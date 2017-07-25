@@ -1,0 +1,177 @@
+---
+systemd:
+  units:
+    {{ if eq .etcd_on_host "true" }}
+    - name: etcd-member.service
+      enable: true
+      dropins:
+        - name: 40-etcd-cluster.conf
+          contents: |
+            [Service]
+            Environment="ETCD_IMAGE_TAG=v3.2.0"
+            Environment="ETCD_NAME={{.etcd_name}}"
+            Environment="ETCD_ADVERTISE_CLIENT_URLS=https://{{.domain_name}}:2379"
+            Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=https://{{.domain_name}}:2380"
+            Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379"
+            Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
+            Environment="ETCD_INITIAL_CLUSTER={{.etcd_initial_cluster}}"
+            Environment="ETCD_STRICT_RECONFIG_CHECK=true"
+            Environment="ETCD_SSL_DIR=/etc/ssl/etcd"
+            Environment="ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt"
+            Environment="ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt"
+            Environment="ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key"
+            Environment="ETCD_CLIENT_CERT_AUTH=true"
+            Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt"
+            Environment="ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt"
+            Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
+            Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
+    {{ end }}
+    - name: docker.service
+      enable: true
+    - name: locksmithd.service
+      mask: true
+    - name: kubelet.path
+      enable: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
+    - name: wait-for-dns.service
+      enable: true
+      contents: |
+        [Unit]
+        Description=Wait for DNS entries
+        Wants=systemd-resolved.service
+        Before=kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        ExecStart=/bin/sh -c 'while ! /usr/bin/grep '^[^#[:space:]]' /etc/resolv.conf > /dev/null; do sleep 1; done'
+        [Install]
+        RequiredBy=kubelet.service
+    - name: kubelet.service
+      contents: |
+        [Unit]
+        Description=Kubelet via Hyperkube ACI
+        [Service]
+        EnvironmentFile=/etc/kubernetes/kubelet.env
+        Environment="RKT_RUN_ARGS=--uuid-file-save=/var/run/kubelet-pod.uuid \
+          --volume=resolv,kind=host,source=/etc/resolv.conf \
+          --mount volume=resolv,target=/etc/resolv.conf \
+          --volume var-lib-cni,kind=host,source=/var/lib/cni \
+          --mount volume=var-lib-cni,target=/var/lib/cni \
+          --volume var-log,kind=host,source=/var/log \
+          --mount volume=var-log,target=/var/log"
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
+        ExecStartPre=/bin/mkdir -p /var/lib/cni
+        ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+        ExecStartPre=-/usr/bin/rkt rm --uuid-file=/var/run/kubelet-pod.uuid
+        ExecStart=/usr/lib/coreos/kubelet-wrapper \
+          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --require-kubeconfig \
+          --client-ca-file=/etc/kubernetes/ca.crt \
+          --anonymous-auth=false \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
+          --network-plugin=cni \
+          --lock-file=/var/run/lock/kubelet.lock \
+          --exit-on-lock-contention \
+          --pod-manifest-path=/etc/kubernetes/manifests \
+          --allow-privileged \
+          --hostname-override={{.domain_name}} \
+          --node-labels=node-role.kubernetes.io/master \
+          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+          --cluster_dns={{.k8s_dns_service_ip}} \
+          --cluster_domain=cluster.local
+        ExecStop=-/usr/bin/rkt stop --uuid-file=/var/run/kubelet-pod.uuid
+        Restart=always
+        RestartSec=10
+        [Install]
+        WantedBy=multi-user.target
+    - name: bootkube.service
+      contents: |
+        [Unit]
+        Description=Bootstrap a Kubernetes control plane with a temp api-server
+        ConditionPathExists=!/opt/bootkube/init_bootkube.done
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        WorkingDirectory=/opt/bootkube
+        ExecStart=/opt/bootkube/bootkube-start
+        ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
+storage:
+  {{ if index . "pxe" }}
+  disks:
+    - device: /dev/sda
+      wipe_table: true
+      partitions:
+        - label: ROOT
+  filesystems:
+    - name: root
+      mount:
+        device: "/dev/sda1"
+        format: "ext4"
+        create:
+          force: true
+          options:
+            - "-LROOT"
+  {{end}}
+  files:
+    - path: /etc/kubernetes/kubelet.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
+          KUBELET_IMAGE_TAG=v1.7.1_coreos.0
+    - path: /etc/hostname
+      filesystem: root
+      mode: 0644
+      contents:
+        inline:
+          {{.domain_name}}
+    - path: /etc/sysctl.d/max-user-watches.conf
+      filesystem: root
+      contents:
+        inline: |
+          fs.inotify.max_user_watches=16184
+    - path: /opt/bootkube/bootkube-start
+      filesystem: root
+      mode: 0544
+      user:
+        id: 500
+      group:
+        id: 500
+      contents:
+        inline: |
+          #!/bin/bash
+          # Wrapper for bootkube start
+          set -e
+          # Move experimental manifests
+          [ -d /opt/bootkube/assets/experimental/manifests ] && mv /opt/bootkube/assets/experimental/manifests/* /opt/bootkube/assets/manifests && rm -r /opt/bootkube/assets/experimental/manifests
+          [ -d /opt/bootkube/assets/experimental/bootstrap-manifests ] && mv /opt/bootkube/assets/experimental/bootstrap-manifests/* /opt/bootkube/assets/bootstrap-manifests && rm -r /opt/bootkube/assets/experimental/bootstrap-manifests
+          BOOTKUBE_ACI="${BOOTKUBE_ACI:-quay.io/coreos/bootkube}"
+          BOOTKUBE_VERSION="${BOOTKUBE_VERSION:-v0.6.0}"
+          BOOTKUBE_ASSETS="${BOOTKUBE_ASSETS:-/opt/bootkube/assets}"
+          exec /usr/bin/rkt run \
+            --trust-keys-from-https \
+            --volume assets,kind=host,source=$BOOTKUBE_ASSETS \
+            --mount volume=assets,target=/assets \
+            --volume bootstrap,kind=host,source=/etc/kubernetes \
+            --mount volume=bootstrap,target=/etc/kubernetes \
+            $RKT_OPTS \
+            ${BOOTKUBE_ACI}:${BOOTKUBE_VERSION} \
+            --net=host \
+            --dns=host \
+            --exec=/bootkube -- start --asset-dir=/assets "$@"
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - {{.ssh_authorized_key}}
+

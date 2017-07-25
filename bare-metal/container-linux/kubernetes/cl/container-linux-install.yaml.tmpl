@@ -1,0 +1,37 @@
+---
+systemd:
+  units:
+    - name: installer.service
+      enable: true
+      contents: |
+        [Unit]
+        Requires=network-online.target
+        After=network-online.target
+        [Service]
+        Type=simple
+        ExecStart=/opt/installer
+        [Install]
+        WantedBy=multi-user.target
+storage:
+  files:
+    - path: /opt/installer
+      filesystem: root
+      mode: 0500
+      contents:
+        inline: |
+          #!/bin/bash -ex
+          curl --retry 10 "${ignition_endpoint}?{{.request.raw_query}}&os=installed" -o ignition.json
+          coreos-install \
+            -d ${install_disk} \
+            -C ${container_linux_channel} \
+            -V ${container_linux_version} \
+            -o "${container_linux_oem}" \
+            ${baseurl_flag} \
+            -i ignition.json
+          udevadm settle
+          systemctl reboot
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - {{.ssh_authorized_key}}
