@@ -1,7 +1,7 @@
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {
-  depends_on = ["module.bootkube"]
+  depends_on = ["module.bootkube", "digitalocean_droplet.controllers"]
 
   connection {
     type    = "ssh"
