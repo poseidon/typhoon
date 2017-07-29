@@ -49,11 +49,6 @@ variable "ssh_fingerprints" {
 
 # bootkube assets
 
-variable "k8s_domain_name" {
-  type        = "string"
-  description = "Controller DNS name which resolves to the controller instance. Kubectl and workers use TLS client credentials to communicate via this endpoint."
-}
-
 variable "asset_dir" {
   description = "Path to a directory where generated assets should be placed (contains secrets)"
   type        = "string"

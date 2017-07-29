@@ -1,9 +1,9 @@
 output "controllers_dns" {
-  value = "${digitalocean_record.controllers.fqdn}"
+  value = "${digitalocean_record.controllers.0.fqdn}"
 }
 
 output "workers_dns" {
-  value = "${digitalocean_record.workers.fqdn}"
+  value = "${digitalocean_record.workers.0.fqdn}"
 }
 
 output "controllers_ipv4" {
