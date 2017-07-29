@@ -20,3 +20,4 @@ Currently, `purenetes` is the author's personal distribution of Kubernetes.
 
 * Bare-Metal
 * Google Cloud
+* Digital Ocean

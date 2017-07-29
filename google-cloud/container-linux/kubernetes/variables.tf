@@ -42,7 +42,7 @@ variable "os_image" {
 variable "controller_count" {
   type        = "string"
   default     = "1"
-  description = "Number of workers"
+  description = "Number of controllers"
 }
 
 variable "worker_count" {
