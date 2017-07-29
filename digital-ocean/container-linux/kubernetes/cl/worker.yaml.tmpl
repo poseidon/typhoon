@@ -23,8 +23,11 @@ systemd:
       contents: |
         [Unit]
         Description=Kubelet via Hyperkube ACI
+        Requires=coreos-metadata.service
+        After=coreos-metadata.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
+        EnvironmentFile=/run/metadata/coreos
         Environment="RKT_RUN_ARGS=--uuid-file-save=/var/run/kubelet-pod.uuid \
           --volume=resolv,kind=host,source=/etc/resolv.conf \
           --mount volume=resolv,target=/etc/resolv.conf \
@@ -48,6 +51,7 @@ systemd:
           --network-plugin=cni \
           --lock-file=/var/run/lock/kubelet.lock \
           --exit-on-lock-contention \
+          --hostname-override=$${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0} \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --allow-privileged \
           --node-labels=node-role.kubernetes.io/node \
