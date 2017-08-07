@@ -78,4 +78,3 @@ resource "matchbox_profile" "worker" {
   name                   = "worker"
   container_linux_config = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 }
-

@@ -4,10 +4,10 @@ resource "digitalocean_record" "controllers" {
 
   # DNS zone where record should be created
   domain = "${var.dns_zone}"
-  
-  name = "${var.cluster_name}"
-  type = "A"
-  ttl = 300
+
+  name  = "${var.cluster_name}"
+  type  = "A"
+  ttl   = 300
   value = "${element(digitalocean_droplet.controllers.*.ipv4_address, count.index)}"
 }
 
@@ -15,21 +15,21 @@ resource "digitalocean_record" "controllers" {
 resource "digitalocean_droplet" "controllers" {
   count = "${var.controller_count}"
 
-  name = "${var.cluster_name}-controller-${count.index}"
+  name   = "${var.cluster_name}-controller-${count.index}"
   region = "${var.region}"
 
   image = "${var.image}"
-  size = "${var.controller_type}"
-  
+  size  = "${var.controller_type}"
+
   # network
-  ipv6 = true
+  ipv6               = true
   private_networking = true
-  
+
   user_data = "${data.ct_config.controller_ign.rendered}"
-  ssh_keys = "${var.ssh_fingerprints}"
+  ssh_keys  = "${var.ssh_fingerprints}"
 
   tags = [
-    "${digitalocean_tag.controllers.id}"
+    "${digitalocean_tag.controllers.id}",
   ]
 }
 

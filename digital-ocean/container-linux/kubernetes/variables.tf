@@ -9,7 +9,7 @@ variable "region" {
 }
 
 variable "dns_zone" {
-  type = "string"
+  type        = "string"
   description = "Digital Ocean domain name (i.e. DNS zone with NS records) (e.g. digital-ocean.dghubble.io)"
 }
 
@@ -19,8 +19,8 @@ variable "image" {
 }
 
 variable "controller_type" {
-  type = "string"
-  default = "1gb"
+  type        = "string"
+  default     = "1gb"
   description = "Digital Ocean droplet type or size (e.g. 2gb, 4gb, 8gb). Do not choose a value below 2gb."
 }
 
@@ -31,8 +31,8 @@ variable "controller_count" {
 }
 
 variable "worker_type" {
-  type = "string"
-  default = "512mb"
+  type        = "string"
+  default     = "512mb"
   description = "Digital Ocean droplet type or size (e.g. 512mb, 1gb, 2gb, 4gb)"
 }
 
