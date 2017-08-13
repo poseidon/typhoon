@@ -13,19 +13,14 @@ variable "network" {
   description = "Name of the network to attach to the compute instance interfaces"
 }
 
-variable "dns_base_zone" {
+variable "dns_zone" {
   type        = "string"
   description = "Google Cloud DNS Zone value to create etcd/k8s subdomains (e.g. dghubble.io)"
 }
 
-variable "dns_base_zone_name" {
+variable "dns_zone_name" {
   type        = "string"
   description = "Google Cloud DNS Zone name to create etcd/k8s subdomains (e.g. dghubble-io)"
-}
-
-variable "k8s_domain_name" {
-  type        = "string"
-  description = "Controller DNS name which resolves to the controller instance. Kubectl and workers use TLS client credentials to communicate via this endpoint."
 }
 
 # instances

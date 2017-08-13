@@ -44,7 +44,7 @@ variable "worker_count" {
 
 variable "ssh_fingerprints" {
   type        = "list"
-  description = "SSH public key fingerprints. Use ssh-add -l -E md5."
+  description = "SSH public key fingerprints. (e.g. see `ssh-add -l -E md5`)"
 }
 
 # bootkube assets

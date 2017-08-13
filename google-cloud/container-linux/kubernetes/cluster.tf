@@ -4,15 +4,14 @@ module "controllers" {
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
   # GCE
-  network            = "${google_compute_network.network.name}"
-  count              = "${var.controller_count}"
-  dns_base_zone      = "${var.dns_base_zone}"
-  dns_base_zone_name = "${var.dns_base_zone_name}"
-  k8s_domain_name    = "${var.k8s_domain_name}"
-  zone               = "${var.zone}"
-  machine_type       = "${var.machine_type}"
-  os_image           = "${var.os_image}"
-  preemptible        = "${var.controller_preemptible}"
+  network       = "${google_compute_network.network.name}"
+  count         = "${var.controller_count}"
+  zone          = "${var.zone}"
+  dns_zone      = "${var.dns_zone}"
+  dns_zone_name = "${var.dns_zone_name}"
+  machine_type  = "${var.machine_type}"
+  os_image      = "${var.os_image}"
+  preemptible   = "${var.controller_preemptible}"
 
   # configuration
   service_cidr            = "${var.service_cidr}"

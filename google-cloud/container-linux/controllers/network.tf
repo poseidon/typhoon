@@ -1,16 +1,14 @@
-# DNS record set to the network load balancer over controllers
-resource "google_dns_record_set" "k8s_dns" {
-  # Managed DNS Zone name
-  managed_zone = "${var.dns_base_zone_name}"
+# Controller Network Load balancer DNS record
+resource "google_dns_record_set" "controllers" {
+  # DNS Zone name where record should be created
+  managed_zone = "${var.dns_zone_name}"
 
-  # Name of the DNS record
-  #name = "${format("%s.%s.", var.cluster_name, var.dns_base_zone)}"
-  name = "${var.k8s_domain_name}."
-
+  # DNS record
+  name = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"
   type = "A"
   ttl  = 300
 
-  # compute instance public IP
+  # IPv4 address of controllers' network load balancer
   rrdatas = ["${google_compute_address.controllers-ip.address}"]
 }
 

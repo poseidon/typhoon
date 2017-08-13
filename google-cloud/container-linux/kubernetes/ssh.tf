@@ -6,7 +6,7 @@ resource "null_resource" "bootkube-start" {
   # TODO: SSH to a controller's IP instead of waiting on DNS resolution
   connection {
     type    = "ssh"
-    host    = "${var.k8s_domain_name}"
+    host    = "${format("%s.%s", var.cluster_name, var.dns_zone)}"
     user    = "core"
     timeout = "15m"
   }

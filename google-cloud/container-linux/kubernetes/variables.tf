@@ -3,40 +3,35 @@ variable "cluster_name" {
   description = "Cluster name"
 }
 
-variable "ssh_authorized_key" {
-  type        = "string"
-  description = "SSH public key for logging in as user 'core'"
-}
-
-variable "dns_base_zone" {
-  type        = "string"
-  description = "Google Cloud DNS Zone value to create etcd/k8s subdomains (e.g. dghubble.io)"
-}
-
-variable "dns_base_zone_name" {
-  type        = "string"
-  description = "Google Cloud DNS Zone name to create etcd/k8s subdomains (e.g. dghubble-io)"
-}
-
-variable "k8s_domain_name" {
-  type        = "string"
-  description = "Controller DNS name which resolves to the controller instance. Kubectl and workers use TLS client credentials to communicate via this endpoint."
-}
-
 variable "zone" {
   type        = "string"
-  description = "Google zone that compute instances should be created in (e.g. gcloud compute zones list)"
+  description = "Google Cloud zone (e.g. us-central1-f, see `gcloud compute zones list`)"
+}
+
+variable "dns_zone" {
+  type        = "string"
+  description = "Google Cloud DNS Zone (e.g. google-cloud.dghubble.io)"
+}
+
+variable "dns_zone_name" {
+  type        = "string"
+  description = "Google Cloud DNS Zone name (e.g. google-cloud-prod-zone)"
+}
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for user 'core'"
 }
 
 variable "machine_type" {
   type        = "string"
   default     = "n1-standard-1"
-  description = "Machine type for compute instances (e.g. gcloud compute machine-types list)"
+  description = "Machine type for compute instances (see `gcloud compute machine-types list`)"
 }
 
 variable "os_image" {
   type        = "string"
-  description = "OS image from which to initialize the disk (e.g. gcloud compute images list)"
+  description = "OS image from which to initialize the disk (see `gcloud compute images list`)"
 }
 
 variable "controller_count" {

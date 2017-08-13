@@ -1,13 +1,16 @@
-# Controller DNS records
+# Controller Instance DNS records
 resource "digitalocean_record" "controllers" {
   count = "${var.controller_count}"
 
   # DNS zone where record should be created
   domain = "${var.dns_zone}"
 
-  name  = "${var.cluster_name}"
-  type  = "A"
-  ttl   = 300
+  # DNS record (will be prepended to domain)
+  name = "${var.cluster_name}"
+  type = "A"
+  ttl  = 300
+
+  # IPv4 addresses of controllers
   value = "${element(digitalocean_droplet.controllers.*.ipv4_address, count.index)}"
 }
 
