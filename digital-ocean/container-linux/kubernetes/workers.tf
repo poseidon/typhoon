@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "workers" {
   ]
 }
 
-// Tag to label workers
+# Tag to label workers
 resource "digitalocean_tag" "workers" {
   name = "${var.cluster_name}-worker"
 }

@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "controllers" {
   ]
 }
 
-// Tag to label controllers
+# Tag to label controllers
 resource "digitalocean_tag" "controllers" {
   name = "${var.cluster_name}-controller"
 }
