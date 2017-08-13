@@ -5,9 +5,9 @@ resource "digitalocean_record" "workers" {
   # DNS zone where record should be created
   domain = "${var.dns_zone}"
 
-  name = "${var.cluster_name}-workers"
-  type = "A"
-  ttl = 300
+  name  = "${var.cluster_name}-workers"
+  type  = "A"
+  ttl   = 300
   value = "${element(digitalocean_droplet.workers.*.ipv4_address, count.index)}"
 }
 
@@ -15,21 +15,21 @@ resource "digitalocean_record" "workers" {
 resource "digitalocean_droplet" "workers" {
   count = "${var.worker_count}"
 
-  name = "${var.cluster_name}-worker-${count.index}"
+  name   = "${var.cluster_name}-worker-${count.index}"
   region = "${var.region}"
 
   image = "${var.image}"
-  size = "${var.worker_type}"
-    
+  size  = "${var.worker_type}"
+
   # network
-  ipv6 = true
+  ipv6               = true
   private_networking = true
-  
+
   user_data = "${data.ct_config.worker_ign.rendered}"
-  ssh_keys = "${var.ssh_fingerprints}"
+  ssh_keys  = "${var.ssh_fingerprints}"
 
   tags = [
-    "${digitalocean_tag.workers.id}"
+    "${digitalocean_tag.workers.id}",
   ]
 }
 

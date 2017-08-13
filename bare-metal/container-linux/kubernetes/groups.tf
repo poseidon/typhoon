@@ -45,9 +45,9 @@ resource "matchbox_group" "worker" {
   }
 
   metadata {
-    domain_name         = "${element(var.worker_domains, count.index)}"
-    etcd_on_host        = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
-    k8s_dns_service_ip  = "${module.bootkube.kube_dns_service_ip}"
-    ssh_authorized_key  = "${var.ssh_authorized_key}"
+    domain_name        = "${element(var.worker_domains, count.index)}"
+    etcd_on_host       = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
+    k8s_dns_service_ip = "${module.bootkube.kube_dns_service_ip}"
+    ssh_authorized_key = "${var.ssh_authorized_key}"
   }
 }

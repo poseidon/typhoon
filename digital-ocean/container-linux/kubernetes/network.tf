@@ -6,28 +6,28 @@ resource "digitalocean_firewall" "rules" {
   # allow ssh, http/https ingress, and peer-to-peer traffic
   inbound_rule = [
     {
-      protocol = "tcp"
-      port_range = "22"
+      protocol         = "tcp"
+      port_range       = "22"
       source_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "tcp"
-      port_range = "80"
+      protocol         = "tcp"
+      port_range       = "80"
       source_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "tcp"
-      port_range = "443"
+      protocol         = "tcp"
+      port_range       = "443"
       source_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "udp"
-      port_range = "all"
+      protocol    = "udp"
+      port_range  = "all"
       source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
     },
     {
-      protocol = "tcp"
-      port_range = "all"
+      protocol    = "tcp"
+      port_range  = "all"
       source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
     },
   ]
@@ -35,19 +35,18 @@ resource "digitalocean_firewall" "rules" {
   # allow all outbound traffic
   outbound_rule = [
     {
-      protocol = "icmp"
+      protocol              = "icmp"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "udp"
-      port_range = "all"
+      protocol              = "udp"
+      port_range            = "all"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "tcp"
-      port_range = "all"
+      protocol              = "tcp"
+      port_range            = "all"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
   ]
 }
-
