@@ -38,10 +38,6 @@ To customize clusters in ways that aren't supported by input variables, fork the
 
 To customize lower-level Kubernetes control plane bootstrapping, see the [purenetes/bootkube-terraform](https://github.com/purenetes/bootkube-terraform) Terraform module.
 
-## Contributing
-
-Currently, `purenetes` is the author's personal distribution of Kubernetes. It is focused on addressing the author's cluster needs and is not yet accepting sizable contributions. As the project matures, this contributing policy will be changed to reflect those of a community project.
-
 ## Social Contract
 
 *A formal social contract is being drafted, inspired by the Debian [Social Contract](https://www.debian.org/social_contract).*
