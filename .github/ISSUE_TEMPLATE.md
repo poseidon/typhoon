@@ -8,7 +8,7 @@
 * OS: container-linux, fedora-cloud
 * Terraform: `terraform version`
 * Plugins: Provider plugin versions
-* Ref: Purenetes Git SHA (if applicable)
+* Ref: Git SHA (if applicable)
 
 ### Problem
 

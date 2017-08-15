@@ -1,4 +1,4 @@
-# purenetes <img align="right" src="https://storage.googleapis.com/dghubble/spin.png">
+# Typhoon <img align="right" src="https://storage.googleapis.com/dghubble/spin.png">
 
 * Minimal, stable base Kubernetes distribution
 * Declarative infrastructure and configuration
@@ -8,7 +8,7 @@
 
 ## Status
 
-Purenetes is [dghubble](https://twitter.com/dghubble)'s personal Kubernetes distribution. It powers his cloud and colocation clusters. While functional, it is not yet suited for the public.
+Typhoon is [dghubble](https://twitter.com/dghubble)'s personal Kubernetes distribution. It powers his cloud and colocation clusters. While functional, it is not yet suited for the public.
 
 ## Features
 
@@ -18,13 +18,9 @@ Purenetes is [dghubble](https://twitter.com/dghubble)'s personal Kubernetes dist
 * Ingress-ready (perhaps include by default)
 * Works with your existing Terraform infrastructure and secret management
 
-## Documentation
-
-See [docs.purenetes.org](https://docs.purenetes.org)
-
 ## Modules
 
-Purenetes provides a Terraform Module for each supported operating system and platform.
+Typhoon provides a Terraform Module for each supported operating system and platform.
 
 | Platform      | Operating System | Terraform Module |
 |---------------|------------------|------------------|
@@ -36,13 +32,13 @@ Purenetes provides a Terraform Module for each supported operating system and pl
 
 To customize clusters in ways that aren't supported by input variables, fork the repo and make changes to the Terraform module. Stay tuned for improvements to this strategy since its beneficial to stay close to this upstream.
 
-To customize lower-level Kubernetes control plane bootstrapping, see the [purenetes/bootkube-terraform](https://github.com/purenetes/bootkube-terraform) Terraform module.
+To customize lower-level Kubernetes control plane bootstrapping, see the [poseidon/bootkube-terraform](https://github.com/poseidon/bootkube-terraform) Terraform module.
 
 ## Social Contract
 
 *A formal social contract is being drafted, inspired by the Debian [Social Contract](https://www.debian.org/social_contract).*
 
-For now, know that `purenetes` is not a product, trial, or free-tier. It is not run by a company, it does not offer support or services, and it does not accept or make any money. It is not associated with any operating system or cloud platform vendors.
+For now, know that `typhoon` is not a product, trial, or free-tier. It is not run by a company, it does not offer support or services, and it does not accept or make any money. It is not associated with any operating system or cloud platform vendors.
 
 Disclosure: The author works for CoreOS, but that work is kept as separate as possible. Support for Fedora is planned to ensure no one distro is favored and because the author wants it.
 
