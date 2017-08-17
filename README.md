@@ -12,7 +12,7 @@ Typhoon is [dghubble](https://twitter.com/dghubble)'s personal Kubernetes distri
 
 ## Features
 
-* Kubernetes v1.7.1 with self-hosted control plane via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube)
+* Kubernetes v1.7.3 with self-hosted control plane via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube)
 * Secure etcd with generated TLS certs, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, generated admin kubeconfig
 * Multi-master, workload isolation
 * Ingress-ready (perhaps include by default)

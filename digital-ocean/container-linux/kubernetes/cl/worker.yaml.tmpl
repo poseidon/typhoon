@@ -103,7 +103,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
-          KUBELET_IMAGE_TAG=v1.7.1_coreos.0
+          KUBELET_IMAGE_TAG=v1.7.3_coreos.0
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
@@ -120,7 +120,7 @@ storage:
             --trust-keys-from-https \
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
-            quay.io/coreos/hyperkube:v1.7.1_coreos.0 \
+            quay.io/coreos/hyperkube:v1.7.3_coreos.0 \
             --net=host \
             --dns=host \
             --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
