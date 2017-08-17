@@ -23,12 +23,12 @@ resource "digitalocean_firewall" "rules" {
     {
       protocol    = "udp"
       port_range  = "all"
-      source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+      source_tags = ["${digitalocean_tag.controllers.name}", "${digitalocean_tag.workers.name}"]
     },
     {
       protocol    = "tcp"
       port_range  = "all"
-      source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+      source_tags = ["${digitalocean_tag.controllers.name}", "${digitalocean_tag.workers.name}"]
     },
   ]
 
