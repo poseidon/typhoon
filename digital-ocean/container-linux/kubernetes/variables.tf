@@ -10,18 +10,13 @@ variable "region" {
 
 variable "dns_zone" {
   type        = "string"
-  description = "Digital Ocean domain name (i.e. DNS zone with NS records) (e.g. digital-ocean.dghubble.io)"
+  description = "Digital Ocean domain (i.e. DNS zone) (e.g. do.example.com)"
 }
 
 variable "image" {
   type        = "string"
+  default     = "coreos-stable"
   description = "OS image from which to initialize the disk (e.g. coreos-stable)"
-}
-
-variable "controller_type" {
-  type        = "string"
-  default     = "1gb"
-  description = "Digital Ocean droplet type or size (e.g. 2gb, 4gb, 8gb). Do not choose a value below 2gb."
 }
 
 variable "controller_count" {
@@ -30,16 +25,22 @@ variable "controller_count" {
   description = "Number of controllers"
 }
 
-variable "worker_type" {
+variable "controller_type" {
   type        = "string"
-  default     = "512mb"
-  description = "Digital Ocean droplet type or size (e.g. 512mb, 1gb, 2gb, 4gb)"
+  default     = "2gb"
+  description = "Digital Ocean droplet size (e.g. 2gb (min), 4gb, 8gb)."
 }
 
 variable "worker_count" {
   type        = "string"
   default     = "1"
   description = "Number of workers"
+}
+
+variable "worker_type" {
+  type        = "string"
+  default     = "512mb"
+  description = "Digital Ocean droplet size (e.g. 512mb, 1gb, 2gb, 4gb)"
 }
 
 variable "ssh_fingerprints" {
