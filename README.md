@@ -27,7 +27,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 ## Docs
 
 * [https://typhoon.psdn.io](https://typhoon.psdn.io)
-* [Getting Started](https://typhoon.psdn.io/getting-started/)
+* [Concepts](https://typhoon.psdn.io/concepts/)
 * [Bare-Metal](https://typhoon.psdn.io/bare-metal/)
 * [Digital Ocean](https://typhoon.psdn.io/digital-ocean/)
 * [Google-Cloud](https://typhoon.psdn.io/google-cloud/)
@@ -44,12 +44,12 @@ module "yavin-cluster" {
   zone               = "us-central1-c"
   dns_zone           = "example.com"
   dns_zone_name      = "example-zone"
-  os_image           = "coreos-stable-1409-7-0-v20170719"
+  os_image           = "coreos-stable-1465-6-0-v20170817"
   
   # Cluster
   cluster_name       = "yavin"
   controller_count   = 1
-  worker_count       = 3  
+  worker_count       = 2
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
   # output assets dir

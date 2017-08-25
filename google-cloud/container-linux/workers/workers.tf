@@ -50,9 +50,6 @@ resource "google_compute_instance_template" "worker" {
     preemptible       = "${var.preemptible}"
   }
 
-  # QUIRK: Undocumented field defaults to true if not set
-  automatic_restart = "${var.preemptible ? false : true}"
-
   disk {
     auto_delete  = true
     boot         = true
