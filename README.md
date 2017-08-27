@@ -7,6 +7,8 @@ Typhoon is a minimal and free Kubernetes distribution.
 * [Free](#social-contract) (freedom and cost) and privacy-respecting
 * Practical for labs, datacenters, and clouds
 
+Typhoon distributes upstream Kubernetes, architectural conventions, and cluster addons, much like a GNU/Linux distribution provides the Linux kernel and userspace components.
+
 ## Features
 
 * Kubernetes v1.7.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
@@ -24,9 +26,9 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) |
 
-## Docs
+## Usage
 
-* [https://typhoon.psdn.io](https://typhoon.psdn.io)
+* [Docs](https://typhoon.psdn.io)
 * [Concepts](https://typhoon.psdn.io/concepts/)
 * [Bare-Metal](https://typhoon.psdn.io/bare-metal/)
 * [Digital Ocean](https://typhoon.psdn.io/digital-ocean/)
@@ -37,20 +39,19 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 Define a Kubernetes cluster by using the Terraform module for your chosen platform and operating system. Here's a minimal example:
 
 ```tf
-module "yavin-cluster" {
+module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
 
   # Google Cloud
-  zone               = "us-central1-c"
-  dns_zone           = "example.com"
-  dns_zone_name      = "example-zone"
-  os_image           = "coreos-stable-1465-6-0-v20170817"
-  
-  # Cluster
+  zone          = "us-central1-c"
+  dns_zone      = "example.com"
+  dns_zone_name = "example-zone"
+  os_image      = "coreos-stable-1465-6-0-v20170817"
+
   cluster_name       = "yavin"
   controller_count   = 1
   worker_count       = 2
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # output assets dir
   asset_dir = "/home/user/.secrets/clusters/yavin"
@@ -72,34 +73,33 @@ In 5-10 minutes (varies by platform), the cluster will be ready. This Google Clo
 ```sh
 $ KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
-NAME                                           STATUS  AGE  VERSION
-yavin-controller-t6nx.c.example-com.internal   Ready   3m   v1.7.3+coreos.0
-yavin-worker-gvhs.c.example-com.internal       Ready   3m   v1.7.3+coreos.0
-yavin-worker-m8pl.c.example-com.internal       Ready   3m   v1.7.3+coreos.0
-yavin-worker-wsg7.c.example-com.internal       Ready   3m   v1.7.3+coreos.0
+NAME                                          STATUS   AGE    VERSION
+yavin-controller-1682.c.example-com.internal  Ready    6m     v1.7.3+coreos.0
+yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
+yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
 ```
 
-```sh
-$ kubectl get pods
-NAME                                        READY    STATUS    RESTARTS   AGE
-etcd-operator-3329263108-v34bb              1/1      Running   2          3m
-kube-apiserver-qgqz5                        1/1      Running   1          3m
-kube-controller-manager-3271970485-1jxgj    1/1      Running   1          3m
-kube-controller-manager-3271970485-k57nb    1/1      Running   1          3m
-kube-dns-1187388186-wz3c1                   3/3      Running   0          3m
-kube-etcd-0000                              1/1      Running   1          3m
-kube-etcd-network-checkpointer-3bv09        1/1      Running   1          3m
-kube-flannel-8g1l1                          2/2      Running   1          3m
-kube-flannel-bndl8                          2/2      Running   1          3m
-kube-flannel-hvm8l                          2/2      Running   1          3m
-kube-flannel-tfgj0                          2/2      Running   1          3m
-kube-proxy-8bbkk                            1/1      Running   0          3m
-kube-proxy-gwv6m                            1/1      Running   0          3m
-kube-proxy-h9hnm                            1/1      Running   0          3m
-kube-proxy-v9mlp                            1/1      Running   1          3m
-kube-scheduler-3895335239-0fglg             1/1      Running   1          3m
-kube-scheduler-3895335239-dpd66             1/1      Running   1          3m
-pod-checkpointer-v2zmz                      1/1      Running   1          3m
+List the pods.
+
+```
+$ kubectl get pods --all-namespaces
+NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
+kube-system   etcd-operator-3329263108-f443m            1/1    Running   1         6m
+kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
+kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
+kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1         6m
+kube-system   kube-dns-1187388186-zj5dl                 3/3    Running   0         6m
+kube-system   kube-etcd-0000                            1/1    Running   0         5m
+kube-system   kube-etcd-network-checkpointer-crznb      1/1    Running   0         6m
+kube-system   kube-flannel-1cs8z                        2/2    Running   0         6m
+kube-system   kube-flannel-d1l5b                        2/2    Running   0         6m
+kube-system   kube-flannel-sp9ps                        2/2    Running   0         6m
+kube-system   kube-proxy-117v6                          1/1    Running   0         6m
+kube-system   kube-proxy-9886n                          1/1    Running   0         6m
+kube-system   kube-proxy-njn47                          1/1    Running   0         6m
+kube-system   kube-scheduler-3895335239-5x87r           1/1    Running   0         6m
+kube-system   kube-scheduler-3895335239-bzrrt           1/1    Running   1         6m
+kube-system   pod-checkpointer-l6lrt                    1/1    Running   0         6m
 ```
 
 ## Non-Goals
@@ -112,14 +112,14 @@ Typhoon is strict about minimalism, maturity, and scope. These are not in scope:
 
 ## Background
 
-Typhoon powers the original author's cloud and colocation clusters. The project has been developed through operational experience and Kubernetes evolutions. In 2017, Typhoon was shared under a free license to allow others to use the work freely and contribute to its upkeep.
+Typhoon powers the author's cloud and colocation clusters. The project has evolved through operational experience and Kubernetes changes. Typhoon is shared under a free license to allow others to use the work freely and contribute to its upkeep.
 
-Typhoon clusters address real world needs, which you may share. We'll be honest about any limitations or areas that haven't been explored yet. We'll steer clear of buzzword bingo and hype. If your needs turn out to be different, we'll wish you the best of luck with another project.
+Typhoon addresses real world needs, which you may share. It is honest about limitations or areas that aren't mature yet. It avoids buzzword bingo and hype. It does not aim to be the one-solution-fits-all distro. An ecosystem of free (or enterprise) Kubernetes distros is healthy.
 
 ## Social Contract
 
-Typhoon is not a product, trial, or free-tier. It is not run by a company, does not offer support or services, and does not accept or make any money. It is not associated with operating system or platform vendors.
+Typhoon is not a product, trial, or free-tier. It is not run by a company, does not offer support or services, and does not accept or make any money. It is not associated with any operating system or platform vendor.
 
 Typhoon clusters will contain only [free](https://www.debian.org/intro/free) components. Cluster components will not collect data on users without their permission.
 
-*Disclosure: The author works for CoreOS and previously wrote Matchbox and early Tectonic for bare-metal and AWS.*
+*Disclosure: The author works for CoreOS and previously wrote Matchbox and original Tectonic for bare-metal and AWS. This project is not associated with CoreOS.*

@@ -80,7 +80,7 @@ yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
 yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
 ```
 
-List the default pods.
+List the pods.
 
 ```
 $ kubectl get pods --all-namespaces
