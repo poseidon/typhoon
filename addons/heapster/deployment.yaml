@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: heapster
+  namespace: kube-system
+  labels:
+    k8s-app: heapster
+    kubernetes.io/cluster-service: "true"
+    version: v1.4.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: heapster
+      version: v1.4.0
+  template:
+    metadata:
+      labels:
+        k8s-app: heapster
+        version: v1.4.0
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
+    spec:
+      containers:
+        - name: heapster
+          image: gcr.io/google_containers/heapster-amd64:v1.4.0
+          command:
+            - /heapster
+            - --source=kubernetes.summary_api:''
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8082
+              scheme: HTTP
+            initialDelaySeconds: 180
+            timeoutSeconds: 5
+        - name: heapster-nanny
+          image: gcr.io/google_containers/addon-resizer:2.0
+          command:
+            - /pod_nanny
+            - --cpu=80m
+            - --extra-cpu=0.5m
+            - --memory=140Mi
+            - --extra-memory=4Mi
+            - --deployment=heapster-v1.4.0
+            - --container=heapster
+            - --poll-period=300000
+          env:
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            limits:
+              cpu: 50m
+              memory: 90Mi
+            requests:
+              cpu: 50m
+              memory: 90Mi

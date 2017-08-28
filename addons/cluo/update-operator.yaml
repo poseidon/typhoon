@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: container-linux-update-operator
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: container-linux-update-operator
+    spec:
+      containers:
+      - name: update-operator
+        image: quay.io/coreos/container-linux-update-operator:v0.3.1
+        command:
+        - "/bin/update-operator"
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
