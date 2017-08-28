@@ -177,7 +177,7 @@ kube-system   pod-checkpointer-pr1lq-10.132.115.81       1/1       Running   0  
 
 ## Going Further
 
-Learn about [version pinning](concepts.md#versioning), maintenance, and common [addons](addons.md).
+Learn about [version pinning](concepts.md#versioning), maintenance, and [addons](addons/overview.md).
 
 !!! note
     On Container Linux clusters, install the `container-linux-update-operator` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
