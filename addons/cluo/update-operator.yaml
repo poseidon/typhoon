@@ -15,6 +15,7 @@ spec:
         image: quay.io/coreos/container-linux-update-operator:v0.3.1
         command:
         - "/bin/update-operator"
+        - "--analytics=false"
         env:
         - name: POD_NAMESPACE
           valueFrom:
