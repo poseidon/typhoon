@@ -14,7 +14,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * Kubernetes v1.7.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
 * Self-hosted control plane, single or multi master, workloads isolated to workers
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled
-* Ready for Ingress, Metrics, Dashboards, and other optional [addons](docs/addons.md)
+* Ready for Ingress, Metrics, Dashboards, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Modules
 
