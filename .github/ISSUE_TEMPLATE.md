@@ -16,7 +16,7 @@ Describe the problem.
 
 ### Desired Behavior
 
-Describe what the goal.
+Describe the goal.
 
 ### Steps to Reproduce
 
@@ -30,4 +30,4 @@ Describe the feature and what problem it solves.
 
 ### Tradeoffs
 
-What are the pros and cons of this feature? How will it be exercsied and maintained?
+What are the pros and cons of this feature? How will it be exercised and maintained?
