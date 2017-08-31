@@ -46,8 +46,7 @@ pages:
   - 'Google Cloud': 'google-cloud.md'
   - 'Addons':
     - 'Overview': 'addons/overview.md'
-    - 'Ingress Controller': 'addons/ingress.md'
-    - 'Network Policy': 'addons/calico.md'
+    - 'Nginx Ingress': 'addons/ingress.md'
     - 'Heapster': 'addons/heapster.md'
     - 'Dashboard': 'addons/dashboard.md'
     - 'CLUO': 'addons/cluo.md'
