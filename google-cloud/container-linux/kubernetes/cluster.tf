@@ -14,6 +14,7 @@ module "controllers" {
   preemptible   = "${var.controller_preemptible}"
 
   # configuration
+  networking              = "${var.networking}"
   service_cidr            = "${var.service_cidr}"
   kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
   kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"

@@ -44,3 +44,23 @@ resource "google_compute_firewall" "allow-internal" {
 
   source_ranges = ["10.0.0.0/8"]
 }
+
+# Calico BGP and IPIP
+# https://docs.projectcalico.org/v2.5/reference/public-cloud/gce
+resource "google_compute_firewall" "allow-calico" {
+  count = "${var.networking == "calico" ? 1 : 0}"
+
+  name    = "${var.cluster_name}-allow-calico"
+  network = "${google_compute_network.network.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["179"]
+  }
+
+  allow {
+    protocol = "ipip"
+  }
+
+  source_ranges = ["10.0.0.0/8"]
+}

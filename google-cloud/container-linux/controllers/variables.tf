@@ -59,6 +59,12 @@ variable "preemptible" {
 
 // configuration
 
+variable "networking" {
+  description = "Choice of networking provider (flannel or calico)"
+  type        = "string"
+  default     = "flannel"
+}
+
 variable "service_cidr" {
   description = <<EOD
 CIDR IP range to assign Kubernetes services.
