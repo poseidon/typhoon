@@ -238,8 +238,12 @@ If you uploaded an SSH key to DigitalOcean (not required), find the fingerprint 
 | controller_type | Digital Ocean droplet size | 2gb | 2gb (min), 4gb, 8gb |
 | worker_count | Number of workers | 1 | 3 |
 | worker_type | Digital Ocean droplet size | 512mb | 512mb, 1gb, 2gb, 4gb |
+| networking | Choice of networking provider | "flannel" | "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 
 !!! warning
     Do not choose a `controller_type` smaller than `2gb`. The `1gb` droplet is not sufficient for running a controller and bootstrapping will fail.
+
+!!! bug
+    Digital Ocean firewalls do not yet support the IP tunneling (IP in IP) protocol used by Calico. You can try using "calico" for `networking`, but it will only work if the cloud firewall is removed (unsafe).

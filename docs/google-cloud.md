@@ -230,6 +230,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
 | worker_preemptible | If enabled, Compute Engine will terminate controllers randomly within 24 hours | false | true |
+| networking | Choice of networking provider | "flannel" | "flannel" or "calico" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 
