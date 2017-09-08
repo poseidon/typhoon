@@ -11,8 +11,8 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Features
 
-* Kubernetes v1.7.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
-* Single or multi-master, workloads isolated on workers, [flannel](https://github.com/coreos/flannel) or [Calico](https://www.projectcalico.org/) networking (with BGP peering)
+* Kubernetes v1.7.5 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
+* Single or multi-master, workloads isolated on workers, [flannel](https://github.com/coreos/flannel) or [Calico](https://www.projectcalico.org/) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Ready for Ingress, Dashboards, Metrics and other optional [addons](addons/overview.md)
 * Provided via Terraform Modules
@@ -75,9 +75,9 @@ In 5-10 minutes (varies by platform), the cluster will be ready. This Google Clo
 $ KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                          STATUS   AGE    VERSION
-yavin-controller-1682.c.example-com.internal  Ready    6m     v1.7.3+coreos.0
-yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
-yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
+yavin-controller-1682.c.example-com.internal  Ready    6m     v1.7.5+coreos.0
+yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.5+coreos.0
+yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.5+coreos.0
 ```
 
 List the pods.

@@ -1,6 +1,6 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.7.3 cluster on Google Compute Engine (not GKE).
+In this tutorial, we'll create a Kubernetes v1.7.5 cluster on Google Compute Engine (not GKE).
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a network, firewall rules, managed instance groups of Kubernetes controllers and workers, network load balancers for controllers and workers, and health checks will be created.
 
@@ -120,7 +120,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.6.1 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.6.2 (update)
 ```
 
 Plan the resources to be created.
@@ -154,9 +154,9 @@ In 5-10 minutes, the Kubernetes cluster will be ready.
 $ KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                          STATUS   AGE    VERSION
-yavin-controller-1682.c.example-com.internal  Ready    6m     v1.7.3+coreos.0
-yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
-yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.3+coreos.0
+yavin-controller-1682.c.example-com.internal  Ready    6m     v1.7.5+coreos.0
+yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.7.5+coreos.0
+yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.7.5+coreos.0
 ```
 
 List the pods.

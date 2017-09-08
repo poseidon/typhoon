@@ -128,7 +128,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
-          KUBELET_IMAGE_TAG=v1.7.3_coreos.0
+          KUBELET_IMAGE_TAG=v1.7.5_coreos.0
     - path: /etc/hostname
       filesystem: root
       mode: 0644
@@ -157,7 +157,7 @@ storage:
           [ -d /opt/bootkube/assets/experimental/manifests ] && mv /opt/bootkube/assets/experimental/manifests/* /opt/bootkube/assets/manifests && rm -r /opt/bootkube/assets/experimental/manifests
           [ -d /opt/bootkube/assets/experimental/bootstrap-manifests ] && mv /opt/bootkube/assets/experimental/bootstrap-manifests/* /opt/bootkube/assets/bootstrap-manifests && rm -r /opt/bootkube/assets/experimental/bootstrap-manifests
           BOOTKUBE_ACI="${BOOTKUBE_ACI:-quay.io/coreos/bootkube}"
-          BOOTKUBE_VERSION="${BOOTKUBE_VERSION:-v0.6.1}"
+          BOOTKUBE_VERSION="${BOOTKUBE_VERSION:-v0.6.2}"
           BOOTKUBE_ASSETS="${BOOTKUBE_ASSETS:-/opt/bootkube/assets}"
           exec /usr/bin/rkt run \
             --trust-keys-from-https \
