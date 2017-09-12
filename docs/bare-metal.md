@@ -357,7 +357,7 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | container_linux_oem | Specify alternative OEM image ids for the disk install | "" | "vmware_raw", "xen" |
 | experimental_self_hosted_etcd | Self-host etcd as pods on Kubernetes (not recommended) | false | true |
-| networking | Choice of networking provider | "flannel" | "flannel" or "calico" |
+| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

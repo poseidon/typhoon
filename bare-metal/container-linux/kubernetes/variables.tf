@@ -65,7 +65,7 @@ variable "asset_dir" {
 variable "networking" {
   description = "Choice of networking provider (flannel or calico)"
   type        = "string"
-  default     = "flannel"
+  default     = "calico"
 }
 
 variable "network_mtu" {
