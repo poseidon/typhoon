@@ -66,15 +66,6 @@ resource "google_compute_instance_template" "worker" {
 
   can_ip_forward = true
 
-  service_account {
-    scopes = [
-      "storage-ro",
-      "compute-rw",
-      "datastore",
-      "userinfo-email",
-    ]
-  }
-
   tags = ["worker"]
 
   lifecycle {

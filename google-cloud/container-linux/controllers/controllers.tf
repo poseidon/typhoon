@@ -66,15 +66,6 @@ resource "google_compute_instance_template" "controller" {
 
   can_ip_forward = true
 
-  service_account {
-    scopes = [
-      "storage-ro",
-      "compute-rw",
-      "datastore",
-      "userinfo-email",
-    ]
-  }
-
   lifecycle {
     # To update an Instance Template, Terraform should replace the existing resource
     create_before_destroy = true
