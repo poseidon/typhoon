@@ -5,6 +5,15 @@ systemd:
       enable: true
     - name: locksmithd.service
       mask: true
+    - name: kubelet.path
+      enable: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
     - name: wait-for-dns.service
       enable: true
       contents: |
@@ -19,7 +28,6 @@ systemd:
         [Install]
         RequiredBy=kubelet.service
     - name: kubelet.service
-      enable: true
       contents: |
         [Unit]
         Description=Kubelet via Hyperkube ACI
@@ -78,27 +86,6 @@ systemd:
         WantedBy=multi-user.target
 storage:
   files:
-    - path: /etc/kubernetes/kubeconfig
-      filesystem: root
-      mode: 0644
-      contents:
-        inline: |
-          apiVersion: v1
-          kind: Config
-          clusters:
-          - name: local
-            cluster:
-              server: ${kubeconfig_server}
-              certificate-authority-data: ${kubeconfig_ca_cert}
-          users:
-          - name: kubelet
-            user:
-              client-certificate-data: ${kubeconfig_kubelet_cert}
-              client-key-data: ${kubeconfig_kubelet_key}
-          contexts:
-          - context:
-              cluster: local
-              user: kubelet
     - path: /etc/kubernetes/kubelet.env
       filesystem: root
       mode: 0644

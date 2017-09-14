@@ -45,10 +45,6 @@ data "template_file" "worker_config" {
   vars = {
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
     k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
-    kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
-    kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
-    kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
-    kubeconfig_server       = "${module.bootkube.server}"
   }
 }
 
