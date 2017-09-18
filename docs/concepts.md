@@ -8,7 +8,7 @@ Let's cover the concepts you'll need to get started.
 
 #### Nodes
 
-Cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the higher order cluster.
+Cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the higher order cluster. All nodes run `kube-proxy` and `calico` or `flannel` pods.
 
 #### Controllers
 
@@ -16,7 +16,7 @@ Controller nodes are scheduled to run the Kubernetes `apiserver`, `scheduler`, `
 
 #### Workers
 
-Worker nodes register with the control plane and run application workloads. Workers, like all nodes, run `kube-proxy` and `flannel` pods.
+Worker nodes register with the control plane and run application workloads.
 
 ## Terraform
 
