@@ -46,8 +46,8 @@ data "template_file" "controller_config" {
   template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
 
   vars = {
-    k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
-    k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
+    k8s_dns_service_ip  = "${cidrhost(var.service_cidr, 10)}"
+    k8s_etcd_service_ip = "${cidrhost(var.service_cidr, 15)}"
   }
 }
 
