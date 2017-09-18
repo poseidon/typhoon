@@ -40,6 +40,7 @@ markdown_extensions:
 pages:
   - Home: 'index.md'
   - 'Concepts': 'concepts.md'
+  - 'AWS': 'aws.md'
   - 'Bare-Metal': 'bare-metal.md'
   - 'Digital Ocean': 'digital-ocean.md'
   - 'Google Cloud': 'google-cloud.md'

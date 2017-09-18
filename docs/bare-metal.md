@@ -4,7 +4,7 @@ In this tutorial, we'll network boot and provison a Kubernetes v1.7.5 cluster on
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
 
-Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kubelet`. Workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kubelet`. Workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` or `calico` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -305,14 +305,14 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
+kube-system   calico-node-6qp7f                          2/2       Running   1          11m
+kube-system   calico-node-gnjrm                          2/2       Running   0          11m
+kube-system   calico-node-llbgt                          2/2       Running   0          11m
 kube-system   kube-apiserver-7336w                       1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-b9chx   1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-v30js   1/1       Running   1          11m
 kube-system   kube-dns-1187388186-mx9rt                  3/3       Running   0          11m
 kube-system   kube-etcd-network-checkpointer-q24f7       1/1       Running   0          11m
-kube-system   kube-flannel-6qp7f                         2/2       Running   1          11m
-kube-system   kube-flannel-gnjrm                         2/2       Running   0          11m
-kube-system   kube-flannel-llbgt                         2/2       Running   0          11m
 kube-system   kube-proxy-50sd4                           1/1       Running   0          11m
 kube-system   kube-proxy-bczhp                           1/1       Running   0          11m
 kube-system   kube-proxy-mp2fw                           1/1       Running   0          11m

@@ -12,7 +12,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 ## Features
 
 * Kubernetes v1.7.5 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
-* Single or multi-master, workloads isolated on workers, [flannel](https://github.com/coreos/flannel) or [Calico](https://www.projectcalico.org/) networking
+* Single or multi-master, workloads isolated on workers, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Ready for Ingress, Dashboards, Metrics and other optional [addons](addons/overview.md)
 * Provided via Terraform Modules
@@ -23,6 +23,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
+| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal.md) | production |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean.md) | beta |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud.md) | production |
@@ -31,6 +32,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 
 * [Concepts](concepts.md)
 * Tutorials
+    * [AWS](aws.md)
     * [Bare-Metal](bare-metal.md)
     * [Digital Ocean](digital-ocean.md)
     * [Google-Cloud](google-cloud.md)
