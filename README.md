@@ -1,4 +1,4 @@
-# Typhoon <img align="right" src="https://storage.googleapis.com/dghubble/spin.png">
+# Typhoon [![IRC](https://img.shields.io/badge/freenode-%23typhoon-0099ef.svg)]() <img align="right" src="https://storage.googleapis.com/dghubble/spin.png">
 
 Typhoon is a minimal and free Kubernetes distribution.
 
@@ -20,21 +20,22 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 Typhoon provides a Terraform Module for each supported operating system and platform.
 
-| Platform      | Operating System | Terraform Module |
-|---------------|------------------|------------------|
-| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) |
-| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) |
-| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) |
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | alpha |
+| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | production |
+| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
+| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | beta |
 
 ## Usage
 
 * [Docs](https://typhoon.psdn.io)
 * [Concepts](https://typhoon.psdn.io/concepts/)
-* [AWS](https://typhoon.psdn.io/aws/)
-* [Bare-Metal](https://typhoon.psdn.io/bare-metal/)
-* [Digital Ocean](https://typhoon.psdn.io/digital-ocean/)
-* [Google-Cloud](https://typhoon.psdn.io/google-cloud/)
+* Tutorials
+  * [AWS](https://typhoon.psdn.io/aws/)
+  * [Bare-Metal](https://typhoon.psdn.io/bare-metal/)
+  * [Digital Ocean](https://typhoon.psdn.io/digital-ocean/)
+  * [Google-Cloud](https://typhoon.psdn.io/google-cloud/)
 
 ## Example
 
@@ -63,6 +64,7 @@ module "google-cloud-yavin" {
 Fetch modules, plan the changes to be made, and apply the changes.
 
 ```sh
+$ terraform init
 $ terraform get --update
 $ terraform plan
 Plan: 37 to add, 0 to change, 0 to destroy.
@@ -86,6 +88,9 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
+kube-system   calico-node-1cs8z                         2/2    Running   0         6m
+kube-system   calico-node-d1l5b                         2/2    Running   0         6m
+kube-system   calico-node-sp9ps                         2/2    Running   0         6m
 kube-system   etcd-operator-3329263108-f443m            1/1    Running   1         6m
 kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
@@ -93,9 +98,6 @@ kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1      
 kube-system   kube-dns-1187388186-zj5dl                 3/3    Running   0         6m
 kube-system   kube-etcd-0000                            1/1    Running   0         5m
 kube-system   kube-etcd-network-checkpointer-crznb      1/1    Running   0         6m
-kube-system   kube-flannel-1cs8z                        2/2    Running   0         6m
-kube-system   kube-flannel-d1l5b                        2/2    Running   0         6m
-kube-system   kube-flannel-sp9ps                        2/2    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m
@@ -111,6 +113,10 @@ Typhoon is strict about minimalism, maturity, and scope. These are not in scope:
 * In-place Kubernetes Upgrades
 * Adding every possible option
 * Openstack or Mesos platforms
+
+## Help
+
+Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/).
 
 ## Background
 

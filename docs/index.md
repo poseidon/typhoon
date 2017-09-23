@@ -87,6 +87,9 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
+kube-system   calico-node-1cs8z                         2/2    Running   0         6m
+kube-system   calico-node-d1l5b                         2/2    Running   0         6m
+kube-system   calico-node-sp9ps                         2/2    Running   0         6m
 kube-system   etcd-operator-3329263108-f443m            1/1    Running   1         6m
 kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
@@ -94,9 +97,6 @@ kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1      
 kube-system   kube-dns-1187388186-zj5dl                 3/3    Running   0         6m
 kube-system   kube-etcd-0000                            1/1    Running   0         5m
 kube-system   kube-etcd-network-checkpointer-crznb      1/1    Running   0         6m
-kube-system   kube-flannel-1cs8z                        2/2    Running   0         6m
-kube-system   kube-flannel-d1l5b                        2/2    Running   0         6m
-kube-system   kube-flannel-sp9ps                        2/2    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m
@@ -104,6 +104,10 @@ kube-system   kube-scheduler-3895335239-5x87r           1/1    Running   0      
 kube-system   kube-scheduler-3895335239-bzrrt           1/1    Running   1         6m
 kube-system   pod-checkpointer-l6lrt                    1/1    Running   0         6m
 ```
+
+## Help
+
+Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/).
 
 ## Background
 

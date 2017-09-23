@@ -50,6 +50,8 @@ pages:
     - 'Heapster': 'addons/heapster.md'
     - 'Dashboard': 'addons/dashboard.md'
     - 'CLUO': 'addons/cluo.md'
+  - 'Topics':
+    - 'Security': 'topics/security.md'
   - 'FAQ': 'faq.md'
   - 'Advanced':
     - 'Customization': 'advanced/customization.md'
