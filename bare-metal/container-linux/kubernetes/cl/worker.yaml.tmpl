@@ -54,11 +54,11 @@ systemd:
           --allow-privileged \
           --anonymous-auth=false \
           --client-ca-file=/etc/kubernetes/ca.crt \
-          --cluster_dns={{.k8s_dns_service_ip}} \
+          --cluster_dns=${k8s_dns_service_ip} \
           --cluster_domain=cluster.local \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --exit-on-lock-contention \
-          --hostname-override={{.domain_name}} \
+          --hostname-override=${domain_name} \
           --kubeconfig=/etc/kubernetes/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
@@ -101,7 +101,7 @@ storage:
       mode: 0644
       contents:
         inline:
-          {{.domain_name}}
+          ${domain_name}
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
@@ -111,5 +111,5 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - {{.ssh_authorized_key}}
+        - ${ssh_authorized_key}
 

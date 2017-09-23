@@ -67,14 +67,42 @@ data "template_file" "cached-container-linux-install-config" {
   }
 }
 
-// Kubernetes Controller profile
-resource "matchbox_profile" "controller" {
-  name                   = "controller"
-  container_linux_config = "${file("${path.module}/cl/controller.yaml.tmpl")}"
+// Kubernetes Controller profiles
+resource "matchbox_profile" "controllers" {
+  count                  = "${length(var.controller_names)}"
+  name                   = "${format("%s-controller-%s", var.cluster_name, element(var.controller_names, count.index))}"
+  container_linux_config = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
 }
 
-// Kubernetes Worker profile
-resource "matchbox_profile" "worker" {
-  name                   = "worker"
-  container_linux_config = "${file("${path.module}/cl/worker.yaml.tmpl")}"
+data "template_file" "controller-configs" {
+  count = "${length(var.controller_names)}"
+
+  template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
+
+  vars {
+    domain_name          = "${element(var.controller_domains, count.index)}"
+    etcd_name            = "${element(var.controller_names, count.index)}"
+    etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))}"
+    k8s_dns_service_ip   = "${module.bootkube.kube_dns_service_ip}"
+    ssh_authorized_key   = "${var.ssh_authorized_key}"
+  }
+}
+
+// Kubernetes Worker profiles
+resource "matchbox_profile" "workers" {
+  count                  = "${length(var.worker_names)}"
+  name                   = "${format("%s-worker-%s", var.cluster_name, element(var.worker_names, count.index))}"
+  container_linux_config = "${element(data.template_file.worker-configs.*.rendered, count.index)}"
+}
+
+data "template_file" "worker-configs" {
+  count = "${length(var.worker_names)}"
+
+  template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
+
+  vars {
+    domain_name        = "${element(var.worker_domains, count.index)}"
+    k8s_dns_service_ip = "${module.bootkube.kube_dns_service_ip}"
+    ssh_authorized_key = "${var.ssh_authorized_key}"
+  }
 }
