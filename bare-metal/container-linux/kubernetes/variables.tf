@@ -109,8 +109,3 @@ variable "container_linux_oem" {
   default     = ""
   description = "Specify an OEM image id to use as base for the installation (e.g. ami, vmware_raw, xen) or leave blank for the default image"
 }
-
-variable "experimental_self_hosted_etcd" {
-  default     = "false"
-  description = "Create self-hosted etcd cluster as pods on Kubernetes, instead of on-hosts"
-}
