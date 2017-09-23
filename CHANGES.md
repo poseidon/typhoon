@@ -17,6 +17,7 @@ Notable changes between versions.
 #### Bare-Metal
 
 * Add `network_mtu` to allow CNI interface MTU customization
+* Remove support for `experimental_self_hosted_etcd`
 
 ## v1.7.3
 

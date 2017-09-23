@@ -362,10 +362,9 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| cached_install | Whether machines should PXE boot from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux images into the cache to use this | false | true |
+| cached_install | Whether machines should PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux images into the cache to use this | false | true |
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | container_linux_oem | Specify alternative OEM image ids for the disk install | "" | "vmware_raw", "xen" |
-| experimental_self_hosted_etcd | Self-host etcd as pods on Kubernetes (not recommended) | false | true |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

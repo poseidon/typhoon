@@ -1,7 +1,6 @@
 ---
 systemd:
   units:
-    {{ if eq .etcd_on_host "true" }}
     - name: etcd-member.service
       enable: true
       dropins:
@@ -25,7 +24,6 @@ systemd:
             Environment="ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt"
             Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
             Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
-    {{ end }}
     - name: docker.service
       enable: true
     - name: locksmithd.service

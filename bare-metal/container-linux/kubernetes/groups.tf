@@ -23,10 +23,6 @@ resource "matchbox_group" "controller" {
     mac = "${element(var.controller_macs, count.index)}"
     os  = "installed"
   }
-
-  metadata {
-    etcd_on_host = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
-  }
 }
 
 resource "matchbox_group" "worker" {
