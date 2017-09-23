@@ -1,6 +1,6 @@
 # FAQ
 
-## Terraform?
+## Terraform
 
 Typhoon provides a Terraform Module for each supported operating system and platform. Terraform is considered a *format* detail, much like a Linux distro might provide images in the qcow2 or ISO format. It is a mechanism for sharing Typhoon in a way that works for many users.
 
@@ -21,9 +21,17 @@ Only Container Linux is supported currently. This just due to operational famili
 
 Fedora Cloud will likely be next. 
 
+## Get Help
+
+Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/).
+
+## Security Issues
+
+If you find security issues, please see [security disclosures](/topics/security).
+
 ## Maintainers
 
-Typhoon clusters are Kubernetes configurations the maintainers use in real-world, production clusters.
+Typhoon clusters are Kubernetes clusters the maintainers use in real-world, production clusters.
 
 * Maintainers must personally operate a bare-metal and cloud provider cluster and strive to exercise it in real-world scenarios
 
