@@ -17,7 +17,7 @@ resource "matchbox_group" "container-linux-install" {
 resource "matchbox_group" "controller" {
   count   = "${length(var.controller_names)}"
   name    = "${format("%s-%s", var.cluster_name, element(var.controller_names, count.index))}"
-  profile = "${matchbox_profile.controller.name}"
+  profile = "${element(matchbox_profile.controllers.*.name, count.index)}"
 
   selector {
     mac = "${element(var.controller_macs, count.index)}"
@@ -25,29 +25,17 @@ resource "matchbox_group" "controller" {
   }
 
   metadata {
-    domain_name          = "${element(var.controller_domains, count.index)}"
-    etcd_name            = "${element(var.controller_names, count.index)}"
-    etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))}"
-    etcd_on_host         = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
-    k8s_dns_service_ip   = "${module.bootkube.kube_dns_service_ip}"
-    ssh_authorized_key   = "${var.ssh_authorized_key}"
+    etcd_on_host = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
   }
 }
 
 resource "matchbox_group" "worker" {
   count   = "${length(var.worker_names)}"
   name    = "${format("%s-%s", var.cluster_name, element(var.worker_names, count.index))}"
-  profile = "${matchbox_profile.worker.name}"
+  profile = "${element(matchbox_profile.workers.*.name, count.index)}"
 
   selector {
     mac = "${element(var.worker_macs, count.index)}"
     os  = "installed"
-  }
-
-  metadata {
-    domain_name        = "${element(var.worker_domains, count.index)}"
-    etcd_on_host       = "${var.experimental_self_hosted_etcd ? "false" : "true"}"
-    k8s_dns_service_ip = "${module.bootkube.kube_dns_service_ip}"
-    ssh_authorized_key = "${var.ssh_authorized_key}"
   }
 }
