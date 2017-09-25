@@ -33,6 +33,7 @@ systemd:
         Description=Kubelet via Hyperkube ACI
         Requires=coreos-metadata.service
         After=coreos-metadata.service
+        Wants=rpc-statd.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
         EnvironmentFile=/run/metadata/coreos
