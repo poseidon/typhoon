@@ -54,6 +54,7 @@ systemd:
       contents: |
         [Unit]
         Description=Kubelet via Hyperkube ACI
+        Wants=rpc-statd.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
         Environment="RKT_RUN_ARGS=--uuid-file-save=/var/cache/kubelet-pod.uuid \
