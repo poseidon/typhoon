@@ -1,5 +1,5 @@
 module "controllers" {
-  source             = "../controllers"
+  source             = "controllers"
   cluster_name       = "${var.cluster_name}"
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
@@ -23,7 +23,7 @@ module "controllers" {
 }
 
 module "workers" {
-  source             = "../workers"
+  source             = "workers"
   cluster_name       = "${var.cluster_name}"
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
