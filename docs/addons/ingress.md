@@ -2,6 +2,66 @@
 
 Nginx Ingress controller pods accept and demultiplex HTTP, HTTPS, TCP, or UDP traffic to backend services. Ingress controllers watch the Kubernetes API for Ingress resources and update their configuration accordingly. Ingress resources for HTTP(S) applications support virtual hosts (FQDNs), path rules, TLS termination, and SNI.
 
+## AWS
+
+On AWS, an elastic load balancer distributes traffic across worker nodes (i.e. an auto-scaling group) running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a health Ingress controller receive traffic.
+
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
+
+```
+kubectl apply -R addons/nginx-ingress/aws
+```
+
+For each application, add a DNS CNAME resolving to the ELB's DNS record.
+
+```
+app1.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
+aap2.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
+app3.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
+```
+
+Find the ELB's DNS name through the console or use the Typhoon module's output `ingress_dns_name`. For example, you might use Terraform to manage a Google Cloud DNS record:
+
+```tf
+resource "google_dns_record_set" "some-application" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "CNAME"
+  ttl     = 300
+  rrdatas = ["${module.aws-tempest.ingress_dns_name}."]
+}
+```
+
+## Digital Ocean
+
+On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
+
+Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
+
+```
+kubectl apply -R addons/nginx-ingress/digital-ocean
+```
+
+For each application, add a CNAME record resolving to the worker(s) DNS record. Use the Typhoon module's output `workers_dns` to find the worker DNS value. For example, you might use Terraform to manage a Google Cloud DNS record:
+
+```tf
+resource "google_dns_record_set" "some-application" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "CNAME"
+  ttl     = 300
+  rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
+}
+```
+
+[^1]: Digital Ocean does offers load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
+
 ## Google Cloud
 
 On Google Cloud, a network load balancer distributes traffic across worker nodes (i.e. a target pool of backends) running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure the target pool only includes worker nodes with a healthy Nginx Ingress controller.
@@ -12,7 +72,7 @@ Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, de
 kubectl apply -R addons/nginx-ingress/google-cloud
 ```
 
-Add a DNS record resolving to the network load balancer's IPv4 address for each application.
+For each application, add a DNS record resolving to the network load balancer's IPv4 address.
 
 ```
 app1.example.com -> 11.22.33.44
@@ -34,33 +94,6 @@ resource "google_dns_record_set" "some-application" {
   rrdatas = ["${module.google-cloud-yavin.ingress_static_ip}"]
 }
 ```
-
-## Digital Ocean
-
-On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
-
-Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
-
-```
-kubectl apply -R addons/nginx-ingress/digital-ocean
-```
-
-Add a CNAME record to the worker DNS record for each application. Use the Typhoon module's output `workers_dns` to find the worker DNS value. For example, you might use Terraform to manage a Google Cloud DNS record:
-
-```tf
-resource "google_dns_record_set" "some-application" {
-  # DNS zone name
-  managed_zone = "example-zone"
-
-  # DNS record
-  name    = "app.example.com."
-  type    = "CNAME"
-  ttl     = 300
-  rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
-}
-```
-
-[^1]: Digital Ocean does offers load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
 
 ## Bare-Metal
 
