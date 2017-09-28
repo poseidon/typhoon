@@ -18,7 +18,7 @@ resource "aws_elb" "ingress" {
     instance_protocol = "tcp"
   }
 
-  # Kubelet HTTP health check
+  # Ingress Controller HTTP health check
   health_check {
     target              = "HTTP:10254/healthz"
     healthy_threshold   = 2
