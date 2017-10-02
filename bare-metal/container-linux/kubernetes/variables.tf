@@ -109,3 +109,9 @@ variable "container_linux_oem" {
   default     = ""
   description = "Specify an OEM image id to use as base for the installation (e.g. ami, vmware_raw, xen) or leave blank for the default image"
 }
+
+variable "kernel_args" {
+  description = "Additional kernel arguments the servers should boot with."
+  type        = "list"
+  default     = []
+}

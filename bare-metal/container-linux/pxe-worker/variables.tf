@@ -53,3 +53,14 @@ variable "kube_dns_service_ip" {
   type        = "string"
   default     = "10.3.0.10"
 }
+
+# optional
+
+variable "kernel_args" {
+  description = "Additional kernel arguments the server should boot with."
+  type        = "list"
+
+  default = [
+    "root=/dev/sda1",
+  ]
+}

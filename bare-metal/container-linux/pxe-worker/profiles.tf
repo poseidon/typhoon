@@ -8,12 +8,11 @@ resource "matchbox_profile" "bootkube-worker-pxe" {
   ]
 
   args = [
-    "root=/dev/sda1",
     "coreos.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
     "coreos.first_boot=yes",
     "console=tty0",
     "console=ttyS0",
-    "kvm-intel.nested=1",
+    "${var.kernel_args}",
   ]
 
   container_linux_config = "${file("${path.module}/cl/bootkube-worker.yaml.tmpl")}"

@@ -12,6 +12,7 @@ resource "matchbox_profile" "container-linux-install" {
     "coreos.first_boot=yes",
     "console=tty0",
     "console=ttyS0",
+    "${var.kernel_args}",
   ]
 
   container_linux_config = "${data.template_file.container-linux-install-config.rendered}"
@@ -47,6 +48,7 @@ resource "matchbox_profile" "cached-container-linux-install" {
     "coreos.first_boot=yes",
     "console=tty0",
     "console=ttyS0",
+    "${var.kernel_args}",
   ]
 
   container_linux_config = "${data.template_file.cached-container-linux-install-config.rendered}"
