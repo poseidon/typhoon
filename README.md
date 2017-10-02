@@ -25,7 +25,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | production |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | beta |
+| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | production |
 
 ## Usage
 
