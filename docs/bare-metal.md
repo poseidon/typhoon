@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provison a Kubernetes v1.7.5 cluster on bare-metal.
+In this tutorial, we'll network boot and provison a Kubernetes v1.7.7 cluster on bare-metal.
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
 
@@ -228,7 +228,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.6.2 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.7.0 (update)
 ```
 
 Plan the resources to be created.
@@ -304,9 +304,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS    AGE       VERSION
-node1.example.com   Ready     11m       v1.7.5+coreos.0
-node2.example.com   Ready     11m       v1.7.5+coreos.0
-node3.example.com   Ready     11m       v1.7.5+coreos.0
+node1.example.com   Ready     11m       v1.7.7+coreos.0
+node2.example.com   Ready     11m       v1.7.7+coreos.0
+node3.example.com   Ready     11m       v1.7.7+coreos.0
 ```
 
 List the pods.

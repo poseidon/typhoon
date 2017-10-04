@@ -2,10 +2,19 @@
 
 Notable changes between versions.
 
+## v1.7.7
+
+* Kubernetes v1.7.7
+* Use kubernetes-incubator/bootkube v0.7.0
+* Update kube-dns to 1.14.5 to fix dnsmasq [vulnerability](https://security.googleblog.com/2017/10/behind-masq-yet-more-dns-and-dhcp.html)
+* Calico v2.6.1
+* flannel-cni v0.3.0
+  * Update flannel CNI config to fix hostPort
+
 ## v1.7.5
 
 * Kubernetes v1.7.5
-* Use kubernete-incubator/bootkube v0.6.2
+* Use kubernetes-incubator/bootkube v0.6.2
 * Add AWS Terraform module (alpha)
 * Add support for Calico networking (bare-metal, Google Cloud, AWS)
 * Change networking default from "flannel" to "calico"

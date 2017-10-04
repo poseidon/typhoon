@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.7.5 cluster on AWS.
+In this tutorial, we'll create a Kubernetes v1.7.7 cluster on AWS.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
 
@@ -125,7 +125,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.6.2 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.7.0 (update)
 ```
 
 Plan the resources to be created.
@@ -160,9 +160,9 @@ In 10-20 minutes, the Kubernetes cluster will be ready.
 $ KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION        
-ip-10-0-12-221   Ready     34m       v1.7.5+coreos.0
-ip-10-0-19-112   Ready     34m       v1.7.5+coreos.0
-ip-10-0-4-22     Ready     34m       v1.7.5+coreos.0  
+ip-10-0-12-221   Ready     34m       v1.7.7+coreos.0
+ip-10-0-19-112   Ready     34m       v1.7.7+coreos.0
+ip-10-0-4-22     Ready     34m       v1.7.7+coreos.0
 ```
 
 List the pods.
