@@ -124,19 +124,10 @@ tar xzf terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
 sudo mv terraform-provider-matchbox-v0.2.2-linux-amd64/terraform-provider-matchbox /usr/local/bin/
 ```
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
-
-```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.0/terraform-provider-ct-v0.2.0-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.2.0-linux-amd64.tar.gz
-sudo mv terraform-provider-ct-v0.2.0-linux-amd64/terraform-provider-ct /usr/local/bin/
-```
-
-Add the plugins to your `~/.terraformrc`.
+Add the plugin to your `~/.terraformrc`.
 
 ```
 providers {
-  ct = "/usr/local/bin/terraform-provider-ct"
   matchbox = "/usr/local/bin/terraform-provider-matchbox"
 }
 ```
