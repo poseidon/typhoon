@@ -1,6 +1,6 @@
 # Digital Ocean
 
-In this tutorial, we'll create a Kubernetes v1.7.7 cluster on Digital Ocean.
+In this tutorial, we'll create a Kubernetes v1.8.1 cluster on Digital Ocean.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, firewall rules, DNS records, tags, and droplets for Kubernetes controllers and workers will be created.
 
@@ -147,9 +147,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 $ KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION
-10.132.110.130   Ready     10m       v1.7.7+coreos.0
-10.132.115.81    Ready     10m       v1.7.7+coreos.0
-10.132.124.107   Ready     10m       v1.7.7+coreos.0
+10.132.110.130   Ready     10m       v1.8.1+coreos.0
+10.132.115.81    Ready     10m       v1.8.1+coreos.0
+10.132.124.107   Ready     10m       v1.8.1+coreos.0
 ```
 
 List the pods.

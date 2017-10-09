@@ -4,11 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.8.1
+
+* Kubernetes v1.8.1
+* Use kubernetes-incubator/bootkube v0.8.0
+
 #### Digital Ocean
 
 * Run etcd cluster across controller nodes (etcd-member.service)
-* Reduce time to bootstrap a cluster
 * Remove support for self-hosted etcd
+* Reduce time to bootstrap a cluster
 
 ## v1.7.7
 

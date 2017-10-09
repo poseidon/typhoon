@@ -60,7 +60,7 @@ Modules are updated regularly, set the version to a [release tag](https://github
 
 ```tf
 ...
-source = "git:https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.7.7"
+source = "git:https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.8.1"
 ```
 
 Module versioning ensures `terraform get --update` only fetches the desired version, so plan and apply don't change cluster resources, unless the version is altered.
