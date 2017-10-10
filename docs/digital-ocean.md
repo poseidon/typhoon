@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.7.7 cluster on Digital Ocean.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, firewall rules, DNS records, tags, and droplets for Kubernetes controllers and workers will be created.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules `etcd`, `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -137,7 +137,7 @@ module.digital-ocean-nemo.null_resource.bootkube-start: Creation complete (ID: 7
 Apply complete! Resources: 54 added, 0 changed, 0 destroyed.
 ```
 
-In 5-10 minutes, the Kubernetes cluster will be ready.
+In 3-6 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 
@@ -156,13 +156,10 @@ List the pods.
 
 ```
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
-kube-system   etcd-operator-3329263108-sgsbl             1/1       Running   1          11m
 kube-system   kube-apiserver-n10qr                       1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-37gtw   1/1       Running   1          11m
 kube-system   kube-controller-manager-3271970485-p52t5   1/1       Running   0          11m
 kube-system   kube-dns-1187388186-ld1j7                  3/3       Running   0          11m
-kube-system   kube-etcd-0000                             1/1       Running   0          9m
-kube-system   kube-etcd-network-checkpointer-n9xsk       1/1       Running   0          11m
 kube-system   kube-flannel-1cq1v                         2/2       Running   0          11m
 kube-system   kube-flannel-hq9t0                         2/2       Running   1          11m
 kube-system   kube-flannel-v0g9w                         2/2       Running   0          11m

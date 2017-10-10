@@ -8,12 +8,12 @@ Formats rise and evolve. Typhoon may choose to adapt the format over time (with 
 
 ## Self-hosted etcd
 
-Typhoon clusters on cloud providers run etcd as "self-hosted" pods, managed by the [etcd-operator](https://github.com/coreos/etcd-operator). By contrast, Typhoon bare-metal runs an etcd peer as a systemd `etcd-member.service` on each controller (i.e. on-host).
+AWS and Google Cloud clusters run etcd as "self-hosted" pods, managed by the [etcd-operator](https://github.com/coreos/etcd-operator). By contrast, Typhoon bare-metal and Digital Ocean run an etcd peer as a systemd `etcd-member.service` on each controller (i.e. on-host).
 
-In practice, self-hosted etcd has proven to be *ok*, but not ideal. Running the apiserver's etcd atop Kubernetes itself is inherently complex, but works suitably in most cases. It can be opaque to debug if complex edge cases with upstream Kubernetes bugs arise.
+In practice, self-hosted etcd has proven to be *ok*, but not ideal. Running the apiserver's etcd atop Kubernetes itself is inherently complex, but works in most cases. It can be opaque to debug if complex edge cases with upstream Kubernetes bugs arise.
 
 !!! note ""
-    Typhoon clusters and their defaults power the maintainers' clusters. The edge cases are sufficiently rare that self-hosted etcd is not a pressing issue, but cloud clusters may switch back to on-host etcd in the future.
+    Over time, we plan to deprecate self-hosted etcd and revert to running etcd on-host.
 
 ## Operating Systems
 
