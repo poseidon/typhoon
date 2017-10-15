@@ -1,10 +1,10 @@
-# Secure copy etcd TLS assets and kubeconfig to all nodes. Activates kubelet.service
-resource "null_resource" "copy-secrets" {
-  count = "${length(var.controller_names) + length(var.worker_names)}"
+# Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
+resource "null_resource" "copy-etcd-secrets" {
+  count = "${length(var.controller_names)}"
 
   connection {
     type    = "ssh"
-    host    = "${element(concat(var.controller_domains, var.worker_domains), count.index)}"
+    host    = "${element(var.controller_domains, count.index)}"
     user    = "core"
     timeout = "60m"
   }
@@ -66,19 +66,43 @@ resource "null_resource" "copy-secrets" {
   }
 }
 
+# Secure copy kubeconfig to all workers. Activates kubelet.service
+resource "null_resource" "copy-kubeconfig" {
+  count = "${length(var.worker_names)}"
+
+  connection {
+    type    = "ssh"
+    host    = "${element(var.worker_domains, count.index)}"
+    user    = "core"
+    timeout = "60m"
+  }
+
+  provisioner "file" {
+    content     = "${module.bootkube.kubeconfig}"
+    destination = "$HOME/kubeconfig"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv /home/core/kubeconfig /etc/kubernetes/kubeconfig",
+    ]
+  }
+}
+
+
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {
   # Without depends_on, this remote-exec may start before the kubeconfig copy.
   # Terraform only does one task at a time, so it would try to bootstrap
   # while no Kubelets are running.
-  depends_on = ["null_resource.copy-secrets"]
+  depends_on = ["null_resource.copy-etcd-secrets", "null_resource.copy-kubeconfig"]
 
   connection {
     type    = "ssh"
     host    = "${element(var.controller_domains, 0)}"
     user    = "core"
-    timeout = "60m"
+    timeout = "30m"
   }
 
   provisioner "file" {

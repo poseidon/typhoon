@@ -1,5 +1,5 @@
 # Secure copy kubeconfig to all nodes to activate kubelet.service
-resource "null_resource" "copy-secrets" {
+resource "null_resource" "copy-kubeconfig" {
   count = "${length(var.worker_names)}"
 
   connection {
