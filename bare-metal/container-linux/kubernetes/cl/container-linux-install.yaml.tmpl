@@ -32,6 +32,11 @@ storage:
           systemctl reboot
 passwd:
   users:
-    - name: core
+    # Avoid using standard name "core" so terraform apply cannot SSH until post-install.
+    - name: debug
+      create:
+        groups:
+          - sudo
+          - docker
       ssh_authorized_keys:
         - {{.ssh_authorized_key}}

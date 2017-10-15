@@ -243,9 +243,6 @@ module.bare-metal-mercury.null_resource.copy-secrets.1: Still creating... (10s e
 
 Apply will then loop until it can successfully copy credentials to each machine and start the one-time Kubernetes bootstrap service. Proceed to the next step while this loops.
 
-!!! note ""
-    You may see `terraform apply` fail to `copy-secrets` if it connects before the disk install has completed. Run terraform apply until it reconciles successfully.
-
 ### Power
 
 Power on each machine with the boot device set to `pxe` for the next boot only.
