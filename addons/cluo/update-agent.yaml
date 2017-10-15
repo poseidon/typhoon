@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: container-linux-update-agent
-  namespace: kube-system
+  namespace: reboot-coordinator
 spec:
   updateStrategy:
     type: RollingUpdate

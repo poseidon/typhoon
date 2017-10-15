@@ -1,0 +1,12 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: reboot-coordinator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: reboot-coordinator
+subjects:
+  - kind: ServiceAccount
+    namespace: reboot-coordinator
+    name: default
