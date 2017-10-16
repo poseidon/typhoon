@@ -107,22 +107,6 @@ systemd:
         ExecStart=/opt/bootkube/bootkube-start
         ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
 storage:
-  {{ if index . "pxe" }}
-  disks:
-    - device: /dev/sda
-      wipe_table: true
-      partitions:
-        - label: ROOT
-  filesystems:
-    - name: root
-      mount:
-        device: "/dev/sda1"
-        format: "ext4"
-        create:
-          force: true
-          options:
-            - "-LROOT"
-  {{end}}
   files:
     - path: /etc/kubernetes/kubelet.env
       filesystem: root
