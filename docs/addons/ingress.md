@@ -9,7 +9,7 @@ On AWS, an elastic load balancer distributes traffic across worker nodes (i.e. a
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
 ```
-kubectl apply -R addons/nginx-ingress/aws
+kubectl apply -R -f addons/nginx-ingress/aws
 ```
 
 For each application, add a DNS CNAME resolving to the ELB's DNS record.
@@ -42,7 +42,7 @@ On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to e
 Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
 ```
-kubectl apply -R addons/nginx-ingress/digital-ocean
+kubectl apply -R -f addons/nginx-ingress/digital-ocean
 ```
 
 For each application, add a CNAME record resolving to the worker(s) DNS record. Use the Typhoon module's output `workers_dns` to find the worker DNS value. For example, you might use Terraform to manage a Google Cloud DNS record:
@@ -69,7 +69,7 @@ On Google Cloud, a network load balancer distributes traffic across worker nodes
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
 ```
-kubectl apply -R addons/nginx-ingress/google-cloud
+kubectl apply -R -f addons/nginx-ingress/google-cloud
 ```
 
 For each application, add a DNS record resolving to the network load balancer's IPv4 address.
