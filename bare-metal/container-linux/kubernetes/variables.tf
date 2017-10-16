@@ -111,7 +111,22 @@ variable "container_linux_oem" {
 }
 
 variable "kernel_args" {
-  description = "Additional kernel arguments the servers should boot with."
+  description = "Additional kernel arguments to provide at PXE boot."
   type        = "list"
   default     = []
 }
+
+# unofficial, undocumented, unsupported, temporary
+
+variable "controller_networkds" {
+  type = "list"
+  description = "Controller Container Linux config networkd section"
+  default = []
+}
+
+variable "worker_networkds" {
+  type = "list"
+  description = "Worker Container Linux config networkd section"
+  default = []
+}
+

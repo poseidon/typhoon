@@ -57,9 +57,8 @@ variable "kube_dns_service_ip" {
 # optional
 
 variable "kernel_args" {
-  description = "Additional kernel arguments the server should boot with."
+  description = "Additional kernel arguments to provide at PXE boot."
   type        = "list"
-
   default = [
     "root=/dev/sda1",
   ]
