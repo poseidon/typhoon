@@ -89,7 +89,6 @@ resource "null_resource" "copy-kubeconfig" {
   }
 }
 
-
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {

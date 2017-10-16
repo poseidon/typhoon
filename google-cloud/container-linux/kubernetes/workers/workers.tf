@@ -55,6 +55,7 @@ resource "google_compute_instance_template" "worker" {
     boot         = true
     source_image = "${var.os_image}"
     disk_size_gb = "${var.disk_size}"
+
     // Set explicit name to match the new default name set by the API.
     // https://github.com/terraform-providers/terraform-provider-google/issues/574
     device_name = "persistent-disk-0"

@@ -64,8 +64,9 @@ data "template_file" "controller_config" {
 
   vars = {
     # Cannot use cyclic dependencies on controllers or their DNS records
-    etcd_name            = "etcd${count.index}"
-    etcd_domain          = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+    etcd_name   = "etcd${count.index}"
+    etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
     etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", null_resource.repeat.*.triggers.name, null_resource.repeat.*.triggers.domain))}"
     k8s_dns_service_ip   = "${cidrhost(var.service_cidr, 10)}"

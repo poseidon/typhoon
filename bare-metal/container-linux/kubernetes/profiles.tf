@@ -87,7 +87,7 @@ data "template_file" "controller-configs" {
     etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))}"
     k8s_dns_service_ip   = "${module.bootkube.kube_dns_service_ip}"
     ssh_authorized_key   = "${var.ssh_authorized_key}"
-    networkd_content = "${element(var.controller_networkds, count.index)}"
+    networkd_content     = "${element(var.controller_networkds, count.index)}"
   }
 }
 
@@ -107,6 +107,6 @@ data "template_file" "worker-configs" {
     domain_name        = "${element(var.worker_domains, count.index)}"
     k8s_dns_service_ip = "${module.bootkube.kube_dns_service_ip}"
     ssh_authorized_key = "${var.ssh_authorized_key}"
-    networkd_content = "${element(var.worker_networkds, count.index)}"
+    networkd_content   = "${element(var.worker_networkds, count.index)}"
   }
 }
