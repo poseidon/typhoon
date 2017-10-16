@@ -94,7 +94,7 @@ For networks already supporting iPXE clients, you can add a `default.ipxe` confi
 chain http://matchbox.foo:8080/boot.ipxe
 ```
 
-For networks with Ubiquiti Routers, you can [configure the router](TODO) itself to chainload machines to iPXE and Matchbox.
+For networks with Ubiquiti Routers, you can [configure the router](/topics/hardware/#ubiquiti) itself to chainload machines to iPXE and Matchbox.
 
 For a small lab, you may wish to checkout the [quay.io/coreos/dnsmasq](https://quay.io/repository/coreos/dnsmasq) container image and [copy-paste examples](https://github.com/coreos/matchbox/blob/master/Documentation/network-setup.md#coreosdnsmasq).
 

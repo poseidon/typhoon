@@ -51,6 +51,7 @@ pages:
     - 'Dashboard': 'addons/dashboard.md'
     - 'CLUO': 'addons/cluo.md'
   - 'Topics':
+    - 'Hardware': 'topics/hardware.md'
     - 'Security': 'topics/security.md'
     - 'Performance': 'topics/performance.md'
   - 'FAQ': 'faq.md'
