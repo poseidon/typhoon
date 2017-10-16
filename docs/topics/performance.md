@@ -29,7 +29,7 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 | AWS (calico, MTU 8991)     | ?      | 976 MB/s     | 900-999 MB/s |
 | Bare-Metal (flannel)       | 1 GB/s | 934 MB/s     | 903 MB/s     | 
 | Bare-Metal (calico)        | 1 GB/s | 941 MB/s     | 931 MB/s     |
-| Bare-Metal (flannel, bond) | 3 GB/s | TODO         | TODO         | 
+| Bare-Metal (flannel, bond) | 3 GB/s |  2.3 GB/s    | 1.17 GB/s    | 
 | Bare-Metal (calico, bond)  | 3 GB/s |  2.3 GB/s    | 1.17 GB/s    |
 | Digital Ocean              | ?      | 938 MB/s     | 820-880 MB/s |
 | Google Cloud (flannel)     | ?      | 1.94 GB/s    | 1.76 GB/s    |
@@ -43,4 +43,4 @@ Notes:
 * Only [certain AWS EC2 instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) allow jumbo frames. This is why the default MTU on AWS must be 1480.
 * Between Flannel and Calico, performance differences are usually minimal. Platform and configuration differenes dominate.
 * Pods do not seem to be able to leverage the hosts' bonded NIC setup. Possibly a testing artifact.
-
+* Observing the same bonded NIC pod-to-pod limit suggests the bottleneck lies below flannel and calico.
