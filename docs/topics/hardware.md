@@ -1,6 +1,6 @@
 # Hardware
 
-While bare-metal Kubernetes clusters have no special hardware requirements (beyond the [min reqs](/bare-metal#requirements)), Typhoon does ensure certain router and server hardware integrates well with Kubernetes.
+While bare-metal Kubernetes clusters have no special hardware requirements (beyond the [min reqs](/bare-metal.md#requirements)), Typhoon does ensure certain router and server hardware integrates well with Kubernetes.
 
 ## Ubiquitiy
 
@@ -108,7 +108,7 @@ commit-confirm
 
 ### Port Forwarding
 
-Expose the [Ingress Controller](/addons/ingress#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP like kube-dns (e.g. 10.3.0.12).
+Expose the [Ingress Controller](/addons/ingress.md#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP like kube-dns (e.g. 10.3.0.12).
 
 ```
 configure
@@ -141,3 +141,35 @@ set service gui https-port 4443
 commit-confirm
 ```
 
+### BGP
+
+Add the EdgeRouter as a global BGP peer for nodes in a Kubernetes cluster (requires Calico). Neighbors will exchange `podCIDR` routes and individual pods will become routeable on the LAN.
+
+Configure node(s) as BGP neighbors.
+
+```
+show protocols bgp 1
+set protocols bgp 1 parameters router-id LAN_IP
+set protocols bgp 1 neighbor NODE1_IP remote-as 64512
+set protocols bgp 1 neighbor NODE2_IP remote-as 64512
+set protocols bgp 1 neighbor NODE3_IP remote-as 64512
+```
+
+View the neighbors and exchanged routes.
+
+```
+show ip bgp neighbors
+show ip route bgp
+```
+
+Be sure to register the peer by creating a Calico `bgpPeer` CRD with `kubectl apply`.
+
+```
+apiVersion: v1
+kind: bgpPeer
+metadata:
+  peerIP: LAN_IP
+  scope: global
+spec:
+  asNumber: 64512
+```
