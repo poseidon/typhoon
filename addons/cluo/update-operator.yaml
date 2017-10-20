@@ -12,12 +12,15 @@ spec:
     spec:
       containers:
       - name: update-operator
-        image: quay.io/coreos/container-linux-update-operator:v0.3.1
+        image: quay.io/coreos/container-linux-update-operator:v0.4.0
         command:
         - "/bin/update-operator"
-        - "--analytics=false"
         env:
         - name: POD_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
