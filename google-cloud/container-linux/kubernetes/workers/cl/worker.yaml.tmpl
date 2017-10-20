@@ -34,7 +34,8 @@ systemd:
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
           --volume var-log,kind=host,source=/var/log \
-          --mount volume=var-log,target=/var/log"
+          --mount volume=var-log,target=/var/log \
+          --hosts-entry=host"
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -103,7 +104,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
-          KUBELET_IMAGE_TAG=v1.7.7_coreos.0
+          KUBELET_IMAGE_TAG=v1.8.1_coreos.0
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
@@ -120,7 +121,7 @@ storage:
             --trust-keys-from-https \
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
-            quay.io/coreos/hyperkube:v1.7.7_coreos.0 \
+            quay.io/coreos/hyperkube:v1.8.1_coreos.0 \
             --net=host \
             --dns=host \
             --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
