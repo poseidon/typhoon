@@ -162,7 +162,7 @@ module "bare-metal-mercury" {
   # install
   matchbox_http_endpoint  = "http://matchbox.example.com"
   container_linux_channel = "stable"
-  container_linux_version = "1465.6.0"
+  container_linux_version = "1520.6.0"
   ssh_authorized_key      = "ssh-rsa AAAAB3Nz..."
 
   # cluster
@@ -219,7 +219,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.7.0 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.8.0 (update)
 ```
 
 Plan the resources to be created.
@@ -232,12 +232,10 @@ Plan: 55 to add, 0 to change, 0 to destroy.
 Apply the changes. Terraform will generate bootkube assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
 
 ```sh
-module.bare-metal-mercury.null_resource.copy-secrets.0: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-secrets.2: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-secrets.1: Provisioning with 'file'...    
-module.bare-metal-mercury.null_resource.copy-secrets.0: Still creating... (10s elapsed)
-module.bare-metal-mercury.null_resource.copy-secrets.2: Still creating... (10s elapsed)
-module.bare-metal-mercury.null_resource.copy-secrets.1: Still creating... (10s elapsed)
+module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Provisioning with 'file'...
+module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Provisioning with 'file'...
+module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Still creating... (10s elapsed)
+module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Still creating... (10s elapsed)
 ...
 ```
 
@@ -357,4 +355,5 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
 
