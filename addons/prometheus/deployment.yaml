@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: prometheus
+        phase: prod
+    spec:
+      containers:
+      - name: prometheus
+        image: quay.io/prometheus/prometheus:v1.8.0
+        args:
+          - '-config.file=/etc/prometheus/prometheus.yaml'
+          - '-storage.local.retention=12h'
+          - '-storage.local.memory-chunks=500000'
+        ports:
+        - name: web
+          containerPort: 9090
+        volumeMounts:
+        - name: config
+          mountPath: /etc/prometheus
+        - name: rules
+          mountPath: /etc/prometheus/rules
+        - name: data
+          mountPath: /var/lib/prometheus
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: config
+        configMap:
+          name: prometheus-config
+      - name: rules
+        configMap:
+          name: prometheus-rules
+      - name: data
+        emptyDir: {}
