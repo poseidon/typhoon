@@ -101,18 +101,6 @@ data:
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
     
-    # Scrape config for node-exporter endpoints (e.g. 'node_'). Explore metrics
-    # from a host running a node-exporter by scraping (127.0.0.1:9100/metrics).
-    - job_name: 'node-exporters'  
-
-      kubernetes_sd_configs:
-      - role: endpoints
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: monitoring;node-exporter;metrics
-
     # Scrape config for service endpoints.
     #
     # The relabeling allows the actual service scrape endpoint to be configured
