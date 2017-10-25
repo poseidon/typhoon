@@ -60,7 +60,7 @@ Modules are updated regularly, set the version to a [release tag](https://github
 
 ```tf
 ...
-source = "git:https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.8.1"
+source = "git:https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=hash"
 ```
 
 Module versioning ensures `terraform get --update` only fetches the desired version, so plan and apply don't change cluster resources, unless the version is altered.
@@ -69,14 +69,15 @@ Module versioning ensures `terraform get --update` only fetches the desired vers
 
 Maintain Terraform configs for "live" infrastructure in a versioned repository. Seek to organize configs to reflect resources that should be managed together in a `terraform apply` invocation.
 
-You may choose to organize resources all together, by team, by project, or some other scheme. Here's an example that manages three clusters together:
+You may choose to organize resources all together, by team, by project, or some other scheme. Here's an example that manages four clusters together:
 
 ```sh
 .git/
 infra/
 └── terraform
     └── clusters
-        ├── bare-metal-tungsten.tf
+        ├── aws-tempest.tf
+        ├── bare-metal-mercury.tf
         ├── google-cloud-yavin.tf
         ├── digital-ocean-nemo.tf
         ├── providers.tf

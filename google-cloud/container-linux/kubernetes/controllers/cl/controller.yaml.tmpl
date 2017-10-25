@@ -35,7 +35,8 @@ systemd:
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
           --volume var-log,kind=host,source=/var/log \
           --mount volume=var-log,target=/var/log \
-          --hosts-entry=host"
+          --hosts-entry=host \
+          --insecure-options=image"
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -105,8 +106,8 @@ storage:
       mode: 0644
       contents:
         inline: |
-          KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
-          KUBELET_IMAGE_TAG=v1.8.1_coreos.0
+          KUBELET_IMAGE_URL=docker://gcr.io/google_containers/hyperkube
+          KUBELET_IMAGE_TAG=v1.8.2
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:

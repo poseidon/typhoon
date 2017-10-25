@@ -4,6 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.8.2
+
+* Kubernetes v1.8.2
+  * Fixes a memory leak in the v1.8.1 apiserver ([kubernetes#53485](https://github.com/kubernetes/kubernetes/issues/53485))
+* Switch to using the `gcr.io/google_containers/hyperkube`
+* Update flannel from v0.8.0 to v0.9.0
+* Add `hairpinMode` to flannel CNI config
+* Add `--no-negcache` to kube-dns dnsmasq
+
 ## v1.8.1
 
 * Kubernetes v1.8.1
