@@ -130,6 +130,11 @@ storage:
         inline: |
           KUBELET_IMAGE_URL=docker://gcr.io/google_containers/hyperkube
           KUBELET_IMAGE_TAG=v1.8.4
+    - path: /etc/coreos/docker-1.12
+      filesystem: root
+      contents:
+        inline: |
+          no
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:

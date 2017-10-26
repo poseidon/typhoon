@@ -103,6 +103,11 @@ storage:
       contents:
         inline:
           {{.domain_name}}
+    - path: /etc/coreos/docker-1.12
+      filesystem: root
+      contents:
+        inline: |
+          no
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
