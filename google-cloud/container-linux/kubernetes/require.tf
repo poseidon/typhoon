@@ -5,21 +5,21 @@ terraform {
 }
 
 provider "google" {
-  version = "~> 1.0.1"
+  version = "~> 1.0"
 }
 
 provider "local" {
-  version = "~> 1.0.0"
+  version = "~> 1.0"
 }
 
 provider "null" {
-  version = "~> 1.0.0"
+  version = "~> 1.0"
 }
 
 provider "template" {
-  version = "~> 1.0.0"
+  version = "~> 1.0"
 }
 
 provider "tls" {
-  version = "~> 1.0.0"
+  version = "~> 1.0"
 }
