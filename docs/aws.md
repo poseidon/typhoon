@@ -16,7 +16,7 @@ Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube
 
 * AWS Account and IAM credentials
 * AWS Route53 DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.10.1+ and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
+* Terraform v0.10.4+ and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
@@ -24,7 +24,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.10.1 on your sys
 
 ```sh
 $ terraform version
-Terraform v0.10.1
+Terraform v0.10.7
 ```
 
 Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.

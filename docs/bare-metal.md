@@ -12,7 +12,7 @@ Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kub
 * PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment
 * Matchbox v0.6+ deployment with API enabled
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
-* Terraform v0.9.2+ and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
+* Terraform v0.10.4+ and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
 
 ## Machines
 
@@ -113,7 +113,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.9.2+ on your sys
 
 ```sh
 $ terraform version
-Terraform v0.10.1
+Terraform v0.10.7
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system.
