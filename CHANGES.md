@@ -12,6 +12,7 @@ Notable changes between versions.
 * Update flannel from v0.8.0 to v0.9.0
 * Add `hairpinMode` to flannel CNI config
 * Add `--no-negcache` to kube-dns dnsmasq
+* Use kubernetes-incubator/bootkube v0.8.1
 
 ## v1.8.1
 
