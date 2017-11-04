@@ -38,7 +38,6 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 Notes:
 
 * AWS is alpha
-* AWS instances are located in the same region. Google instances are located in the same zone (helps bandwidth at the expense of fault tolerance).
 * Network bandwidth fluctuates on AWS and Digital Ocean.
 * Only [certain AWS EC2 instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) allow jumbo frames. This is why the default MTU on AWS must be 1480.
 * Between Flannel and Calico, performance differences are usually minimal. Platform and configuration differenes dominate.
