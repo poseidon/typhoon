@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+#### Google Cloud
+
+* Add required variable `region`
+* Change worker managed instance group to automatically span zones in a region
+
 ## v1.8.2
 
 * Kubernetes v1.8.2

@@ -3,9 +3,14 @@ variable "cluster_name" {
   description = "Cluster name"
 }
 
+variable "region" {
+  type        = "string"
+  description = "Google Cloud Region (e.g. us-central1, see `gcloud compute regions list`)"
+}
+
 variable "zone" {
   type        = "string"
-  description = "Google Cloud zone (e.g. us-central1-f, see `gcloud compute zones list`)"
+  description = "Google Cloud Zone (e.g. us-central1-f, see `gcloud compute zones list`)"
 }
 
 variable "dns_zone" {

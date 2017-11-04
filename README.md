@@ -46,6 +46,7 @@ module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
 
   # Google Cloud
+  region        = "us-central1"
   zone          = "us-central1-c"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"

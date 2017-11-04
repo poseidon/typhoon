@@ -77,6 +77,7 @@ module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
 
   # Google Cloud
+  region        = "us-central1"
   zone          = "us-central1-c"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
@@ -196,6 +197,7 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name (prepended to dns_zone) | "yavin" |
+| region | Google Cloud region | "us-central1" |
 | zone | Google Cloud zone | "us-central1-f" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |

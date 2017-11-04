@@ -29,8 +29,8 @@ module "workers" {
 
   # GCE
   network      = "${google_compute_network.network.name}"
+  region       = "${var.region}"
   count        = "${var.worker_count}"
-  zone         = "${var.zone}"
   machine_type = "${var.machine_type}"
   os_image     = "${var.os_image}"
   preemptible  = "${var.worker_preemptible}"

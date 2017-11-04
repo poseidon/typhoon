@@ -1,16 +1,17 @@
-# Managed Instance Group
-resource "google_compute_instance_group_manager" "workers" {
+# Regional managed instance group maintains a homogeneous set of workers that
+# span the zones in the region.
+resource "google_compute_region_instance_group_manager" "workers" {
   name        = "${var.cluster_name}-worker-group"
   description = "Compute instance group of ${var.cluster_name} workers"
 
-  # Instance name prefix for instances in the group
+  # instance name prefix for instances in the group
   base_instance_name = "${var.cluster_name}-worker"
   instance_template  = "${google_compute_instance_template.worker.self_link}"
-  update_strategy    = "RESTART"
-  zone               = "${var.zone}"
-  target_size        = "${var.count}"
+  region             = "${var.region}"
 
-  # Target pool instances in the group should be added into
+  target_size = "${var.count}"
+
+  # target pool to which instances in the group should be added
   target_pools = [
     "${google_compute_target_pool.workers.self_link}",
   ]
