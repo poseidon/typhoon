@@ -6,8 +6,9 @@ metadata:
 spec:
   replicas: 1
   strategy:
+    type: RollingUpdate
     rollingUpdate:
-      maxUnavilable: 1
+      maxUnavailable: 1
   selector:
     matchLabels:
       name: kube-state-metrics
