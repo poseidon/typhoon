@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: prometheus
-        image: quay.io/prometheus/prometheus:v1.8.0
+        image: quay.io/prometheus/prometheus:v1.8.2
         args:
           - '-config.file=/etc/prometheus/prometheus.yaml'
           - '-storage.local.retention=12h'
