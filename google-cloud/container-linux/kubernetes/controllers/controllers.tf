@@ -23,7 +23,7 @@ data "template_file" "controller_config" {
   vars = {
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
     k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
-    ssh_authorized_keys     = "${var.ssh_authorized_key}"
+    ssh_authorized_key     = "${var.ssh_authorized_key}"
     kubeconfig_ca_cert      = "${var.kubeconfig_ca_cert}"
     kubeconfig_kubelet_cert = "${var.kubeconfig_kubelet_cert}"
     kubeconfig_kubelet_key  = "${var.kubeconfig_kubelet_key}"
