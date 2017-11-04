@@ -5,7 +5,7 @@ terraform {
 }
 
 provider "google" {
-  version = "~> 1.0"
+  version = "~> 1.1"
 }
 
 provider "local" {
