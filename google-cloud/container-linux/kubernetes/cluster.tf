@@ -11,7 +11,6 @@ module "controllers" {
   dns_zone_name = "${var.dns_zone_name}"
   machine_type  = "${var.machine_type}"
   os_image      = "${var.os_image}"
-  preemptible   = "${var.controller_preemptible}"
 
   # configuration
   networking              = "${var.networking}"

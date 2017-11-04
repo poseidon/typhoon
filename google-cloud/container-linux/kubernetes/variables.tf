@@ -51,12 +51,6 @@ variable "worker_count" {
   description = "Number of workers"
 }
 
-variable "controller_preemptible" {
-  type        = "string"
-  default     = "false"
-  description = "If enabled, Compute Engine will terminate controllers randomly within 24 hours"
-}
-
 variable "worker_preemptible" {
   type        = "string"
   default     = "false"

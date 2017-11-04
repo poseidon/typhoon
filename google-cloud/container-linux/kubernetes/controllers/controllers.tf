@@ -45,11 +45,6 @@ resource "google_compute_instance_template" "controller" {
     user-data = "${data.ct_config.controller_ign.rendered}"
   }
 
-  scheduling {
-    automatic_restart = "${var.preemptible ? false : true}"
-    preemptible       = "${var.preemptible}"
-  }
-
   disk {
     auto_delete  = true
     boot         = true

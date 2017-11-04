@@ -6,8 +6,9 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Add required variable `region`
+* Add required variable `region` (e.g. "us-central1")
 * Change worker managed instance group to automatically span zones in a region
+* Remove `controller_preemptible` optional variable (breaking)
 
 ## v1.8.2
 

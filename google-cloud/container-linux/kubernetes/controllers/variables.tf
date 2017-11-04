@@ -51,12 +51,6 @@ variable "disk_size" {
   description = "The size of the disk in gigabytes."
 }
 
-variable "preemptible" {
-  type        = "string"
-  default     = "false"
-  description = "If enabled, Compute Engine will terminate instances randomly within 24 hours"
-}
-
 // configuration
 
 variable "networking" {
