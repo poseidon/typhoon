@@ -5,7 +5,7 @@ Every Typhoon cluster is verified to work well with several post-install addons.
 * [CLUO](cluo.md) (Container Linux only)
 * Nginx [Ingress Controller](ingress.md)
 * [Heapster](heapster.md)
-* Kubernetes [Dashboard](dashboard.md)
 * [Prometheus](prometheus.md)
-* Grafana
+* [Grafana](prometheus.md#grafana)
+* Kubernetes [Dashboard](dashboard.md)
 

@@ -45,6 +45,21 @@ Visit [127.0.0.1:9090](http://127.0.0.1:9090) to query [expressions](http://127.
 <br/>
 ![Prometheus Targets](/img/prometheus-targets.png)
 
-### Visualization
+## Grafana
 
-Grafana can be used to build dashboards and rich visualizations that use Prometheus as the datasource. Favor Grafana for these use cases and use the Prometheus for debugging or quickly checking available metrics.
+Grafana can be used to build dashboards and rich visualizations that use Prometheus as the datasource. Create the grafana deployment and service.
+
+```
+kubectl apply -f addons/grafana -R
+```
+
+Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Grafana pod.
+
+```
+kubectl port-forward grafana-POD-ID 8080 -n monitoring
+```
+
+Visit [127.0.0.1:8080](http://127.0.0.1:8080), add the prometheus data-source (http://prometheus.monitoring.svc.cluster.local), and import your desired dashboard (e.g. 315).
+
+![Grafana Dashboard](/img/grafana-dashboard.png)
+
