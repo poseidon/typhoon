@@ -7,8 +7,11 @@ Notable changes between versions.
 #### Google Cloud
 
 * Add required variable `region` (e.g. "us-central1")
+* Reduce time to bootstrap a cluster
+* Change etcd to run on-host, across controllers (etcd-member.service)
 * Change worker managed instance group to automatically span zones in a region
-* Remove `controller_preemptible` optional variable (breaking)
+* Remove support for self-hosted etcd
+* Remove `controller_preemptible` optional variable
 
 ## v1.8.2
 

@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.8.2 cluster on AWS.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules `etcd`, `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` or `calico` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules `etcd`, `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 !!! warning "Alpha"
     Typhoon Kubernetes clusters on AWS are marked as "alpha".

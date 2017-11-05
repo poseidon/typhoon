@@ -1,4 +1,4 @@
-# Static IP for the Network Load Balancer
+# Static IPv4 address for the Network Load Balancer
 resource "google_compute_address" "ingress-ip" {
   name = "${var.cluster_name}-ingress-ip"
 }

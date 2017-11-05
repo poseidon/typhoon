@@ -14,6 +14,7 @@ resource "digitalocean_record" "controllers" {
   value = "${element(digitalocean_droplet.controllers.*.ipv4_address, count.index)}"
 }
 
+# Discrete DNS records for each controller's private IPv4 for etcd usage.
 resource "digitalocean_record" "etcds" {
   count = "${var.controller_count}"
 
@@ -25,7 +26,7 @@ resource "digitalocean_record" "etcds" {
   type = "A"
   ttl  = 300
 
-  # IPv4 addresses of controllers
+  # private IPv4 address for etcd
   value = "${element(digitalocean_droplet.controllers.*.ipv4_address_private, count.index)}"
 }
 

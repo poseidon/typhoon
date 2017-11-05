@@ -1,55 +1,38 @@
-# Managed Instance Group
-resource "google_compute_instance_group_manager" "controllers" {
-  name        = "${var.cluster_name}-controller-group"
-  description = "Compute instance group of ${var.cluster_name} controllers"
+# Discrete DNS records for each controller's private IPv4 for etcd usage.
+resource "google_dns_record_set" "etcds" {
+  count = "${var.count}"
 
-  # Instance name prefix for instances in the group
-  base_instance_name = "${var.cluster_name}-controller"
-  instance_template  = "${google_compute_instance_template.controller.self_link}"
-  update_strategy    = "RESTART"
-  zone               = "${var.zone}"
-  target_size        = "${var.count}"
+  # DNS Zone name where record should be created
+  managed_zone = "${var.dns_zone_name}"
 
-  # Target pool instances in the group should be added into
-  target_pools = [
-    "${google_compute_target_pool.controllers.self_link}",
-  ]
+  # DNS record
+  name = "${format("%s-etcd%d.%s.", var.cluster_name, count.index,  var.dns_zone)}"
+  type = "A"
+  ttl  = 300
+
+  # private IPv4 address for etcd
+  rrdatas = ["${element(google_compute_instance.controllers.*.network_interface.0.address, count.index)}"]
 }
 
-# Controller Container Linux Config
-data "template_file" "controller_config" {
-  template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
+# Controller instances
+resource "google_compute_instance" "controllers" {
+  count = "${var.count}"
 
-  vars = {
-    k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
-    k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
-    ssh_authorized_key     = "${var.ssh_authorized_key}"
-    kubeconfig_ca_cert      = "${var.kubeconfig_ca_cert}"
-    kubeconfig_kubelet_cert = "${var.kubeconfig_kubelet_cert}"
-    kubeconfig_kubelet_key  = "${var.kubeconfig_kubelet_key}"
-    kubeconfig_server       = "${var.kubeconfig_server}"
-  }
-}
-
-data "ct_config" "controller_ign" {
-  content      = "${data.template_file.controller_config.rendered}"
-  pretty_print = false
-}
-
-resource "google_compute_instance_template" "controller" {
-  name_prefix  = "${var.cluster_name}-controller-"
-  description  = "Controller Instance template"
+  name         = "${var.cluster_name}-controller-${count.index}"
+  zone         = "${var.zone}"
   machine_type = "${var.machine_type}"
 
   metadata {
-    user-data = "${data.ct_config.controller_ign.rendered}"
+    user-data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
   }
 
-  disk {
-    auto_delete  = true
-    boot         = true
-    source_image = "${var.os_image}"
-    disk_size_gb = "${var.disk_size}"
+  boot_disk {
+    auto_delete = true
+
+    initialize_params {
+      image = "${var.os_image}"
+      size  = "${var.disk_size}"
+    }
   }
 
   network_interface {
@@ -60,9 +43,44 @@ resource "google_compute_instance_template" "controller" {
   }
 
   can_ip_forward = true
+}
 
-  lifecycle {
-    # To update an Instance Template, Terraform should replace the existing resource
-    create_before_destroy = true
+# Controller Container Linux Config
+data "template_file" "controller_config" {
+  count = "${var.count}"
+
+  template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
+
+  vars = {
+    # Cannot use cyclic dependencies on controllers or their DNS records
+    etcd_name   = "etcd${count.index}"
+    etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+
+    # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
+    etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", null_resource.repeat.*.triggers.name, null_resource.repeat.*.triggers.domain))}"
+
+    k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
+    ssh_authorized_key      = "${var.ssh_authorized_key}"
+    kubeconfig_ca_cert      = "${var.kubeconfig_ca_cert}"
+    kubeconfig_kubelet_cert = "${var.kubeconfig_kubelet_cert}"
+    kubeconfig_kubelet_key  = "${var.kubeconfig_kubelet_key}"
+    kubeconfig_server       = "${var.kubeconfig_server}"
   }
+}
+
+# Horrible hack to generate a Terraform list of a desired length without dependencies.
+# Ideal ${repeat("etcd", 3) -> ["etcd", "etcd", "etcd"]}
+resource null_resource "repeat" {
+  count = "${var.count}"
+
+  triggers {
+    name   = "etcd${count.index}"
+    domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+  }
+}
+
+data "ct_config" "controller_ign" {
+  count        = "${var.count}"
+  content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
+  pretty_print = false
 }

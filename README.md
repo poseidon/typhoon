@@ -79,7 +79,7 @@ In 5-10 minutes (varies by platform), the cluster will be ready. This Google Clo
 $ KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                          STATUS   AGE    VERSION
-yavin-controller-1682.c.example-com.internal  Ready    6m     v1.8.2
+yavin-controller-0.c.example-com.internal     Ready    6m     v1.8.2
 yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.8.2
 yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.8.2
 ```
@@ -92,13 +92,10 @@ NAMESPACE     NAME                                      READY  STATUS    RESTART
 kube-system   calico-node-1cs8z                         2/2    Running   0         6m
 kube-system   calico-node-d1l5b                         2/2    Running   0         6m
 kube-system   calico-node-sp9ps                         2/2    Running   0         6m
-kube-system   etcd-operator-3329263108-f443m            1/1    Running   1         6m
 kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1         6m
 kube-system   kube-dns-1187388186-zj5dl                 3/3    Running   0         6m
-kube-system   kube-etcd-0000                            1/1    Running   0         5m
-kube-system   kube-etcd-network-checkpointer-crznb      1/1    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m

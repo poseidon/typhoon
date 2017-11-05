@@ -1,4 +1,9 @@
-# Controller Network Load balancer DNS record
+# Static IPv4 address for the Network Load Balancer
+resource "google_compute_address" "controllers-ip" {
+  name = "${var.cluster_name}-controllers-ip"
+}
+
+# DNS record for the Network Load Balancer
 resource "google_dns_record_set" "controllers" {
   # DNS Zone name where record should be created
   managed_zone = "${var.dns_zone_name}"
@@ -12,12 +17,7 @@ resource "google_dns_record_set" "controllers" {
   rrdatas = ["${google_compute_address.controllers-ip.address}"]
 }
 
-# Static IP for the Network Load Balancer
-resource "google_compute_address" "controllers-ip" {
-  name = "${var.cluster_name}-controllers-ip"
-}
-
-# Network Load Balancer (i.e. forwarding rules)
+# Network Load Balancer (i.e. forwarding rule)
 resource "google_compute_forwarding_rule" "controller-https-rule" {
   name       = "${var.cluster_name}-controller-https-rule"
   ip_address = "${google_compute_address.controllers-ip.address}"
@@ -25,26 +25,23 @@ resource "google_compute_forwarding_rule" "controller-https-rule" {
   target     = "${google_compute_target_pool.controllers.self_link}"
 }
 
-resource "google_compute_forwarding_rule" "controller-ssh-rule" {
-  name       = "${var.cluster_name}-controller-ssh-rule"
-  ip_address = "${google_compute_address.controllers-ip.address}"
-  port_range = "22"
-  target     = "${google_compute_target_pool.controllers.self_link}"
-}
-
-# Network Load Balancer target pool of instances.
+# Target pool of instances for the controller(s) Network Load Balancer
 resource "google_compute_target_pool" "controllers" {
   name = "${var.cluster_name}-controller-pool"
 
+  instances = [
+    "${google_compute_instance.controllers.*.self_link}",
+  ]
+
   health_checks = [
-    "${google_compute_http_health_check.ingress.name}",
+    "${google_compute_http_health_check.kubelet.name}",
   ]
 
   session_affinity = "NONE"
 }
 
 # Kubelet HTTP Health Check
-resource "google_compute_http_health_check" "ingress" {
+resource "google_compute_http_health_check" "kubelet" {
   name        = "${var.cluster_name}-kubelet-health"
   description = "Health check Kubelet health host port"
 
