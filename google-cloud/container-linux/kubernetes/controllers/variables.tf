@@ -30,9 +30,9 @@ variable "count" {
   description = "Number of controller compute instances the instance group should manage"
 }
 
-variable "zone" {
+variable "region" {
   type        = "string"
-  description = "Google zone that compute instances in the group should be created in (e.g. gcloud compute zones list)"
+  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
 }
 
 variable "machine_type" {

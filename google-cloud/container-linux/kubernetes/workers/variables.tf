@@ -22,7 +22,7 @@ variable "count" {
 
 variable "region" {
   type        = "string"
-  description = "Google Cloud region to create a regional managed group of workers (e.g. us-central1, see `gcloud compute regions list`)."
+  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
 }
 
 variable "machine_type" {

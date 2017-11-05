@@ -8,11 +8,6 @@ variable "region" {
   description = "Google Cloud Region (e.g. us-central1, see `gcloud compute regions list`)"
 }
 
-variable "zone" {
-  type        = "string"
-  description = "Google Cloud Zone (e.g. us-central1-f, see `gcloud compute zones list`)"
-}
-
 variable "dns_zone" {
   type        = "string"
   description = "Google Cloud DNS Zone (e.g. google-cloud.dghubble.io)"

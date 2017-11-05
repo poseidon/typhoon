@@ -6,7 +6,7 @@ module "controllers" {
   # GCE
   network       = "${google_compute_network.network.name}"
   count         = "${var.controller_count}"
-  zone          = "${var.zone}"
+  region        = "${var.region}"
   dns_zone      = "${var.dns_zone}"
   dns_zone_name = "${var.dns_zone_name}"
   machine_type  = "${var.machine_type}"
