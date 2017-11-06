@@ -1,5 +1,5 @@
-# Controller Network Load Balancer DNS Record
-resource "aws_route53_record" "controllers" {
+# kube-apiserver Network Load Balancer DNS Record
+resource "aws_route53_record" "apiserver" {
   zone_id = "${var.dns_zone_id}"
 
   name = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"
@@ -7,15 +7,15 @@ resource "aws_route53_record" "controllers" {
 
   # AWS recommends their special "alias" records for ELBs
   alias {
-    name                   = "${aws_elb.controllers.dns_name}"
-    zone_id                = "${aws_elb.controllers.zone_id}"
+    name                   = "${aws_elb.apiserver.dns_name}"
+    zone_id                = "${aws_elb.apiserver.zone_id}"
     evaluate_target_health = true
   }
 }
 
 # Controller Network Load Balancer
-resource "aws_elb" "controllers" {
-  name            = "${var.cluster_name}-controllers"
+resource "aws_elb" "apiserver" {
+  name            = "${var.cluster_name}-apiserver"
   subnets         = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.controller.id}"]
 
@@ -30,7 +30,7 @@ resource "aws_elb" "controllers" {
 
   # Kubelet HTTP health check
   health_check {
-    target              = "HTTP:10255/healthz"
+    target              = "SSL:443"
     healthy_threshold   = 2
     unhealthy_threshold = 4
     timeout             = 5
