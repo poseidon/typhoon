@@ -142,6 +142,16 @@ resource "aws_security_group_rule" "worker-flannel-self" {
   self      = true
 }
 
+resource "aws_security_group_rule" "worker-node-exporter" {
+  security_group_id = "${aws_security_group.worker.id}"
+
+  type        = "ingress"
+  protocol    = "tcp"
+  from_port   = 9100
+  to_port     = 9100
+  self = true
+}
+
 resource "aws_security_group_rule" "worker-kubelet" {
   security_group_id = "${aws_security_group.worker.id}"
 
