@@ -1,6 +1,6 @@
 # Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
 resource "null_resource" "copy-secrets" {
-  depends_on = ["module.controllers", "module.bootkube"]
+  depends_on = ["module.bootkube"]
   count      = "${var.controller_count}"
 
   connection {
@@ -70,7 +70,7 @@ resource "null_resource" "copy-secrets" {
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {
-  depends_on = ["module.controllers", "module.workers", "module.bootkube"]
+  depends_on = ["module.bootkube", "module.workers", "null_resource.copy-secrets"]
 
   connection {
     type    = "ssh"
