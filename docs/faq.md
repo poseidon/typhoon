@@ -6,15 +6,6 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 
 Formats rise and evolve. Typhoon may choose to adapt the format over time (with lots of forewarning). However, the authors' have built several Kubernetes "distros" before and learned from mistakes - Terraform modules are the right format for now.
 
-## Self-hosted etcd
-
-AWS clusters run etcd as "self-hosted" pods, managed by the [etcd-operator](https://github.com/coreos/etcd-operator). By contrast, Typhoon bare-metal, Digital Ocean, and Google Cloud run an etcd peer as a systemd `etcd-member.service` on each controller (i.e. on-host).
-
-In practice, self-hosted etcd has proven to be *ok*, but not ideal. Running the apiserver's etcd atop Kubernetes itself is inherently complex, but works in most cases. It can be opaque to debug if complex edge cases with upstream Kubernetes bugs arise.
-
-!!! note ""
-    Over time, we plan to deprecate self-hosted etcd and revert to running etcd on-host.
-
 ## Operating Systems
 
 Only Container Linux is supported currently. This just due to operational familiarity, rather than intentional exclusion. It's important that another operating system be added, to reduce the risk of making narrowly-scoped design decisions.
