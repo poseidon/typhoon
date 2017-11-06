@@ -7,6 +7,8 @@ metadata:
     prometheus.io/scrape: 'true'
 spec:
   type: ClusterIP
+  # service is created to allow prometheus to scape endpoints
+  clusterIP: None
   selector:
     name: kube-state-metrics
     phase: prod
