@@ -200,7 +200,7 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | os_image | OS image for compute instances | "coreos-stable-1465-6-0-v20170817" |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
 
-Check the list of valid [zones](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.
+Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.
 
 #### DNS Zone
 
