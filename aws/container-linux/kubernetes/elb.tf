@@ -20,18 +20,13 @@ resource "aws_elb" "controllers" {
   security_groups = ["${aws_security_group.controller.id}"]
 
   listener {
-    lb_port           = 22
-    lb_protocol       = "tcp"
-    instance_port     = 22
-    instance_protocol = "tcp"
-  }
-
-  listener {
     lb_port           = 443
     lb_protocol       = "tcp"
     instance_port     = 443
     instance_protocol = "tcp"
   }
+
+  instances = ["${aws_instance.controllers.*.id}"]
 
   # Kubelet HTTP health check
   health_check {
@@ -42,7 +37,7 @@ resource "aws_elb" "controllers" {
     interval            = 6
   }
 
-  idle_timeout                = 1800
+  idle_timeout                = 3600
   connection_draining         = true
   connection_draining_timeout = 300
 }

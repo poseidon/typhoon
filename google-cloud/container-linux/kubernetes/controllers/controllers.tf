@@ -1,4 +1,4 @@
-# Discrete DNS records for each controller's private IPv4 for etcd usage.
+# Discrete DNS records for each controller's private IPv4 for etcd usage
 resource "google_dns_record_set" "etcds" {
   count = "${var.count}"
 

@@ -1,39 +1,30 @@
-# Controllers AutoScaling Group
-resource "aws_autoscaling_group" "controllers" {
-  name           = "${var.cluster_name}-controller"
-  load_balancers = ["${aws_elb.controllers.id}"]
+# Discrete DNS records for each controller's private IPv4 for etcd usage
+resource "aws_route53_record" "etcds" {
+  count = "${var.controller_count}"
 
-  # count
-  desired_capacity = "${var.controller_count}"
-  min_size         = "${var.controller_count}"
-  max_size         = "${var.controller_count}"
+  # DNS Zone where record should be created
+  zone_id = "${var.dns_zone_id}"
 
-  # network
-  vpc_zone_identifier = ["${aws_subnet.public.*.id}"]
+  name = "${format("%s-etcd%d.%s.", var.cluster_name, count.index, var.dns_zone)}"
+  type = "A"
+  ttl  = 300
 
-  # template
-  launch_configuration = "${aws_launch_configuration.controller.name}"
-
-  lifecycle {
-    # override the default destroy and replace update behavior
-    create_before_destroy = true
-    ignore_changes        = ["image_id"]
-  }
-
-  tags = [{
-    key                 = "Name"
-    value               = "${var.cluster_name}-controller"
-    propagate_at_launch = true
-  }]
+  # private IPv4 address for etcd
+  records = ["${element(aws_instance.controllers.*.private_ip, count.index)}"]
 }
 
-# Controller template
-resource "aws_launch_configuration" "controller" {
-  name_prefix   = "${var.cluster_name}-controller-template-"
-  image_id      = "${data.aws_ami.coreos.image_id}"
+# Controller instances
+resource "aws_instance" "controllers" {
+  count = "${var.controller_count}"
+
+  tags = {
+    Name = "${var.cluster_name}-controller-${count.index}"
+  }
+
   instance_type = "${var.controller_type}"
 
-  user_data = "${data.ct_config.controller_ign.rendered}"
+  ami       = "${data.aws_ami.coreos.image_id}"
+  user_data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
 
   # storage
   root_block_device {
@@ -43,21 +34,25 @@ resource "aws_launch_configuration" "controller" {
 
   # network
   associate_public_ip_address = true
-  security_groups             = ["${aws_security_group.controller.id}"]
-
-  lifecycle {
-    // Override the default destroy and replace update behavior
-    create_before_destroy = true
-  }
+  subnet_id                   = "${element(aws_subnet.public.*.id, count.index)}"
+  vpc_security_group_ids      = ["${aws_security_group.controller.id}"]
 }
 
 # Controller Container Linux Config
 data "template_file" "controller_config" {
+  count = "${var.controller_count}"
+
   template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
 
   vars = {
+    # Cannot use cyclic dependencies on controllers or their DNS records
+    etcd_name   = "etcd${count.index}"
+    etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+
+    # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
+    etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", null_resource.repeat.*.triggers.name, null_resource.repeat.*.triggers.domain))}"
+
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
-    k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
     ssh_authorized_key      = "${var.ssh_authorized_key}"
     kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
@@ -66,8 +61,20 @@ data "template_file" "controller_config" {
   }
 }
 
+# Horrible hack to generate a Terraform list of a desired length without dependencies.
+# Ideal ${repeat("etcd", 3) -> ["etcd", "etcd", "etcd"]}
+resource null_resource "repeat" {
+  count = "${var.controller_count}"
+
+  triggers {
+    name   = "etcd${count.index}"
+    domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
+  }
+}
+
 data "ct_config" "controller_ign" {
-  content      = "${data.template_file.controller_config.rendered}"
+  count        = "${var.controller_count}"
+  content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
   pretty_print = false
 }
 

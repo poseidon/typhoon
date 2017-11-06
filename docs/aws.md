@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.8.2 cluster on AWS.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules `etcd`, `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 !!! warning "Alpha"
     Typhoon Kubernetes clusters on AWS are marked as "alpha".
@@ -140,17 +140,14 @@ Apply the changes to create the cluster.
 ```sh
 $ terraform apply
 ...
-module.aws-tempest.null_resource.bootkube-start: Still creating... (10m50s elapsed)
-module.aws-tempest.null_resource.bootkube-start: Still creating... (11m0s elapsed)
+module.aws-tempest.null_resource.bootkube-start: Still creating... (4m50s elapsed)
+module.aws-tempest.null_resource.bootkube-start: Still creating... (5m0s elapsed)
 module.aws-tempest.null_resource.bootkube-start: Creation complete after 11m8s (ID: 3961816482286168143)
 
 Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
 ```
 
-In 10-20 minutes, the Kubernetes cluster will be ready.
-
-!!! bug ""
-    Typhoon clusters on AWS take much longer to create than clusters on other platforms. This is related to DNS resolution time to the ASG, which will be resolved in a future version that uses static controllers.
+In 5-10 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 
@@ -173,13 +170,10 @@ NAMESPACE     NAME                                      READY  STATUS    RESTART
 kube-system   calico-node-1m5bf                         2/2    Running   0         34m              
 kube-system   calico-node-7jmr1                         2/2    Running   0         34m              
 kube-system   calico-node-bknc8                         2/2    Running   0         34m              
-kube-system   etcd-operator-2287495111-br512            1/1    Running   1         34m              
 kube-system   kube-apiserver-4mjbk                      1/1    Running   0         34m              
 kube-system   kube-controller-manager-3597210155-j2jbt  1/1    Running   1         34m              
 kube-system   kube-controller-manager-3597210155-j7g7x  1/1    Running   0         34m              
 kube-system   kube-dns-1187388186-wx1lg                 3/3    Running   0         34m              
-kube-system   kube-etcd-0000                            1/1    Running   0         32m              
-kube-system   kube-etcd-network-checkpointer-dt5pt      1/1    Running   0         34m              
 kube-system   kube-proxy-14wxv                          1/1    Running   0         34m              
 kube-system   kube-proxy-9vxh2                          1/1    Running   0         34m              
 kube-system   kube-proxy-sbbsh                          1/1    Running   0         34m              

@@ -15,6 +15,12 @@ Notable changes between versions.
 * Remove the `zone` required variable
 * Remove the `controller_preemptible` optional variable
 
+#### AWS
+
+* Reduce time to bootstrap a cluster
+* Change etcd to run on-host, across controllers (etcd-member.service)
+* Remove support for self-hosted etcd
+
 ## v1.8.2
 
 * Kubernetes v1.8.2
