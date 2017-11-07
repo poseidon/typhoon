@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* All platforms run etcd on-host, across controllers
+* AWS platform promoted to beta
+
 #### Google Cloud
 
 * Add required variable `region` (e.g. "us-central1")
@@ -17,8 +20,10 @@ Notable changes between versions.
 
 #### AWS
 
+* Promote AWS platform to beta
 * Reduce time to bootstrap a cluster
 * Change etcd to run on-host, across controllers (etcd-member.service)
+* Fix firewall rules for multi-controller kubelet scraping and node-exporter
 * Remove support for self-hosted etcd
 
 ## v1.8.2

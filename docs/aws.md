@@ -6,12 +6,6 @@ We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform modu
 
 Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
-!!! warning "Alpha"
-    Typhoon Kubernetes clusters on AWS are marked as "alpha".
-
-!!! warning "Disabled"
-    Clusters do not use EC2 instances with elevated IAM roles. Kubernetes AWS integrations are not enabled.
-
 ## Requirements
 
 * AWS Account and IAM credentials
@@ -87,7 +81,7 @@ module "aws-tempest" {
   dns_zone           = "aws.example.com"
   dns_zone_id        = "Z3PAABBCFAKEC0"
   controller_count   = 1
-  controller_type    = "t2.small"
+  controller_type    = "t2.medium"
   worker_count       = 2
   worker_type        = "t2.small"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
@@ -147,7 +141,7 @@ module.aws-tempest.null_resource.bootkube-start: Creation complete after 11m8s (
 Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
 ```
 
-In 5-10 minutes, the Kubernetes cluster will be ready.
+In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 

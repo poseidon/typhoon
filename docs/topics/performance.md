@@ -6,21 +6,20 @@ Provisioning times vary based on the platform. Sampling the time to create (appl
 
 | Platform      | Apply | Destroy |
 |---------------|-------|---------|
-| AWS           | 5 min | 5 min   |
+| AWS           | 6 min | 5 min   |
 | Bare-Metal    | 10-14 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
 | Google Cloud  | 4 min | 4 min 30 sec |
 
 Notes:
 
-* AWS is alpha
-* DNS propagation times have a large impact on provision time
+* SOA TTL and NXDOMAIN caching can have a large impact on provision time
 * Platforms with auto-scaling take more time to provision (AWS, Google)
-* Bare-metal provision times vary depending on the time for machines to POST and network bandwidth to download images.
+* Bare-metal POST times and network bandwidth will affect provision times
 
 ## Network Performance
 
-Network performance varies based on the platform and CNI plugin. `iperf` was used to measture the bandwidth between different hosts and different pods. Host-to-host indicates the typical bandwidth offered by the provider. Pod-to-pod shows the bandwidth between two `iperf` containers. The difference provides some idea about the overhead.
+Network performance varies based on the platform and CNI plugin. `iperf` was used to measture the bandwidth between different hosts and different pods. Host-to-host shows typical bandwidth between host machines. Pod-to-pod shows the bandwidth between two `iperf` containers.
 
 | Platform / Plugin          | Theory | Host to Host | Pod to Pod   |
 |----------------------------|-------:|-------------:|-------------:|
@@ -37,9 +36,7 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 
 Notes:
 
-* AWS is alpha
-* Network bandwidth fluctuates on AWS and Digital Ocean.
+* Calico and Flannel have comparable performance. Platform and configuration differenes dominate.
+* Neither CNI provider seems to be able to leverage bonded NICs (bare-metal)
+* AWS and Digital Ocean network bandwidth fluctuates more than on other platforms.
 * Only [certain AWS EC2 instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) allow jumbo frames. This is why the default MTU on AWS must be 1480.
-* Between Flannel and Calico, performance differences are usually minimal. Platform and configuration differenes dominate.
-* Pods do not seem to be able to leverage the hosts' bonded NIC setup. Possibly a testing artifact.
-* Observing the same bonded NIC pod-to-pod limit suggests the bottleneck lies below flannel and calico.

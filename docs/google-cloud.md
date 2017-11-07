@@ -137,14 +137,14 @@ $ terraform apply
 module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (10s elapsed)
 ...
 
-module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (8m30s elapsed)
-module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (8m40s elapsed)
+module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (5m30s elapsed)
+module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (5m40s elapsed)
 module.google-cloud-yavin.null_resource.bootkube-start: Creation complete (ID: 5768638456220583358)
 
 Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
 ```
 
-In 5-10 minutes, the Kubernetes cluster will be ready.
+In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 
