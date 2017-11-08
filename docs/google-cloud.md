@@ -233,6 +233,9 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 
+!!! warning
+    Set controller_count to 1. A bug in Google Cloud network load balancer health checking prevents multiple controllers from bootstrapping. There are workarounds, but they all involve tradeoffs we're uncomfortable recommending. See [#54](https://github.com/poseidon/typhoon/issues/54).
+
 #### Preemption
 
 Add `worker_preemeptible = "true"` to allow worker nodes to be [preempted](https://cloud.google.com/compute/docs/instances/preemptible) at random, but pay [significantly](https://cloud.google.com/compute/pricing) less. Clusters tolerate stopping instances fairly well (reschedules pods, but cannot drain) and preemption provides a nice reward for running fault-tolerant cluster systems.`
