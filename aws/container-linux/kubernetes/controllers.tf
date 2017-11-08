@@ -129,16 +129,6 @@ resource "aws_security_group_rule" "controller-etcd" {
   self      = true
 }
 
-resource "aws_security_group_rule" "controller-bootstrap-etcd" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 12379
-  to_port   = 12380
-  self      = true
-}
-
 resource "aws_security_group_rule" "controller-flannel" {
   security_group_id = "${aws_security_group.controller.id}"
 
