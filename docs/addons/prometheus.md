@@ -30,9 +30,9 @@ Exporters expose metrics for 3rd-party systems that don't natively expose Promet
 * [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) - Deployment that exposes Kubernetes object metrics
 * [blackbox_exporter](https://github.com/prometheus/blackbox_exporter) - Scrapes HTTP, HTTPS, DNS, TCP, or ICMP endpoints and exposes availability as metrics
 
-### Queries and Graphs
+### Queries and Alerts
 
-Prometheus provides a simplistic UI for querying and graphing metrics. Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Prometheus pod.
+Prometheus provides a simplistic UI for querying metrics and viewing alerts. Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Prometheus pod.
 
 ```
 kubectl get pods -n monitoring
@@ -44,6 +44,8 @@ Visit [127.0.0.1:9090](http://127.0.0.1:9090) to query [expressions](http://127.
 ![Prometheus Graph](/img/prometheus-graph.png)
 <br/>
 ![Prometheus Targets](/img/prometheus-targets.png)
+<br/>
+![Prometheus Alerts](/img/prometheus-alerts.png)
 
 ## Grafana
 

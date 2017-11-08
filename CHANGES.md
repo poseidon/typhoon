@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.8.3
+
 * Kubernetes v1.8.3
 * Run etcd on-host, across controllers
 * Promote AWS platform to beta
@@ -28,6 +30,11 @@ Notable changes between versions.
 * Change etcd to run on-host, across controllers (etcd-member.service)
 * Fix firewall rules for multi-controller kubelet scraping and node-exporter
 * Remove support for self-hosted etcd
+
+#### Addons
+
+* Add Prometheus 2.0 addon with alerting rules
+* Add Grafana dashboard for observing metrics
 
 ## v1.8.2
 
