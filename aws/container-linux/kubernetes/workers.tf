@@ -1,7 +1,6 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
-  name           = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
-  load_balancers = ["${aws_elb.ingress.id}"]
+  name = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
 
   # count
   desired_capacity          = "${var.worker_count}"
@@ -15,6 +14,12 @@ resource "aws_autoscaling_group" "workers" {
 
   # template
   launch_configuration = "${aws_launch_configuration.worker.name}"
+
+  # target groups to which instances should be added
+  target_group_arns = [
+    "${aws_lb_target_group.workers-http.id}",
+    "${aws_lb_target_group.workers-https.id}",
+  ]
 
   lifecycle {
     # override the default destroy and replace update behavior
@@ -153,6 +158,16 @@ resource "aws_security_group_rule" "worker-node-exporter" {
   self      = true
 }
 
+resource "aws_security_group_rule" "ingress-health" {
+  security_group_id = "${aws_security_group.worker.id}"
+
+  type        = "ingress"
+  protocol    = "tcp"
+  from_port   = 10254
+  to_port     = 10254
+  cidr_blocks = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group_rule" "worker-kubelet" {
   security_group_id = "${aws_security_group.worker.id}"
 
@@ -190,16 +205,6 @@ resource "aws_security_group_rule" "worker-kubelet-read-self" {
   protocol  = "tcp"
   from_port = 10255
   to_port   = 10255
-  self      = true
-}
-
-resource "aws_security_group_rule" "ingress-health-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10254
-  to_port   = 10254
   self      = true
 }
 

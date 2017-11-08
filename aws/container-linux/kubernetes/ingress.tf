@@ -1,32 +1,80 @@
-# Ingress Network Load Balancer
-resource "aws_elb" "ingress" {
-  name            = "${var.cluster_name}-ingress"
-  subnets         = ["${aws_subnet.public.*.id}"]
-  security_groups = ["${aws_security_group.worker.id}"]
+# Network Load Balancer for Ingress
+resource "aws_lb" "ingress" {
+  name               = "${var.cluster_name}-ingress"
+  load_balancer_type = "network"
+  internal           = false
 
-  listener {
-    lb_port           = 80
-    lb_protocol       = "tcp"
-    instance_port     = 80
-    instance_protocol = "tcp"
-  }
+  subnets = ["${aws_subnet.public.*.id}"]
+}
 
-  listener {
-    lb_port           = 443
-    lb_protocol       = "tcp"
-    instance_port     = 443
-    instance_protocol = "tcp"
+# Forward HTTP traffic to instances
+resource "aws_lb_listener" "ingress-http" {
+  load_balancer_arn = "${aws_lb.ingress.arn}"
+  protocol          = "TCP"
+  port              = 80
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.workers-http.arn}"
   }
+}
+
+# Forward HTTPS traffic to instances
+resource "aws_lb_listener" "ingress-https" {
+  load_balancer_arn = "${aws_lb.ingress.arn}"
+  protocol          = "TCP"
+  port              = 443
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.workers-https.arn}"
+  }
+}
+
+# Network Load Balancer target groups of instances
+
+resource "aws_lb_target_group" "workers-http" {
+  name        = "${var.cluster_name}-workers-http"
+  vpc_id      = "${aws_vpc.network.id}"
+  target_type = "instance"
+
+  protocol = "TCP"
+  port     = 80
 
   # Ingress Controller HTTP health check
   health_check {
-    target              = "HTTP:10254/healthz"
-    healthy_threshold   = 2
-    unhealthy_threshold = 4
-    timeout             = 5
-    interval            = 6
-  }
+    protocol = "HTTP"
+    port     = 10254
+    path     = "/healthz"
 
-  connection_draining         = true
-  connection_draining_timeout = 300
+    # NLBs required to use same healthy and unhealthy thresholds
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+
+    # Interval between health checks required to be 10 or 30
+    interval = 10
+  }
+}
+
+resource "aws_lb_target_group" "workers-https" {
+  name        = "${var.cluster_name}-workers-https"
+  vpc_id      = "${aws_vpc.network.id}"
+  target_type = "instance"
+
+  protocol = "TCP"
+  port     = 443
+
+  # Ingress Controller HTTP health check
+  health_check {
+    protocol = "HTTP"
+    port     = 10254
+    path     = "/healthz"
+
+    # NLBs required to use same healthy and unhealthy thresholds
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+
+    # Interval between health checks required to be 10 or 30
+    interval = 10
+  }
 }
