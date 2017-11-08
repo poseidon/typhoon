@@ -67,7 +67,7 @@ resource "google_compute_instance_template" "worker" {
 
   can_ip_forward = true
 
-  tags = ["worker"]
+  tags = ["worker", "${var.cluster_name}-worker"]
 
   lifecycle {
     # To update an Instance Template, Terraform should replace the existing resource

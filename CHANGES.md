@@ -14,6 +14,7 @@ Notable changes between versions.
 * Change etcd to run on-host, across controllers (etcd-member.service)
 * Change controller instances to automatically span zones in the region
 * Change worker managed instance group to automatically span zones in the region
+* Improve internal firewall rules and use tag-based firewall policies
 * Remove support for self-hosted etcd
 * Remove the `zone` required variable
 * Remove the `controller_preemptible` optional variable
