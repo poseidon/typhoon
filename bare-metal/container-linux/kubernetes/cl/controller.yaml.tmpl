@@ -89,8 +89,7 @@ systemd:
           --network-plugin=cni \
           --node-labels=node-role.kubernetes.io/master \
           --pod-manifest-path=/etc/kubernetes/manifests \
-          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
-          --require-kubeconfig
+          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
         Restart=always
         RestartSec=10
