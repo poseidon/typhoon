@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes v1.8.3
 * All platforms run etcd on-host, across controllers
 * AWS platform promoted to beta
 
