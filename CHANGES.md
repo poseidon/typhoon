@@ -5,8 +5,9 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes v1.8.3
-* All platforms run etcd on-host, across controllers
-* AWS platform promoted to beta
+* Run etcd on-host, across controllers
+* Promote AWS platform to beta
+* Use kubernetes-incubator/bootkube v0.8.2
 
 #### Google Cloud
 
