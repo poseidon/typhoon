@@ -30,7 +30,7 @@ resource "google_compute_target_pool" "controllers" {
   name = "${var.cluster_name}-controller-pool"
 
   instances = [
-    "${formatlist("%s/%s", google_compute_instance.controllers.*.zone, google_compute_instance.controllers.*.name)}",
+    "${google_compute_instance.controllers.*.self_link}",
   ]
 
   health_checks = [
