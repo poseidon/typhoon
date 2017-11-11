@@ -18,7 +18,7 @@ Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/
 
 ## Security Issues
 
-If you find security issues, please see [security disclosures](/topics/security).
+If you find security issues, please see [security disclosures](/topics/security.md#disclosures).
 
 ## Maintainers
 
