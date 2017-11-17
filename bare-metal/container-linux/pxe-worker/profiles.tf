@@ -8,6 +8,7 @@ resource "matchbox_profile" "bootkube-worker-pxe" {
   ]
 
   args = [
+    "initrd=coreos_production_pxe_image.cpio.gz",
     "coreos.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
     "coreos.first_boot=yes",
     "console=tty0",
