@@ -1,4 +1,4 @@
-# Typhoon <img align="right" src="https://storage.googleapis.com/dghubble/spin.png">
+# Typhoon <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo.png">
 
 Typhoon is a minimal and free Kubernetes distribution.
 
