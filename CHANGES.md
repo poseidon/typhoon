@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes v1.8.4
+* Calico related bug fixes
+* Update Calico from v2.6.1 to v2.6.3
+* Update flannel from v0.9.0 to v0.9.1
+* Use service accounts for kube-proxy and pod-checkpointer
+
 ## v1.8.3
 
 * Kubernetes v1.8.3
