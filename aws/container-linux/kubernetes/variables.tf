@@ -3,6 +3,12 @@ variable "cluster_name" {
   description = "Cluster name"
 }
 
+variable "cloud_provider" {
+  type        = "string"
+  description = "The cloud provider"
+  default = "aws"
+}
+
 variable "dns_zone" {
   type        = "string"
   description = "AWS DNS Zone (e.g. aws.dghubble.io)"

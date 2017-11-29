@@ -28,6 +28,21 @@ systemd:
       enable: true
     - name: locksmithd.service
       mask: true
+    - name: set-aws-fqdn.service
+      enable: true
+      contents: |
+        [Unit]
+        Wants=network-online.target
+        After=network-online.target
+        Description=Set Hostname Workaround
+        Before=kubelet.service
+
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/sh -c "/usr/bin/hostnamectl set-hostname $(curl -s http://169.254.169.254/latest/meta-data/hostname)"
+
+        [Install]
+        RequiredBy=kubelet.service
     - name: wait-for-dns.service
       enable: true
       contents: |
@@ -74,6 +89,7 @@ systemd:
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${k8s_dns_service_ip} \
           --cluster_domain=cluster.local \
+          --cloud-provider=${cloud_provider} \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --exit-on-lock-contention \
           --kubeconfig=/etc/kubernetes/kubeconfig \
