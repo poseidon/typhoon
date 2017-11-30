@@ -5,10 +5,9 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes v1.8.4
-* Calico related bug fixes
+* Enable Docker 17.09 on Container Linux (replaces Docker 1.12)
 * Update Calico from v2.6.1 to v2.6.3
 * Update flannel from v0.9.0 to v0.9.1
-* Use service accounts for kube-proxy and pod-checkpointer
 
 ## v1.8.3
 
