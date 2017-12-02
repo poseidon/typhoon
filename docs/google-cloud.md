@@ -10,11 +10,11 @@ Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube
 
 * Google Cloud Account and Service Account
 * Google Cloud DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.10.4+ and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
+* Terraform v0.10.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.9.2+ on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.10.x on your system.
 
 ```sh
 $ terraform version
