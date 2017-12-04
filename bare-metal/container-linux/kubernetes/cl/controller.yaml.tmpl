@@ -50,6 +50,7 @@ systemd:
         ExecStart=/bin/sh -c 'while ! /usr/bin/grep '^[^#[:space:]]' /etc/resolv.conf > /dev/null; do sleep 1; done'
         [Install]
         RequiredBy=kubelet.service
+        RequiredBy=etcd-member.service
     - name: kubelet.service
       contents: |
         [Unit]
