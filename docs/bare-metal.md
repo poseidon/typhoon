@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provison a Kubernetes v1.8.4 cluster on bare-metal.
+In this tutorial, we'll network boot and provision a Kubernetes v1.8.4 cluster on bare-metal.
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
 
@@ -31,7 +31,7 @@ Configure each machine to boot from the disk [^1] through IPMI or the BIOS menu.
 ipmitool -H node1 -U USER -P PASS chassis bootdev disk options=persistent
 ```
  
-During provisioning, you'll explicitly set the boot device to `pxe` for the next boot only. Machines will install (overwrite) the operting system to disk on PXE boot and reboot into the disk install.
+During provisioning, you'll explicitly set the boot device to `pxe` for the next boot only. Machines will install (overwrite) the operating system to disk on PXE boot and reboot into the disk install.
 
 !!! tip ""
     Ask your hardware vendor to provide MACs and preconfigure IPMI, if possible. With it, you can rack new servers, `terraform apply` with new info, and power on machines that network boot and provision into clusters.
@@ -105,7 +105,7 @@ Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup
 * Place Matchbox behind a menu entry (timeout and default to Matchbox)
 
 !!! note ""
-    TFTP chainloding to modern boot firmware, like iPXE, avoids issues with old NICs and allows faster transfer protocols like HTTP to be used.
+    TFTP chainloading to modern boot firmware, like iPXE, avoids issues with old NICs and allows faster transfer protocols like HTTP to be used.
 
 ## Terraform Setup
 
@@ -203,7 +203,7 @@ ssh-add -L
 ```
 
 !!! warning
-    `terrafrom apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
+    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
 
 ## Apply
 
@@ -354,6 +354,6 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
 

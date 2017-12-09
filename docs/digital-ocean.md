@@ -98,7 +98,7 @@ ssh-add -L
 ```
 
 !!! warning
-    `terrafrom apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
+    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
 
 ## Apply
 
@@ -195,7 +195,7 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 
 Clusters create DNS A records `${cluster_name}.${dns_zone}` to resolve to controller droplets (round robin). This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `nemo.do.example.com`.
 
-You'll need a registered domain name or subdomain registered in Digital Ocean Domains (i.e. DNS zones). You can set this up once and create many clusters with unqiue names.
+You'll need a registered domain name or subdomain registered in Digital Ocean Domains (i.e. DNS zones). You can set this up once and create many clusters with unique names.
 
 ```tf
 resource "digitalocean_domain" "zone-for-clusters" {
@@ -237,7 +237,7 @@ If you uploaded an SSH key to DigitalOcean (not required), find the fingerprint 
 | worker_type | Digital Ocean droplet size | 512mb | 512mb, 1gb, 2gb, 4gb |
 | networking | Choice of networking provider | "flannel" | "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 
 !!! warning
     Do not choose a `controller_type` smaller than `2gb`. The `1gb` droplet is not sufficient for running a controller and bootstrapping will fail.

@@ -104,7 +104,7 @@ ssh-add -L
 ```
 
 !!! warning
-    `terrafrom apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
+    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
 
 ## Apply
 
@@ -206,7 +206,7 @@ Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-
 
 Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `yavin.google-cloud.example.com`.
 
-You'll need a registered domain name or subdomain registered in a Google Cloud DNS zone. You can set this up once and create many clusters with unqiue names.
+You'll need a registered domain name or subdomain registered in a Google Cloud DNS zone. You can set this up once and create many clusters with unique names.
 
 ```tf
 resource "google_dns_managed_zone" "zone-for-clusters" {
@@ -229,7 +229,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_preemptible | If enabled, Compute Engine will terminate controllers randomly within 24 hours | false | true |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR range to assgin to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 

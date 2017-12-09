@@ -12,7 +12,7 @@ kubectl apply -f addons/cluo -R
 
 ## Usage
 
-`update-agent` runs as a DaemonSet and annotates a node when `update-engine.service` indiates an update has been installed and a reboot is needed. It also adds additional labels and annotations to nodes.
+`update-agent` runs as a DaemonSet and annotates a node when `update-engine.service` indicates an update has been installed and a reboot is needed. It also adds additional labels and annotations to nodes.
 
 ```
 $ kubectl get nodes --show-labels

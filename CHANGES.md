@@ -95,7 +95,7 @@ Notable changes between versions.
 ## v1.7.3
 
 * Kubernetes v1.7.3
-* Use kubernete-incubator/bootkube v0.6.1
+* Use kubernetes-incubator/bootkube v0.6.1
 
 #### Digital Ocean
 
@@ -105,7 +105,7 @@ Notable changes between versions.
 ## v1.7.1
 
 * Kubernetes v1.7.1
-* Use kubernete-incubator/bootkube v0.6.0
+* Use kubernetes-incubator/bootkube v0.6.0
 * Add Bare-Metal Terraform module (stable)
 * Add Digital Ocean Terraform module (beta)
 
@@ -118,12 +118,12 @@ Notable changes between versions.
 ## v1.6.7
 
 * Kubernetes v1.6.7
-* Use kubernete-incubator/bootkube v0.5.1
+* Use kubernetes-incubator/bootkube v0.5.1
 
 ## v1.6.6
 
 * Kubernetes v1.6.6
-* Use kubernete-incubator/bootkube v0.4.5
+* Use kubernetes-incubator/bootkube v0.4.5
 * Disable locksmithd on hosts, in favor of [CLUO](https://github.com/coreos/container-linux-update-operator).
 
 ## v1.6.4
