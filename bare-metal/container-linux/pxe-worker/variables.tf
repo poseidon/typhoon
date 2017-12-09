@@ -64,3 +64,9 @@ variable "kernel_args" {
     "root=/dev/sda1",
   ]
 }
+
+variable "cluster_dns_fqdn" {
+  description = "FQDN root for DNS resolution for Kubernetes services. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  type        = "string"
+  default     = "cluster.local"
+}

@@ -16,6 +16,7 @@ resource "matchbox_group" "workers" {
     etcd_on_host        = "true"
     k8s_etcd_service_ip = "10.3.0.15"
     k8s_dns_service_ip  = "${var.kube_dns_service_ip}"
+    cluster_dns_fqdn    = "${var.cluster_dns_fqdn}"
     ssh_authorized_key  = "${var.ssh_authorized_key}"
   }
 }
