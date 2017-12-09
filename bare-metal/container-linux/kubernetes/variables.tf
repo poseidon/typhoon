@@ -92,6 +92,12 @@ EOD
 
 # optional
 
+variable "cluster_domain_suffix" {
+  description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  type        = "string"
+  default     = "cluster.local"
+}
+
 variable "cached_install" {
   type        = "string"
   default     = "false"

@@ -66,6 +66,7 @@ data "template_file" "controller_config" {
     etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", null_resource.repeat.*.triggers.name, null_resource.repeat.*.triggers.domain))}"
 
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix   = "${var.cluster_domain_suffix}"
     ssh_authorized_key      = "${var.ssh_authorized_key}"
     kubeconfig_ca_cert      = "${var.kubeconfig_ca_cert}"
     kubeconfig_kubelet_cert = "${var.kubeconfig_kubelet_cert}"
