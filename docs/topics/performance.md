@@ -19,7 +19,7 @@ Notes:
 
 ## Network Performance
 
-Network performance varies based on the platform and CNI plugin. `iperf` was used to measture the bandwidth between different hosts and different pods. Host-to-host shows typical bandwidth between host machines. Pod-to-pod shows the bandwidth between two `iperf` containers.
+Network performance varies based on the platform and CNI plugin. `iperf` was used to measure the bandwidth between different hosts and different pods. Host-to-host shows typical bandwidth between host machines. Pod-to-pod shows the bandwidth between two `iperf` containers.
 
 | Platform / Plugin          | Theory | Host to Host | Pod to Pod   |
 |----------------------------|-------:|-------------:|-------------:|
@@ -36,7 +36,7 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 
 Notes:
 
-* Calico and Flannel have comparable performance. Platform and configuration differenes dominate.
+* Calico and Flannel have comparable performance. Platform and configuration differences dominate.
 * Neither CNI provider seems to be able to leverage bonded NICs (bare-metal)
 * AWS and Digital Ocean network bandwidth fluctuates more than on other platforms.
 * Only [certain AWS EC2 instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) allow jumbo frames. This is why the default MTU on AWS must be 1480.

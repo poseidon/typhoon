@@ -2,9 +2,9 @@
 
 While bare-metal Kubernetes clusters have no special hardware requirements (beyond the [min reqs](/bare-metal.md#requirements)), Typhoon does ensure certain router and server hardware integrates well with Kubernetes.
 
-## Ubiquitiy
+## Ubiquiti
 
-Ubiquity EdgeRouters work well with bare-metal Kubernetes clusters. Knowledge about how to setup an EdgeRouter and use the CLI is required.
+Ubiquiti EdgeRouters work well with bare-metal Kubernetes clusters. Knowledge about how to setup an EdgeRouter and use the CLI is required.
 
 ### PXE
 
@@ -50,7 +50,7 @@ Add `dnsmasq` command line options to enable the TFTP file server.
 
 ```
 configure
-show servce dns forwarding
+show service dns forwarding
 set service dns forwarding options enable-tftp
 set service dns forwarding options tftp-root=/var/lib/tftpboot
 commit-confirm
@@ -143,7 +143,7 @@ commit-confirm
 
 ### BGP
 
-Add the EdgeRouter as a global BGP peer for nodes in a Kubernetes cluster (requires Calico). Neighbors will exchange `podCIDR` routes and individual pods will become routeable on the LAN.
+Add the EdgeRouter as a global BGP peer for nodes in a Kubernetes cluster (requires Calico). Neighbors will exchange `podCIDR` routes and individual pods will become routable on the LAN.
 
 Configure node(s) as BGP neighbors.
 
