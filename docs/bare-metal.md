@@ -355,5 +355,6 @@ Learn about [version pinning](concepts.md#versioning), maintenance, and [addons]
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| cluster_dns_fqdn | Cluster FQDN for Kubernetes services | "cluster.local" | "k8s.example.com" |
 | kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
 
