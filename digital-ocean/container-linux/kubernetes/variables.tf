@@ -76,3 +76,10 @@ EOD
   type    = "string"
   default = "10.3.0.0/16"
 }
+
+variable "cluster_dns_fqdn" {
+  description = "FQDN root for DNS resolution for Kubernetes services. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  type        = "string"
+  default     = "cluster.local"
+}
+

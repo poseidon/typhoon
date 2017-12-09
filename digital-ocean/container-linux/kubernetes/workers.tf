@@ -45,6 +45,7 @@ data "template_file" "worker_config" {
   vars = {
     k8s_dns_service_ip  = "${cidrhost(var.service_cidr, 10)}"
     k8s_etcd_service_ip = "${cidrhost(var.service_cidr, 15)}"
+    cluster_dns_fqdn    = "${var.cluster_dns_fqdn}"
   }
 }
 
