@@ -15,6 +15,7 @@ module "controllers" {
   # configuration
   networking              = "${var.networking}"
   service_cidr            = "${var.service_cidr}"
+  cluster_dns_fqdn        = "${var.cluster_dns_fqdn}"
   kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
   kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
   kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
@@ -36,6 +37,7 @@ module "workers" {
 
   # configuration
   service_cidr            = "${var.service_cidr}"
+  cluster_dns_fqdn        = "${var.cluster_dns_fqdn}"
   kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
   kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
   kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
