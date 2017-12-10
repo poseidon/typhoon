@@ -5,6 +5,11 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes v1.8.5
+* Recommend Docker 17.09 and validate against it
+  * Container Linux stable, beta, and alpha now provide Docker 17.09 (instead
+  of 1.12). Recommend images which provide 17.09.
+  * Older clusters (with CLUO addon) auto-update node's Container Linux version
+  and will begin using Docker 17.09.
 
 ## v1.8.4
 
