@@ -4,12 +4,21 @@ Notable changes between versions.
 
 ## Latest
 
-* Kubernetes v1.8.5
-* Recommend Docker 17.09 and validate against it
+* Kubernetes [v1.8.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#v185)
+* Recommend Container Linux [images](https://coreos.com/releases/) with Docker 17.09
   * Container Linux stable, beta, and alpha now provide Docker 17.09 (instead
   of 1.12). Recommend images which provide 17.09.
   * Older clusters (with CLUO addon) auto-update node's Container Linux version
   and will begin using Docker 17.09.
+* Fix race where `etcd-member.service` could fail to resolve peers ([#69](https://github.com/poseidon/typhoon/pull/69)) 
+
+#### Bare-Metal
+
+* Add kubelet `--volume-plugin-dir` flag to allow flexvolume providers ([#61](https://github.com/poseidon/typhoon/pull/61))
+
+#### Addons
+
+* Deploying the Kubernetes Dashboard is discouraged
 
 ## v1.8.4
 
