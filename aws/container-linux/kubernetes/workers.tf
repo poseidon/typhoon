@@ -28,11 +28,11 @@ resource "aws_autoscaling_group" "workers" {
       value               = "${var.cluster_name}-worker"
       propagate_at_launch = true
     },
-    # {
-    #   key = "kubernetes.io/cluster/${var.cluster_name}"
-    #   value = "owned"
-    #   propagate_at_launch = true
-    # },
+    {
+      key = "kubernetes.io/cluster/${var.cluster_name}"
+      value = "owned"
+      propagate_at_launch = true
+    },
     {
       key                 = "KubernetesCluster"
       value               = "${var.cluster_name}"
@@ -95,7 +95,7 @@ resource "aws_security_group" "worker" {
 
   vpc_id = "${aws_vpc.network.id}"
 
-  tags = "${map("Name", "${var.cluster_name}-worker")}"
+  tags = "${map("Name", "${var.cluster_name}-worker", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_security_group_rule" "worker-icmp" {

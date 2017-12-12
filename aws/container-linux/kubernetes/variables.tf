@@ -30,6 +30,12 @@ variable "os_channel" {
   description = "Container Linux AMI channel (stable, beta, alpha)"
 }
 
+variable "os_version" {
+  type        = "string"
+  default     = ""
+  description = "Container Linux OS version (for example 1548.0.0). Latest if empty."
+}
+
 variable "disk_size" {
   type        = "string"
   default     = "40"

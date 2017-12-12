@@ -18,10 +18,7 @@ resource "aws_instance" "controllers" {
   depends_on = ["aws_iam_role.controller_role"]
   count = "${var.controller_count}"
 
-  tags = {
-      Name = "${var.cluster_name}-controller-${count.index}"
-      KubernetesCluster = "${var.cluster_name}"
-  }
+  tags = "${map("Name", "${var.cluster_name}-controller-${count.index}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 
   instance_type = "${var.controller_type}"
 
@@ -92,7 +89,7 @@ resource "aws_security_group" "controller" {
 
   vpc_id = "${aws_vpc.network.id}"
 
-  tags = "${map("Name", "${var.cluster_name}-controller")}"
+  tags = "${map("Name", "${var.cluster_name}-controller", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_security_group_rule" "controller-icmp" {
