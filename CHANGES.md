@@ -4,13 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.8.5
+
 * Kubernetes [v1.8.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#v185)
 * Recommend Container Linux [images](https://coreos.com/releases/) with Docker 17.09
   * Container Linux stable, beta, and alpha now provide Docker 17.09 (instead
-  of 1.12). Recommend images which provide 17.09.
-  * Older clusters (with CLUO addon) auto-update node's Container Linux version
-  and will begin using Docker 17.09.
+  of 1.12)
+  * Older clusters (with CLUO addon) auto-update Container Linux version to begin using Docker 17.09
 * Fix race where `etcd-member.service` could fail to resolve peers ([#69](https://github.com/poseidon/typhoon/pull/69)) 
+* Add optional `cluster_domain_suffix` variable (#74)
 * Use kubernetes-incubator/bootkube v0.9.1
 
 #### Bare-Metal
@@ -19,7 +21,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Deploying the Kubernetes Dashboard is discouraged
+* Discourage deploying the Kubernetes Dashboard (security)
 
 ## v1.8.4
 
