@@ -15,11 +15,10 @@ resource "aws_route53_record" "etcds" {
 
 # Controller instances
 resource "aws_instance" "controllers" {
+  depends_on = ["aws_iam_role.controller_role"]
   count = "${var.controller_count}"
 
-  tags = {
-    Name = "${var.cluster_name}-controller-${count.index}"
-  }
+  tags = "${map("Name", "${var.cluster_name}-controller-${count.index}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 
   instance_type = "${var.controller_type}"
 
@@ -36,6 +35,9 @@ resource "aws_instance" "controllers" {
   associate_public_ip_address = true
   subnet_id                   = "${element(aws_subnet.public.*.id, count.index)}"
   vpc_security_group_ids      = ["${aws_security_group.controller.id}"]
+
+  # iam
+  iam_instance_profile = "${aws_iam_instance_profile.controller_profile.name}"
 }
 
 # Controller Container Linux Config
@@ -58,6 +60,7 @@ data "template_file" "controller_config" {
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
     kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
     kubeconfig_server       = "${module.bootkube.server}"
+    cloud_provider          = "${var.cloud_provider}"
   }
 }
 
@@ -86,7 +89,7 @@ resource "aws_security_group" "controller" {
 
   vpc_id = "${aws_vpc.network.id}"
 
-  tags = "${map("Name", "${var.cluster_name}-controller")}"
+  tags = "${map("Name", "${var.cluster_name}-controller", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_security_group_rule" "controller-icmp" {

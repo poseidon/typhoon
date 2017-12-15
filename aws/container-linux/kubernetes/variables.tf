@@ -3,6 +3,12 @@ variable "cluster_name" {
   description = "Cluster name"
 }
 
+variable "cloud_provider" {
+  type        = "string"
+  description = "The cloud provider"
+  default = "aws"
+}
+
 variable "dns_zone" {
   type        = "string"
   description = "AWS DNS Zone (e.g. aws.dghubble.io)"
@@ -22,6 +28,12 @@ variable "os_channel" {
   type        = "string"
   default     = "stable"
   description = "Container Linux AMI channel (stable, beta, alpha)"
+}
+
+variable "os_version" {
+  type        = "string"
+  default     = ""
+  description = "Container Linux OS version (for example 1548.0.0). Latest if empty."
 }
 
 variable "disk_size" {

@@ -22,11 +22,23 @@ resource "aws_autoscaling_group" "workers" {
     ignore_changes        = ["image_id"]
   }
 
-  tags = [{
-    key                 = "Name"
-    value               = "${var.cluster_name}-worker"
-    propagate_at_launch = true
-  }]
+  tags = [
+    {
+      key                 = "Name"
+      value               = "${var.cluster_name}-worker"
+      propagate_at_launch = true
+    },
+    {
+      key = "kubernetes.io/cluster/${var.cluster_name}"
+      value = "owned"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "KubernetesCluster"
+      value               = "${var.cluster_name}"
+      propagate_at_launch = true
+    }
+  ]
 }
 
 # Worker template
@@ -41,6 +53,9 @@ resource "aws_launch_configuration" "worker" {
     volume_type = "standard"
     volume_size = "${var.disk_size}"
   }
+
+  # iam
+  iam_instance_profile = "${aws_iam_instance_profile.worker_profile.name}"
 
   # network
   security_groups = ["${aws_security_group.worker.id}"]
@@ -63,6 +78,7 @@ data "template_file" "worker_config" {
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
     kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
     kubeconfig_server       = "${module.bootkube.server}"
+    cloud_provider          = "${var.cloud_provider}"
   }
 }
 
@@ -79,7 +95,7 @@ resource "aws_security_group" "worker" {
 
   vpc_id = "${aws_vpc.network.id}"
 
-  tags = "${map("Name", "${var.cluster_name}-worker")}"
+  tags = "${map("Name", "${var.cluster_name}-worker", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_security_group_rule" "worker-icmp" {

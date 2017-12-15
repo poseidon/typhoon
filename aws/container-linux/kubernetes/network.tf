@@ -8,13 +8,13 @@ resource "aws_vpc" "network" {
   enable_dns_support               = true
   enable_dns_hostnames             = true
 
-  tags = "${map("Name", "${var.cluster_name}")}"
+  tags = "${map("Name", "${var.cluster_name}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_internet_gateway" "gateway" {
   vpc_id = "${aws_vpc.network.id}"
 
-  tags = "${map("Name", "${var.cluster_name}")}"
+  tags = "${map("Name", "${var.cluster_name}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_route_table" "default" {
@@ -30,7 +30,7 @@ resource "aws_route_table" "default" {
     gateway_id      = "${aws_internet_gateway.gateway.id}"
   }
 
-  tags = "${map("Name", "${var.cluster_name}")}"
+  tags = "${map("Name", "${var.cluster_name}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 # Subnets (one per availability zone)
@@ -46,7 +46,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch         = true
   assign_ipv6_address_on_creation = true
 
-  tags = "${map("Name", "${var.cluster_name}-public-${count.index}")}"
+  tags = "${map("Name", "${var.cluster_name}-public-${count.index}", "kubernetes.io/role/elb", "" , "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
 }
 
 resource "aws_route_table_association" "public" {

@@ -14,6 +14,6 @@ data "aws_ami" "coreos" {
 
   filter {
     name   = "name"
-    values = ["CoreOS-${var.os_channel}-*"]
+    values = ["CoreOS-${var.os_channel}-${var.os_version}*"]
   }
 }
