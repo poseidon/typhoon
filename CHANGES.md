@@ -11,6 +11,7 @@ Notable changes between versions.
   * Older clusters (with CLUO addon) auto-update node's Container Linux version
   and will begin using Docker 17.09.
 * Fix race where `etcd-member.service` could fail to resolve peers ([#69](https://github.com/poseidon/typhoon/pull/69)) 
+* BBR is enabled as the default traffic congestion algorithm.
 
 #### Bare-Metal
 
