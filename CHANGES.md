@@ -11,6 +11,7 @@ Notable changes between versions.
   * Older clusters (with CLUO addon) auto-update node's Container Linux version
   and will begin using Docker 17.09.
 * Fix race where `etcd-member.service` could fail to resolve peers ([#69](https://github.com/poseidon/typhoon/pull/69)) 
+* Use kubernetes-incubator/bootkube v0.9.1
 
 #### Bare-Metal
 
