@@ -65,8 +65,8 @@ variable "kernel_args" {
   ]
 }
 
-variable "cluster_dns_fqdn" {
-  description = "FQDN root for DNS resolution for Kubernetes services. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+variable "cluster_domain_suffix" {
+  description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
 }

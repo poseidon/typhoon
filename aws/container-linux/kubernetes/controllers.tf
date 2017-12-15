@@ -54,7 +54,7 @@ data "template_file" "controller_config" {
 
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
     ssh_authorized_key      = "${var.ssh_authorized_key}"
-    cluster_dns_fqdn        = "${var.cluster_dns_fqdn}"
+    cluster_domain_suffix   = "${var.cluster_domain_suffix}"
     kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
     kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
