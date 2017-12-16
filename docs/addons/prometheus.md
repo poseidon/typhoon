@@ -61,7 +61,7 @@ Use `kubectl` to authenticate to the apiserver and create a local port-forward t
 kubectl port-forward grafana-POD-ID 8080 -n monitoring
 ```
 
-Visit [127.0.0.1:8080](http://127.0.0.1:8080), add the prometheus data-source (http://prometheus.monitoring.svc.cluster.local), and import your desired dashboard (e.g. 315).
+Visit [127.0.0.1:8080](http://127.0.0.1:8080), add the prometheus data-source (http://prometheus.monitoring.svc.cluster.local), and import your desired dashboard (e.g. [Grafana Dashboard 315](https://grafana.com/dashboards/315)).
 
 ![Grafana Dashboard](/img/grafana-dashboard.png)
 
