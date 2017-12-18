@@ -18,7 +18,7 @@ resource "aws_instance" "controllers" {
   depends_on = ["aws_iam_role.controller_role"]
   count = "${var.controller_count}"
 
-  tags = "${map("Name", "${var.cluster_name}-controller-${count.index}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}")}"
+  tags = "${map("Name", "${var.cluster_name}-controller-${count.index}", "kubernetes.io/cluster/${var.cluster_name}", "owned", "KubernetesCluster", "${var.cluster_name}", "kubernetes.io/role/master", "")}"
 
   instance_type = "${var.controller_type}"
 
