@@ -1,6 +1,6 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.8.5 cluster on Google Compute Engine (not GKE).
+In this tutorial, we'll create a Kubernetes v1.8.6 cluster on Google Compute Engine (not GKE).
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a network, firewall rules, managed instance groups of Kubernetes controllers and workers, network load balancers for controllers and workers, and health checks will be created.
 
@@ -154,9 +154,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 $ KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                          STATUS   AGE    VERSION
-yavin-controller-0.c.example-com.internal     Ready    6m     v1.8.5
-yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.8.5
-yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.8.5
+yavin-controller-0.c.example-com.internal     Ready    6m     v1.8.6
+yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.8.6
+yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.8.6
 ```
 
 List the pods.
