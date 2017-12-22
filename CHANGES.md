@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.8.6
+
 * Kubernetes [v1.8.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#v186)
 
 ## v1.8.5
