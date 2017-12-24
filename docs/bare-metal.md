@@ -160,7 +160,7 @@ module "bare-metal-mercury" {
   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes"
   
   # install
-  matchbox_http_endpoint  = "http://matchbox.example.com"
+  matchbox_http_endpoint  = "http://matchbox.example.com:8080"
   container_linux_channel = "stable"
   container_linux_version = "1576.4.0"
   ssh_authorized_key      = "ssh-rsa AAAAB3Nz..."
