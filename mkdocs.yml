@@ -1,13 +1,11 @@
 site_name: Typhoon
-theme: material
-site_favicon: 'img/favicon.ico'
-repo_name: 'poseidon/typhoon'
-repo_url: 'https://github.com/poseidon/typhoon'
-extra:
+theme:
+  name: 'material'
   palette:
     primary: 'blue'
     accent: 'light blue'
   logo: 'img/spin.png'
+  favicon: 'img/favicon.ico'
   font:
     text: 'Roboto Slab'
     code: 'Roboto Mono'
@@ -16,6 +14,8 @@ extra:
       link: 'https://github.com/poseidon'
     - type: 'twitter'
       link: 'https://twitter.com/typhoon8s'
+repo_name: 'poseidon/typhoon'
+repo_url: 'https://github.com/poseidon/typhoon'
 google_analytics:
   - 'UA-38995133-6'
   - 'auto'
