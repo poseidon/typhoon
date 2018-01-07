@@ -6,7 +6,7 @@ resource "azurerm_dns_a_record" "etcds" {
 
   name                = "${format("%s-etcd%d", var.cluster_name, count.index)}"
   zone_name           = "${var.dns_zone}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${var.dns_zone_rg}"
   ttl                 = 60
   records             = ["${element(azurerm_network_interface.controller.*.private_ip_address, count.index)}"]
 }
@@ -78,7 +78,7 @@ resource "azurerm_virtual_machine" "controller" {
   }
 }
 
-# controller NIC
+# Controller NIC
 resource "azurerm_network_interface" "controller" {
   count = "${var.controller_count}"
 
@@ -92,8 +92,23 @@ resource "azurerm_network_interface" "controller" {
     name                                    = "controllerIPConfig"
     subnet_id                               = "${azurerm_subnet.public.id}"
     private_ip_address_allocation           = "dynamic"
-    load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.ingress.id}"]
+    public_ip_address_id                    = "${element(azurerm_public_ip.controller.*.id, count.index)}"
+    load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.apiserver.id}"]
   }
+  tags {
+    name = "${var.cluster_name}"
+  }
+}
+
+# Controller Public IP
+resource "azurerm_public_ip" "controller" {
+  count = "${var.controller_count}"
+
+  name                         = "${var.cluster_name}-pip-controller-${count.index}"
+  location                     = "${var.location}"
+  resource_group_name          = "${azurerm_resource_group.resource_group.name}"
+  public_ip_address_allocation = "static"
+
   tags {
     name = "${var.cluster_name}"
   }
@@ -325,4 +340,3 @@ resource "aws_security_group_rule" "controller-egress" {
   ipv6_cidr_blocks = ["::/0"]
 }
 */
-
