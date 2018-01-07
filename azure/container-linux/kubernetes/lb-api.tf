@@ -47,6 +47,8 @@ resource "azurerm_lb_rule" "apiserver" {
 
   # TODO: Parameterize
   frontend_ip_configuration_name = "apiserver"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.apiserver.id}"
+  probe_id                       = "${azurerm_lb_probe.apiserver.id}"
 }
 
 resource "azurerm_lb_probe" "apiserver" {
