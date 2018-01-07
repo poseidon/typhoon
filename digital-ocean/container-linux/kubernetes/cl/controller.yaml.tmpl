@@ -54,7 +54,7 @@ systemd:
     - name: kubelet.service
       contents: |
         [Unit]
-        Description=Kubelet via Hyperkube ACI
+        Description=Kubelet via Hyperkube
         Requires=coreos-metadata.service
         After=coreos-metadata.service
         Wants=rpc-statd.service

@@ -22,7 +22,7 @@ systemd:
       enable: true
       contents: |
         [Unit]
-        Description=Kubelet via Hyperkube ACI
+        Description=Kubelet via Hyperkube
         Wants=rpc-statd.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
