@@ -287,7 +287,7 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 [Install kubectl](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) on your system. Use the generated `kubeconfig` credentials to access the Kubernetes cluster and list nodes.
 
 ```
-$ KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
+$ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS    AGE       VERSION
 node1.example.com   Ready     11m       v1.9.1

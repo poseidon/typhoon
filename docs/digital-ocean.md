@@ -144,7 +144,7 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 [Install kubectl](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) on your system. Use the generated `kubeconfig` credentials to access the Kubernetes cluster and list nodes.
 
 ```
-$ KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
+$ export KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION
 10.132.110.130   Ready     10m       v1.9.1
