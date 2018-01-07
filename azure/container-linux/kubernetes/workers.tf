@@ -5,6 +5,7 @@ resource "azurerm_availability_set" "workers" {
   name                = "${var.cluster_name}-workers"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  managed             = true
 
   tags {
     name = "${var.cluster_name}-worker"
