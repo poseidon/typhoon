@@ -61,7 +61,7 @@ resource "azurerm_virtual_machine" "controller" {
     computer_name  = "${var.cluster_name}-controller-${count.index}"
     admin_username = "core"
     admin_password = ""
-    custom_data    = "${data.ct_config.controller_ign.rendered}"
+    custom_data    = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
   }
 
   os_profile_linux_config {
