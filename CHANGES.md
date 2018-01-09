@@ -5,10 +5,16 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.9.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v191)
+* Update kube-dns from 1.14.5 to v1.14.7
+* Update etcd from 3.2.0 to 3.2.13
+* Update Calico from v2.6.4 to v2.6.5
+* Enable portmap to fix hostPort with Calico
+* Service account for controller-manager
 
 ## v1.8.6
 
 * Kubernetes [v1.8.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.8.md#v186)
+* Update Calico from v2.6.3 to v2.6.4
 
 ## v1.8.5
 
