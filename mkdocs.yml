@@ -52,6 +52,7 @@ pages:
     - 'Prometheus': 'addons/prometheus.md'
     - 'Dashboard': 'addons/dashboard.md'
   - 'Topics':
+    - 'Maintenance': 'topics/maintenance.md'
     - 'Hardware': 'topics/hardware.md'
     - 'Security': 'topics/security.md'
     - 'Performance': 'topics/performance.md'
