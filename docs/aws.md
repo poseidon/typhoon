@@ -10,15 +10,15 @@ Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube
 
 * AWS Account and IAM credentials
 * AWS Route53 DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.10.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
+* Terraform v0.11.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.10.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.10.7
+Terraform v0.11.1
 ```
 
 Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
@@ -57,8 +57,31 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
+  version = "~> 1.5.0"
+  alias   = "default"
+
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
+}
+
+provider "local" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "null" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "template" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "tls" {
+  version = "~> 1.0"
+  alias = "default"
 }
 ```
 
@@ -75,6 +98,14 @@ Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
 module "aws-tempest" {
   source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes"
 
+  providers = {
+    aws = "aws.default"
+    local = "local.default"
+    null = "null.default"
+    template = "template.default"
+    tls = "tls.default"
+  }
+  
   cluster_name = "tempest"
 
   # AWS

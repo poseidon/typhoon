@@ -12,7 +12,7 @@ Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kub
 * PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment
 * Matchbox v0.6+ deployment with API enabled
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
-* Terraform v0.10.x and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
+* Terraform v0.11.x and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
 
 ## Machines
 
@@ -109,11 +109,11 @@ Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.10.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.10.7
+Terraform v0.11.1
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system.
@@ -149,6 +149,26 @@ provider "matchbox" {
   client_key  = "${file("~/.config/matchbox/client.key")}"
   ca          = "${file("~/.config/matchbox/ca.crt")}"
 }
+
+provider "local" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "null" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "template" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "tls" {
+  version = "~> 1.0"
+  alias = "default"
+}
 ```
 
 ## Cluster
@@ -158,6 +178,13 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 ```tf
 module "bare-metal-mercury" {
   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes"
+  
+  providers = {
+    local = "local.default"
+    null = "null.default"
+    template = "template.default"
+    tls = "tls.default"
+  }
   
   # install
   matchbox_http_endpoint  = "http://matchbox.example.com"

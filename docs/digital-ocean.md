@@ -10,15 +10,15 @@ Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube
 
 * Digital Ocean Account and Token
 * Digital Ocean Domain (registered Domain Name or delegated subdomain)
-* Terraform v0.10.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
+* Terraform v0.11.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.10.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.10.7
+Terraform v0.11.1
 ```
 
 Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
@@ -58,7 +58,29 @@ Configure the DigitalOcean provider to use your token in a `providers.tf` file.
 
 ```tf
 provider "digitalocean" {
+  version = "0.1.2"
   token = "${chomp(file("~/.config/digital-ocean/token"))}"
+  alias = "default"
+}
+
+provider "local" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "null" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "template" {
+  version = "~> 1.0"
+  alias = "default"
+}
+
+provider "tls" {
+  version = "~> 1.0"
+  alias = "default"
 }
 ```
 
@@ -69,6 +91,14 @@ Define a Kubernetes cluster using the module `digital-ocean/container-linux/kube
 ```tf
 module "digital-ocean-nemo" {
   source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes"
+  
+  providers = {
+    digitalocean = "digitalocean.default"
+    local = "local.default"
+    null = "null.default"
+    template = "template.default"
+    tls = "tls.default"
+  }
 
   region   = "nyc3"
   dns_zone = "digital-ocean.example.com"
