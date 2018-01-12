@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from 3.2.13 to 3.2.14
+
+## v1.9.1
+
 * Kubernetes [v1.9.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v191)
 * Update kube-dns from 1.14.5 to v1.14.7
 * Update etcd from 3.2.0 to 3.2.13
