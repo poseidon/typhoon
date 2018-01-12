@@ -5,6 +5,8 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from 3.2.13 to 3.2.14
+* Update kube-dns from v1.14.7 to v1.14.8
+* Use separate service account for kube-dns
 
 ## v1.9.1
 
@@ -13,7 +15,7 @@ Notable changes between versions.
 * Update etcd from 3.2.0 to 3.2.13
 * Update Calico from v2.6.4 to v2.6.5
 * Enable portmap to fix hostPort with Calico
-* Service account for controller-manager
+* Use separate service account for controller-manager
 
 ## v1.8.6
 
