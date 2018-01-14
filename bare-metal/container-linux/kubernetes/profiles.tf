@@ -1,6 +1,8 @@
 // Container Linux Install profile (from release.core-os.net)
 resource "matchbox_profile" "container-linux-install" {
-  name   = "container-linux-install"
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+  name  = "${format("%s-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
+
   kernel = "http://${var.container_linux_channel}.release.core-os.net/amd64-usr/${var.container_linux_version}/coreos_production_pxe.vmlinuz"
 
   initrd = [
@@ -16,10 +18,12 @@ resource "matchbox_profile" "container-linux-install" {
     "${var.kernel_args}",
   ]
 
-  container_linux_config = "${data.template_file.container-linux-install-config.rendered}"
+  container_linux_config = "${element(data.template_file.container-linux-install-configs.*.rendered, count.index)}"
 }
 
-data "template_file" "container-linux-install-config" {
+data "template_file" "container-linux-install-configs" {
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+
   template = "${file("${path.module}/cl/container-linux-install.yaml.tmpl")}"
 
   vars {
@@ -37,7 +41,9 @@ data "template_file" "container-linux-install-config" {
 // Container Linux Install profile (from matchbox /assets cache)
 // Note: Admin must have downloaded container_linux_version into matchbox assets.
 resource "matchbox_profile" "cached-container-linux-install" {
-  name   = "cached-container-linux-install"
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+  name  = "${format("%s-cached-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
+
   kernel = "/assets/coreos/${var.container_linux_version}/coreos_production_pxe.vmlinuz"
 
   initrd = [
@@ -53,10 +59,12 @@ resource "matchbox_profile" "cached-container-linux-install" {
     "${var.kernel_args}",
   ]
 
-  container_linux_config = "${data.template_file.cached-container-linux-install-config.rendered}"
+  container_linux_config = "${element(data.template_file.cached-container-linux-install-configs.*.rendered, count.index)}"
 }
 
-data "template_file" "cached-container-linux-install-config" {
+data "template_file" "cached-container-linux-install-configs" {
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+
   template = "${file("${path.module}/cl/container-linux-install.yaml.tmpl")}"
 
   vars {

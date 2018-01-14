@@ -12,6 +12,12 @@ Notable changes between versions.
 * Update kube-dns from v1.14.7 to v1.14.8
 * Use separate service account for kube-dns
 
+#### Bare-Metal
+
+* Use per-node Container Linux install profiles ([#97](https://github.com/poseidon/typhoon/pull/97))
+  * Allow Container Linux channel/version to be chosen per-cluster
+  * Fix issue where cluster deletion could require `terraform apply` multiple times
+
 ## v1.9.1
 
 * Kubernetes [v1.9.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v191)

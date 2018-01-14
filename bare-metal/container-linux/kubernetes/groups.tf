@@ -3,7 +3,7 @@ resource "matchbox_group" "container-linux-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
 
   name    = "${format("container-linux-install-%s", element(concat(var.controller_names, var.worker_names), count.index))}"
-  profile = "${var.cached_install == "true" ? matchbox_profile.cached-container-linux-install.name : matchbox_profile.container-linux-install.name}"
+  profile = "${var.cached_install == "true" ? element(matchbox_profile.cached-container-linux-install.*.name, count.index) : element(matchbox_profile.container-linux-install.*.name, count.index)}"
 
   selector {
     mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
