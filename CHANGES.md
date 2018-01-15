@@ -12,6 +12,11 @@ Notable changes between versions.
 * Update kube-dns from v1.14.7 to v1.14.8
 * Use separate service account for kube-dns
 
+#### Addons
+
+* Update kube-state-metrics from v1.1.0 to v1.2.0
+* Fix RBAC cluster role for kube-state-metrics
+
 #### Bare-Metal
 
 * Use per-node Container Linux install profiles ([#97](https://github.com/poseidon/typhoon/pull/97))
