@@ -1,0 +1,17 @@
+# Terraform files
+.terraform
+terraform.tfstate
+terraform.tfvars
+*.tfstate*
+crash.log
+
+# OS X files
+.history
+.DS_Store
+
+# Cache objects
+packer_cache/
+
+# creadentials
+assets
+
