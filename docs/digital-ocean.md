@@ -58,7 +58,7 @@ Configure the DigitalOcean provider to use your token in a `providers.tf` file.
 
 ```tf
 provider "digitalocean" {
-  version = "0.1.2"
+  version = "0.1.3"
   token = "${chomp(file("~/.config/digital-ocean/token"))}"
   alias = "default"
 }

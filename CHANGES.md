@@ -23,6 +23,10 @@ Notable changes between versions.
   * Allow Container Linux channel/version to be chosen per-cluster
   * Fix issue where cluster deletion could require `terraform apply` multiple times
 
+#### Digital Ocean
+
+* Relax `digitalocean` provider version constraint
+
 ## v1.9.1
 
 * Kubernetes [v1.9.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v191)
