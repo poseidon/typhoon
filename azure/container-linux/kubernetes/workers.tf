@@ -111,7 +111,7 @@ resource "azurerm_network_interface" "worker" {
 
   ip_configuration {
     name                                    = "workerIPConfig"
-    subnet_id                               = "${azurerm_subnet.public.id}"
+    subnet_id                               = "${azurerm_subnet.worker.id}"
     private_ip_address_allocation           = "dynamic"
     load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.ingress.id}"]
   }
@@ -165,159 +165,213 @@ data "ct_config" "worker_ign" {
 }
 
 # Security Group (instance firewall)
+resource "azurerm_network_security_group" "worker" {
+  name                = "${var.cluster_name}-worker"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.resource_group.name}"
 
+  tags {
+    name = "${var.cluster_name}-worker"
+  }
+}
 
-# TODO: Add security rules
+resource "azurerm_network_security_rule" "worker-egress" {
+  name                        = "worker-egress"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-ssh" {
+  name                        = "worker-ssh"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-http" {
+  name                        = "worker-http"
+  priority                    = 150
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-https" {
+  name                        = "worker-https"
+  priority                    = 200
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-flannel" {
+  name                        = "worker-flannel"
+  priority                    = 250
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "UDP"
+  source_port_range           = "*"
+  destination_port_range      = "8472"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-flannel-self" {
+  name                        = "worker-flannel-self"
+  priority                    = 300
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "UDP"
+  source_port_range           = "*"
+  destination_port_range      = "8472"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-node-exporter" {
+  name                        = "worker-node-exporter"
+  priority                    = 350
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "9100"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-kubelet" {
+  name                        = "worker-kubelet"
+  priority                    = 400
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10250"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-kubelet-self" {
+  name                        = "worker-kubelet-self"
+  priority                    = 450
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10250"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-kubelet-read" {
+  name                        = "worker-kubelet-read"
+  priority                    = 500
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10255"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-kubelet-read-self" {
+  name                        = "worker-kubelet-read-self"
+  priority                    = 550
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10255"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "ingress-health-self" {
+  name                        = "ingress-health-self"
+  priority                    = 600
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10254"
+  source_address_prefix       = "AzureLoadBalancer"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-bgp" {
+  name                        = "worker-bgp"
+  priority                    = 650
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "179"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
+resource "azurerm_network_security_rule" "worker-bgp-self" {
+  name                        = "worker-bgp-self"
+  priority                    = 700
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "179"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.worker_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.worker.name}"
+}
+
 /*
-resource "aws_security_group" "worker" {
-  name        = "${var.cluster_name}-worker"
-  description = "${var.cluster_name} worker security group"
-
-  vpc_id = "${aws_vpc.network.id}"
-
-  tags = "${map("Name", "${var.cluster_name}-worker")}"
-}
-
-resource "aws_security_group_rule" "worker-icmp" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "icmp"
-  from_port   = 0
-  to_port     = 0
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "worker-ssh" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 22
-  to_port     = 22
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "worker-http" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 80
-  to_port     = 80
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "worker-https" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 443
-  to_port     = 443
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "worker-flannel" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = "udp"
-  from_port                = 8472
-  to_port                  = 8472
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-flannel-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "udp"
-  from_port = 8472
-  to_port   = 8472
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-node-exporter" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 9100
-  to_port     = 9100
-  self = true
-}
-
-resource "aws_security_group_rule" "worker-kubelet" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 10250
-  to_port                  = 10250
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-kubelet-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10250
-  to_port   = 10250
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-kubelet-read" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 10255
-  to_port                  = 10255
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-kubelet-read-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10255
-  to_port   = 10255
-  self      = true
-}
-
-resource "aws_security_group_rule" "ingress-health-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10254
-  to_port   = 10254
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-bgp" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 179
-  to_port                  = 179
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-bgp-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 179
-  to_port   = 179
-  self      = true
-}
-
 resource "aws_security_group_rule" "worker-ipip" {
   security_group_id = "${aws_security_group.worker.id}"
 
@@ -357,16 +411,4 @@ resource "aws_security_group_rule" "worker-ipip-legacy-self" {
   to_port   = 0
   self      = true
 }
-
-resource "aws_security_group_rule" "worker-egress" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type             = "egress"
-  protocol         = "-1"
-  from_port        = 0
-  to_port          = 0
-  cidr_blocks      = ["0.0.0.0/0"]
-  ipv6_cidr_blocks = ["::/0"]
-}
 */
-

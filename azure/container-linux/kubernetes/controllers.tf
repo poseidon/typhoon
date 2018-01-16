@@ -90,7 +90,7 @@ resource "azurerm_network_interface" "controller" {
 
   ip_configuration {
     name                                    = "controllerIPConfig"
-    subnet_id                               = "${azurerm_subnet.public.id}"
+    subnet_id                               = "${azurerm_subnet.controller.id}"
     private_ip_address_allocation           = "dynamic"
     public_ip_address_id                    = "${element(azurerm_public_ip.controller.*.id, count.index)}"
     load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.apiserver.id}"]
@@ -156,139 +156,185 @@ data "ct_config" "controller_ign" {
 }
 
 # Security Group (instance firewall)
+resource "azurerm_network_security_group" "controller" {
+  name                = "${var.cluster_name}-controller"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.resource_group.name}"
 
+  tags {
+    name = "${var.cluster_name}-controller"
+  }
+}
 
-# TODO: Add security rules
+resource "azurerm_network_security_rule" "controller-egress" {
+  name                        = "controller-egress"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-ssh" {
+  name                        = "controller-ssh"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-apiserver" {
+  name                        = "controller-apiserver"
+  priority                    = 150
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "443"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-etcd" {
+  name                        = "controller-etcd"
+  priority                    = 200
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "2379-2380"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-flannel" {
+  name                        = "controller-flannel"
+  priority                    = 250
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "UDP"
+  source_port_range           = "*"
+  destination_port_range      = "8472"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-flannel-self" {
+  name                        = "controller-flannel-self"
+  priority                    = 300
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "UDP"
+  source_port_range           = "*"
+  destination_port_range      = "8472"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-node-exporter" {
+  name                        = "controller-node-exporter"
+  priority                    = 350
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "9100"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-kubelet" {
+  name                        = "controller-kubelet"
+  priority                    = 400
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10250"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-kubelet-read" {
+  name                        = "controller-kubelet-read"
+  priority                    = 450
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10255"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-kubelet-read-self" {
+  name                        = "controller-kubelet-read-self"
+  priority                    = 500
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "10255"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-bgp" {
+  name                        = "controller-bgp"
+  priority                    = 550
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "179"
+  source_address_prefix       = "${var.worker_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
+resource "azurerm_network_security_rule" "controller-bgp-self" {
+  name                        = "controller-bgp-self"
+  priority                    = 600
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "TCP"
+  source_port_range           = "*"
+  destination_port_range      = "179"
+  source_address_prefix       = "${var.controller_cidr}"
+  destination_address_prefix  = "${var.controller_cidr}"
+  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  network_security_group_name = "${azurerm_network_security_group.controller.name}"
+}
+
 /*
-resource "aws_security_group" "controller" {
-  name        = "${var.cluster_name}-controller"
-  description = "${var.cluster_name} controller security group"
-
-  vpc_id = "${aws_vpc.network.id}"
-
-  tags = "${map("Name", "${var.cluster_name}-controller")}"
-}
-
-resource "aws_security_group_rule" "controller-icmp" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type        = "ingress"
-  protocol    = "icmp"
-  from_port   = 0
-  to_port     = 0
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "controller-ssh" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 22
-  to_port     = 22
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "controller-apiserver" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type        = "ingress"
-  protocol    = "tcp"
-  from_port   = 443
-  to_port     = 443
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "controller-etcd" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 2379
-  to_port   = 2380
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-flannel" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = "udp"
-  from_port                = 8472
-  to_port                  = 8472
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-flannel-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "udp"
-  from_port = 8472
-  to_port   = 8472
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-node-exporter" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 9100
-  to_port                  = 9100
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-kubelet-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10250
-  to_port   = 10250
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-kubelet-read" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 10255
-  to_port                  = 10255
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-kubelet-read-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10255
-  to_port   = 10255
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-bgp" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 179
-  to_port                  = 179
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-bgp-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 179
-  to_port   = 179
-  self      = true
-}
-
 resource "aws_security_group_rule" "controller-ipip" {
   security_group_id = "${aws_security_group.controller.id}"
 
@@ -327,16 +373,5 @@ resource "aws_security_group_rule" "controller-ipip-legacy-self" {
   from_port = 0
   to_port   = 0
   self      = true
-}
-
-resource "aws_security_group_rule" "controller-egress" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type             = "egress"
-  protocol         = "-1"
-  from_port        = 0
-  to_port          = 0
-  cidr_blocks      = ["0.0.0.0/0"]
-  ipv6_cidr_blocks = ["::/0"]
 }
 */

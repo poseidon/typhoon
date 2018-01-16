@@ -1,3 +1,4 @@
+# TODO: Update variables for Azure
 variable "location" {
   type        = "string"
   description = "Azure location to create resources"
@@ -41,6 +42,12 @@ variable "host_cidr" {
   default     = "10.0.0.0/16"
 }
 
+variable "controller_cidr" {
+  description = "CIDR IPv4 range to assign to EC2 nodes"
+  type        = "string"
+  default     = "10.0.1.0/24"
+}
+
 variable "controller_count" {
   type        = "string"
   default     = "1"
@@ -51,6 +58,12 @@ variable "controller_type" {
   type        = "string"
   default     = "t2.small"
   description = "Controller EC2 instance type"
+}
+
+variable "worker_cidr" {
+  description = "CIDR IPv4 range to assign to EC2 nodes"
+  type        = "string"
+  default     = "10.0.2.0/24"
 }
 
 variable "worker_count" {

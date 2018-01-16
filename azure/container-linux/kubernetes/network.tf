@@ -2,7 +2,7 @@
 
 # Network VPC, gateway, and routes
 
-resource "azurerm_virtual_network" "network" {
+resource "azurerm_virtual_network" "vnet" {
   name                = "${var.cluster_name}-vnet"
   resource_group_name = "${azurerm_resource_group.resource_group.name}"
   address_space       = ["${var.host_cidr}"]
@@ -13,17 +13,23 @@ resource "azurerm_virtual_network" "network" {
 
 # TODO: Assess need for routes & route tables
 
-# Subnets (one per availability zone)
+# Subnets
+resource "azurerm_subnet" "controller" {
+  name                      = "${var.cluster_name}-controller"
+  resource_group_name       = "${azurerm_resource_group.resource_group.name}"
+  virtual_network_name      = "${azurerm_virtual_network.vnet.name}"
+  address_prefix            = "${var.controller_cidr}"
+  network_security_group_id = "${azurerm_network_security_group.controller.id}"
 
-# TODO: Assess need for public and private subnets
-resource "azurerm_subnet" "public" {
-  name                 = "${var.cluster_name}-public"
-  resource_group_name  = "${azurerm_resource_group.resource_group.name}"
-  virtual_network_name = "${azurerm_virtual_network.network.name}"
+  # TODO: route_table_id
+}
 
-  # TODO: Parameterize
-  address_prefix = "10.0.1.0/24"
+resource "azurerm_subnet" "worker" {
+  name                      = "${var.cluster_name}-worker"
+  resource_group_name       = "${azurerm_resource_group.resource_group.name}"
+  virtual_network_name      = "${azurerm_virtual_network.vnet.name}"
+  address_prefix            = "${var.worker_cidr}"
+  network_security_group_id = "${azurerm_network_security_group.worker.id}"
 
-  # TODO: network_security_group_id
   # TODO: route_table_id
 }
