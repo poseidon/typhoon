@@ -22,12 +22,12 @@ resource "digitalocean_firewall" "rules" {
     },
     {
       protocol    = "udp"
-      port_range  = "all"
+      port_range  = "1-65535"
       source_tags = ["${digitalocean_tag.controllers.name}", "${digitalocean_tag.workers.name}"]
     },
     {
       protocol    = "tcp"
-      port_range  = "all"
+      port_range  = "1-65535"
       source_tags = ["${digitalocean_tag.controllers.name}", "${digitalocean_tag.workers.name}"]
     },
   ]
@@ -35,17 +35,18 @@ resource "digitalocean_firewall" "rules" {
   # allow all outbound traffic
   outbound_rule = [
     {
-      protocol              = "icmp"
+      protocol              = "tcp"
+      port_range            = "1-65535"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
       protocol              = "udp"
-      port_range            = "all"
+      port_range            = "1-65535"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol              = "tcp"
-      port_range            = "all"
+      protocol              = "icmp"
+      port_range            = "1-65535"
       destination_addresses = ["0.0.0.0/0", "::/0"]
     },
   ]
