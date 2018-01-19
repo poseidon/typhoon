@@ -7,13 +7,15 @@ Notable changes between versions.
 * Add Terraform v0.11.x support
   * Add explicit "providers" section to modules for Terraform v0.11.x
   * Retain support for Terraform v0.10.4+
-* Add [migration guide](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md) from Terraform v0.10.x to v0.11.x (action required!)
+* Add [migration guide](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md) from Terraform v0.10.x to v0.11.x (**action required!**)
 * Update etcd from 3.2.13 to 3.2.14
 * Update kube-dns from v1.14.7 to v1.14.8
 * Use separate service account for kube-dns
 
 #### Addons
 
+* Update CLUO to v0.5.0 to fix compatibility with Kubernetes 1.9 (**important**)
+  * Earlier versions can't roll out Container Linux updates on Kubernetes 1.9 nodes ([cluo#163](https://github.com/coreos/container-linux-update-operator/issues/163))
 * Update kube-state-metrics from v1.1.0 to v1.2.0
 * Fix RBAC cluster role for kube-state-metrics
 
