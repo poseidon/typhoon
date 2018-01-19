@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.9.2
+
+* Kubernetes [v1.9.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v192)
 * Add Terraform v0.11.x support
   * Add explicit "providers" section to modules for Terraform v0.11.x
   * Retain support for Terraform v0.10.4+
