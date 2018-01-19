@@ -26,6 +26,10 @@ Notable changes between versions.
   * Fix issue where Azure defaults to `Deallocate` eviction policy, which required manually restarting deallocated instances. `Delete` policy aligns Azure with AWS and GCP behavior.
   * Require `terraform-provider-azurerm` v1.19+ (action required)
 
+#### Bare-Metal
+
+* Add Kubelet `/etc/iscsi` and `iscsadm` mounts on bare-metal for iSCSI ([#103](https://github.com/poseidon/typhoon/pull/103))
+
 #### Addons
 
 * Update nginx-ingress from v0.20.0 to v0.21.0

@@ -70,6 +70,10 @@ systemd:
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
           --volume var-log,kind=host,source=/var/log \
           --mount volume=var-log,target=/var/log \
+          --volume iscsiconf,kind=host,source=/etc/iscsi/ \
+          --mount volume=iscsiconf,target=/etc/iscsi/ \
+          --volume iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
+          --mount volume=iscsiadm,target=/sbin/iscsiadm \
           --insecure-options=image"
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
