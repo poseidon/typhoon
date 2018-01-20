@@ -144,7 +144,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.9.1 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.10.0 (update)
 ```
 
 Plan the resources to be created.

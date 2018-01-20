@@ -151,7 +151,7 @@ storage:
           # Move experimental manifests
           [ -n "$(ls /opt/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootkube/assets/manifests-*/* /opt/bootkube/assets/manifests && rm -rf /opt/bootkube/assets/manifests-*
           BOOTKUBE_ACI="$${BOOTKUBE_ACI:-quay.io/coreos/bootkube}"
-          BOOTKUBE_VERSION="$${BOOTKUBE_VERSION:-v0.9.1}"
+          BOOTKUBE_VERSION="$${BOOTKUBE_VERSION:-v0.10.0}"
           BOOTKUBE_ASSETS="$${BOOTKUBE_ASSETS:-/opt/bootkube/assets}"
           exec /usr/bin/rkt run \
             --trust-keys-from-https \

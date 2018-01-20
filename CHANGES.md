@@ -12,8 +12,10 @@ Notable changes between versions.
   * Retain support for Terraform v0.10.4+
 * Add [migration guide](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md) from Terraform v0.10.x to v0.11.x (**action required!**)
 * Update etcd from 3.2.13 to 3.2.14
+* Update calico from 2.6.5 to 2.6.6
 * Update kube-dns from v1.14.7 to v1.14.8
 * Use separate service account for kube-dns
+* Use kubernetes-incubator/bootkube v0.10.0
 
 #### Addons
 
