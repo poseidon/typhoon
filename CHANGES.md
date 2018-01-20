@@ -33,6 +33,7 @@ Notable changes between versions.
 #### Digital Ocean
 
 * Relax `digitalocean` provider version constraint
+* Fix bug with `terraform plan` always showing a firewall diff to be applied ([#3](https://github.com/poseidon/typhoon/issues/3))
 
 ## v1.9.1
 
