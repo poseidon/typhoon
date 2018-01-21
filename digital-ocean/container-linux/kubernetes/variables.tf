@@ -27,8 +27,8 @@ variable "controller_count" {
 
 variable "controller_type" {
   type        = "string"
-  default     = "2gb"
-  description = "Digital Ocean droplet size (e.g. 2gb (min), 4gb, 8gb)."
+  default     = "s-2vcpu-2gb"
+  description = "Digital Ocean droplet size (e.g. s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb)."
 }
 
 variable "worker_count" {
@@ -39,8 +39,8 @@ variable "worker_count" {
 
 variable "worker_type" {
   type        = "string"
-  default     = "512mb"
-  description = "Digital Ocean droplet size (e.g. 512mb, 1gb, 2gb, 4gb)"
+  default     = "s-1vcpu-1gb"
+  description = "Digital Ocean droplet size (e.g. s-1vcpu-1gb, s-1vcpu-2gb, s-2vcpu-2gb)"
 }
 
 variable "ssh_fingerprints" {
