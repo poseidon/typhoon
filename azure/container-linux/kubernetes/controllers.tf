@@ -1,4 +1,4 @@
-# TODO: Add support for Scale Sets
+# TODO: Add Scale Sets implementation once support exists: https://github.com/kubernetes/kubernetes/issues/43287
 
 # Discrete DNS records for each controller's private IPv4 for etcd usage
 resource "azurerm_dns_a_record" "etcds" {
@@ -15,7 +15,7 @@ resource "azurerm_dns_a_record" "etcds" {
 resource "azurerm_availability_set" "controllers" {
   name                = "${var.cluster_name}-controllers"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   managed             = true
 
   tags {
@@ -30,7 +30,7 @@ resource "azurerm_virtual_machine" "controller" {
   name                  = "${var.cluster_name}-controller-${count.index}"
   location              = "${var.location}"
   availability_set_id   = "${azurerm_availability_set.controllers.id}"
-  resource_group_name   = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name   = "${azurerm_resource_group.rg.name}"
   network_interface_ids = ["${azurerm_network_interface.controller.*.id[count.index]}"]
   vm_size               = "${var.controller_type}"
 
@@ -41,17 +41,13 @@ resource "azurerm_virtual_machine" "controller" {
     publisher = "CoreOS"
     offer     = "CoreOS"
     sku       = "${var.os_channel}"
-
-    # TODO: Parameterize
-    version = "latest"
+    version   = "latest"
   }
 
   storage_os_disk {
-    name          = "${var.cluster_name}-controller-${count.index}-os"
-    caching       = "ReadWrite"
-    create_option = "FromImage"
-
-    # TODO: Parameterize
+    name              = "${var.cluster_name}-controller-${count.index}-os"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
     os_type           = "linux"
     disk_size_gb      = "${var.disk_size}"
@@ -84,9 +80,7 @@ resource "azurerm_network_interface" "controller" {
 
   name                = "${var.cluster_name}-controller-${count.index}-nic"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
-
-  # TODO: network_security_group_id
+  resource_group_name = "${azurerm_resource_group.rg.name}"
 
   ip_configuration {
     name                                    = "controllerIPConfig"
@@ -95,6 +89,7 @@ resource "azurerm_network_interface" "controller" {
     public_ip_address_id                    = "${element(azurerm_public_ip.controller.*.id, count.index)}"
     load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.apiserver.id}"]
   }
+
   tags {
     name = "${var.cluster_name}"
   }
@@ -106,7 +101,7 @@ resource "azurerm_public_ip" "controller" {
 
   name                         = "${var.cluster_name}-pip-controller-${count.index}"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name          = "${azurerm_resource_group.rg.name}"
   public_ip_address_allocation = "static"
 
   tags {
@@ -159,7 +154,7 @@ data "ct_config" "controller_ign" {
 resource "azurerm_network_security_group" "controller" {
   name                = "${var.cluster_name}-controller"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
 
   tags {
     name = "${var.cluster_name}-controller"
@@ -176,7 +171,7 @@ resource "azurerm_network_security_rule" "controller-egress" {
   destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -190,7 +185,7 @@ resource "azurerm_network_security_rule" "controller-ssh" {
   destination_port_range      = "22"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -204,7 +199,7 @@ resource "azurerm_network_security_rule" "controller-apiserver" {
   destination_port_range      = "443"
   source_address_prefix       = "*"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -218,7 +213,7 @@ resource "azurerm_network_security_rule" "controller-etcd" {
   destination_port_range      = "2379-2380"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -232,7 +227,7 @@ resource "azurerm_network_security_rule" "controller-flannel" {
   destination_port_range      = "8472"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -246,7 +241,7 @@ resource "azurerm_network_security_rule" "controller-flannel-self" {
   destination_port_range      = "8472"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -260,7 +255,7 @@ resource "azurerm_network_security_rule" "controller-node-exporter" {
   destination_port_range      = "9100"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -274,7 +269,7 @@ resource "azurerm_network_security_rule" "controller-kubelet" {
   destination_port_range      = "10250"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -288,7 +283,7 @@ resource "azurerm_network_security_rule" "controller-kubelet-read" {
   destination_port_range      = "10255"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -302,7 +297,7 @@ resource "azurerm_network_security_rule" "controller-kubelet-read-self" {
   destination_port_range      = "10255"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -316,7 +311,7 @@ resource "azurerm_network_security_rule" "controller-bgp" {
   destination_port_range      = "179"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
 
@@ -330,48 +325,6 @@ resource "azurerm_network_security_rule" "controller-bgp-self" {
   destination_port_range      = "179"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.controller_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
 }
-
-/*
-resource "aws_security_group_rule" "controller-ipip" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = 4
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-ipip-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = 4
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-ipip-legacy" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = 94
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "controller-ipip-legacy-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = 94
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-*/

@@ -1,48 +1,16 @@
-# TODO: Add support for Scale Sets
+# TODO: Add Scale Sets implementation once support exists: https://github.com/kubernetes/kubernetes/issues/43287
 
 # Workers Availability Set
 resource "azurerm_availability_set" "workers" {
   name                = "${var.cluster_name}-workers"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   managed             = true
 
   tags {
     name = "${var.cluster_name}-worker"
   }
 }
-
-/*
-resource "aws_autoscaling_group" "workers" {
-  name           = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
-  load_balancers = ["${aws_elb.ingress.id}"]
-
-  # count
-  desired_capacity          = "${var.worker_count}"
-  min_size                  = "${var.worker_count}"
-  max_size                  = "${var.worker_count + 2}"
-  default_cooldown          = 30
-  health_check_grace_period = 30
-
-  # network
-  vpc_zone_identifier = ["${aws_subnet.public.*.id}"]
-
-  # template
-  launch_configuration = "${aws_launch_configuration.worker.name}"
-
-  lifecycle {
-    # override the default destroy and replace update behavior
-    create_before_destroy = true
-    ignore_changes        = ["image_id"]
-  }
-
-  tags = [{
-    key                 = "Name"
-    value               = "${var.cluster_name}-worker"
-    propagate_at_launch = true
-  }]
-}
-*/
 
 # Worker VM
 resource "azurerm_virtual_machine" "worker" {
@@ -51,7 +19,7 @@ resource "azurerm_virtual_machine" "worker" {
   name                  = "${var.cluster_name}-worker-${count.index}"
   location              = "${var.location}"
   availability_set_id   = "${azurerm_availability_set.workers.id}"
-  resource_group_name   = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name   = "${azurerm_resource_group.rg.name}"
   network_interface_ids = ["${element(azurerm_network_interface.worker.*.id, count.index)}"]
   vm_size               = "${var.worker_type}"
 
@@ -62,17 +30,13 @@ resource "azurerm_virtual_machine" "worker" {
     publisher = "CoreOS"
     offer     = "CoreOS"
     sku       = "${var.os_channel}"
-
-    # TODO: Parameterize
-    version = "latest"
+    version   = "latest"
   }
 
   storage_os_disk {
-    name          = "${var.cluster_name}-worker-${count.index}-os"
-    caching       = "ReadWrite"
-    create_option = "FromImage"
-
-    # TODO: Parameterize
+    name              = "${var.cluster_name}-worker-${count.index}-os"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
     os_type           = "linux"
     disk_size_gb      = "${var.disk_size}"
@@ -105,9 +69,7 @@ resource "azurerm_network_interface" "worker" {
 
   name                = "${var.cluster_name}-worker-${count.index}-nic"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
-
-  # TODO: network_security_group_id
+  resource_group_name = "${azurerm_resource_group.rg.name}"
 
   ip_configuration {
     name                                    = "workerIPConfig"
@@ -115,33 +77,11 @@ resource "azurerm_network_interface" "worker" {
     private_ip_address_allocation           = "dynamic"
     load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.ingress.id}"]
   }
+
   tags {
     name = "${var.cluster_name}"
   }
 }
-
-/*
-resource "aws_launch_configuration" "worker" {
-  image_id      = "${data.aws_ami.coreos.image_id}"
-  instance_type = "${var.worker_type}"
-
-  user_data = "${data.ct_config.worker_ign.rendered}"
-
-  # storage
-  root_block_device {
-    volume_type = "standard"
-    volume_size = "${var.disk_size}"
-  }
-
-  # network
-  security_groups = ["${aws_security_group.worker.id}"]
-
-  lifecycle {
-    // Override the default destroy and replace update behavior
-    create_before_destroy = true
-  }
-}
-*/
 
 # Worker Container Linux Config
 data "template_file" "worker_config" {
@@ -168,7 +108,7 @@ data "ct_config" "worker_ign" {
 resource "azurerm_network_security_group" "worker" {
   name                = "${var.cluster_name}-worker"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
 
   tags {
     name = "${var.cluster_name}-worker"
@@ -185,7 +125,7 @@ resource "azurerm_network_security_rule" "worker-egress" {
   destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -199,7 +139,7 @@ resource "azurerm_network_security_rule" "worker-ssh" {
   destination_port_range      = "22"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -213,7 +153,7 @@ resource "azurerm_network_security_rule" "worker-http" {
   destination_port_range      = "80"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -227,7 +167,7 @@ resource "azurerm_network_security_rule" "worker-https" {
   destination_port_range      = "443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -241,7 +181,7 @@ resource "azurerm_network_security_rule" "worker-flannel" {
   destination_port_range      = "8472"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -255,7 +195,7 @@ resource "azurerm_network_security_rule" "worker-flannel-self" {
   destination_port_range      = "8472"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -269,7 +209,7 @@ resource "azurerm_network_security_rule" "worker-node-exporter" {
   destination_port_range      = "9100"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -283,7 +223,7 @@ resource "azurerm_network_security_rule" "worker-kubelet" {
   destination_port_range      = "10250"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -297,7 +237,7 @@ resource "azurerm_network_security_rule" "worker-kubelet-self" {
   destination_port_range      = "10250"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -311,7 +251,7 @@ resource "azurerm_network_security_rule" "worker-kubelet-read" {
   destination_port_range      = "10255"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -325,7 +265,7 @@ resource "azurerm_network_security_rule" "worker-kubelet-read-self" {
   destination_port_range      = "10255"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -339,7 +279,7 @@ resource "azurerm_network_security_rule" "ingress-health-self" {
   destination_port_range      = "10254"
   source_address_prefix       = "AzureLoadBalancer"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -353,7 +293,7 @@ resource "azurerm_network_security_rule" "worker-bgp" {
   destination_port_range      = "179"
   source_address_prefix       = "${var.controller_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
 
@@ -367,48 +307,6 @@ resource "azurerm_network_security_rule" "worker-bgp-self" {
   destination_port_range      = "179"
   source_address_prefix       = "${var.worker_cidr}"
   destination_address_prefix  = "${var.worker_cidr}"
-  resource_group_name         = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name         = "${azurerm_resource_group.rg.name}"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
 }
-
-/*
-resource "aws_security_group_rule" "worker-ipip" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = 4
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-ipip-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = 4
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-ipip-legacy" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = 94
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-ipip-legacy-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = 94
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-*/

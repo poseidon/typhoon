@@ -1,6 +1,6 @@
 # Ingress Azure Load Balancer DNS Record
 resource "azurerm_dns_a_record" "ingress" {
-  name                = "${var.cluster_name}-in"
+  name                = "${var.cluster_name}-ing"
   zone_name           = "${var.dns_zone}"
   resource_group_name = "${var.dns_zone_rg}"
   ttl                 = 60
@@ -11,7 +11,7 @@ resource "azurerm_dns_a_record" "ingress" {
 resource "azurerm_public_ip" "ingress" {
   name                         = "${var.cluster_name}-pip-ingress"
   location                     = "${var.location}"
-  resource_group_name          = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name          = "${azurerm_resource_group.rg.name}"
   public_ip_address_allocation = "static"
 
   tags {
@@ -23,7 +23,7 @@ resource "azurerm_public_ip" "ingress" {
 resource "azurerm_lb" "ingress" {
   name                = "${var.cluster_name}-ingress"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
 
   frontend_ip_configuration {
     name                 = "ingress"
@@ -32,37 +32,33 @@ resource "azurerm_lb" "ingress" {
 }
 
 resource "azurerm_lb_backend_address_pool" "ingress" {
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   loadbalancer_id     = "${azurerm_lb.ingress.id}"
   name                = "ingress"
 }
 
 resource "azurerm_lb_rule" "ingress_http" {
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
-  loadbalancer_id     = "${azurerm_lb.ingress.id}"
-  name                = "ingress-http"
-  protocol            = "TCP"
-  frontend_port       = 80
-  backend_port        = 80
-
-  # TODO: Parameterize
+  resource_group_name            = "${azurerm_resource_group.rg.name}"
+  loadbalancer_id                = "${azurerm_lb.ingress.id}"
+  name                           = "ingress-http"
+  protocol                       = "TCP"
+  frontend_port                  = 80
+  backend_port                   = 80
   frontend_ip_configuration_name = "ingress"
 }
 
 resource "azurerm_lb_rule" "ingress_https" {
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
-  loadbalancer_id     = "${azurerm_lb.ingress.id}"
-  name                = "ingress-https"
-  protocol            = "TCP"
-  frontend_port       = 443
-  backend_port        = 443
-
-  # TODO: Parameterize
+  resource_group_name            = "${azurerm_resource_group.rg.name}"
+  loadbalancer_id                = "${azurerm_lb.ingress.id}"
+  name                           = "ingress-https"
+  protocol                       = "TCP"
+  frontend_port                  = 443
+  backend_port                   = 443
   frontend_ip_configuration_name = "ingress"
 }
 
 resource "azurerm_lb_probe" "ingress" {
-  resource_group_name = "${azurerm_resource_group.resource_group.name}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
   loadbalancer_id     = "${azurerm_lb.ingress.id}"
   name                = "ingress-probe"
   protocol            = "Http"

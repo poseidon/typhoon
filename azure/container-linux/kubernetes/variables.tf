@@ -1,4 +1,3 @@
-# TODO: Update variables for Azure
 variable "location" {
   type        = "string"
   description = "Azure location to create resources"
@@ -11,12 +10,12 @@ variable "cluster_name" {
 
 variable "dns_zone" {
   type        = "string"
-  description = "AWS DNS Zone (e.g. aws.dghubble.io)"
+  description = "Azure DNS Zone (e.g., azure.typhoon.psdn.io)"
 }
 
 variable "dns_zone_rg" {
   type        = "string"
-  description = "AWS DNS Zone ID (e.g. Z3PAABBCFAKEC0)"
+  description = "Resource group of Azure DNS zone"
 }
 
 variable "ssh_authorized_key" {
@@ -36,14 +35,14 @@ variable "disk_size" {
   description = "The size of the disk in Gigabytes"
 }
 
-variable "host_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
+variable "vnet_cidr" {
+  description = "CIDR IPv4 range to assign to the Virtual Network"
   type        = "string"
   default     = "10.0.0.0/16"
 }
 
 variable "controller_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
+  description = "CIDR IPv4 range to assign to controller nodes"
   type        = "string"
   default     = "10.0.1.0/24"
 }
@@ -56,12 +55,12 @@ variable "controller_count" {
 
 variable "controller_type" {
   type        = "string"
-  default     = "t2.small"
-  description = "Controller EC2 instance type"
+  default     = "Standard_DS2_v2"
+  description = "Controller VM instance type"
 }
 
 variable "worker_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
+  description = "CIDR IPv4 range to assign to worker nodes"
   type        = "string"
   default     = "10.0.2.0/24"
 }
@@ -74,8 +73,8 @@ variable "worker_count" {
 
 variable "worker_type" {
   type        = "string"
-  default     = "t2.small"
-  description = "Worker EC2 instance type"
+  default     = "Standard_DS2_v2"
+  description = "Worker VM instance type"
 }
 
 # bootkube assets
