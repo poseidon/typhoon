@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from 3.2.14 to 3.2.15
+
 ## v1.9.2
 
 * Kubernetes [v1.9.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v192)
