@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: update-operator
-        image: quay.io/coreos/container-linux-update-operator:v0.5.0
+        image: quay.io/coreos/container-linux-update-operator:v0.6.0
         command:
         - "/bin/update-operator"
         env:
