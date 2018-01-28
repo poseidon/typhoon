@@ -35,4 +35,3 @@ rules:
   resources:
   - horizontalpodautoscalers
   verbs: ["list", "watch"]
-

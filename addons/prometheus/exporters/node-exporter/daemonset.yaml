@@ -18,11 +18,15 @@ spec:
         name: node-exporter
         phase: prod
     spec:
+      serviceAccountName: node-exporter
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
       hostNetwork: true
       hostPID: true
       containers:
       - name: node-exporter
-        image: quay.io/prometheus/node-exporter:v0.15.0
+        image: quay.io/prometheus/node-exporter:v0.15.2
         args:
           - "--path.procfs=/host/proc"
           - "--path.sysfs=/host/sys"
@@ -45,9 +49,8 @@ spec:
             mountPath: /host/sys
             readOnly: true
       tolerations:
-        - key: node-role.kubernetes.io/master
+        - effect: NoSchedule
           operator: Exists
-          effect: NoSchedule
       volumes:
         - name: proc
           hostPath:

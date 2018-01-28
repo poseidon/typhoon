@@ -14,9 +14,10 @@ spec:
         name: prometheus
         phase: prod
     spec:
+      serviceAccountName: prometheus
       containers:
       - name: prometheus
-        image: quay.io/prometheus/prometheus:v2.0.0
+        image: quay.io/prometheus/prometheus:v2.1.0
         args:
           - '--config.file=/etc/prometheus/prometheus.yaml'
         ports:

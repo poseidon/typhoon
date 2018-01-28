@@ -54,8 +54,8 @@ spec:
           - /pod_nanny
           - --container=kube-state-metrics
           - --cpu=100m
-          - --extra-cpu=1m
-          - --memory=100Mi
-          - --extra-memory=2Mi
+          - --extra-cpu=2m
+          - --memory=150Mi
+          - --extra-memory=30Mi
           - --threshold=5
           - --deployment=kube-state-metrics

@@ -39,7 +39,7 @@ data:
       tls_config:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         # Using endpoints to discover kube-apiserver targets finds the pod IP
-        # (host IP since apiserver is uses host network) which is not used in
+        # (host IP since apiserver uses host network) which is not used in
         # the server certificate.
         insecure_skip_verify: true
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -51,6 +51,9 @@ data:
       - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
         action: keep
         regex: default;kubernetes;https
+      - replacement: apiserver
+        action: replace
+        target_label: job
 
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
     # metrics from a node by scraping kubelet (127.0.0.1:10255/metrics).
@@ -59,7 +62,7 @@ data:
     # Kubernetes apiserver.  This means it will work if Prometheus is running out of
     # cluster, or can't connect to nodes for some other reason (e.g. because of
     # firewalling).
-    - job_name: 'kubernetes-nodes'
+    - job_name: 'kubelet'
       kubernetes_sd_configs:
       - role: node
       
@@ -149,7 +152,7 @@ data:
         target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_service_name]
         action: replace
-        target_label: kubernetes_name
+        target_label: job
 
     # Example scrape config for probing services via the Blackbox Exporter.
     #
@@ -181,7 +184,7 @@ data:
       - source_labels: [__meta_kubernetes_namespace]
         target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_service_name]
-        target_label: kubernetes_name
+        target_label: job
 
     # Example scrape config for pods
     #
