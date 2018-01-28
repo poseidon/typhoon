@@ -41,6 +41,22 @@ spec:
             limits:
               memory: 200Mi
               cpu: 200m
+        - name: grafana-watcher
+          image: quay.io/coreos/grafana-watcher:v0.0.8
+          args:
+            - '--watch-dir=/etc/grafana/dashboards'
+            - '--grafana-url=http://localhost:8080'
+          resources:
+            requests:
+              memory: "16Mi"
+              cpu: "50m"
+            limits:
+              memory: "32Mi"
+              cpu: "100m"
+          volumeMounts:
+          - name: dashboards
+            mountPath: /etc/grafana/dashboards
       volumes:
-        - name: grafana-storage
-          emptyDir: {}
+        - name: dashboards
+          configMap:
+            name: grafana-dashboards

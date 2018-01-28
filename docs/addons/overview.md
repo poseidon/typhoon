@@ -6,6 +6,6 @@ Every Typhoon cluster is verified to work well with several post-install addons.
 * Nginx [Ingress Controller](ingress.md)
 * [Heapster](heapster.md)
 * [Prometheus](prometheus.md)
-* [Grafana](prometheus.md#grafana)
+* [Grafana](grafana.md)
 * Kubernetes [Dashboard](dashboard.md)
 

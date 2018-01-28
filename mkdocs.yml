@@ -50,6 +50,7 @@ pages:
     - 'Heapster': 'addons/heapster.md'
     - 'Nginx Ingress': 'addons/ingress.md'
     - 'Prometheus': 'addons/prometheus.md'
+    - 'Grafana': 'addons/grafana.md'
     - 'Dashboard': 'addons/dashboard.md'
   - 'Topics':
     - 'Maintenance': 'topics/maintenance.md'

@@ -20,7 +20,7 @@ On Kubernetes clusters, Prometheus is run as a Deployment, configured with a Con
 kubectl apply -f addons/prometheus -R
 ```
 
-The ConfigMap configures Prometheus to target apiserver endpoints, node metrics, cAdvisor metrics, and exporters. By default, data is kept in an `emptyDir` so it is persisted until the pod is rescheduled.
+The ConfigMap configures Prometheus to discover apiservers, kubelets, cAdvisor, services, endpoints, and exporters. By default, data is kept in an `emptyDir` so it is persisted until the pod is rescheduled.
 
 ### Exporters
 
@@ -32,7 +32,7 @@ Exporters expose metrics for 3rd-party systems that don't natively expose Promet
 
 ### Queries and Alerts
 
-Prometheus provides a simplistic UI for querying metrics and viewing alerts. Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Prometheus pod.
+Prometheus provides a basic UI for querying metrics and viewing alerts. Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Prometheus pod.
 
 ```
 kubectl get pods -n monitoring
@@ -47,21 +47,4 @@ Visit [127.0.0.1:9090](http://127.0.0.1:9090) to query [expressions](http://127.
 <br/>
 ![Prometheus Alerts](/img/prometheus-alerts.png)
 
-## Grafana
-
-Grafana can be used to build dashboards and rich visualizations that use Prometheus as the datasource. Create the grafana deployment and service.
-
-```
-kubectl apply -f addons/grafana -R
-```
-
-Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Grafana pod.
-
-```
-kubectl port-forward grafana-POD-ID 8080 -n monitoring
-```
-
-Visit [127.0.0.1:8080](http://127.0.0.1:8080), add the prometheus data-source (http://prometheus.monitoring.svc.cluster.local), and import your desired dashboard (e.g. [Grafana Dashboard 315](https://grafana.com/dashboards/315)).
-
-![Grafana Dashboard](/img/grafana-dashboard.png)
-
+Use [Grafana](/addons/grafana.md) to view or build dashboards that use Prometheus as the datasource.
