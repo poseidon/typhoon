@@ -6,6 +6,23 @@ Notable changes between versions.
 
 * Update etcd from 3.2.14 to 3.2.15
 
+#### Addons
+
+* Update Prometheus from v2.0.0 to v2.1.0
+  * Improve alerting rules
+  * Relabel discovered kubelet, endpoint, service, and apiserver scrapes
+  * Use separate service accounts
+  * Update node-exporter and kube-state-metrics
+* Include Grafana dashboards for Kubernetes admins
+  * Add grafana-watcher to load bundled upstream dashboards
+* Update nginx-ingress from 0.9.0 to 0.10.2
+* Update CLUO from v0.5.0 to v0.6.0 
+
+#### Digital Ocean
+
+* Use new Droplet [types](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) which offer more CPU/memory, at lower cost. ([#105](https://github.com/poseidon/typhoon/pull/105))
+  * A small Digital Ocean cluster costs less than $25 a month!
+
 ## v1.9.2
 
 * Kubernetes [v1.9.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v192)
