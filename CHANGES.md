@@ -4,7 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
-* Update etcd from 3.2.14 to 3.2.15
+* Network improvements and fixes
+  * Switch from Calico v2.6.6 to v3.0.1
+  * Update flannel from v0.9.0 to v0.10.0
+* Update etcd from v3.2.14 to v3.2.15
 
 #### Addons
 
