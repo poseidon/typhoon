@@ -126,4 +126,4 @@ Typhoon is not a product, trial, or free-tier. It is not run by a company, does 
 
 Typhoon clusters will contain only [free](https://www.debian.org/intro/free) components. Cluster components will not collect data on users without their permission.
 
-*Disclosure: The author works for CoreOS and previously wrote Matchbox and original Tectonic for bare-metal and AWS. This project is not associated with CoreOS.*
+*Disclosure: The author works for Red Hat (prev CoreOS), but Typhoon is unassociated and maintained independently.*
