@@ -24,7 +24,7 @@ variable "ssh_authorized_key" {
 }
 
 # Machines
-# Terraform's crude "type system" does properly support lists of maps so we do this.
+# Terraform's crude "type system" does not properly support lists of maps so we do this.
 
 variable "controller_names" {
   type = "list"
