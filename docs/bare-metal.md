@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.9.2 cluster on bare-metal.
+In this tutorial, we'll network boot and provision a Kubernetes v1.9.3 cluster on bare-metal.
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
 
@@ -177,7 +177,7 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.9.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.9.3"
   
   providers = {
     local = "local.default"
@@ -317,9 +317,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS    AGE       VERSION
-node1.example.com   Ready     11m       v1.9.2
-node2.example.com   Ready     11m       v1.9.2
-node3.example.com   Ready     11m       v1.9.2
+node1.example.com   Ready     11m       v1.9.3
+node2.example.com   Ready     11m       v1.9.3
+node3.example.com   Ready     11m       v1.9.3
 ```
 
 List the pods.

@@ -94,7 +94,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=docker://gcr.io/google_containers/hyperkube
-          KUBELET_IMAGE_TAG=v1.9.2
+          KUBELET_IMAGE_TAG=v1.9.3
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
@@ -112,7 +112,7 @@ storage:
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
             --insecure-options=image \
-            docker://gcr.io/google_containers/hyperkube:v1.9.2 \
+            docker://gcr.io/google_containers/hyperkube:v1.9.3 \
             --net=host \
             --dns=host \
             --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)

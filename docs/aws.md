@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.9.2 cluster on AWS.
+In this tutorial, we'll create a Kubernetes v1.9.3 cluster on AWS.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
 
@@ -96,7 +96,7 @@ Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
 
 ```tf
 module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.9.2"
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.9.3"
 
   providers = {
     aws = "aws.default"
@@ -182,9 +182,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION        
-ip-10-0-12-221   Ready     34m       v1.9.2
-ip-10-0-19-112   Ready     34m       v1.9.2
-ip-10-0-4-22     Ready     34m       v1.9.2
+ip-10-0-12-221   Ready     34m       v1.9.3
+ip-10-0-19-112   Ready     34m       v1.9.3
+ip-10-0-4-22     Ready     34m       v1.9.3
 ```
 
 List the pods.

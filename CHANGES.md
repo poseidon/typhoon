@@ -4,9 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v193)
 * Network improvements and fixes
-  * Switch from Calico v2.6.6 to v3.0.1
+  * Switch from Calico v2.6.6 to v3.0.2
+  * Add Calico GlobalNetworkSet CRD
   * Update flannel from v0.9.0 to v0.10.0
+  * Use separate service account for flannel
 * Update etcd from v3.2.14 to v3.2.15
 
 #### Addons
