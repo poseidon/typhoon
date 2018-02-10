@@ -11,4 +11,7 @@ module "bootkube" {
   pod_cidr              = "${var.pod_cidr}"
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"
+  ca_certificate        = "${var.ca_certificate}"
+  ca_key_alg            = "${var.ca_key_alg}"
+  ca_private_key        = "${var.ca_private_key}"
 }

@@ -269,6 +269,9 @@ If you uploaded an SSH key to DigitalOcean (not required), find the fingerprint 
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
+| ca_certificate | CA certificate used by Kubernetes in PEM format | generated | "-----BEGIN CERTIFICATE..." |
+| ca_key_alg | Algorithm used to generate ca_private_key | RSA | RSA, ECDSA, ... |
+| ca_private_key | CA Key for ca_certificate | generated | "-----BEGIN RSA PRIVATE KEY..." |
 
 You can see all valid droplet sizes [on DigitalOcean's website](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) or by [using their `doctl` command-line tool](https://github.com/digitalocean/doctl) via `doctl compute size list`.
 
@@ -277,3 +280,6 @@ You can see all valid droplet sizes [on DigitalOcean's website](https://develope
 
 !!! bug
     Digital Ocean firewalls do not yet support the IP tunneling (IP in IP) protocol used by Calico. You can try using "calico" for `networking`, but it will only work if the cloud firewall is removed (unsafe).
+
+!!! note
+    In case of `ca_certificate` being intermediate certificate, specify your certificate chain in order that it would end with root certificate. eg. intermediate 2, intermediate 1, root.
