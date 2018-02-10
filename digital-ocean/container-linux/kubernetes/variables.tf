@@ -82,4 +82,3 @@ variable "cluster_domain_suffix" {
   type        = "string"
   default     = "cluster.local"
 }
-

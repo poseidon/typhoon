@@ -14,7 +14,7 @@ resource "google_compute_firewall" "allow-ssh" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+  target_tags   = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
 resource "google_compute_firewall" "allow-apiserver" {
@@ -27,9 +27,8 @@ resource "google_compute_firewall" "allow-apiserver" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["${var.cluster_name}-controller"]
+  target_tags   = ["${var.cluster_name}-controller"]
 }
-
 
 resource "google_compute_firewall" "allow-ingress" {
   name    = "${var.cluster_name}-allow-ingress"
@@ -41,7 +40,7 @@ resource "google_compute_firewall" "allow-ingress" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags = ["${var.cluster_name}-worker"]
+  target_tags   = ["${var.cluster_name}-worker"]
 }
 
 resource "google_compute_firewall" "internal-etcd" {

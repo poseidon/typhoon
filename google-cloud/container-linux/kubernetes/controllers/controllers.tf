@@ -48,7 +48,7 @@ resource "google_compute_instance" "controllers" {
   }
 
   can_ip_forward = true
-  tags = ["${var.cluster_name}-controller"]
+  tags           = ["${var.cluster_name}-controller"]
 }
 
 # Controller Container Linux Config
