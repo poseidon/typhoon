@@ -24,6 +24,7 @@ Notable changes between versions.
 * Update nginx-ingress from 0.9.0 to 0.10.2
 * Update CLUO from v0.5.0 to v0.6.0
 * Switch manifests to use `apps/v1` Deployments and Daemonsets
+* Remove Kubernetes Dashboard manifests ([#121](https://github.com/poseidon/typhoon/pull/121))
 
 #### Digital Ocean
 

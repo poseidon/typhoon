@@ -7,5 +7,4 @@ Every Typhoon cluster is verified to work well with several post-install addons.
 * [Heapster](heapster.md)
 * [Prometheus](prometheus.md)
 * [Grafana](grafana.md)
-* Kubernetes [Dashboard](dashboard.md)
 

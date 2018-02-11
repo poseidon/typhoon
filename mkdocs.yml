@@ -51,7 +51,6 @@ pages:
     - 'Nginx Ingress': 'addons/ingress.md'
     - 'Prometheus': 'addons/prometheus.md'
     - 'Grafana': 'addons/grafana.md'
-    - 'Dashboard': 'addons/dashboard.md'
   - 'Topics':
     - 'Maintenance': 'topics/maintenance.md'
     - 'Hardware': 'topics/hardware.md'
