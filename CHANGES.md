@@ -4,8 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.9.3
+
 * Kubernetes [v1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v193)
-* Network improvements and fixes
+* Network improvements and fixes ([#104](https://github.com/poseidon/typhoon/pull/104))
   * Switch from Calico v2.6.6 to v3.0.2
   * Add Calico GlobalNetworkSet CRD
   * Update flannel from v0.9.0 to v0.10.0
@@ -14,16 +16,16 @@ Notable changes between versions.
 
 #### Addons
 
-* Update Prometheus from v2.0.0 to v2.1.0
+* Update Prometheus from v2.0.0 to v2.1.0 ([#113](https://github.com/poseidon/typhoon/pull/113))
   * Improve alerting rules
   * Relabel discovered kubelet, endpoint, service, and apiserver scrapes
   * Use separate service accounts
   * Update node-exporter and kube-state-metrics
-* Include Grafana dashboards for Kubernetes admins
+* Include Grafana dashboards for Kubernetes admins ([#113](https://github.com/poseidon/typhoon/pull/113))
   * Add grafana-watcher to load bundled upstream dashboards
 * Update nginx-ingress from 0.9.0 to 0.10.2
 * Update CLUO from v0.5.0 to v0.6.0
-* Switch manifests to use `apps/v1` Deployments and Daemonsets
+* Switch manifests to use `apps/v1` Deployments and Daemonsets ([#120](https://github.com/poseidon/typhoon/pull/120))
 * Remove Kubernetes Dashboard manifests ([#121](https://github.com/poseidon/typhoon/pull/121))
 
 #### Digital Ocean
