@@ -1,13 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
   namespace: monitoring
 spec:
   replicas: 1
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: prometheus
+      phase: prod
   template:
     metadata:
       labels:

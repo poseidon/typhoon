@@ -22,7 +22,8 @@ Notable changes between versions.
 * Include Grafana dashboards for Kubernetes admins
   * Add grafana-watcher to load bundled upstream dashboards
 * Update nginx-ingress from 0.9.0 to 0.10.2
-* Update CLUO from v0.5.0 to v0.6.0 
+* Update CLUO from v0.5.0 to v0.6.0
+* Switch manifests to use `apps/v1` Deployments and Daemonsets
 
 #### Digital Ocean
 

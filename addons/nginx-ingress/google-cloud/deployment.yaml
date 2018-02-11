@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-ingress-controller
@@ -8,6 +8,10 @@ spec:
   strategy:
     rollingUpdate:
       maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: nginx-ingess-controller
+      phase: prod
   template:
     metadata:
       labels:

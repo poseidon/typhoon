@@ -1,10 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: default-backend
   namespace: ingress
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      name: default-backend
+      phase: prod
   template:
     metadata:
       labels:
