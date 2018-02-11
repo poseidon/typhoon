@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
+  * Use separate service account
+
 ## v1.9.3
 
 * Kubernetes [v1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v193)

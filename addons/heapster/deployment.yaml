@@ -14,12 +14,11 @@ spec:
       labels:
         name: heapster
         phase: prod
-      annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
+      serviceAccountName: heapster
       containers:
         - name: heapster
-          image: gcr.io/google_containers/heapster-amd64:v1.5.0
+          image: k8s.gcr.io/heapster-amd64:v1.5.1
           command:
             - /heapster
             - --source=kubernetes.summary_api:''
@@ -31,7 +30,7 @@ spec:
             initialDelaySeconds: 180
             timeoutSeconds: 5
         - name: heapster-nanny
-          image: gcr.io/google_containers/addon-resizer:1.7
+          image: k8s.gcr.io/addon-resizer:1.7
           command:
             - /pod_nanny
             - --cpu=80m
