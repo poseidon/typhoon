@@ -45,6 +45,8 @@ resource "azurerm_lb_rule" "ingress_http" {
   frontend_port                  = 80
   backend_port                   = 80
   frontend_ip_configuration_name = "ingress"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.ingress.id}"
+  probe_id                       = "${azurerm_lb_probe.ingress.id}"
 }
 
 resource "azurerm_lb_rule" "ingress_https" {
@@ -55,6 +57,8 @@ resource "azurerm_lb_rule" "ingress_https" {
   frontend_port                  = 443
   backend_port                   = 443
   frontend_ip_configuration_name = "ingress"
+  backend_address_pool_id        = "${azurerm_lb_backend_address_pool.ingress.id}"
+  probe_id                       = "${azurerm_lb_probe.ingress.id}"
 }
 
 resource "azurerm_lb_probe" "ingress" {
