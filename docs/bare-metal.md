@@ -334,7 +334,6 @@ kube-system   kube-apiserver-7336w                       1/1       Running   0  
 kube-system   kube-controller-manager-3271970485-b9chx   1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-v30js   1/1       Running   1          11m
 kube-system   kube-dns-1187388186-mx9rt                  3/3       Running   0          11m
-kube-system   kube-etcd-network-checkpointer-q24f7       1/1       Running   0          11m
 kube-system   kube-proxy-50sd4                           1/1       Running   0          11m
 kube-system   kube-proxy-bczhp                           1/1       Running   0          11m
 kube-system   kube-proxy-mp2fw                           1/1       Running   0          11m
