@@ -49,6 +49,10 @@ resource "google_compute_instance" "controllers" {
 
   can_ip_forward = true
   tags           = ["${var.cluster_name}-controller"]
+
+  lifecycle {
+    ignore_changes = ["boot_disk"]
+  }
 }
 
 # Controller Container Linux Config
