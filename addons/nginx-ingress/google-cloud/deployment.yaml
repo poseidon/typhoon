@@ -10,7 +10,7 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      name: nginx-ingess-controller
+      name: nginx-ingress-controller
       phase: prod
   template:
     metadata:
