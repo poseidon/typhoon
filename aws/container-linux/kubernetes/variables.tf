@@ -13,11 +13,6 @@ variable "dns_zone_id" {
   description = "AWS DNS Zone ID (e.g. Z3PAABBCFAKEC0)"
 }
 
-variable "ssh_authorized_key" {
-  type        = "string"
-  description = "SSH public key for user 'core'"
-}
-
 variable "os_channel" {
   type        = "string"
   default     = "stable"
@@ -99,4 +94,14 @@ variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
+}
+
+variable "keypair_name" {
+  description = "The name of the EC2 KeyPair to use for instance created in this template."
+  type        = "string"
+}
+
+variable "instance_pem" {
+  description = "The location of EC2 PEM file to use for communicating to created instances."
+  type        = "string"
 }

@@ -1,12 +1,17 @@
 # Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
 resource "null_resource" "copy-secrets" {
+  depends_on = ["aws_route53_record.bastion", "aws_route53_record.apiserver", "aws_autoscaling_group.bastion", "aws_autoscaling_attachment.bastion_tg_attachment", "aws_lb_listener.bastion-22"]
   count = "${var.controller_count}"
 
   connection {
+    agent = false
     type    = "ssh"
-    host    = "${element(aws_instance.controllers.*.public_ip, count.index)}"
+    host    = "${element(aws_instance.controllers.*.private_ip, count.index)}"
     user    = "core"
     timeout = "15m"
+    
+    bastion_host = "${format("bastion.%s.%s.", var.cluster_name, var.dns_zone)}"
+    private_key = "${file(var.instance_pem)}"
   }
 
   provisioner "file" {
@@ -73,9 +78,11 @@ resource "null_resource" "bootkube-start" {
 
   connection {
     type    = "ssh"
-    host    = "${aws_instance.controllers.0.public_ip}"
+    host    = "${aws_instance.controllers.0.private_ip}"
     user    = "core"
     timeout = "15m"
+    bastion_host = "${format("bastion.%s.%s.", var.cluster_name, var.dns_zone)}"
+    private_key = "${file(var.instance_pem)}"
   }
 
   provisioner "file" {

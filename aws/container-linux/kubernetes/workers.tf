@@ -1,7 +1,7 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
   name           = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
-  load_balancers = ["${aws_elb.ingress.id}"]
+  target_group_arns = ["${aws_lb_target_group.ingress.arn}"]
 
   # count
   desired_capacity          = "${var.worker_count}"
@@ -11,7 +11,7 @@ resource "aws_autoscaling_group" "workers" {
   health_check_grace_period = 30
 
   # network
-  vpc_zone_identifier = ["${aws_subnet.public.*.id}"]
+  vpc_zone_identifier = ["${aws_subnet.private.*.id}"]
 
   # template
   launch_configuration = "${aws_launch_configuration.worker.name}"
@@ -36,6 +36,9 @@ resource "aws_launch_configuration" "worker" {
 
   user_data = "${data.ct_config.worker_ign.rendered}"
 
+  # keypair access to box.
+  key_name = "${var.keypair_name}"
+
   # storage
   root_block_device {
     volume_type = "standard"
@@ -58,7 +61,6 @@ data "template_file" "worker_config" {
   vars = {
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
     k8s_etcd_service_ip     = "${cidrhost(var.service_cidr, 15)}"
-    ssh_authorized_key      = "${var.ssh_authorized_key}"
     cluster_domain_suffix   = "${var.cluster_domain_suffix}"
     kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
