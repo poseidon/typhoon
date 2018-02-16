@@ -163,8 +163,3 @@ storage:
             --net=host \
             --dns=host \
             --exec=/bootkube -- start --asset-dir=/assets "$@"
-passwd:
-  users:
-    - name: core
-      ssh_authorized_keys:
-        - "${ssh_authorized_key}"
