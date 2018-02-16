@@ -1,7 +1,7 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
   name           = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
-  load_balancers = ["${aws_elb.ingress.id}"]
+  target_group_arns = ["${aws_lb_target_group.ingress.arn}"]
 
   # count
   desired_capacity          = "${var.worker_count}"
