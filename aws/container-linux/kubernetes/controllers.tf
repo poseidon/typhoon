@@ -21,6 +21,9 @@ resource "aws_instance" "controllers" {
     Name = "${var.cluster_name}-controller-${count.index}"
   }
 
+  # keypair access to box.
+  key_name = "${var.keypair_name}"
+
   instance_type = "${var.controller_type}"
 
   ami       = "${data.aws_ami.coreos.image_id}"
@@ -33,8 +36,8 @@ resource "aws_instance" "controllers" {
   }
 
   # network
-  associate_public_ip_address = true
-  subnet_id                   = "${element(aws_subnet.public.*.id, count.index)}"
+  associate_public_ip_address = false
+  subnet_id                   = "${element(aws_subnet.private.*.id, count.index)}"
   vpc_security_group_ids      = ["${aws_security_group.controller.id}"]
 
   lifecycle {
@@ -57,7 +60,6 @@ data "template_file" "controller_config" {
     etcd_initial_cluster = "${join(",", formatlist("%s=https://%s:2380", null_resource.repeat.*.triggers.name, null_resource.repeat.*.triggers.domain))}"
 
     k8s_dns_service_ip      = "${cidrhost(var.service_cidr, 10)}"
-    ssh_authorized_key      = "${var.ssh_authorized_key}"
     cluster_domain_suffix   = "${var.cluster_domain_suffix}"
     kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
     kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
