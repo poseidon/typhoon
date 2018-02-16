@@ -7,7 +7,7 @@ resource "aws_lb" "ingress" {
   subnets = ["${aws_subnet.public.*.id}"]
 }
 
-# Forward HTTP traffic to instances
+# Forward HTTP traffic to workers
 resource "aws_lb_listener" "ingress-http" {
   load_balancer_arn = "${aws_lb.ingress.arn}"
   protocol          = "TCP"
@@ -19,7 +19,7 @@ resource "aws_lb_listener" "ingress-http" {
   }
 }
 
-# Forward HTTPS traffic to instances
+# Forward HTTPS traffic to workers
 resource "aws_lb_listener" "ingress-https" {
   load_balancer_arn = "${aws_lb.ingress.arn}"
   protocol          = "TCP"
