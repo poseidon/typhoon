@@ -59,7 +59,7 @@ variable "kubeconfig" {
 
 variable "ssh_authorized_key" {
   type        = "string"
-  description = "SSH public key for logging in as user 'core'"
+  description = "SSH public key for user 'core'"
 }
 
 variable "service_cidr" {
@@ -78,16 +78,22 @@ variable "cluster_domain_suffix" {
   default     = "cluster.local"
 }
 
+variable "clc_snippets" {
+  type        = "list"
+  description = "Container Linux Config snippets"
+  default     = []
+}
+
 # unofficial, undocumented, unsupported, temporary
 
 variable "accelerator_type" {
-  type = "string"
-  default = ""
+  type        = "string"
+  default     = ""
   description = "Google Compute Engine accelerator type (e.g. nvidia-tesla-k80, see gcloud compute accelerator-types list)"
 }
 
 variable "accelerator_count" {
-  type = "string"
-  default = "0"
+  type        = "string"
+  default     = "0"
   description = "Number of compute engine accelerators"
 }

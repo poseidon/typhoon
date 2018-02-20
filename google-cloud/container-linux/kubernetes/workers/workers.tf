@@ -32,6 +32,7 @@ data "template_file" "worker_config" {
 data "ct_config" "worker_ign" {
   content      = "${data.template_file.worker_config.rendered}"
   pretty_print = false
+  snippets     = ["${var.clc_snippets}"]
 }
 
 resource "google_compute_instance_template" "worker" {
@@ -63,11 +64,11 @@ resource "google_compute_instance_template" "worker" {
   }
 
   can_ip_forward = true
-  tags = ["worker", "${var.cluster_name}-worker", "${var.name}-worker"]
+  tags           = ["worker", "${var.cluster_name}-worker", "${var.name}-worker"]
 
   guest_accelerator {
     count = "${var.accelerator_count}"
-    type = "${var.accelerator_type}"
+    type  = "${var.accelerator_type}"
   }
 
   lifecycle {

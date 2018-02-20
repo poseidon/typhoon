@@ -48,6 +48,18 @@ variable "ssh_fingerprints" {
   description = "SSH public key fingerprints. (e.g. see `ssh-add -l -E md5`)"
 }
 
+variable "controller_clc_snippets" {
+  type        = "list"
+  description = "Controller Container Linux Config snippets"
+  default     = []
+}
+
+variable "worker_clc_snippets" {
+  type        = "list"
+  description = "Worker Container Linux Config snippets"
+  default     = []
+}
+
 # bootkube assets
 
 variable "asset_dir" {

@@ -3,9 +3,9 @@ variable "cluster_name" {
   description = "Unique cluster name"
 }
 
-variable "ssh_authorized_key" {
+variable "region" {
   type        = "string"
-  description = "SSH public key for logging in as user 'core'"
+  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
 }
 
 variable "network" {
@@ -30,11 +30,6 @@ variable "count" {
   description = "Number of controller compute instances the instance group should manage"
 }
 
-variable "region" {
-  type        = "string"
-  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
-}
-
 variable "machine_type" {
   type        = "string"
   description = "Machine type for compute instances (e.g. gcloud compute machine-types list)"
@@ -51,12 +46,22 @@ variable "disk_size" {
   description = "The size of the disk in gigabytes."
 }
 
-// configuration
+# configuration
 
 variable "networking" {
   description = "Choice of networking provider (flannel or calico)"
   type        = "string"
-  default     = "flannel"
+  default     = "calico"
+}
+
+variable "kubeconfig" {
+  type        = "string"
+  description = "Generated Kubelet kubeconfig"
+}
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for logging in as user 'core'"
 }
 
 variable "service_cidr" {
@@ -75,7 +80,8 @@ variable "cluster_domain_suffix" {
   default     = "cluster.local"
 }
 
-variable "kubeconfig" {
-  type        = "string"
-  description = "Generated Kubelet kubeconfig"
+variable "clc_snippets" {
+  type        = "list"
+  description = "Container Linux Config snippets"
+  default     = []
 }

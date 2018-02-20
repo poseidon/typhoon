@@ -78,4 +78,5 @@ data "ct_config" "controller_ign" {
   count        = "${var.controller_count}"
   content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
   pretty_print = false
+  snippets     = ["${var.controller_clc_snippets}"]
 }

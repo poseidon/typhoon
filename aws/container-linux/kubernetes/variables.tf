@@ -60,6 +60,18 @@ variable "worker_type" {
   description = "Worker EC2 instance type"
 }
 
+variable "controller_clc_snippets" {
+  type        = "list"
+  description = "Controller Container Linux Config snippets"
+  default     = []
+}
+
+variable "worker_clc_snippets" {
+  type        = "list"
+  description = "Worker Container Linux Config snippets"
+  default     = []
+}
+
 # bootkube assets
 
 variable "asset_dir" {

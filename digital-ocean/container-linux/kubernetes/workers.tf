@@ -51,4 +51,5 @@ data "template_file" "worker_config" {
 data "ct_config" "worker_ign" {
   content      = "${data.template_file.worker_config.rendered}"
   pretty_print = false
+  snippets     = ["${var.worker_clc_snippets}"]
 }
