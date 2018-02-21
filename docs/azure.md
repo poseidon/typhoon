@@ -1,15 +1,15 @@
-# AWS
+# Azure
 
-In this tutorial, we'll create a Kubernetes v1.9.3 cluster on AWS.
+In this tutorial, we'll create a Kubernetes v1.9.3 cluster on Azure.
 
-We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
+We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, an Azure Virtual Network, subnets, Availability Sets for controllers and workers, load balancers for controllers and workers, and network security groups will be created.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
-* AWS Account and IAM credentials
-* AWS Route53 DNS Zone (registered Domain Name or delegated subdomain)
+* Azure Account and AAD credentials
+* Azure DNS Zone (registered Domain Name or delegated subdomain)
 * Terraform v0.11.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Terraform Setup
@@ -45,23 +45,22 @@ cd infra/clusters
 
 ## Provider
 
-Login to your AWS IAM dashboard and find your IAM user. Select "Security Credentials" and create an access key. Save the id and secret to a file that can be referenced in configs.
+Credentials are required to provision resources using the `azurerm` provider.
 
-```
-[default]
-aws_access_key_id = xxx
-aws_secret_access_key = yyy
+Using environment variables is the suggested method for storing authentication information:
+```bash
+export ARM_CLIENT_ID="<arm_client_id>"
+export ARM_CLIENT_SECRET="<arm_client_secret>"
+export ARM_SUBSCRIPTION_ID="<arm_subscription_id>"
+export ARM_TENANT_ID="<arm_tenant_id>"
 ```
 
-Configure the AWS provider to use your access key credentials in a `providers.tf` file.
+Configure the Azure provider to use your access key credentials in a `providers.tf` file.
 
 ```tf
-provider "aws" {
-  version = "~> 1.5.0"
+provider "azurerm" {
+  version = "~> 1.1"
   alias   = "default"
-
-  region                  = "eu-central-1"
-  shared_credentials_file = "/home/user/.config/aws/credentials"
 }
 
 provider "local" {
@@ -85,44 +84,46 @@ provider "tls" {
 }
 ```
 
-Additional configuration options are described in the `aws` provider [docs](https://www.terraform.io/docs/providers/aws/).
+Additional configuration options are described in the `azurerm` provider [docs](https://www.terraform.io/docs/providers/azurerm/).
 
 !!! tip
-    Regions are listed in [docs](http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region) or with `aws ec2 describe-regions`.
+    Regions are listed in [docs](https://azure.microsoft.com/en-us/regions/) or with `az account list-locations -o table`.
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `azure/container-linux/kubernetes`.
 
 ```tf
-module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.9.3"
+module "azure-foo" {
+  source = "git::https://github.com/justaugustus/typhoon-azure//azure/container-linux/kubernetes?ref=v1.9.3-azure.0"
 
   providers = {
-    aws = "aws.default"
+    azure = "azure.default"
     local = "local.default"
     null = "null.default"
     template = "template.default"
     tls = "tls.default"
   }
-  
-  cluster_name = "tempest"
 
-  # AWS
-  dns_zone           = "aws.example.com"
-  dns_zone_id        = "Z3PAABBCFAKEC0"
-  controller_count   = 1
-  controller_type    = "t2.medium"
+  cluster_name = "foo"
+  location     = "eastus2"
+
+  # Azure
+  dns_zone           = "azure.example.com"
+  dns_zone_rg        = "dns-resource-group"
+  controller_count   = 3
+  controller_type    = "Standard_DS2_v2"
   worker_count       = 2
-  worker_type        = "t2.small"
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  worker_type        = "Standard_DS2_v2"
+  os_channel         = "stable"
+  ssh_authorized_key = "${file("/home/<user>/.ssh/id_rsa.pub")}"
 
   # bootkube
-  asset_dir  = "/home/user/.secrets/clusters/tempest"
+  asset_dir = "/home/augustus/.secrets/clusters/foo"
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/justaugustus/typhoon-azure/blob/azure/azure/container-linux/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -149,7 +150,7 @@ Get or update Terraform modules.
 ```sh
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
-Get: git::https://github.com/poseidon/typhoon (update)
+Get: git::https://github.com/justaugustus/typhoon-azure (update)
 Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.10.0 (update)
 ```
 
@@ -165,9 +166,9 @@ Apply the changes to create the cluster.
 ```sh
 $ terraform apply
 ...
-module.aws-tempest.null_resource.bootkube-start: Still creating... (4m50s elapsed)
-module.aws-tempest.null_resource.bootkube-start: Still creating... (5m0s elapsed)
-module.aws-tempest.null_resource.bootkube-start: Creation complete after 11m8s (ID: 3961816482286168143)
+module.azure-foo.null_resource.bootkube-start: Still creating... (4m50s elapsed)
+module.azure-foo.null_resource.bootkube-start: Still creating... (5m0s elapsed)
+module.azure-foo.null_resource.bootkube-start: Creation complete after 11m8s (ID: 3961816482286168143)
 
 Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
 ```
@@ -179,7 +180,7 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 [Install kubectl](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) on your system. Use the generated `kubeconfig` credentials to access the Kubernetes cluster and list nodes.
 
 ```
-$ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
+$ export KUBECONFIG=/home/user/.secrets/clusters/foo/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION        
 ip-10-0-12-221   Ready     34m       v1.9.3
@@ -221,48 +222,49 @@ Learn about [version pinning](concepts.md#versioning), [maintenance](topics/main
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
-| cluster_name | Unique cluster name (prepended to dns_zone) | "tempest" |
-| dns_zone | AWS Route53 DNS zone | "aws.example.com" |
-| dns_zone_id | AWS Route53 DNS zone id | "Z3PAABBCFAKEC0" |
+| location | Azure location to create resources | "eastus2" |
+| cluster_name | Unique cluster name (prepended to dns_zone) | "foo" |
+| dns_zone | Azure DNS zone | "azure.example.com" |
+| dns_zone_rg | Resource group of Azure DNS zone | "dns-resource-group" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
 | os_channel | Container Linux AMI channel | stable, beta, alpha |
-| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/tempest" |
+| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/foo" |
 
 #### DNS Zone
 
-Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `tempest.aws.example.com`.
+Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `foo.azure.example.com`.
 
-You'll need a registered domain name or subdomain registered in a AWS Route53 DNS zone. You can set this up once and create many clusters with unique names.
+You'll need a registered domain name or subdomain registered in an Azure DNS zone. You can set this up once and create many clusters with unique names.
 
 ```tf
-resource "aws_route53_zone" "zone-for-clusters" {
-  name = "aws.example.com."
+resource "azurerm_resource_group" "typhoon" {
+  name     = "dns-resource-group"
+  location = "East US 2"
+}
+
+resource "azurerm_dns_zone" "typhoon" {
+  name                = "azure.example.com"
+  resource_group_name = "${azurerm_resource_group.typhoon.name}"
 }
 ```
 
-Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`.
-
-!!! tip ""
-    If you have an existing domain name with a zone file elsewhere, just carve out a subdomain that can be managed on Route53 (e.g. aws.mydomain.com) and [update nameservers](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html).
+Reference the DNS zone id with `"${azurerm_dns_zone.typhoon.id}"`.
 
 ### Optional
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| controller_count | Number of controllers (i.e. masters) | 1 | 1 |
-| controller_type | Controller EC2 instance type | "t2.small" | "t2.medium" |
+| controller_count | Number of controllers (i.e. masters) | 1 | 3 |
+| controller_type | Controller VM instance type | "Standard_DS2_v2" | "Standard_DS3_v2" |
 | worker_count | Number of workers | 1 | 3 |
-| worker_type | Worker EC2 instance type | "t2.small" | "t2.medium" |
+| worker_type | Worker VM instance type | "Standard_DS2_v2" | "Standard_DS3_v2" |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
-| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
-| network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
-| host_cidr | CIDR range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
+| networking | Choice of networking provider | "flannel" | "flannel" |
+| vnet_cidr | CIDR IPv4 range to assign to the Virtual Network | "10.0.0.0/16" | "10.1.0.0/16" |
+| controller_cidr | CIDR IPv4 range to assign to controller nodes | "10.0.1.0/24" | "10.0.1.0/24" |
+| worker_cidr | CIDR IPv4 range to assign to worker nodes | "10.0.1.0/24" | "10.0.1.0/24" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 
-Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/).
-
-!!! tip "MTU"
-    If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8991! You will get better pod-to-pod bandwidth.
-
+Check the list of valid [instance types](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes).
