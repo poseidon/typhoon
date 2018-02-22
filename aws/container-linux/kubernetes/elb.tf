@@ -35,7 +35,7 @@ resource "aws_lb_target_group" "apiserver" {
   }
 }
 
-resource "aws_lb_listener" "apiserver-443" {
+resource "aws_lb_listener" "apiserver-https" {
   load_balancer_arn = "${aws_lb.apiserver.arn}"
   port              = "443"
   protocol          = "TCP"
@@ -46,7 +46,7 @@ resource "aws_lb_listener" "apiserver-443" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "apiserver" {
+resource "aws_lb_target_group_attachment" "controllers" {
   count = "${var.controller_count}"
 
   target_group_arn = "${aws_lb_target_group.apiserver.arn}"
