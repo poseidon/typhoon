@@ -14,6 +14,7 @@ Notable changes between versions.
 
 #### AWS
 
+* Switch apiserver elastic load balancer to a network load balancer ([#136](https://github.com/poseidon/typhoon/pull/136))
 * Switch Ingress elastic load balancer to a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS (NLBs)(https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
   * Require terraform-provider-aws 1.7.0 or higher
