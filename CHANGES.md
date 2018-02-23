@@ -7,12 +7,6 @@ Notable changes between versions.
 * Upgrade etcd from v3.2.15 to v3.3.1
 * Use kubernetes-incubator/bootkube v0.10.0
 
-#### Addons
-
-* Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
-  * Use separate service account
-* Update nginx-ingress from 0.10.2 to 0.11.0
-
 #### AWS
 
 * Switch apiserver elastic load balancer to a network load balancer ([#136](https://github.com/poseidon/typhoon/pull/136))
@@ -29,6 +23,12 @@ Notable changes between versions.
 
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 
+#### Addons
+
+* Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
+  * Use separate service account
+* Update nginx-ingress from 0.10.2 to 0.11.0
+
 ## v1.9.3
 
 * Kubernetes [v1.9.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v193)
@@ -38,6 +38,11 @@ Notable changes between versions.
   * Update flannel from v0.9.0 to v0.10.0
   * Use separate service account for flannel
 * Update etcd from v3.2.14 to v3.2.15
+
+#### Digital Ocean
+
+* Use new Droplet [types](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) which offer more CPU/memory, at lower cost. ([#105](https://github.com/poseidon/typhoon/pull/105))
+  * A small Digital Ocean cluster costs less than $25 a month!
 
 #### Addons
 
@@ -53,11 +58,6 @@ Notable changes between versions.
 * Switch manifests to use `apps/v1` Deployments and Daemonsets ([#120](https://github.com/poseidon/typhoon/pull/120))
 * Remove Kubernetes Dashboard manifests ([#121](https://github.com/poseidon/typhoon/pull/121))
 
-#### Digital Ocean
-
-* Use new Droplet [types](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) which offer more CPU/memory, at lower cost. ([#105](https://github.com/poseidon/typhoon/pull/105))
-  * A small Digital Ocean cluster costs less than $25 a month!
-
 ## v1.9.2
 
 * Kubernetes [v1.9.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v192)
@@ -71,13 +71,6 @@ Notable changes between versions.
 * Use separate service account for kube-dns
 * Use kubernetes-incubator/bootkube v0.10.0
 
-#### Addons
-
-* Update CLUO to v0.5.0 to fix compatibility with Kubernetes 1.9 (**important**)
-  * Earlier versions can't roll out Container Linux updates on Kubernetes 1.9 nodes ([cluo#163](https://github.com/coreos/container-linux-update-operator/issues/163))
-* Update kube-state-metrics from v1.1.0 to v1.2.0
-* Fix RBAC cluster role for kube-state-metrics
-
 #### Bare-Metal
 
 * Use per-node Container Linux install profiles ([#97](https://github.com/poseidon/typhoon/pull/97))
@@ -88,6 +81,13 @@ Notable changes between versions.
 
 * Relax `digitalocean` provider version constraint
 * Fix bug with `terraform plan` always showing a firewall diff to be applied ([#3](https://github.com/poseidon/typhoon/issues/3))
+
+#### Addons
+
+* Update CLUO to v0.5.0 to fix compatibility with Kubernetes 1.9 (**important**)
+  * Earlier versions can't roll out Container Linux updates on Kubernetes 1.9 nodes ([cluo#163](https://github.com/coreos/container-linux-update-operator/issues/163))
+* Update kube-state-metrics from v1.1.0 to v1.2.0
+* Fix RBAC cluster role for kube-state-metrics
 
 ## v1.9.1
 
