@@ -19,6 +19,15 @@ Notable changes between versions.
 * Switch Ingress elastic load balancer to a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS (NLBs)(https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
   * Require terraform-provider-aws 1.7.0 or higher
+* Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
+
+#### Digital Ocean
+
+* Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
+
+#### Google Cloud
+
+* Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 
 ## v1.9.3
 
