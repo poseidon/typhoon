@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Upgrade etcd from v3.2.15 to v3.3.1
+* Update Calico from v3.0.2 to v3.0.3
 * Use kubernetes-incubator/bootkube v0.10.0
 * [Recommend](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 
