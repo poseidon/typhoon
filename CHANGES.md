@@ -18,6 +18,7 @@ Notable changes between versions.
 #### Digital Ocean
 
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
+* Fix to pass `ssh_fingerprints` as a list to droplets ([#143](https://github.com/poseidon/typhoon/pull/143))
 
 #### Google Cloud
 

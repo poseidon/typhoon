@@ -45,7 +45,7 @@ resource "digitalocean_droplet" "controllers" {
   private_networking = true
 
   user_data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
-  ssh_keys  = "${var.ssh_fingerprints}"
+  ssh_keys  = ["${var.ssh_fingerprints}"]
 
   tags = [
     "${digitalocean_tag.controllers.id}",
