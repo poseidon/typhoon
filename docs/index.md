@@ -125,5 +125,3 @@ Typhoon addresses real world needs, which you may share. It is honest about limi
 Typhoon is not a product, trial, or free-tier. It is not run by a company, does not offer support or services, and does not accept or make any money. It is not associated with any operating system or platform vendor.
 
 Typhoon clusters will contain only [free](https://www.debian.org/intro/free) components. Cluster components will not collect data on users without their permission.
-
-*Disclosure: The author works for Red Hat (prev CoreOS), but Typhoon is unassociated and maintained independently.*
