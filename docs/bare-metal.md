@@ -259,6 +259,7 @@ Plan: 55 to add, 0 to change, 0 to destroy.
 Apply the changes. Terraform will generate bootkube assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
 
 ```sh
+$ terraform apply
 module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Provisioning with 'file'...
 module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Provisioning with 'file'...
 module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Still creating... (10s elapsed)
