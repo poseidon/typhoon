@@ -13,13 +13,10 @@ module "controllers" {
   os_image      = "${var.os_image}"
 
   # configuration
-  networking              = "${var.networking}"
-  service_cidr            = "${var.service_cidr}"
-  cluster_domain_suffix   = "${var.cluster_domain_suffix}"
-  kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
-  kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
-  kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
-  kubeconfig_server       = "${module.bootkube.server}"
+  networking            = "${var.networking}"
+  service_cidr          = "${var.service_cidr}"
+  cluster_domain_suffix = "${var.cluster_domain_suffix}"
+  kubeconfig            = "${module.bootkube.kubeconfig}"
 }
 
 module "workers" {
@@ -36,10 +33,7 @@ module "workers" {
   preemptible  = "${var.worker_preemptible}"
 
   # configuration
-  service_cidr            = "${var.service_cidr}"
-  cluster_domain_suffix   = "${var.cluster_domain_suffix}"
-  kubeconfig_ca_cert      = "${module.bootkube.ca_cert}"
-  kubeconfig_kubelet_cert = "${module.bootkube.kubelet_cert}"
-  kubeconfig_kubelet_key  = "${module.bootkube.kubelet_key}"
-  kubeconfig_server       = "${module.bootkube.server}"
+  service_cidr          = "${var.service_cidr}"
+  cluster_domain_suffix = "${var.cluster_domain_suffix}"
+  kubeconfig            = "${module.bootkube.kubeconfig}"
 }

@@ -110,22 +110,7 @@ storage:
       mode: 0644
       contents:
         inline: |
-          apiVersion: v1
-          kind: Config
-          clusters:
-          - name: local
-            cluster:
-              server: ${kubeconfig_server}
-              certificate-authority-data: ${kubeconfig_ca_cert}
-          users:
-          - name: kubelet
-            user:
-              client-certificate-data: ${kubeconfig_kubelet_cert}
-              client-key-data: ${kubeconfig_kubelet_key}
-          contexts:
-          - context:
-              cluster: local
-              user: kubelet
+          ${kubeconfig}
     - path: /etc/kubernetes/kubelet.env
       filesystem: root
       mode: 0644

@@ -75,24 +75,7 @@ variable "cluster_domain_suffix" {
   default     = "cluster.local"
 }
 
-// kubeconfig
-
-variable "kubeconfig_ca_cert" {
+variable "kubeconfig" {
   type        = "string"
-  description = "Generated kubeconfig CA certificate"
-}
-
-variable "kubeconfig_kubelet_cert" {
-  type        = "string"
-  description = "Generated kubeconfig kubelet certificate"
-}
-
-variable "kubeconfig_kubelet_key" {
-  type        = "string"
-  description = "Generated kubeconfig kubelet private key"
-}
-
-variable "kubeconfig_server" {
-  type        = "string"
-  description = "Generated kubeconfig server"
+  description = "Generated Kubelet kubeconfig"
 }
