@@ -243,8 +243,8 @@ resource "digitalocean_domain" "zone-for-clusters" {
 DigitalOcean droplets are created with your SSH public key "fingerprint" (i.e. MD5 hash) to allow access. If your SSH public key is at `~/.ssh/id_rsa`, find the fingerprint with,
 
 ```bash
-ssh-keygen -lf ~/.ssh/id_rsa.pub | awk '{print $2}'
-d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7
+ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub | awk '{print $2}'
+MD5:d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7
 ```
 
 If you use `ssh-agent` (e.g. Yubikey for SSH), find the fingerprint with,
@@ -254,7 +254,7 @@ ssh-add -l -E md5
 2048 MD5:d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7 cardno:000603633110 (RSA)
 ```
 
-If you uploaded an SSH key to DigitalOcean (not required), find the fingerprint under Settings -> Security. Finally, if you don't have an SSH key, [create one now](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
+Digital Ocean requires the SSH public key be uploaded to your account, so you may also find the fingerprint under Settings -> Security. Finally, if you don't have an SSH key, [create one now](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
 
 ### Optional
 
@@ -270,7 +270,7 @@ If you uploaded an SSH key to DigitalOcean (not required), find the fingerprint 
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 
-You can see all valid droplet sizes [on DigitalOcean's website](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) or by [using their `doctl` command-line tool](https://github.com/digitalocean/doctl) via `doctl compute size list`.
+Check the list of valid [droplet types](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) or use `doctl compute size list`.
 
 !!! warning
     Do not choose a `controller_type` smaller than 2GB. Smaller droplets are not sufficient for running a controller and bootstrapping will fail.
