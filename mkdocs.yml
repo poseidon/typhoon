@@ -58,4 +58,6 @@ pages:
     - 'Performance': 'topics/performance.md'
   - 'FAQ': 'faq.md'
   - 'Advanced':
+    - 'Overview': 'advanced/overview.md'
     - 'Customization': 'advanced/customization.md'
+    - 'Worker Pools': 'advanced/worker-pools.md'

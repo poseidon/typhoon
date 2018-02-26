@@ -1,7 +1,6 @@
 module "controllers" {
-  source             = "controllers"
-  cluster_name       = "${var.cluster_name}"
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  source       = "controllers"
+  cluster_name = "${var.cluster_name}"
 
   # GCE
   network       = "${google_compute_network.network.name}"
@@ -14,15 +13,15 @@ module "controllers" {
 
   # configuration
   networking            = "${var.networking}"
+  kubeconfig            = "${module.bootkube.kubeconfig}"
+  ssh_authorized_key    = "${var.ssh_authorized_key}"
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"
-  kubeconfig            = "${module.bootkube.kubeconfig}"
 }
 
 module "workers" {
-  source             = "workers"
-  cluster_name       = "${var.cluster_name}"
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  source       = "workers"
+  cluster_name = "${var.cluster_name}"
 
   # GCE
   network      = "${google_compute_network.network.name}"
@@ -33,7 +32,8 @@ module "workers" {
   preemptible  = "${var.worker_preemptible}"
 
   # configuration
+  kubeconfig            = "${module.bootkube.kubeconfig}"
+  ssh_authorized_key    = "${var.ssh_authorized_key}"
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"
-  kubeconfig            = "${module.bootkube.kubeconfig}"
 }

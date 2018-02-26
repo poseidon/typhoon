@@ -100,11 +100,11 @@ module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.9.3"
   
   providers = {
-    google = "google.default"
-    local = "local.default"
-    null = "null.default"
+    google   = "google.default"
+    local    = "local.default"
+    null     = "null.default"
     template = "template.default"
-    tls = "tls.default"
+    tls      = "tls.default"
   }
 
   # Google Cloud
@@ -257,7 +257,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | machine_type | Machine type for compute instances | "n1-standard-1" | See below |
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
-| worker_preemptible | If enabled, Compute Engine will terminate controllers randomly within 24 hours | false | true |
+| worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

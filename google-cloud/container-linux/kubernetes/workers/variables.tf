@@ -17,6 +17,7 @@ variable "network" {
 
 variable "count" {
   type        = "string"
+  default     = "1"
   description = "Number of worker compute instances the instance group should manage"
 }
 
@@ -27,11 +28,13 @@ variable "region" {
 
 variable "machine_type" {
   type        = "string"
+  default     = "n1-standard-1"
   description = "Machine type for compute instances (e.g. gcloud compute machine-types list)"
 }
 
 variable "os_image" {
   type        = "string"
+  default     = "coreos-stable"
   description = "OS image from which to initialize the disk (e.g. gcloud compute images list)"
 }
 
