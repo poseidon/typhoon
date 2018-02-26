@@ -202,3 +202,38 @@ Re-run `terraform plan`. Plan will claim there are no changes to apply. Run `ter
 ### Verify
 
 You should now be able to run `terraform plan` without errors. When you choose, you may comment or delete a module from Terraform configs and `terraform apply` should destroy the cluster correctly.
+
+## terraform-provider-ct v0.2.1
+
+Typhoon recommends updating the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin installed on your system from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1). The release contains an important feature that will be used in future Typhoon releases.
+
+Check your `~/.terraformrc` to find your current `terraform-provider-ct` plugin.
+
+```
+providers {
+  ct = "/usr/local/bin/terraform-provider-ct"
+}
+```
+
+Make a backup copy. Install `terraform-provider-ct` v0.2.1.
+
+```sh
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
+sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
+```
+
+Re-initialize Terraform configs which have Typhoon cluster resources.
+
+```
+cd clusters
+terraform init
+```
+
+Verify Terraform does not produce a diff related to Container Linux provisioning.
+
+```
+terraform plan
+```
+
+You're prepared for future Typhoon releases.

@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Upgrade etcd from v3.2.15 to v3.3.1
 * Use kubernetes-incubator/bootkube v0.10.0
+* [Recommend](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 
 #### AWS
 
@@ -65,7 +66,7 @@ Notable changes between versions.
 * Add Terraform v0.11.x support
   * Add explicit "providers" section to modules for Terraform v0.11.x
   * Retain support for Terraform v0.10.4+
-* Add [migration guide](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md) from Terraform v0.10.x to v0.11.x (**action required!**)
+* Add [migration guide](https://github.com/poseidon/typhoon/blob/master/docs/topics/maintenance.md#terraform-v011x) from Terraform v0.10.x to v0.11.x (**action required!**)
 * Update etcd from 3.2.13 to 3.2.14
 * Update calico from 2.6.5 to 2.6.6
 * Update kube-dns from v1.14.7 to v1.14.8
