@@ -9,7 +9,8 @@ kubectl apply -f addons/grafana -R
 Use `kubectl` to authenticate to the apiserver and create a local port-forward to the Grafana pod.
 
 ```
-kubectl port-forward grafana-POD-ID 8080 -n monitoring
+kubectl port-forward $(kubectl get pods -n monitoring -o name |sed 's/pods\///' | sed -n '/grafana/p') 8080 -n monitoring
+open http://localhost:8080
 ```
 
 Visit [127.0.0.1:8080](http://127.0.0.1:8080) to view the bundled dashboards.
