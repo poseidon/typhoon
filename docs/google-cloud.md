@@ -111,7 +111,7 @@ module "google-cloud-yavin" {
   region        = "us-central1"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
-  os_image      = "coreos-stable-1576-5-0-v20180105"
+  os_image      = "coreos-stable"
 
   cluster_name       = "yavin"
   controller_count   = 1
@@ -228,7 +228,7 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
-| os_image | OS image for compute instances | "coreos-stable-1576-5-0-v20180105" |
+| os_image | OS image for compute instances | "coreos-stable" |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.

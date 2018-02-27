@@ -18,7 +18,7 @@ kubectl apply -f addons/cluo -R
 $ kubectl get nodes --show-labels
 ...
 container-linux-update.v1.coreos.com/group=stable
-container-linux-update.v1.coreos.com/version=1576.5.0
+container-linux-update.v1.coreos.com/version=1632.3.0
 ```
 
 `update-operator` ensures one node reboots at a time and that pods are drained prior to reboot.

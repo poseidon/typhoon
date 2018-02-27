@@ -57,7 +57,7 @@ module "google-cloud-yavin" {
   region        = "us-central1"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
-  os_image      = "coreos-stable-1576-5-0-v20180105"
+  os_image      = "coreos-stable"
 
   cluster_name       = "yavin"
   controller_count   = 1

@@ -189,7 +189,7 @@ module "bare-metal-mercury" {
   # install
   matchbox_http_endpoint  = "http://matchbox.example.com"
   container_linux_channel = "stable"
-  container_linux_version = "1576.5.0"
+  container_linux_version = "1632.3.0"
   ssh_authorized_key      = "ssh-rsa AAAAB3Nz..."
 
   # cluster
@@ -359,7 +359,7 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 |:-----|:------------|:--------|
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:8080 |
 | container_linux_channel | Container Linux channel | stable, beta, alpha |
-| container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1576.5.0 |
+| container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
 | cluster_name | Cluster name | mercury |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for ~/.ssh/authorized_keys | "ssh-rsa AAAAB3Nz..." |
