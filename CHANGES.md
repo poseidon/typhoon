@@ -4,10 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+* Add [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud (advanced)
+* [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 * Upgrade etcd from v3.2.15 to v3.3.1
 * Update Calico from v3.0.2 to v3.0.3
 * Use kubernetes-incubator/bootkube v0.10.0
-* [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 
 #### AWS
 
@@ -15,6 +16,7 @@ Notable changes between versions.
 * Switch Ingress elastic load balancer to a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS [NLBs](https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
   * Require terraform-provider-aws 1.7.0 or higher
+* Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#150](https://github.com/poseidon/typhoon/pull/150))
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 
 #### Digital Ocean
@@ -24,7 +26,7 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Add support for "worker pools" - groups of homogeneous workers joined to an existing cluster ([#148](https://github.com/poseidon/typhoon/pull/148))
+* Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#148](https://github.com/poseidon/typhoon/pull/148))
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 * Add `kubeconfig` variable to `controllers` and `workers` submodules ([#147](https://github.com/poseidon/typhoon/pull/147))
 * Remove `kubeconfig_*` variables from `controllers` and `workers` submodules ([#147](https://github.com/poseidon/typhoon/pull/147))

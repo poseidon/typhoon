@@ -4,7 +4,7 @@ resource "aws_lb" "ingress" {
   load_balancer_type = "network"
   internal           = false
 
-  subnets = ["${aws_subnet.public.*.id}"]
+  subnets = ["${var.subnet_ids}"]
 }
 
 # Forward HTTP traffic to workers
@@ -35,7 +35,7 @@ resource "aws_lb_listener" "ingress-https" {
 
 resource "aws_lb_target_group" "workers-http" {
   name        = "${var.cluster_name}-workers-http"
-  vpc_id      = "${aws_vpc.network.id}"
+  vpc_id      = "${var.vpc_id}"
   target_type = "instance"
 
   protocol = "TCP"
@@ -58,7 +58,7 @@ resource "aws_lb_target_group" "workers-http" {
 
 resource "aws_lb_target_group" "workers-https" {
   name        = "${var.cluster_name}-workers-https"
-  vpc_id      = "${aws_vpc.network.id}"
+  vpc_id      = "${var.vpc_id}"
   target_type = "instance"
 
   protocol = "TCP"

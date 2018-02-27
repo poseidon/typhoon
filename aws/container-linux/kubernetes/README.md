@@ -14,6 +14,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * Kubernetes v1.9.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
 * Single or multi-master, workloads isolated on workers, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/)
 * Ready for Ingress, Dashboards, Metrics, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Docs
