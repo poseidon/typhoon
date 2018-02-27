@@ -61,11 +61,10 @@ data "template_file" "worker_config" {
   template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 
   vars = {
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    k8s_etcd_service_ip   = "${cidrhost(var.service_cidr, 15)}"
-    ssh_authorized_key    = "${var.ssh_authorized_key}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
     kubeconfig            = "${indent(10, module.bootkube.kubeconfig)}"
+    ssh_authorized_key    = "${var.ssh_authorized_key}"
+    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix = "${var.cluster_domain_suffix}"
   }
 }
 

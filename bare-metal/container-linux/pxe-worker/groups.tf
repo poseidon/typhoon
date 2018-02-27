@@ -12,9 +12,6 @@ resource "matchbox_group" "workers" {
     domain_name    = "${element(var.worker_domains, count.index)}"
     etcd_endpoints = "${join(",", formatlist("%s:2379", var.controller_domains))}"
 
-    # TODO
-    etcd_on_host          = "true"
-    k8s_etcd_service_ip   = "10.3.0.15"
     k8s_dns_service_ip    = "${var.kube_dns_service_ip}"
     cluster_domain_suffix = "${var.cluster_domain_suffix}"
     ssh_authorized_key    = "${var.ssh_authorized_key}"
