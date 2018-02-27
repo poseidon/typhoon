@@ -36,7 +36,8 @@ Prometheus provides a basic UI for querying metrics and viewing alerts. Use `kub
 
 ```
 kubectl get pods -n monitoring
-kubectl port-forward prometheus-POD-ID 9090 -n monitoring
+kubectl port-forward $(kubectl get pods -n monitoring -o name |sed 's/pods\///' | sed -n '/prometheus/p') 9090 -n monitoring
+open http://localhost:9090
 ```
 
 Visit [127.0.0.1:9090](http://127.0.0.1:9090) to query [expressions](http://127.0.0.1:9090/graph), view [targets](http://127.0.0.1:9090/targets), or check [alerts](http://127.0.0.1:9090/alerts).
