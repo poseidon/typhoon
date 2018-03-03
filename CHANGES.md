@@ -33,6 +33,8 @@ Notable changes between versions.
 
 #### Addons
 
+* Update Prometheus from 2.1.0 to 2.2.0 ([#153](https://github.com/poseidon/typhoon/pull/153))
+* Update Grafana from v4.6.3 to v5.0.0 ([#153](https://github.com/poseidon/typhoon/pull/153))
 * Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
   * Use separate service account
 * Update nginx-ingress from 0.10.2 to 0.11.0
