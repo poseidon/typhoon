@@ -79,6 +79,10 @@ Create a cluster following the Google Cloud [tutorial](../google-cloud.md#cluste
 module "yavin-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes/workers?ref=v1.9.4"
 
+  providers = {
+    google = "google.default"
+  }
+
   # Google Cloud
   region  = "us-central1"
   network = "${module.google-cloud-yavin.network_name}"
