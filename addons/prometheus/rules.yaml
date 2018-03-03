@@ -353,7 +353,7 @@ data:
           description: Prometheus failed to scrape {{ $value }}% of kubelets.
       - alert: K8SKubeletDown
         expr: (absent(up{job="kubelet"} == 1) or count(up{job="kubelet"} == 0) / count(up{job="kubelet"}))
-          * 100 > 1
+          * 100 > 10
         for: 1h
         labels:
           severity: critical
@@ -588,3 +588,11 @@ data:
           description: '{{$labels.job}} at {{$labels.instance}} has a corrupted write-ahead
             log (WAL).'
           summary: Prometheus write-ahead log is corrupted
+      - alert: PrometheusNotIngestingSamples
+        expr: rate(prometheus_tsdb_head_samples_appended_total[5m]) <= 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: "Prometheus {{ $labels.namespace }}/{{ $labels.pod}} isn't ingesting samples."
+          summary: "Prometheus isn't ingesting samples"
