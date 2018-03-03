@@ -77,3 +77,17 @@ variable "cluster_domain_suffix" {
   type        = "string"
   default     = "cluster.local"
 }
+
+# unofficial, undocumented, unsupported, temporary
+
+variable "accelerator_type" {
+  type = "string"
+  default = ""
+  description = "Google Compute Engine accelerator type (e.g. nvidia-tesla-k80, see gcloud compute accelerator-types list)"
+}
+
+variable "accelerator_count" {
+  type = "string"
+  default = "0"
+  description = "Number of compute engine accelerators"
+}
