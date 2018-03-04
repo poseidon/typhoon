@@ -1,6 +1,6 @@
 variable "name" {
   type        = "string"
-  description = "Unique name"
+  description = "Unique name for instance group"
 }
 
 variable "cluster_name" {

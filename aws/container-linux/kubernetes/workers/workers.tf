@@ -1,6 +1,6 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
-  name = "${var.cluster_name}-worker ${aws_launch_configuration.worker.name}"
+  name = "${var.name}-worker ${aws_launch_configuration.worker.name}"
 
   # count
   desired_capacity          = "${var.count}"
@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "workers" {
 
   tags = [{
     key                 = "Name"
-    value               = "${var.cluster_name}-worker"
+    value               = "${var.name}-worker"
     propagate_at_launch = true
   }]
 }

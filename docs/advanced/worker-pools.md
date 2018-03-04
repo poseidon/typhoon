@@ -25,7 +25,7 @@ module "tempest-worker-pool" {
   security_groups = "${module.aws-tempest.worker_security_groups}"
   
   # configuration
-  cluster_name       = "tempest-worker-pool"
+  name               = "tempest-worker-pool"
   kubeconfig         = "${module.aws-tempest.kubeconfig}"
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
@@ -54,7 +54,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | vpc_id | Must be set to `vpc_id` output by cluster | "${module.cluster.vpc_id}" |
 | subnet_ids | Must be set to `subnet_ids` output by cluster | "${module.cluster.subnet_ids}" |
 | security_groups | Must be set to `worker_security_groups` output by cluster | "${module.cluster.worker_security_groups}" |
-| cluster_name | Unique name | "tempest-worker-pool" |
+| name | Unique name (distinct from cluster name) | "tempest-m5s" |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
 

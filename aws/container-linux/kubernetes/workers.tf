@@ -1,6 +1,6 @@
 module "workers" {
   source = "workers"
-  cluster_name = "${var.cluster_name}"
+  name = "${var.cluster_name}"
   
   # AWS
   vpc_id      = "${aws_vpc.network.id}"

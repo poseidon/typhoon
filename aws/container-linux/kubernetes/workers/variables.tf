@@ -1,6 +1,6 @@
-variable "cluster_name" {
+variable "name" {
   type        = "string"
-  description = "Unique name"
+  description = "Unique name instance group"
 }
 
 variable "vpc_id" {

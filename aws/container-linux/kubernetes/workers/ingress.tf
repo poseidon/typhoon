@@ -1,6 +1,6 @@
 # Network Load Balancer for Ingress
 resource "aws_lb" "ingress" {
-  name               = "${var.cluster_name}-ingress"
+  name               = "${var.name}-ingress"
   load_balancer_type = "network"
   internal           = false
 
@@ -34,7 +34,7 @@ resource "aws_lb_listener" "ingress-https" {
 # Network Load Balancer target groups of instances
 
 resource "aws_lb_target_group" "workers-http" {
-  name        = "${var.cluster_name}-workers-http"
+  name        = "${var.name}-workers-http"
   vpc_id      = "${var.vpc_id}"
   target_type = "instance"
 
@@ -57,7 +57,7 @@ resource "aws_lb_target_group" "workers-http" {
 }
 
 resource "aws_lb_target_group" "workers-https" {
-  name        = "${var.cluster_name}-workers-https"
+  name        = "${var.name}-workers-https"
   vpc_id      = "${var.vpc_id}"
   target_type = "instance"
 
