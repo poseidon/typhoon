@@ -1,11 +1,11 @@
 # Regional managed instance group maintains a homogeneous set of workers that
 # span the zones in the region.
 resource "google_compute_region_instance_group_manager" "workers" {
-  name        = "${var.cluster_name}-worker-group"
-  description = "Compute instance group of ${var.cluster_name} workers"
+  name        = "${var.name}-worker-group"
+  description = "Compute instance group of ${var.name} workers"
 
   # instance name prefix for instances in the group
-  base_instance_name = "${var.cluster_name}-worker"
+  base_instance_name = "${var.name}-worker"
   instance_template  = "${google_compute_instance_template.worker.self_link}"
   region             = "${var.region}"
 
@@ -35,7 +35,7 @@ data "ct_config" "worker_ign" {
 }
 
 resource "google_compute_instance_template" "worker" {
-  name_prefix  = "${var.cluster_name}-worker-"
+  name_prefix  = "${var.name}-worker-"
   description  = "Worker Instance template"
   machine_type = "${var.machine_type}"
 
@@ -64,7 +64,7 @@ resource "google_compute_instance_template" "worker" {
 
   can_ip_forward = true
 
-  tags = ["worker", "${var.cluster_name}-worker"]
+  tags = ["worker", "${var.cluster_name}-worker", "${var.name}-worker"]
 
   lifecycle {
     # To update an Instance Template, Terraform should replace the existing resource

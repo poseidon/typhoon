@@ -79,12 +79,17 @@ Create a cluster following the Google Cloud [tutorial](../google-cloud.md#cluste
 module "yavin-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes/workers?ref=v1.9.4"
 
+  providers = {
+    google = "google.default"
+  }
+
   # Google Cloud
-  region  = "us-central1"
-  network = "${module.google-cloud-yavin.network_name}"
+  region       = "us-central1"
+  network      = "${module.google-cloud-yavin.network_name}"
+  cluster_name = "yavin"
 
   # configuration
-  cluster_name       = "yavin-16x"
+  name               = "yavin-16x"
   kubeconfig         = "${module.google-cloud-yavin.kubeconfig}"
   ssh_authorized_key = "${var.ssh_authorized_key}"
   
@@ -123,7 +128,8 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 |:-----|:------------|:--------|
 | region | Must be set to `region` of cluster | "us-central1" |
 | network | Must be set to `network_name` output by cluster | "${module.cluster.network_name}" |
-| cluster_name | Unique name | "yavin-worker-pool" |
+| name | Unique name (distinct from cluster name) | "yavin-16x" |
+| cluster_name | Must be set to `cluster_name` of cluster | "yavin" |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
 

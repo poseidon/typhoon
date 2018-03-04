@@ -1,11 +1,16 @@
-variable "cluster_name" {
+variable "name" {
   type        = "string"
-  description = "Unique cluster name"
+  description = "Unique name"
 }
 
-variable "ssh_authorized_key" {
+variable "cluster_name" {
   type        = "string"
-  description = "SSH public key for logging in as user 'core'"
+  description = "Cluster name"
+}
+
+variable "region" {
+  type        = "string"
+  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
 }
 
 variable "network" {
@@ -19,11 +24,6 @@ variable "count" {
   type        = "string"
   default     = "1"
   description = "Number of worker compute instances the instance group should manage"
-}
-
-variable "region" {
-  type        = "string"
-  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
 }
 
 variable "machine_type" {
@@ -52,6 +52,16 @@ variable "preemptible" {
 
 # configuration
 
+variable "kubeconfig" {
+  type        = "string"
+  description = "Generated Kubelet kubeconfig"
+}
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for logging in as user 'core'"
+}
+
 variable "service_cidr" {
   description = <<EOD
 CIDR IP range to assign Kubernetes services.
@@ -66,9 +76,4 @@ variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
-}
-
-variable "kubeconfig" {
-  type        = "string"
-  description = "Generated Kubelet kubeconfig"
 }

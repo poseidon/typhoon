@@ -3,11 +3,11 @@ module "controllers" {
   cluster_name = "${var.cluster_name}"
 
   # GCE
-  network       = "${google_compute_network.network.name}"
-  count         = "${var.controller_count}"
   region        = "${var.region}"
+  network       = "${google_compute_network.network.name}"
   dns_zone      = "${var.dns_zone}"
   dns_zone_name = "${var.dns_zone_name}"
+  count         = "${var.controller_count}"
   machine_type  = "${var.machine_type}"
   os_image      = "${var.os_image}"
 
@@ -21,11 +21,12 @@ module "controllers" {
 
 module "workers" {
   source       = "workers"
+  name         = "${var.cluster_name}"
   cluster_name = "${var.cluster_name}"
 
   # GCE
-  network      = "${google_compute_network.network.name}"
   region       = "${var.region}"
+  network      = "${google_compute_network.network.name}"
   count        = "${var.worker_count}"
   machine_type = "${var.machine_type}"
   os_image     = "${var.os_image}"
