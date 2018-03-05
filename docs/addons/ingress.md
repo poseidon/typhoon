@@ -20,18 +20,18 @@ aap2.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 app3.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 ```
 
-Find the ELB's DNS name through the console or use the Typhoon module's output `ingress_dns_name`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the ELB's DNS name through the console or use the Typhoon module's output `ingress_dns_name`. For example, you might use Terraform to manage a Route53 DNS record:
 
 ```tf
-resource "google_dns_record_set" "some-application" {
-  # DNS zone name
-  managed_zone = "example-zone"
+resource "aws_route53_record" "some-application" {
+  # Hosted zone id
+  zone_id = "example-zone"
 
   # DNS record
   name    = "app.example.com."
   type    = "CNAME"
   ttl     = 300
-  rrdatas = ["${module.aws-tempest.ingress_dns_name}."]
+  records = ["${module.aws-tempest.ingress_dns_name}."]
 }
 ```
 
