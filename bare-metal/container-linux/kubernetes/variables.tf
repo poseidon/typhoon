@@ -122,6 +122,30 @@ variable "kernel_args" {
   default     = []
 }
 
+variable "kubelet_controller_mount_points" {
+  description = "Additional mount points for kubelet on controller node - names of rkt volumes"
+  type = "list"
+  default = []
+}
+
+variable "kubelet_controller_mount_points_mapping" {
+  description = "Mappings for additional kubelet controller mount points as a source=target map"
+  type = "map"
+  default = {}
+}
+
+variable "kubelet_worker_mount_points" {
+  description = "Additional mount points for kubelet on worker node - names of rkt volumes"
+  type = "list"
+  default = []
+}
+
+variable "kubelet_worker_mount_points_mapping" {
+  description = "Mappings for additional kubelet worker mount points as a source=target map"
+  type = "map"
+  default = {}
+}
+
 # unofficial, undocumented, unsupported, temporary
 
 variable "controller_networkds" {
