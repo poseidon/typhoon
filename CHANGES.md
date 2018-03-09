@@ -6,7 +6,7 @@ Notable changes between versions.
 
 * Add [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud (advanced)
 * [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
-* Upgrade etcd from v3.2.15 to v3.3.1
+* Upgrade etcd from v3.2.15 to v3.3.2
 * Update Calico from v3.0.2 to v3.0.3
 * Use kubernetes-incubator/bootkube v0.10.0
 
