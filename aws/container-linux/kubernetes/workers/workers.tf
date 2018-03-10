@@ -24,7 +24,6 @@ resource "aws_autoscaling_group" "workers" {
   lifecycle {
     # override the default destroy and replace update behavior
     create_before_destroy = true
-    ignore_changes        = ["image_id"]
   }
 
   tags = [{
@@ -53,6 +52,7 @@ resource "aws_launch_configuration" "worker" {
   lifecycle {
     // Override the default destroy and replace update behavior
     create_before_destroy = true
+    ignore_changes        = ["image_id"]
   }
 }
 
