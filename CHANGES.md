@@ -4,9 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.9.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v194)
 * Introduce [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud. Allow groups of workers with different properties to be joined to a cluster.
 * Use new Network Load Balancers and cross zone load balancing on AWS
-* Allow flexvolume plugins to be used on all Typhoon clusters (not just bare-metal)
+* Allow flexvolume plugins to be used on any Typhoon cluster (not just bare-metal)
 * Upgrade etcd from v3.2.15 to v3.3.2
 * Update Calico from v3.0.2 to v3.0.3
 * Use kubernetes-incubator/bootkube v0.10.0
