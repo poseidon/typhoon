@@ -16,6 +16,9 @@ Notable changes between versions.
 * Switch Ingress elastic load balancer to a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS [NLBs](https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
   * Require terraform-provider-aws 1.7.0 or higher
+* Enable cross-zone NLB load balancing ([#159](https://github.com/poseidon/typhoon/pull/159))
+  * [Announcement](https://aws.amazon.com/about-aws/whats-new/2018/02/network-load-balancer-now-supports-cross-zone-load-balancing/): Requests are automatically evenly distributed to targets regardless of AZ
+  * Require terraform-provider-aws 1.11.0 or higher
 * Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#150](https://github.com/poseidon/typhoon/pull/150))
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 * Fix controller and worker launch configs to ignore AMI changes ([#126](https://github.com/poseidon/typhoon/pull/126), [#158](https://github.com/poseidon/typhoon/pull/158))

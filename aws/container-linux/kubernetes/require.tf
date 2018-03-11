@@ -5,7 +5,7 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 1.7"
+  version = "~> 1.11"
 }
 
 provider "local" {

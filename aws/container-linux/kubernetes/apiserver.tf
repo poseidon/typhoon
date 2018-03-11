@@ -20,6 +20,8 @@ resource "aws_lb" "apiserver" {
   internal           = false
 
   subnets = ["${aws_subnet.public.*.id}"]
+
+  enable_cross_zone_load_balancing = true
 }
 
 # Forward HTTP traffic to controllers

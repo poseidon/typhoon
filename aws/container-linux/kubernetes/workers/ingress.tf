@@ -5,6 +5,8 @@ resource "aws_lb" "ingress" {
   internal           = false
 
   subnets = ["${var.subnet_ids}"]
+
+  enable_cross_zone_load_balancing = true
 }
 
 # Forward HTTP traffic to workers
