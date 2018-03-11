@@ -4,17 +4,17 @@ variable "name" {
 }
 
 variable "vpc_id" {
-  type = "string"
+  type        = "string"
   description = "ID of the VPC for creating instances"
 }
 
 variable "subnet_ids" {
-  type = "list"
+  type        = "list"
   description = "List of subnet IDs for creating instances"
 }
 
 variable "security_groups" {
-  type = "list"
+  type        = "list"
   description = "List of security group IDs"
 }
 
@@ -47,7 +47,7 @@ variable "disk_size" {
 # configuration
 
 variable "kubeconfig" {
-  type = "string"
+  type        = "string"
   description = "Generated Kubelet kubeconfig"
 }
 
