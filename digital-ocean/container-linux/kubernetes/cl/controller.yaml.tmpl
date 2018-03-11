@@ -93,6 +93,7 @@ systemd:
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
           --node-labels=node-role.kubernetes.io/master \
+          --node-labels=node-role.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
