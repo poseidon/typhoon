@@ -4,22 +4,24 @@ Notable changes between versions.
 
 ## Latest
 
-* Add [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud (advanced)
-* [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
+* Introduce [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud. Allow groups of workers with different properties to be joined to a cluster.
+* Use new Network Load Balancers and cross zone load balancing on AWS
+* Allow flexvolume plugins to be used on all Typhoon clusters (not just bare-metal)
 * Upgrade etcd from v3.2.15 to v3.3.2
 * Update Calico from v3.0.2 to v3.0.3
 * Use kubernetes-incubator/bootkube v0.10.0
+* [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 
 #### AWS
 
-* Switch apiserver elastic load balancer to a network load balancer ([#136](https://github.com/poseidon/typhoon/pull/136))
-* Switch Ingress elastic load balancer to a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
+* Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#150](https://github.com/poseidon/typhoon/pull/150))
+* Replace the apiserver elastic load balancer with a network load balancer ([#136](https://github.com/poseidon/typhoon/pull/136))
+* Replace the Ingress elastic load balancer with a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS [NLBs](https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
-  * Require terraform-provider-aws 1.7.0 or higher
+  * Require `terraform-provider-aws` 1.7.0 or higher
 * Enable cross-zone NLB load balancing ([#159](https://github.com/poseidon/typhoon/pull/159))
   * [Announcement](https://aws.amazon.com/about-aws/whats-new/2018/02/network-load-balancer-now-supports-cross-zone-load-balancing/): Requests are automatically evenly distributed to targets regardless of AZ
-  * Require terraform-provider-aws 1.11.0 or higher
-* Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#150](https://github.com/poseidon/typhoon/pull/150))
+  * Require `terraform-provider-aws` 1.11.0 or higher
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 * Fix controller and worker launch configs to ignore AMI changes ([#126](https://github.com/poseidon/typhoon/pull/126), [#158](https://github.com/poseidon/typhoon/pull/158))
 
@@ -38,7 +40,10 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from 2.1.0 to 2.2.0 ([#153](https://github.com/poseidon/typhoon/pull/153))
+  * Scrape Prometheus itself to enable alerts about Prometheus itself
+  * Adjust KubeletDown rule to fire when 10% of kubelets are down
 * Update Grafana from v4.6.3 to v5.0.1 ([#153](https://github.com/poseidon/typhoon/pull/153))
+  * Restrict dashboard organization role to Viewer
 * Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
   * Use separate service account
 * Update nginx-ingress from 0.10.2 to 0.11.0
