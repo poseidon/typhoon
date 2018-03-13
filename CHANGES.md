@@ -18,6 +18,7 @@ Notable changes between versions.
 
 #### AWS
 
+* Promote AWS platform to stable
 * Allow groups of workers to be defined and joined to a cluster (i.e. worker pools) ([#150](https://github.com/poseidon/typhoon/pull/150))
 * Replace the apiserver elastic load balancer with a network load balancer ([#136](https://github.com/poseidon/typhoon/pull/136))
 * Replace the Ingress elastic load balancer with a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
