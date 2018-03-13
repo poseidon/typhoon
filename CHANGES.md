@@ -4,8 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.9.4
+
 * Kubernetes [v1.9.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v194)
-* Introduce [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud. Allow groups of workers with different properties to be joined to a cluster.
+  * Upstream changed secret, configMap, downward API, and projected volumes to be read-only (breaking, [kubernetes#58720](https://github.com/kubernetes/kubernetes/pull/58720))
+* Introduce [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud for joining heterogeneous workers to existing clusters.
 * Use new Network Load Balancers and cross zone load balancing on AWS
 * Allow flexvolume plugins to be used on any Typhoon cluster (not just bare-metal)
 * Upgrade etcd from v3.2.15 to v3.3.2
@@ -20,8 +23,8 @@ Notable changes between versions.
 * Replace the Ingress elastic load balancer with a network load balancer ([#141](https://github.com/poseidon/typhoon/pull/141))
   * AWS [NLBs](https://aws.amazon.com/blogs/aws/new-network-load-balancer-effortless-scaling-to-millions-of-requests-per-second/) can handle millions of RPS with high throughput and low latency.
   * Require `terraform-provider-aws` 1.7.0 or higher
-* Enable cross-zone NLB load balancing ([#159](https://github.com/poseidon/typhoon/pull/159))
-  * [Announcement](https://aws.amazon.com/about-aws/whats-new/2018/02/network-load-balancer-now-supports-cross-zone-load-balancing/): Requests are automatically evenly distributed to targets regardless of AZ
+* Enable NLB [cross-zone](https://aws.amazon.com/about-aws/whats-new/2018/02/network-load-balancer-now-supports-cross-zone-load-balancing/) load balancing ([#159](https://github.com/poseidon/typhoon/pull/159))
+  * Requests are automatically evenly distributed to targets regardless of AZ
   * Require `terraform-provider-aws` 1.11.0 or higher
 * Add kubelet `--volume-plugin-dir` flag to allow flexvolume plugins ([#142](https://github.com/poseidon/typhoon/pull/142))
 * Fix controller and worker launch configs to ignore AMI changes ([#126](https://github.com/poseidon/typhoon/pull/126), [#158](https://github.com/poseidon/typhoon/pull/158))

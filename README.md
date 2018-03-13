@@ -15,7 +15,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * Single or multi-master, workloads isolated on workers, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) and [preemption](https://typhoon.psdn.io/google-cloud/#preemption) (varies by platform)
-* Ready for Ingress, Dashboards, Metrics, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
+* Ready for Ingress, Prometheus, Grafana, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Modules
 
@@ -44,7 +44,7 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.9.4"
   
   providers = {
     google = "google.default"
