@@ -6,11 +6,13 @@ metadata:
 data:
   deployment-dashboard.json: |+
     {
+      "dashboard":
+    {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -37,7 +39,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -108,7 +110,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -179,7 +181,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "Bps",
               "gauge": {
@@ -260,7 +262,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -331,7 +333,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -401,7 +403,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -471,7 +473,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -548,7 +550,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -663,7 +665,7 @@ data:
           {
             "allValue": ".*",
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": "Namespace",
@@ -683,7 +685,7 @@ data:
           {
             "allValue": null,
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": "Deployment",
@@ -735,11 +737,24 @@ data:
       "title": "Deployment",
       "version": 1
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   etcd-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "label": "prometheus",
           "description": "",
           "type": "datasource",
@@ -798,7 +813,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "format": "none",
@@ -874,7 +889,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -963,7 +978,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -1064,7 +1079,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "decimals": null,
               "editable": false,
               "error": false,
@@ -1146,7 +1161,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -1235,7 +1250,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -1327,7 +1342,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 5,
@@ -1407,7 +1422,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 5,
@@ -1487,7 +1502,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -1567,7 +1582,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "decimals": null,
               "editable": false,
               "error": false,
@@ -1661,7 +1676,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 0,
@@ -1767,7 +1782,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "decimals": 0,
               "editable": false,
               "error": false,
@@ -1894,13 +1909,26 @@ data:
       "title": "etcd",
       "version": 4
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   kubernetes-capacity-planning-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -1926,7 +1954,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2004,7 +2032,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2106,7 +2134,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2222,7 +2250,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -2305,7 +2333,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2412,7 +2440,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percentunit",
               "gauge": {
@@ -2494,7 +2522,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2576,7 +2604,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2667,7 +2695,7 @@ data:
               "aliasColors": {},
               "bars": false,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -2754,7 +2782,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -2869,13 +2897,26 @@ data:
       "title": "Kubernetes Capacity Planning",
       "version": 4
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   kubernetes-cluster-health-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -2903,7 +2944,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -2984,7 +3025,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3060,7 +3101,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3136,7 +3177,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3222,7 +3263,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3298,7 +3339,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3374,7 +3415,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3450,7 +3491,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3564,13 +3605,26 @@ data:
       "title": "Kubernetes Cluster Health",
       "version": 9
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   kubernetes-cluster-status-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -3597,7 +3651,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3669,7 +3723,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -3751,7 +3805,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -3823,7 +3877,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -3895,7 +3949,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -3967,7 +4021,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -4049,7 +4103,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4121,7 +4175,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4193,7 +4247,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4265,7 +4319,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4375,13 +4429,26 @@ data:
       "title": "Kubernetes Cluster Status",
       "version": 3
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   kubernetes-control-plane-status-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -4408,7 +4475,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4483,7 +4550,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4558,7 +4625,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4633,7 +4700,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -4716,7 +4783,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -4802,7 +4869,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -4877,7 +4944,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -5002,13 +5069,26 @@ data:
       "title": "Kubernetes Control Plane Status",
       "version": 3
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   kubernetes-resource-requests-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -5033,7 +5113,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "description": "This represents the total [CPU resource requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-cpu) in the cluster.\nFor comparison the total [allocatable CPU cores](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node-allocatable.md) is also shown.",
               "editable": false,
               "error": false,
@@ -5122,7 +5202,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -5204,7 +5284,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "description": "This represents the total [memory resource requests](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory) in the cluster.\nFor comparison the total [allocatable memory](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node-allocatable.md) is also shown.",
               "editable": false,
               "error": false,
@@ -5293,7 +5373,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -5406,13 +5486,26 @@ data:
       "title": "Kubernetes Resource Requests",
       "version": 2
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   nodes-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -5439,7 +5532,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -5518,7 +5611,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -5620,7 +5713,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -5732,7 +5825,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percent",
               "gauge": {
@@ -5814,7 +5907,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -5921,7 +6014,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(245, 54, 54, 0.9)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "percentunit",
               "gauge": {
@@ -6003,7 +6096,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -6085,7 +6178,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -6177,7 +6270,7 @@ data:
           {
             "allValue": null,
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": null,
@@ -6229,13 +6322,26 @@ data:
       "title": "Nodes",
       "version": 2
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   pods-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -6260,7 +6366,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -6366,7 +6472,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -6470,7 +6576,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -6556,7 +6662,7 @@ data:
           {
             "allValue": ".*",
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": true,
             "label": "Namespace",
@@ -6576,7 +6682,7 @@ data:
           {
             "allValue": null,
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": "Pod",
@@ -6596,7 +6702,7 @@ data:
           {
             "allValue": ".*",
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": true,
             "label": "Container",
@@ -6648,13 +6754,26 @@ data:
       "title": "Pods",
       "version": 1
     }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
   statefulset-dashboard.json: |+
+    {
+      "dashboard":
     {
       "__inputs": [
         {
           "description": "",
           "label": "prometheus",
-          "name": "prometheus",
+          "name": "DS_PROMETHEUS",
           "pluginId": "prometheus",
           "pluginName": "Prometheus",
           "type": "datasource"
@@ -6681,7 +6800,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -6752,7 +6871,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -6823,7 +6942,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "Bps",
               "gauge": {
@@ -6904,7 +7023,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -6975,7 +7094,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -7045,7 +7164,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -7115,7 +7234,7 @@ data:
                 "rgba(237, 129, 40, 0.89)",
                 "rgba(50, 172, 45, 0.97)"
               ],
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "format": "none",
               "gauge": {
@@ -7192,7 +7311,7 @@ data:
               "bars": false,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "prometheus",
+              "datasource": "${DS_PROMETHEUS}",
               "editable": false,
               "error": false,
               "fill": 1,
@@ -7286,7 +7405,7 @@ data:
           {
             "allValue": ".*",
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": "Namespace",
@@ -7306,7 +7425,7 @@ data:
           {
             "allValue": null,
             "current": {},
-            "datasource": "prometheus",
+            "datasource": "${DS_PROMETHEUS}",
             "hide": 0,
             "includeAll": false,
             "label": "StatefulSet",
@@ -7357,5 +7476,24 @@ data:
       "timezone": "browser",
       "title": "StatefulSet",
       "version": 1
+    }
+    ,
+      "inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "pluginId": "prometheus",
+          "type": "datasource",
+          "value": "prometheus"
+        }
+      ],
+      "overwrite": true
+    }
+  prometheus-datasource.json: |+
+    {
+        "access": "proxy",
+        "basicAuth": false,
+        "name": "prometheus",
+        "type": "prometheus",
+        "url": "http://prometheus.monitoring.svc"
     }
 ---

@@ -48,8 +48,6 @@ Notable changes between versions.
 * Update Prometheus from 2.1.0 to 2.2.0 ([#153](https://github.com/poseidon/typhoon/pull/153))
   * Scrape Prometheus itself to enable alerts about Prometheus itself
   * Adjust KubeletDown rule to fire when 10% of kubelets are down
-* Update Grafana from v4.6.3 to v5.0.1 ([#153](https://github.com/poseidon/typhoon/pull/153))
-  * Restrict dashboard organization role to Viewer
 * Update heapster from v1.5.0 to v1.5.1 ([#131](https://github.com/poseidon/typhoon/pull/131))
   * Use separate service account
 * Update nginx-ingress from 0.10.2 to 0.11.0
