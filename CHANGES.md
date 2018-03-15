@@ -8,6 +8,7 @@ Notable changes between versions.
 
 * Kubernetes [v1.9.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v194)
   * Secret, configMap, downward API, and projected volumes now read-only (breaking, [kubernetes#58720](https://github.com/kubernetes/kubernetes/pull/58720))
+  * Regressed `subPath` volume mounts (regression, [kubernetes#61076](https://github.com/kubernetes/kubernetes/issues/61076))
   * Mitigated `subPath` [CVE-2017-1002101](https://github.com/kubernetes/kubernetes/issues/60813)
 * Introduce [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) for AWS and Google Cloud for joining heterogeneous workers to existing clusters.
 * Use new Network Load Balancers and cross zone load balancing on AWS
