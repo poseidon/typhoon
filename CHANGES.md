@@ -4,6 +4,23 @@ Notable changes between versions.
 
 ## Latest
 
+* Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on cloud platforms ([#145](https://github.com/poseidon/typhoon/pull/145))
+  * Validate and additively merge custom Container Linux Configs during `terraform plan`
+  * Define files, systemd units, dropins, networkd configs, mounts, users, and more
+  * Require updating `terraform-provider-ct` plugin from v0.2.0 to v0.2.1
+
+#### AWS
+
+* [Require](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action required!)
+
+#### Digital Ocean
+
+* [Require](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action required!)
+
+#### Google Cloud
+
+* [Require](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action required!)
+
 #### Addons
 
 * Update Prometheus from 2.2.0 to 2.2.1
