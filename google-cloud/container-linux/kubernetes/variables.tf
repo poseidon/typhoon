@@ -31,6 +31,7 @@ variable "machine_type" {
 
 variable "os_image" {
   type        = "string"
+  default     = "coreos-stable"
   description = "OS image from which to initialize the disk (see `gcloud compute images list`)"
 }
 

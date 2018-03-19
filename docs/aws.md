@@ -225,7 +225,6 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 | dns_zone | AWS Route53 DNS zone | "aws.example.com" |
 | dns_zone_id | AWS Route53 DNS zone id | "Z3PAABBCFAKEC0" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
-| os_channel | Container Linux AMI channel | stable, beta, alpha |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/tempest" |
 
 #### DNS Zone
@@ -253,6 +252,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | controller_type | Controller EC2 instance type | "t2.small" | "t2.medium" |
 | worker_count | Number of workers | 1 | 3 |
 | worker_type | Worker EC2 instance type | "t2.small" | "t2.medium" |
+| os_channel | Container Linux AMI channel | stable | stable, beta, alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |

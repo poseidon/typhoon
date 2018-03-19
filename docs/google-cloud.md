@@ -228,7 +228,6 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
 | ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
-| os_image | OS image for compute instances | "coreos-stable" |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.
@@ -254,9 +253,10 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| machine_type | Machine type for compute instances | "n1-standard-1" | See below |
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
+| machine_type | Machine type for compute instances | "n1-standard-1" | See below |
+| os_image | OS image for compute instances | "coreos-stable" | "coreos-stable-1632-3-0-v20180215" |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

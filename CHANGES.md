@@ -20,6 +20,7 @@ Notable changes between versions.
 #### Google Cloud
 
 * [Require](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action required!)
+* Relax `os_image` to optional. Default to "coreos-stable".
 
 #### Addons
 

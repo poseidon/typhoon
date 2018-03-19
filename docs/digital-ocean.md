@@ -260,11 +260,11 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| image | OS image for droplets | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | controller_type | Digital Ocean droplet size | s-2vcpu-2gb | s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb, ... |
 | worker_count | Number of workers | 1 | 3 |
 | worker_type | Digital Ocean droplet size | s-1vcpu-1gb | s-1vcpu-1gb, s-1vcpu-2gb, s-2vcpu-2gb, ... |
+| image | OS image for droplets | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | networking | Choice of networking provider | "flannel" | "flannel" |
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
