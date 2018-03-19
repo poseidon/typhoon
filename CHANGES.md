@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.9.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v195)
+  * Fix `subPath` volume mounts regression ([kubernetes#61076](https://github.com/kubernetes/kubernetes/issues/61076))
 * Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on cloud platforms ([#145](https://github.com/poseidon/typhoon/pull/145))
   * Validate and additively merge custom Container Linux Configs during `terraform plan`
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
