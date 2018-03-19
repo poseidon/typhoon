@@ -269,6 +269,8 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
+| controller_clc_snippets | Controller Container Linux Config snippets | [] | |
+| worker_clc_snippets | Worker Container Linux Config snippets | [] | |
 
 Check the list of valid [droplet types](https://developers.digitalocean.com/documentation/changelog/api-v2/new-size-slugs-for-droplet-plan-changes/) or use `doctl compute size list`.
 
