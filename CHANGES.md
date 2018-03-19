@@ -8,6 +8,7 @@ Notable changes between versions.
   * Validate and additively merge custom Container Linux Configs during `terraform plan`
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
   * Require updating `terraform-provider-ct` plugin from v0.2.0 to v0.2.1
+* Add `node-role.kubernetes.io/controller="true"` node label to controllers ([#160](https://github.com/poseidon/typhoon/pull/160))
 
 #### AWS
 
