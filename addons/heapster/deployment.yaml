@@ -18,7 +18,7 @@ spec:
       serviceAccountName: heapster
       containers:
         - name: heapster
-          image: k8s.gcr.io/heapster-amd64:v1.5.1
+          image: k8s.gcr.io/heapster-amd64:v1.5.2
           command:
             - /heapster
             - --source=kubernetes.summary_api:''
