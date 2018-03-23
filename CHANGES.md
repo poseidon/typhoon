@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.9.6
+
 * Kubernetes [v1.9.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v196)
 * Update Calico from v3.0.3 to v3.0.4
 
