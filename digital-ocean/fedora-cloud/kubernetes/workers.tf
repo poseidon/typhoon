@@ -36,7 +36,7 @@ resource "digitalocean_tag" "workers" {
   name = "${var.cluster_name}-worker"
 }
 
-# Worker Container Linux Config
+# Worker Cloud-Init
 data "template_file" "worker-cloudinit" {
   template = "${file("${path.module}/cloudinit/worker.yaml.tmpl")}"
 

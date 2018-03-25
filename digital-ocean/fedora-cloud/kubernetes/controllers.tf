@@ -55,7 +55,7 @@ resource "digitalocean_tag" "controllers" {
   name = "${var.cluster_name}-controller"
 }
 
-# Controller Cloud-init
+# Controller Cloud-Init
 data "template_file" "controller-cloudinit" {
   count = "${var.controller_count}"
 
