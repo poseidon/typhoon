@@ -1,0 +1,164 @@
+#cloud-config
+yum_repos:
+  kubernetes:
+    name: kubernetes
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+packages:
+  - vim
+  - docker
+  - kubelet
+  - nfs-utils
+write_files:
+  - path: /etc/systemd/system/cloud-metadata.service
+    content: |
+      [Unit]
+      Description=Digital Ocean metadata agent
+      [Service]
+      Type=oneshot
+      Environment=OUTPUT=/run/metadata/digitalocean
+      ExecStart=/usr/bin/mkdir -p /run/metadata
+      ExecStart=/usr/bin/bash -c 'echo "DIGITALOCEAN_IPV4_PUBLIC_0=$(curl\
+        --url http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address\
+        --retry 10)\nDIGITALOCEAN_IPV4_PRIVATE_0=$(curl\
+        --url http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address\
+        --retry 10)" > $${OUTPUT}'
+  - path: /etc/systemd/system/etcd-member.service
+    content: |
+      [Unit]
+      Description=etcd-member
+      Documentation=https://github.com/coreos/etcd
+      Wants=network-online.target network.target
+      After=network-online.target
+      Requires=docker.service
+      After=docker.service
+      [Service]
+      EnvironmentFile=/etc/etcd/etcd.conf
+      ExecStartPre=/bin/mkdir -p /var/lib/etcd
+      ExecStart=/usr/bin/docker run --rm --name etcd-member \
+        --net=host \
+        -v /usr/share/ca-certificates:/usr/share/ca-certificates:ro,z \
+        -v /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
+        -v /var/lib/etcd:/var/lib/etcd:Z \
+        --env-file=/etc/etcd/etcd.conf \
+        quay.io/coreos/etcd:v3.3.2
+      ExecStop=/usr/bin/docker stop etcd-member
+      Restart=on-failure
+      RestartSec=10s
+      TimeoutStartSec=0
+      LimitNOFILE=40000
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/etcd/etcd.conf
+    content: |
+      ETCD_NAME=${etcd_name}
+      ETCD_DATA_DIR=/var/lib/etcd
+      ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380
+      ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
+      ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
+      ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}
+      ETCD_STRICT_RECONFIG_CHECK=true
+      ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt
+      ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt
+      ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key
+      ETCD_CLIENT_CERT_AUTH=true
+      ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt
+      ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
+      ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
+      ETCD_PEER_CLIENT_CERT_AUTH=true
+  - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
+    content: |
+      [Unit]
+      Description=Kubelet
+      Requires=cloud-metadata.service
+      After=cloud-metadata.service
+      Wants=rpc-statd.service
+      [Service]
+      EnvironmentFile=/run/metadata/digitalocean
+      ExecStartPre=/bin/mkdir -p /opt/cni/bin
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
+      ExecStartPre=/bin/mkdir -p /var/lib/cni
+      ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
+      ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+      ExecStart=
+      ExecStart=/usr/bin/kubelet \
+        --allow-privileged \
+        --anonymous-auth=false \
+        --cgroup-driver=systemd \
+        --client-ca-file=/etc/kubernetes/ca.crt \
+        --cluster_dns=${k8s_dns_service_ip} \
+        --cluster_domain=${cluster_domain_suffix} \
+        --cni-conf-dir=/etc/kubernetes/cni/net.d \
+        --exit-on-lock-contention \
+        --hostname-override=$${DIGITALOCEAN_IPV4_PRIVATE_0} \
+        --kubeconfig=/etc/kubernetes/kubeconfig \
+        --lock-file=/var/run/lock/kubelet.lock \
+        --network-plugin=cni \
+        --node-labels=node-role.kubernetes.io/master \
+        --node-labels=node-role.kubernetes.io/controller="true" \
+        --pod-manifest-path=/etc/kubernetes/manifests \
+        --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+        --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+      Restart=always
+      RestartSec=10
+      [Install]
+      WantedBy=multi-user.target 
+  - path: /etc/systemd/system/kubelet.path
+    content: |
+      [Unit]
+      Description=Watch for kubeconfig
+      [Path]
+      PathExists=/etc/kubernetes/kubeconfig
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/kubernetes/.keep
+  - path: /etc/selinux/config
+    content: |
+      SELINUX=permissive
+  - path: /etc/systemd/system/bootkube.service
+    content: |
+      [Unit]
+      Description=Bootstrap a Kubernetes cluster
+      ConditionPathExists=!/opt/bootkube/init_bootkube.done
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      WorkingDirectory=/opt/bootkube
+      ExecStart=/opt/bootkube/bootkube-start
+      ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
+      [Install]
+      WantedBy=multi-user.target
+  - path: /opt/bootkube/bootkube-start
+    permissions: '0544'
+    content: |
+      #!/bin/bash -e
+      # Wrapper for bootkube start
+      [ -n "$(ls /opt/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootkube/assets/manifests-*/* /opt/bootkube/assets/manifests && rm -rf /opt/bootkube/assets/manifests-*
+      /usr/bin/docker run --rm --name bootkube \
+        --volume /etc/kubernetes:/etc/kubernetes:Z \
+        --volume /opt/bootkube/assets:/assets:Z \
+        --entrypoint=/bootkube \
+        quay.io/coreos/bootkube:v0.11.0 start --asset-dir=/assets
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, docker.service]
+  - [systemctl, start, --no-block, docker.service]
+  - [systemctl, enable, etcd-member.service]
+  - [systemctl, start, --no-block, etcd-member.service]
+  - [systemctl, enable, cloud-metadata.service]
+  - [systemctl, enable, kubelet.path]
+  - [systemctl, start, --no-block, kubelet.path]
+users:
+  - default
+  - name: fedora
+    gecos: Fedora Admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: wheel,adm,systemd-journal,docker
+    ssh-authorized-keys:
+      - "${ssh_authorized_key}"
