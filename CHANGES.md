@@ -13,6 +13,9 @@ Notable changes between versions.
 #### Google Cloud
 
 * Add `disk_size` variable for setting instance disk size in GB
+* Add `controller_type` variable for setting machine type for controllers
+* Add `worker_type` variable for setting machine type for workers
+* Remove optional variable `machine_type`. Use `controller_type` and `worker_type`.
 
 ## v1.9.6
 

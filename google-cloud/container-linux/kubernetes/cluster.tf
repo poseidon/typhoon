@@ -8,7 +8,7 @@ module "controllers" {
   dns_zone      = "${var.dns_zone}"
   dns_zone_name = "${var.dns_zone_name}"
   count         = "${var.controller_count}"
-  machine_type  = "${var.machine_type}"
+  machine_type  = "${var.controller_type}"
   os_image      = "${var.os_image}"
   disk_size     = "${var.disk_size}"
 
@@ -30,7 +30,7 @@ module "workers" {
   region       = "${var.region}"
   network      = "${google_compute_network.network.name}"
   count        = "${var.worker_count}"
-  machine_type = "${var.machine_type}"
+  machine_type = "${var.worker_type}"
   os_image     = "${var.os_image}"
   disk_size    = "${var.disk_size}"
   preemptible  = "${var.worker_preemptible}"

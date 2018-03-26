@@ -34,10 +34,16 @@ variable "worker_count" {
   description = "Number of workers"
 }
 
-variable "machine_type" {
-  type        = "string"
-  default     = "n1-standard-1"
-  description = "Machine type for compute instances (see `gcloud compute machine-types list`)"
+variable controller_type {
+  type = "string"
+  default = "n1-standard-1"
+  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
+}
+
+variable worker_type {
+  type = "string"
+  default = "n1-standard-1"
+  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
 }
 
 variable "os_image" {

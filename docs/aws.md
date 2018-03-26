@@ -249,8 +249,8 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 |:-----|:------------|:--------|:--------|
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
-| controller_type | EC2 instance type for controllers | "t2.small" | "t2.medium" |
-| worker_type | EC2 instance type for workers | "t2.small" | "t2.medium" |
+| controller_type | EC2 instance type for controllers | "t2.small" | See below |
+| worker_type | EC2 instance type for workers | "t2.small" | See below |
 | os_channel | Container Linux AMI channel | stable | stable, beta, alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | |
