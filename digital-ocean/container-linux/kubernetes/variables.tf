@@ -48,6 +48,12 @@ variable "ssh_fingerprints" {
   description = "SSH public key fingerprints. (e.g. see `ssh-add -l -E md5`)"
 }
 
+variable "ssh_port" {
+  type        = "string"
+  default     = "22"
+  description = "SSH server port"
+}
+
 variable "controller_clc_snippets" {
   type        = "list"
   description = "Controller Container Linux Config snippets"

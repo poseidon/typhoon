@@ -115,6 +115,13 @@ systemd:
         ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
         [Install]
         WantedBy=multi-user.target
+    - name: sshd.socket
+      dropins:
+      - name: 10-sshd-port.conf
+        contents: |
+          [Socket]
+          ListenStream=
+          ListenStream=${ssh_port}
 storage:
   files:
     - path: /etc/kubernetes/kubelet.env
@@ -157,3 +164,22 @@ storage:
             --net=host \
             --dns=host \
             --exec=/bootkube -- start --asset-dir=/assets "$@"
+    - path: /etc/ssh/sshd_config
+      filesystem: root
+      mode: 0600
+      contents:
+        inline: |
+          UsePrivilegeSeparation sandbox
+          Subsystem sftp internal-sftp
+          UseDNS no
+
+          PermitRootLogin no
+
+          AllowUsers core
+          AuthenticationMethods publickey
+          PubkeyAuthentication yes
+
+          LoginGraceTime 30
+
+          ClientAliveInterval 300
+          ClientAliveCountMax 0
