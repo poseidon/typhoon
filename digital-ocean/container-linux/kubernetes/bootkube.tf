@@ -6,7 +6,7 @@ module "bootkube" {
   api_servers           = ["${format("%s.%s", var.cluster_name, var.dns_zone)}"]
   etcd_servers          = "${digitalocean_record.etcds.*.fqdn}"
   asset_dir             = "${var.asset_dir}"
-  networking            = "${var.networking}"
+  networking            = "flannel"
   network_mtu           = 1440
   pod_cidr              = "${var.pod_cidr}"
   service_cidr          = "${var.service_cidr}"

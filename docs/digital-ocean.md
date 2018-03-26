@@ -266,7 +266,6 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | |
-| networking | Choice of networking provider | "flannel" | "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
@@ -275,6 +274,3 @@ Check the list of valid [droplet types](https://developers.digitalocean.com/docu
 
 !!! warning
     Do not choose a `controller_type` smaller than 2GB. Smaller droplets are not sufficient for running a controller and bootstrapping will fail.
-
-!!! bug
-    Digital Ocean firewalls do not yet support the IP tunneling (IP in IP) protocol used by Calico. You can try using "calico" for `networking`, but it will only work if the cloud firewall is removed (unsafe).

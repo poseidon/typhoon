@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Digital Ocean
+
+* Remove optional variable `networking`. Only flannel works on Digital Ocean.
+
 ## v1.9.6
 
 * Kubernetes [v1.9.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v196)
