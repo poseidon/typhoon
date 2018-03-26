@@ -186,13 +186,13 @@ module "bare-metal-mercury" {
     tls = "tls.default"
   }
   
-  # install
+  # bare-metal
+  cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
   container_linux_channel = "stable"
   container_linux_version = "1632.3.0"
 
   # configuration
-  cluster_name       = "mercury"
   k8s_domain_name    = "node1.example.com"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
   asset_dir          = "/home/user/.secrets/clusters/mercury"
@@ -355,19 +355,19 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
+| cluster_name | Unique cluster name | mercury |
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:8080 |
 | container_linux_channel | Container Linux channel | stable, beta, alpha |
 | container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
-| cluster_name | Cluster name | mercury |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
-| ssh_authorized_key | SSH public key for ~/.ssh/authorized_keys | "ssh-rsa AAAAB3Nz..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
+| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
 | controller_names | Ordered list of controller short names | ["node1"] |
 | controller_macs | Ordered list of controller identifying MAC addresses | ["52:54:00:a1:9c:ae"] |
 | controller_domains | Ordered list of controller FQDNs | ["node1.example.com"] |
 | worker_names | Ordered list of worker short names | ["node2", "node3"] |
 | worker_macs | Ordered list of worker identifying MAC addresses | ["52:54:00:b2:2f:86", "52:54:00:c3:61:77"] |
 | worker_domains | Ordered list of worker FQDNs | ["node2.example.com", "node3.example.com"] |
-| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
 
 ### Optional
 
@@ -378,8 +378,8 @@ Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md
 | container_linux_oem | Specify alternative OEM image ids for the disk install | "" | "vmware_raw", "xen" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
-| pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
+| service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 | kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
 

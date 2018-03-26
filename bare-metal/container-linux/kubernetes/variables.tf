@@ -1,3 +1,10 @@
+variable "cluster_name" {
+  type        = "string"
+  description = "Unique cluster name"
+}
+
+# bare-metal
+
 variable "matchbox_http_endpoint" {
   type        = "string"
   description = "Matchbox HTTP read-only endpoint (e.g. http://matchbox.example.com:8080)"
@@ -13,17 +20,7 @@ variable "container_linux_version" {
   description = "Container Linux version of the kernel/initrd to PXE or the image to install"
 }
 
-variable "cluster_name" {
-  type        = "string"
-  description = "Cluster name"
-}
-
-variable "ssh_authorized_key" {
-  type        = "string"
-  description = "SSH public key to set as an authorized_key on machines"
-}
-
-# Machines
+# machines
 # Terraform's crude "type system" does not properly support lists of maps so we do this.
 
 variable "controller_names" {
@@ -50,11 +47,16 @@ variable "worker_domains" {
   type = "list"
 }
 
-# bootkube assets
+# configuration
 
 variable "k8s_domain_name" {
   description = "Controller DNS name which resolves to a controller instance. Workers and kubeconfig's will communicate with this endpoint (e.g. cluster.example.com)"
   type        = "string"
+}
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for user 'core'"
 }
 
 variable "asset_dir" {
@@ -75,14 +77,14 @@ variable "network_mtu" {
 }
 
 variable "pod_cidr" {
-  description = "CIDR IP range to assign Kubernetes pods"
+  description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = "string"
   default     = "10.2.0.0/16"
 }
 
 variable "service_cidr" {
   description = <<EOD
-CIDR IP range to assign Kubernetes services.
+CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for kube-dns.
 EOD
 

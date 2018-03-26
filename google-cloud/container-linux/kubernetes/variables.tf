@@ -1,7 +1,9 @@
 variable "cluster_name" {
   type        = "string"
-  description = "Cluster name"
+  description = "Unique cluster name (prepended to dns_zone)"
 }
+
+# Google Cloud
 
 variable "region" {
   type        = "string"
@@ -10,17 +12,26 @@ variable "region" {
 
 variable "dns_zone" {
   type        = "string"
-  description = "Google Cloud DNS Zone (e.g. google-cloud.dghubble.io)"
+  description = "Google Cloud DNS Zone (e.g. google-cloud.example.com)"
 }
 
 variable "dns_zone_name" {
   type        = "string"
-  description = "Google Cloud DNS Zone name (e.g. google-cloud-prod-zone)"
+  description = "Google Cloud DNS Zone name (e.g. example-zone)"
 }
 
-variable "ssh_authorized_key" {
+# instances
+
+variable "controller_count" {
   type        = "string"
-  description = "SSH public key for user 'core'"
+  default     = "1"
+  description = "Number of controllers (i.e. masters)"
+}
+
+variable "worker_count" {
+  type        = "string"
+  default     = "1"
+  description = "Number of workers"
 }
 
 variable "machine_type" {
@@ -32,19 +43,7 @@ variable "machine_type" {
 variable "os_image" {
   type        = "string"
   default     = "coreos-stable"
-  description = "OS image from which to initialize the disk (see `gcloud compute images list`)"
-}
-
-variable "controller_count" {
-  type        = "string"
-  default     = "1"
-  description = "Number of controllers"
-}
-
-variable "worker_count" {
-  type        = "string"
-  default     = "1"
-  description = "Number of workers"
+  description = "Container Linux image for compute instances (e.g. coreos-stable)"
 }
 
 variable "worker_preemptible" {
@@ -65,7 +64,12 @@ variable "worker_clc_snippets" {
   default     = []
 }
 
-# bootkube assets
+# configuration
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for user 'core'"
+}
 
 variable "asset_dir" {
   description = "Path to a directory where generated assets should be placed (contains secrets)"
@@ -79,14 +83,14 @@ variable "networking" {
 }
 
 variable "pod_cidr" {
-  description = "CIDR IP range to assign Kubernetes pods"
+  description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = "string"
   default     = "10.2.0.0/16"
 }
 
 variable "service_cidr" {
   description = <<EOD
-CIDR IP range to assign Kubernetes services.
+CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for kube-dns.
 EOD
 

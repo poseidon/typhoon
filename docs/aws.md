@@ -248,19 +248,19 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
-| controller_type | Controller EC2 instance type | "t2.small" | "t2.medium" |
 | worker_count | Number of workers | 1 | 3 |
-| worker_type | Worker EC2 instance type | "t2.small" | "t2.medium" |
+| controller_type | EC2 instance type for controllers | "t2.small" | "t2.medium" |
+| worker_type | EC2 instance type for workers | "t2.small" | "t2.medium" |
 | os_channel | Container Linux AMI channel | stable | stable, beta, alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
-| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
-| network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
-| host_cidr | CIDR range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
-| pod_cidr | CIDR range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | |
+| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
+| network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
+| host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
+| pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
+| service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
+| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/).
 

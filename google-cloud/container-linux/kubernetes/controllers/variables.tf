@@ -66,7 +66,7 @@ variable "ssh_authorized_key" {
 
 variable "service_cidr" {
   description = <<EOD
-CIDR IP range to assign Kubernetes services.
+CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for kube-dns.
 EOD
 

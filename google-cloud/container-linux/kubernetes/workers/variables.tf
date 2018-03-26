@@ -1,21 +1,23 @@
 variable "name" {
   type        = "string"
-  description = "Unique name for instance group"
+  description = "Unique name for the worker pool"
 }
 
 variable "cluster_name" {
   type        = "string"
-  description = "Cluster name"
+  description = "Must be set to `cluster_name of cluster`"
 }
+
+# Google Cloud
 
 variable "region" {
   type        = "string"
-  description = "Google Cloud region (e.g. us-central1, see `gcloud compute regions list`)."
+  description = "Must be set to `region` of cluster"
 }
 
 variable "network" {
   type        = "string"
-  description = "Name of the network to attach to the compute instance interfaces"
+  description = "Must be set to `network_name` output by cluster"
 }
 
 # instances
@@ -35,7 +37,7 @@ variable "machine_type" {
 variable "os_image" {
   type        = "string"
   default     = "coreos-stable"
-  description = "OS image from which to initialize the disk (e.g. gcloud compute images list)"
+  description = "Container Linux image for compute instanges (e.g. gcloud compute images list)"
 }
 
 variable "disk_size" {
@@ -54,7 +56,7 @@ variable "preemptible" {
 
 variable "kubeconfig" {
   type        = "string"
-  description = "Generated Kubelet kubeconfig"
+  description = "Must be set to `kubeconfig` output by cluster"
 }
 
 variable "ssh_authorized_key" {
@@ -64,7 +66,7 @@ variable "ssh_authorized_key" {
 
 variable "service_cidr" {
   description = <<EOD
-CIDR IP range to assign Kubernetes services.
+CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for kube-dns.
 EOD
 

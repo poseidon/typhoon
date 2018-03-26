@@ -56,7 +56,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | security_groups | Must be set to `worker_security_groups` output by cluster | "${module.cluster.worker_security_groups}" |
 | name | Unique name (distinct from cluster name) | "tempest-m5s" |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
-| ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 #### Optional
 
@@ -131,7 +131,7 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 | name | Unique name (distinct from cluster name) | "yavin-16x" |
 | cluster_name | Must be set to `cluster_name` of cluster | "yavin" |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
-| ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 #### Optional
 
@@ -139,7 +139,7 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 |:-----|:------------|:--------|:--------|
 | count | Number of instances | 1 | 3 |
 | machine_type | Compute instance machine type | "n1-standard-1" | See below |
-| os_image | OS image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
+| os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |

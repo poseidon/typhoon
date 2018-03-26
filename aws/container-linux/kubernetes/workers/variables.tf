@@ -1,21 +1,23 @@
 variable "name" {
   type        = "string"
-  description = "Unique name instance group"
+  description = "Unique name for the worker pool"
 }
+
+# AWS
 
 variable "vpc_id" {
   type        = "string"
-  description = "ID of the VPC for creating instances"
+  description = "Must be set to `vpc_id` output by cluster"
 }
 
 variable "subnet_ids" {
   type        = "list"
-  description = "List of subnet IDs for creating instances"
+  description = "Must be set to `subnet_ids` output by cluster"
 }
 
 variable "security_groups" {
   type        = "list"
-  description = "List of security group IDs"
+  description = "Must be set to `worker_security_groups` output by cluster"
 }
 
 # instances
@@ -41,14 +43,20 @@ variable "os_channel" {
 variable "disk_size" {
   type        = "string"
   default     = "40"
-  description = "Size of the disk in GB"
+  description = "Size of the EBS volume in GB"
+}
+
+variable "clc_snippets" {
+  type        = "list"
+  description = "Container Linux Config snippets"
+  default     = []
 }
 
 # configuration
 
 variable "kubeconfig" {
   type        = "string"
-  description = "Generated Kubelet kubeconfig"
+  description = "Must be set to `kubeconfig` output by cluster"
 }
 
 variable "ssh_authorized_key" {
@@ -70,10 +78,4 @@ variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
-}
-
-variable "clc_snippets" {
-  type        = "list"
-  description = "Container Linux Config snippets"
-  default     = []
 }
