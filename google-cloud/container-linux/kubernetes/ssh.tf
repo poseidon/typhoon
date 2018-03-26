@@ -1,6 +1,6 @@
 # Secure copy etcd TLS assets to controllers.
 resource "null_resource" "copy-controller-secrets" {
-  count      = "${var.controller_count}"
+  count = "${var.controller_count}"
 
   connection {
     type    = "ssh"
