@@ -100,19 +100,18 @@ module "digital-ocean-nemo" {
     tls = "tls.default"
   }
 
-  region   = "nyc3"
-  dns_zone = "digital-ocean.example.com"
+  # Digital Ocean
+  cluster_name = "nemo"
+  region       = "nyc3"
+  dns_zone     = "digital-ocean.example.com"
 
-  cluster_name     = "nemo"
-  image            = "coreos-stable"
-  controller_count = 1
-  controller_type  = "s-2vcpu-2gb"
-  worker_count     = 2
-  worker_type      = "s-1vcpu-1gb"
+  # configuration
   ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
-
-  # output assets dir
-  asset_dir = "/home/user/.secrets/clusters/nemo"
+  asset_dir        = "/home/user/.secrets/clusters/nemo"
+  
+  # optional
+  worker_count = 2
+  worker_type  = "s-1vcpu-1gb"
 }
 ```
 

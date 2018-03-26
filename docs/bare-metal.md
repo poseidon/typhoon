@@ -190,11 +190,12 @@ module "bare-metal-mercury" {
   matchbox_http_endpoint  = "http://matchbox.example.com"
   container_linux_channel = "stable"
   container_linux_version = "1632.3.0"
-  ssh_authorized_key      = "ssh-rsa AAAAB3Nz..."
 
-  # cluster
-  cluster_name    = "mercury"
-  k8s_domain_name = "node1.example.com"
+  # configuration
+  cluster_name       = "mercury"
+  k8s_domain_name    = "node1.example.com"
+  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  asset_dir          = "/home/user/.secrets/clusters/mercury"
 
   # machines
   controller_names   = ["node1"]
@@ -212,9 +213,6 @@ module "bare-metal-mercury" {
     "node2.example.com",
     "node3.example.com",
   ]
-
-  # output assets dir
-  asset_dir = "/home/user/.secrets/clusters/mercury"
 }
 ```
 

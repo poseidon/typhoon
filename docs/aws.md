@@ -105,20 +105,19 @@ module "aws-tempest" {
     template = "template.default"
     tls = "tls.default"
   }
-  
-  cluster_name = "tempest"
 
   # AWS
-  dns_zone           = "aws.example.com"
-  dns_zone_id        = "Z3PAABBCFAKEC0"
-  controller_count   = 1
-  controller_type    = "t2.medium"
-  worker_count       = 2
-  worker_type        = "t2.small"
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  cluster_name = "tempest"
+  dns_zone     = "aws.example.com"
+  dns_zone_id  = "Z3PAABBCFAKEC0"
 
-  # bootkube
-  asset_dir  = "/home/user/.secrets/clusters/tempest"
+  # configuration
+  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  asset_dir          = "/home/user/.secrets/clusters/tempest"
+
+  # optional
+  worker_count = 2
+  worker_type  = "t2.medium"
 }
 ```
 

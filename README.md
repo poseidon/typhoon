@@ -47,26 +47,25 @@ module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.9.6"
   
   providers = {
-    google = "google.default"
-    local = "local.default"
-    null = "null.default"
+    google   = "google.default"
+    local    = "local.default"
+    null     = "null.default"
     template = "template.default"
-    tls = "tls.default"
+    tls      = "tls.default"
   }
 
   # Google Cloud
+  cluster_name  = "yavin"
   region        = "us-central1"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
-  os_image      = "coreos-stable"
 
-  cluster_name       = "yavin"
-  controller_count   = 1
-  worker_count       = 2
+  # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-
-  # output assets dir
-  asset_dir = "/home/user/.secrets/clusters/yavin"
+  asset_dir          = "/home/user/.secrets/clusters/yavin"
+  
+  # optional
+  worker_count = 2
 }
 ```
 

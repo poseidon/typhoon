@@ -108,18 +108,17 @@ module "google-cloud-yavin" {
   }
 
   # Google Cloud
+  cluster_name  = "yavin"
   region        = "us-central1"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
-  os_image      = "coreos-stable"
 
-  cluster_name       = "yavin"
-  controller_count   = 1
-  worker_count       = 2
+  # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-
-  # output assets dir
-  asset_dir = "/home/user/.secrets/clusters/yavin"
+  asset_dir          = "/home/user/.secrets/clusters/yavin"
+  
+  # optional
+  worker_count = 2
 }
 ```
 
