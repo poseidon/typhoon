@@ -35,14 +35,14 @@ variable "worker_count" {
 }
 
 variable controller_type {
-  type = "string"
-  default = "n1-standard-1"
+  type        = "string"
+  default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
 }
 
 variable worker_type {
-  type = "string"
-  default = "n1-standard-1"
+  type        = "string"
+  default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
 }
 

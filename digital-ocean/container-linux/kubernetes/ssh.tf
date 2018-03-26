@@ -81,7 +81,7 @@ resource "null_resource" "copy-worker-secrets" {
     content     = "${module.bootkube.kubeconfig}"
     destination = "$HOME/kubeconfig"
   }
- 
+
   provisioner "remote-exec" {
     inline = [
       "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
