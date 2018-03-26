@@ -8,6 +8,7 @@ Notable changes between versions.
 
 #### Digital Ocean
 
+* Ensure etcd secrets are only distributed to controller hosts, not workers.
 * Remove optional variable `networking`. Only flannel works on Digital Ocean.
 
 #### Google Cloud
