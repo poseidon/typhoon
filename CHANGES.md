@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Remove unused, unmaintained `pxe-worker` internal module
+
 #### Digital Ocean
 
 * Remove optional variable `networking`. Only flannel works on Digital Ocean.
