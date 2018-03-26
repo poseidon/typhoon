@@ -46,6 +46,12 @@ variable "os_image" {
   description = "Container Linux image for compute instances (e.g. coreos-stable)"
 }
 
+variable "disk_size" {
+  type        = "string"
+  default     = "40"
+  description = "Size of the disk in GB"
+}
+
 variable "worker_preemptible" {
   type        = "string"
   default     = "false"

@@ -256,6 +256,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | machine_type | Machine type for compute instances | "n1-standard-1" | See below |
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-stable-1632-3-0-v20180215" |
+| disk_size | Size of the disk in GB | 40 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | |

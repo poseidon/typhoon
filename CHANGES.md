@@ -10,6 +10,10 @@ Notable changes between versions.
 
 * Remove optional variable `networking`. Only flannel works on Digital Ocean.
 
+#### Google Cloud
+
+* Add `disk_size` variable for setting instance disk size in GB
+
 ## v1.9.6
 
 * Kubernetes [v1.9.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v196)

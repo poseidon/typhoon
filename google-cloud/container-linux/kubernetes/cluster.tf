@@ -10,6 +10,7 @@ module "controllers" {
   count         = "${var.controller_count}"
   machine_type  = "${var.machine_type}"
   os_image      = "${var.os_image}"
+  disk_size     = "${var.disk_size}"
 
   # configuration
   networking            = "${var.networking}"
@@ -31,6 +32,7 @@ module "workers" {
   count        = "${var.worker_count}"
   machine_type = "${var.machine_type}"
   os_image     = "${var.os_image}"
+  disk_size    = "${var.disk_size}"
   preemptible  = "${var.worker_preemptible}"
 
   # configuration

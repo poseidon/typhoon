@@ -43,7 +43,7 @@ variable "os_image" {
 variable "disk_size" {
   type        = "string"
   default     = "40"
-  description = "The size of the disk in gigabytes."
+  description = "Size of the disk in GB"
 }
 
 variable "preemptible" {
