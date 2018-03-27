@@ -47,6 +47,12 @@ variable "image" {
   description = "Container Linux image for instances (e.g. coreos-stable)"
 }
 
+variable "ssh_port" {
+  type        = "string"
+  default     = "22"
+  description = "SSH server port"
+}
+
 variable "controller_clc_snippets" {
   type        = "list"
   description = "Controller Container Linux Config snippets"

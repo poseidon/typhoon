@@ -6,6 +6,7 @@ resource "null_resource" "copy-controller-secrets" {
     type    = "ssh"
     host    = "${element(concat(digitalocean_droplet.controllers.*.ipv4_address), count.index)}"
     user    = "core"
+    port    = "${var.ssh_port}"
     timeout = "15m"
   }
 
@@ -102,6 +103,7 @@ resource "null_resource" "bootkube-start" {
     type    = "ssh"
     host    = "${digitalocean_droplet.controllers.0.ipv4_address}"
     user    = "core"
+    port    = "${var.ssh_port}"
     timeout = "15m"
   }
 
