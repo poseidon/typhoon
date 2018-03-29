@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:4.6.3
+          image: grafana/grafana:5.0.4
           env:
             - name: GF_SERVER_HTTP_PORT
               value: "8080"
@@ -30,7 +30,7 @@ spec:
             - name: GF_AUTH_ANONYMOUS_ENABLED
               value: "true"
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-              value: Admin
+              value: Viewer
           ports:
             - name: http
               containerPort: 8080
@@ -41,22 +41,20 @@ spec:
             limits:
               memory: 200Mi
               cpu: 200m
-        - name: grafana-watcher
-          image: quay.io/coreos/grafana-watcher:v0.0.8
-          args:
-            - '--watch-dir=/etc/grafana/dashboards'
-            - '--grafana-url=http://localhost:8080'
-          resources:
-            requests:
-              memory: "16Mi"
-              cpu: "50m"
-            limits:
-              memory: "32Mi"
-              cpu: "100m"
           volumeMounts:
-          - name: dashboards
-            mountPath: /etc/grafana/dashboards
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: dashboard-providers
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: dashboards
+              mountPath: /var/lib/grafana/dashboards
       volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-providers
+          configMap:
+            name: grafana-dashboard-providers
         - name: dashboards
           configMap:
             name: grafana-dashboards

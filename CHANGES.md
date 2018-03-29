@@ -18,6 +18,11 @@ Notable changes between versions.
 * Add `worker_type` variable for setting machine type for workers
 * Remove optional variable `machine_type`. Use `controller_type` and `worker_type`.
 
+#### Addons
+
+* Update Grafana from v4.6.3 to v5.0.4 ([#153](https://github.com/poseidon/typhoon/pull/153), [#174](https://github.com/poseidon/typhoon/pull/174))
+  * Restrict dashboard organization role to Viewer
+
 ## v1.9.6
 
 * Kubernetes [v1.9.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#v196)
