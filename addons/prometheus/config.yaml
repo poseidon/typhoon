@@ -112,6 +112,22 @@ data:
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
     
+    # Scrap etcd metrics from controllers 
+    - job_name: 'etcd'
+      kubernetes_sd_configs:
+      - role: node
+      scheme: http
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_node_label_node_role_kubernetes_io_controller]
+          action: keep
+          regex: 'true'
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        - source_labels: [__meta_kubernetes_node_name]
+          action: replace
+          target_label: __address__
+          replacement: '${1}:2381'
+    
     # Scrape config for service endpoints.
     #
     # The relabeling allows the actual service scrape endpoint to be configured

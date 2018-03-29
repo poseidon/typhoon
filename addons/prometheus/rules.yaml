@@ -63,26 +63,6 @@ data:
           description: etcd instance {{ $labels.instance }} has seen {{ $value }} leader
             changes within the last hour
           summary: a high number of leader changes within the etcd cluster are happening
-      - alert: HighNumberOfFailedGRPCRequests
-        expr: sum(rate(grpc_server_handled_total{grpc_code!="OK",job="etcd"}[5m])) BY (grpc_service, grpc_method)
-          / sum(rate(grpc_server_handled_total{job="etcd"}[5m])) BY (grpc_service, grpc_method) > 0.01
-        for: 10m
-        labels:
-          severity: warning
-        annotations:
-          description: '{{ $value }}% of requests for {{ $labels.grpc_method }} failed
-            on etcd instance {{ $labels.instance }}'
-          summary: a high number of gRPC requests are failing
-      - alert: HighNumberOfFailedGRPCRequests
-        expr: sum(rate(grpc_server_handled_total{grpc_code!="OK",job="etcd"}[5m])) BY (grpc_service, grpc_method)
-          / sum(rate(grpc_server_handled_total{job="etcd"}[5m])) BY (grpc_service, grpc_method) > 0.05
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          description: '{{ $value }}% of requests for {{ $labels.grpc_method }} failed
-            on etcd instance {{ $labels.instance }}'
-          summary: a high number of gRPC requests are failing
       - alert: GRPCRequestsSlow
         expr: histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job="etcd",grpc_type="unary"}[5m])) by (grpc_service, grpc_method, le))
           > 0.15

@@ -4,6 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+* Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
+
+#### Addons
+
+* Add Prometheus discovery for etcd peers on controller nodes ([#175](https://github.com/poseidon/typhoon/pull/175))
+  * Scrape etcd v3.3 `--listen-metrics-urls` for metrics
+  * Enable etcd alerts and populate the etcd Grafana dashboard
+
+## v1.10.0
+
 * Kubernetes [v1.10.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1100)
 * Remove unused, unmaintained `pxe-worker` internal module
 
