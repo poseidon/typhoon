@@ -6,17 +6,22 @@ Notable changes between versions.
 
 * Remove unused, unmaintained `pxe-worker` internal module
 
+#### AWS
+
+* Add `disk_type` optional variable for setting the EBS volume type ([#176](https://github.com/poseidon/typhoon/pull/176))
+  * Change default type from `standard` to `gp2`. Prometheus etcd alerts are tuned for fast disks.
+
 #### Digital Ocean
 
 * Ensure etcd secrets are only distributed to controller hosts, not workers.
-* Remove optional variable `networking`. Only flannel works on Digital Ocean.
+* Remove `networking` optional variable. Only flannel works on Digital Ocean.
 
 #### Google Cloud
 
-* Add `disk_size` variable for setting instance disk size in GB
-* Add `controller_type` variable for setting machine type for controllers
-* Add `worker_type` variable for setting machine type for workers
-* Remove optional variable `machine_type`. Use `controller_type` and `worker_type`.
+* Add `disk_size` optional variable for setting instance disk size in GB
+* Add `controller_type` optional variable for setting machine type for controllers
+* Add `worker_type` optional variable for setting machine type for workers
+* Remove `machine_type` optional variable. Use `controller_type` and `worker_type`.
 
 #### Addons
 

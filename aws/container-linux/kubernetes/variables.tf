@@ -53,6 +53,12 @@ variable "disk_size" {
   description = "Size of the EBS volume in GB"
 }
 
+variable "disk_type" {
+  type        = "string"
+  default     = "gp2"
+  description = "Type of the EBS volume (e.g. standard, gp2, io1)"
+}
+
 variable "controller_clc_snippets" {
   type        = "list"
   description = "Controller Container Linux Config snippets"

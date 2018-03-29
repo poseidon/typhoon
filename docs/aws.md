@@ -253,6 +253,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | worker_type | EC2 instance type for workers | "t2.small" | See below |
 | os_channel | Container Linux AMI channel | stable | stable, beta, alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
+| disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
