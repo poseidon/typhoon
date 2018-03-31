@@ -1,5 +1,5 @@
 # Secure copy etcd TLS assets to controllers.
-resource "null_resource" "copy-secrets" {
+resource "null_resource" "copy-controller-secrets" {
   count = "${var.controller_count}"
 
   connection {
@@ -61,7 +61,11 @@ resource "null_resource" "copy-secrets" {
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {
-  depends_on = ["module.bootkube", "null_resource.copy-secrets", "aws_route53_record.apiserver"]
+  depends_on = [
+    "null_resource.copy-controller-secrets",
+    "module.workers",
+    "aws_route53_record.apiserver",
+  ]
 
   connection {
     type    = "ssh"
@@ -77,7 +81,8 @@ resource "null_resource" "bootkube-start" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mv assets /opt/bootkube",
+      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 4; done",
+      "sudo mv $HOME/assets /opt/bootkube",
       "sudo systemctl start bootkube",
     ]
   }

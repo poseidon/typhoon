@@ -1,10 +1,10 @@
-# Secure copy kubeconfig to all nodes. Activates kubelet.service
-resource "null_resource" "copy-secrets" {
-  count = "${var.controller_count + var.worker_count}"
+# Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
+resource "null_resource" "copy-controller-secrets" {
+  count = "${var.controller_count}"
 
   connection {
     type    = "ssh"
-    host    = "${element(concat(digitalocean_droplet.controllers.*.ipv4_address, digitalocean_droplet.workers.*.ipv4_address), count.index)}"
+    host    = "${element(concat(digitalocean_droplet.controllers.*.ipv4_address), count.index)}"
     user    = "fedora"
     timeout = "15m"
   }
@@ -51,7 +51,6 @@ resource "null_resource" "copy-secrets" {
 
   provisioner "remote-exec" {
     inline = [
-      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 4; done",
       "sudo mkdir -p /etc/ssl/etcd/etcd",
       "sudo mv etcd-client* /etc/ssl/etcd/",
       "sudo cp /etc/ssl/etcd/etcd-client-ca.crt /etc/ssl/etcd/etcd/server-ca.crt",
@@ -60,7 +59,30 @@ resource "null_resource" "copy-secrets" {
       "sudo cp /etc/ssl/etcd/etcd-client-ca.crt /etc/ssl/etcd/etcd/peer-ca.crt",
       "sudo mv etcd-peer.crt /etc/ssl/etcd/etcd/peer.crt",
       "sudo mv etcd-peer.key /etc/ssl/etcd/etcd/peer.key",
-      "sudo mv kubeconfig /etc/kubernetes/kubeconfig",
+      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+    ]
+  }
+}
+
+# Secure copy kubeconfig to all workers. Activates kubelet.service.
+resource "null_resource" "copy-worker-secrets" {
+  count = "${var.worker_count}"
+
+  connection {
+    type    = "ssh"
+    host    = "${element(concat(digitalocean_droplet.workers.*.ipv4_address), count.index)}"
+    user    = "fedora"
+    timeout = "15m"
+  }
+
+  provisioner "file" {
+    content     = "${module.bootkube.kubeconfig}"
+    destination = "$HOME/kubeconfig"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
     ]
   }
 }
@@ -68,7 +90,10 @@ resource "null_resource" "copy-secrets" {
 # Secure copy bootkube assets to ONE controller and start bootkube to perform
 # one-time self-hosted cluster bootstrapping.
 resource "null_resource" "bootkube-start" {
-  depends_on = ["module.bootkube", "null_resource.copy-secrets"]
+  depends_on = [
+    "null_resource.copy-controller-secrets",
+    "null_resource.copy-worker-secrets",
+  ]
 
   connection {
     type    = "ssh"
@@ -84,7 +109,8 @@ resource "null_resource" "bootkube-start" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mv assets /opt/bootkube",
+      "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 4; done",
+      "sudo mv $HOME/assets /opt/bootkube",
       "sudo systemctl start bootkube",
     ]
   }

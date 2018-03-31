@@ -1,21 +1,23 @@
 variable "name" {
   type        = "string"
-  description = "Unique name instance group"
+  description = "Unique name for the worker pool"
 }
+
+# AWS
 
 variable "vpc_id" {
   type        = "string"
-  description = "ID of the VPC for creating instances"
+  description = "Must be set to `vpc_id` output by cluster"
 }
 
 variable "subnet_ids" {
   type        = "list"
-  description = "List of subnet IDs for creating instances"
+  description = "Must be set to `subnet_ids` output by cluster"
 }
 
 variable "security_groups" {
   type        = "list"
-  description = "List of security group IDs"
+  description = "Must be set to `worker_security_groups` output by cluster"
 }
 
 # instances
@@ -35,19 +37,25 @@ variable "instance_type" {
 variable "disk_size" {
   type        = "string"
   default     = "40"
-  description = "Size of the disk in GB"
+  description = "Size of the EBS volume in GB"
+}
+
+variable "disk_type" {
+  type        = "string"
+  default     = "gp2"
+  description = "Type of the EBS volume (e.g. standard, gp2, io1)"
 }
 
 # configuration
 
 variable "kubeconfig" {
   type        = "string"
-  description = "Generated Kubelet kubeconfig"
+  description = "Must be set to `kubeconfig` output by cluster"
 }
 
 variable "ssh_authorized_key" {
   type        = "string"
-  description = "SSH public key for user 'core'"
+  description = "SSH public key for user 'fedora'"
 }
 
 variable "service_cidr" {

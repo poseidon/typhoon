@@ -7,9 +7,8 @@ yum_repos:
     gpgcheck: true
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 packages:
-  - vim
-  - docker
-  - kubelet
+  - [docker, 1.13.1]
+  - [kubelet, 1.10.0]
   - nfs-utils
 write_files:
   - path: /etc/systemd/system/cloud-metadata.service
@@ -43,7 +42,7 @@ write_files:
         -v /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
         -v /var/lib/etcd:/var/lib/etcd:Z \
         --env-file=/etc/etcd/etcd.conf \
-        quay.io/coreos/etcd:v3.3.2
+        quay.io/coreos/etcd:v3.3.3
       ExecStop=/usr/bin/docker stop etcd-member
       Restart=on-failure
       RestartSec=10s

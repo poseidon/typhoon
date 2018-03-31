@@ -42,7 +42,7 @@ resource "aws_launch_configuration" "worker" {
 
   # storage
   root_block_device {
-    volume_type = "standard"
+    volume_type = "${var.disk_type}"
     volume_size = "${var.disk_size}"
   }
 

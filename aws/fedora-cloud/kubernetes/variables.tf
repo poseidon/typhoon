@@ -1,11 +1,13 @@
 variable "cluster_name" {
   type        = "string"
-  description = "Cluster name"
+  description = "Unique cluster name (prepended to dns_zone)"
 }
+
+# AWS
 
 variable "dns_zone" {
   type        = "string"
-  description = "AWS DNS Zone (e.g. aws.dghubble.io)"
+  description = "AWS DNS Zone (e.g. aws.example.com)"
 }
 
 variable "dns_zone_id" {
@@ -13,33 +15,12 @@ variable "dns_zone_id" {
   description = "AWS DNS Zone ID (e.g. Z3PAABBCFAKEC0)"
 }
 
-variable "ssh_authorized_key" {
-  type        = "string"
-  description = "SSH public key for user 'core'"
-}
-
-variable "disk_size" {
-  type        = "string"
-  default     = "40"
-  description = "The size of the disk in Gigabytes"
-}
-
-variable "host_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
-  type        = "string"
-  default     = "10.0.0.0/16"
-}
+# instances
 
 variable "controller_count" {
   type        = "string"
   default     = "1"
-  description = "Number of controllers"
-}
-
-variable "controller_type" {
-  type        = "string"
-  default     = "t2.small"
-  description = "Controller EC2 instance type"
+  description = "Number of controllers (i.e. masters)"
 }
 
 variable "worker_count" {
@@ -48,13 +29,36 @@ variable "worker_count" {
   description = "Number of workers"
 }
 
+variable "controller_type" {
+  type        = "string"
+  default     = "t2.small"
+  description = "EC2 instance type for controllers"
+}
+
 variable "worker_type" {
   type        = "string"
   default     = "t2.small"
-  description = "Worker EC2 instance type"
+  description = "EC2 instance type for workers"
 }
 
-# bootkube assets
+variable "disk_size" {
+  type        = "string"
+  default     = "40"
+  description = "Size of the EBS volume in GB"
+}
+
+variable "disk_type" {
+  type        = "string"
+  default     = "gp2"
+  description = "Type of the EBS volume (e.g. standard, gp2, io1)"
+}
+
+# configuration
+
+variable "ssh_authorized_key" {
+  type        = "string"
+  description = "SSH public key for user 'fedora'"
+}
 
 variable "asset_dir" {
   description = "Path to a directory where generated assets should be placed (contains secrets)"
@@ -71,6 +75,12 @@ variable "network_mtu" {
   description = "CNI interface MTU (applies to calico only). Use 8981 if using instances types with Jumbo frames."
   type        = "string"
   default     = "1480"
+}
+
+variable "host_cidr" {
+  description = "CIDR IPv4 range to assign to EC2 nodes"
+  type        = "string"
+  default     = "10.0.0.0/16"
 }
 
 variable "pod_cidr" {

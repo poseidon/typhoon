@@ -26,6 +26,8 @@ resource "digitalocean_droplet" "workers" {
   private_networking = true
 
   user_data = "${data.template_file.worker-cloudinit.rendered}"
+  ssh_keys  = ["${var.ssh_fingerprints}"]
+
   tags = [
     "${digitalocean_tag.workers.id}",
   ]

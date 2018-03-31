@@ -7,9 +7,8 @@ yum_repos:
     gpgcheck: true
     gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 packages:
-  - vim
-  - docker
-  - kubelet
+  - [docker, 1.13.1]
+  - [kubelet, 1.10.0]
   - nfs-utils
 write_files:
   - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
