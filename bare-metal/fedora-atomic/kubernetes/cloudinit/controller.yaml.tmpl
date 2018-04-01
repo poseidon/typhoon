@@ -1,0 +1,147 @@
+#cloud-config
+write_files:
+  - path: /etc/systemd/system/etcd-member.service
+    content: |
+      [Unit]
+      Description=etcd-member
+      Documentation=https://github.com/coreos/etcd
+      Wants=network-online.target network.target
+      After=network-online.target
+      Requires=docker.service
+      After=docker.service
+      [Service]
+      EnvironmentFile=/etc/etcd/etcd.conf
+      ExecStartPre=/bin/mkdir -p /var/lib/etcd
+      ExecStart=/usr/bin/docker run --rm --name etcd-member \
+        --net=host \
+        -v /etc/pki/tls/certs:/usr/share/ca-certificates:ro,z \
+        -v /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
+        -v /var/lib/etcd:/var/lib/etcd:Z \
+        --env-file=/etc/etcd/etcd.conf \
+        quay.io/coreos/etcd:v3.3.3
+      ExecStop=/usr/bin/docker stop etcd-member
+      Restart=on-failure
+      RestartSec=10s
+      TimeoutStartSec=0
+      LimitNOFILE=40000
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/etcd/etcd.conf
+    content: |
+      ETCD_NAME=${etcd_name}
+      ETCD_DATA_DIR=/var/lib/etcd
+      ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380
+      ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
+      ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
+      ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}
+      ETCD_STRICT_RECONFIG_CHECK=true
+      ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt
+      ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt
+      ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key
+      ETCD_CLIENT_CERT_AUTH=true
+      ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt
+      ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
+      ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
+      ETCD_PEER_CLIENT_CERT_AUTH=true
+  - path: /etc/systemd/system/kubelet.service
+    content: |
+      [Unit]
+      Description=Kubelet
+      Wants=rpc-statd.service
+      [Service]
+      WorkingDirectory=/etc/kubernetes
+      ExecStartPre=/bin/mkdir -p /opt/cni/bin
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
+      ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
+      ExecStartPre=/bin/mkdir -p /var/lib/cni
+      ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
+      ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+      # Atomic's system containers and RPMs are old and unfriendly. Use this.
+      ExecStartPre=/usr/bin/curl -L https://dl.k8s.io/v1.10.0/kubernetes-node-linux-amd64.tar.gz -o kubernetes-node-linux-amd64.tar.gz
+      ExecStartPre=/usr/bin/tar xzf kubernetes-node-linux-amd64.tar.gz -C /usr/local/bin --strip-components=3 kubernetes/node/bin/kubelet 
+      ExecStart=
+      ExecStart=/usr/local/bin/kubelet \
+        --allow-privileged \
+        --anonymous-auth=false \
+        --cgroup-driver=systemd \
+        --client-ca-file=/etc/kubernetes/ca.crt \
+        --cluster_dns=${k8s_dns_service_ip} \
+        --cluster_domain=${cluster_domain_suffix} \
+        --cni-conf-dir=/etc/kubernetes/cni/net.d \
+        --exit-on-lock-contention \
+        --hostname-override=${domain_name} \
+        --kubeconfig=/etc/kubernetes/kubeconfig \
+        --lock-file=/var/run/lock/kubelet.lock \
+        --network-plugin=cni \
+        --node-labels=node-role.kubernetes.io/master \
+        --node-labels=node-role.kubernetes.io/controller="true" \
+        --pod-manifest-path=/etc/kubernetes/manifests \
+        --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+        --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+      Restart=always
+      RestartSec=10
+      [Install]
+      WantedBy=multi-user.target 
+  - path: /etc/systemd/system/kubelet.path
+    content: |
+      [Unit]
+      Description=Watch for kubeconfig
+      [Path]
+      PathExists=/etc/kubernetes/kubeconfig
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/systemd/system/bootkube.service
+    content: |
+      [Unit]
+      Description=Bootstrap a Kubernetes cluster
+      ConditionPathExists=!/var/bootkube/init_bootkube.done
+      [Service]
+      Type=oneshot
+      RemainAfterExit=true
+      WorkingDirectory=/var/bootkube
+      ExecStartPre=/bin/mkdir -p /var/bootkube
+      ExecStart=/usr/local/bin/bootkube-start
+      ExecStartPost=/bin/touch /var/bootkube/init_bootkube.done
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/kubernetes/.keep
+  - path: /var/bootkube/.keep
+  - path: /etc/selinux/config
+    owner: root:root
+    permissions: '0644'
+    content: |
+      SELINUX=permissive
+      SELINUXTYPE=targeted
+  - path: /usr/local/bin/bootkube-start
+    permissions: '0755'
+    content: |
+      #!/bin/bash -e
+      # Wrapper for bootkube start
+      [ -n "$(ls /var/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /var/bootkube/assets/manifests-*/* /var/bootkube/assets/manifests && rm -rf /var/bootkube/assets/manifests-*
+      /usr/bin/docker run --rm --name bootkube \
+        --net=host \
+        --volume /etc/kubernetes:/etc/kubernetes:Z \
+        --volume /var/bootkube/assets:/assets:Z \
+        --entrypoint=/bootkube \
+        quay.io/coreos/bootkube:v0.11.0 start --asset-dir=/assets
+bootcmd:
+  - [setenforce, Permissive]
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, etcd-member.service]
+  - [systemctl, start, --no-block, etcd-member.service]
+  - [hostnamectl, set-hostname, ${domain_name}]
+  - [systemctl, enable, kubelet.path]
+  - [systemctl, start, --no-block, kubelet.path]
+  - [systemctl, disable, firewalld, --now]
+users:
+  - default
+  - name: fedora
+    gecos: Fedora Admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: wheel,adm,systemd-journal,docker
+    ssh-authorized-keys:
+      - "${ssh_authorized_key}"
