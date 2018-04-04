@@ -1,15 +1,4 @@
 #cloud-config
-yum_repos:
-  kubernetes:
-    name: kubernetes
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-    enabled: true
-    gpgcheck: true
-    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-packages:
-  - [docker, 1.13.1]
-  - [kubelet, 1.10.0]
-  - nfs-utils
 write_files:
   - path: /etc/systemd/system/cloud-metadata.service
     content: |
@@ -24,7 +13,7 @@ write_files:
         --retry 10)\nDIGITALOCEAN_IPV4_PRIVATE_0=$(curl\
         --url http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address\
         --retry 10)" > $${OUTPUT}'
-  - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
+  - path: /etc/systemd/system/kubelet.service
     content: |
       [Unit]
       Description=Kubelet
@@ -32,6 +21,7 @@ write_files:
       After=cloud-metadata.service
       Wants=rpc-statd.service
       [Service]
+      WorkingDirectory=/etc/kubernetes
       EnvironmentFile=/run/metadata/digitalocean
       ExecStartPre=/bin/mkdir -p /opt/cni/bin
       ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -41,8 +31,11 @@ write_files:
       ExecStartPre=/bin/mkdir -p /var/lib/cni
       ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
       ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+      # Atomic's system containers and RPMs are old and unfriendly. Use this.
+      ExecStartPre=/usr/bin/curl -L https://dl.k8s.io/v1.10.0/kubernetes-node-linux-amd64.tar.gz -o kubernetes-node-linux-amd64.tar.gz
+      ExecStartPre=/usr/bin/tar xzf kubernetes-node-linux-amd64.tar.gz -C /usr/local/bin --strip-components=3 kubernetes/node/bin/kubelet 
       ExecStart=
-      ExecStart=/usr/bin/kubelet \
+      ExecStart=/usr/local/bin/kubelet \
         --allow-privileged \
         --anonymous-auth=false \
         --cgroup-driver=systemd \
@@ -72,15 +65,19 @@ write_files:
       WantedBy=multi-user.target
   - path: /etc/kubernetes/.keep
   - path: /etc/selinux/config
+    owner: root:root
+    permissions: '0644'
     content: |
       SELINUX=permissive
+      SELINUXTYPE=targeted
+bootcmd:
+  - [setenforce, Permissive]
 runcmd:
   - [systemctl, daemon-reload]
-  - [systemctl, enable, docker.service]
-  - [systemctl, start, --no-block, docker.service]
-  - [systemctl, enable, cloud-metadata.service]
   - [systemctl, enable, kubelet.path]
+  - [systemctl, enable, cloud-metadata.service]
   - [systemctl, start, --no-block, kubelet.path]
+  - [systemctl, disable, firewalld, --now]
 users:
   - default
   - name: fedora
