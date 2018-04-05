@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
+* Update kube-dns from v1.14.8 to v1.14.9
 * Update etcd from v3.3.2 to v3.3.3
 
 #### Addons
