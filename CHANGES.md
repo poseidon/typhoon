@@ -13,6 +13,7 @@ Notable changes between versions.
 * Add Prometheus discovery for etcd peers on controller nodes ([#175](https://github.com/poseidon/typhoon/pull/175))
   * Scrape etcd v3.3 `--listen-metrics-urls` for metrics
   * Enable etcd alerts and populate the etcd Grafana dashboard
+* Update kube-state-metrics from v1.2.0 to v1.3.0
 
 ## v1.10.0
 
