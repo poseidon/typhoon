@@ -12,6 +12,16 @@ systemd:
         ExecStart=/opt/installer
         [Install]
         WantedBy=multi-user.target
+    # Avoid using the standard SSH port so terraform apply cannot SSH until
+    # post-install. But admins may SSH to debug disk install problems.
+    # After install, sshd will use port 22 and users/terraform can connect.
+    - name: sshd.socket
+      dropins:
+        - name: 10-sshd-port.conf
+          contents: |
+            [Socket]
+            ListenStream=
+            ListenStream=2222
 storage:
   files:
     - path: /opt/installer
@@ -32,11 +42,6 @@ storage:
           systemctl reboot
 passwd:
   users:
-    # Avoid using standard name "core" so terraform apply cannot SSH until post-install.
-    - name: debug
-      create:
-        groups:
-          - sudo
-          - docker
+    - name: core
       ssh_authorized_keys:
-        - {{.ssh_authorized_key}}
+        - "${ssh_authorized_key}"

@@ -5,10 +5,16 @@ Notable changes between versions.
 ## Latest
 
 * Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
-* Use `k8s.gcr.io` instead of `gcr.io/google_containers`
+* Use `k8s.gcr.io` instead of `gcr.io/google_containers` ([#180](https://github.com/poseidon/typhoon/pull/180))
   * Kubernetes [recommends](https://groups.google.com/forum/#!msg/kubernetes-dev/ytjk_rNrTa0/3EFUHvovCAAJ) using the alias to pull from the nearest regional mirror and to abstract the backing container registry
 * Update kube-dns from v1.14.8 to v1.14.9
 * Update etcd from v3.3.2 to v3.3.3
+
+#### Bare-Metal
+
+* Fix need for multiple `terraform apply` runs to create a cluster with Terraform v0.11.4 ([#181](https://github.com/poseidon/typhoon/pull/181))
+  * To SSH during a disk install for debugging, SSH as user "core" with port 2222
+  * Remove the old trick of using a user "debug" during disk install
 
 #### Addons
 
