@@ -1,22 +1,12 @@
 #cloud-config
-yum_repos:
-  kubernetes:
-    name: kubernetes
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-    enabled: true
-    gpgcheck: true
-    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-packages:
-  - [docker, 1.13.1]
-  - [kubelet, 1.10.0]
-  - nfs-utils
 write_files:
-  - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
+  - path: /etc/systemd/system/kubelet.service
     content: |
       [Unit]
       Description=Kubelet
       Wants=rpc-statd.service
       [Service]
+      WorkingDirectory=/etc/kubernetes
       ExecStartPre=/bin/mkdir -p /opt/cni/bin
       ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
       ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -25,8 +15,11 @@ write_files:
       ExecStartPre=/bin/mkdir -p /var/lib/cni
       ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
       ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+      # Atomic's system containers and RPMs are old and unfriendly. Use this.
+      ExecStartPre=/usr/bin/curl -L https://dl.k8s.io/v1.10.0/kubernetes-node-linux-amd64.tar.gz -o kubernetes-node-linux-amd64.tar.gz
+      ExecStartPre=/usr/bin/tar xzf kubernetes-node-linux-amd64.tar.gz -C /usr/local/bin --strip-components=3 kubernetes/node/bin/kubelet 
       ExecStart=
-      ExecStart=/usr/bin/kubelet \
+      ExecStart=/usr/local/bin/kubelet \
         --allow-privileged \
         --anonymous-auth=false \
         --cgroup-driver=systemd \
@@ -45,19 +38,31 @@ write_files:
       RestartSec=10
       [Install]
       WantedBy=multi-user.target 
+  - path: /etc/systemd/system/kubelet.path
+    content: |
+      [Unit]
+      Description=Watch for kubeconfig
+      [Path]
+      PathExists=/etc/kubernetes/kubeconfig
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/kubernetes/.keep
   - path: /etc/kubernetes/kubeconfig
     permissions: '0644'
     content: |
       ${kubeconfig}
   - path: /etc/selinux/config
+    owner: root:root
+    permissions: '0644'
     content: |
       SELINUX=permissive
+      SELINUXTYPE=targeted
+bootcmd:
+  - [setenforce, Permissive]
 runcmd:
   - [systemctl, daemon-reload]
-  - [systemctl, enable, docker.service]
-  - [systemctl, start, --no-block, docker.service]
-  - [systemctl, enable, kubelet.service]
-  - [systemctl, start, --no-block, kubelet.service]
+  - [systemctl, disable, firewalld, --now]
+  - [systemctl, enable, kubelet.service, --now]
 users:
   - default
   - name: fedora

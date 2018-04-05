@@ -14,6 +14,6 @@ data "aws_ami" "fedora" {
 
   filter {
     name   = "name"
-    values = ["Fedora-Cloud-Base-27*-gp2-0"]
+    values = ["Fedora-Atomic-27*-gp2-0"]
   }
 }

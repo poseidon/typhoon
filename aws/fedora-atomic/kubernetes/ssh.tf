@@ -82,7 +82,7 @@ resource "null_resource" "bootkube-start" {
   provisioner "remote-exec" {
     inline = [
       "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do sleep 4; done",
-      "sudo mv $HOME/assets /opt/bootkube",
+      "sudo mv $HOME/assets /var/bootkube",
       "sudo systemctl start bootkube",
     ]
   }
