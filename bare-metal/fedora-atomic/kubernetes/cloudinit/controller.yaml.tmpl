@@ -1,31 +1,5 @@
 #cloud-config
 write_files:
-  - path: /etc/systemd/system/etcd-member.service
-    content: |
-      [Unit]
-      Description=etcd-member
-      Documentation=https://github.com/coreos/etcd
-      Wants=network-online.target network.target
-      After=network-online.target
-      Requires=docker.service
-      After=docker.service
-      [Service]
-      EnvironmentFile=/etc/etcd/etcd.conf
-      ExecStartPre=/bin/mkdir -p /var/lib/etcd
-      ExecStart=/usr/bin/docker run --rm --name etcd-member \
-        --net=host \
-        -v /etc/pki/tls/certs:/usr/share/ca-certificates:ro,z \
-        -v /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
-        -v /var/lib/etcd:/var/lib/etcd:Z \
-        --env-file=/etc/etcd/etcd.conf \
-        quay.io/coreos/etcd:v3.3.3
-      ExecStop=/usr/bin/docker stop etcd-member
-      Restart=on-failure
-      RestartSec=10s
-      TimeoutStartSec=0
-      LimitNOFILE=40000
-      [Install]
-      WantedBy=multi-user.target
   - path: /etc/etcd/etcd.conf
     content: |
       ETCD_NAME=${etcd_name}
@@ -131,8 +105,8 @@ bootcmd:
   - [setenforce, Permissive]
 runcmd:
   - [systemctl, daemon-reload]
-  - [systemctl, enable, etcd-member.service]
-  - [systemctl, start, --no-block, etcd-member.service]
+  - "atomic install --system --name=etcd quay.io/dghubble/etcd:99f87f9245ef2b2104fe2fc3550c21327b5a980f"
+  - [systemctl, start, --no-block, etcd.service]
   - [hostnamectl, set-hostname, ${domain_name}]
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
