@@ -8,55 +8,41 @@ write_files:
       Type=oneshot
       Environment=OUTPUT=/run/metadata/digitalocean
       ExecStart=/usr/bin/mkdir -p /run/metadata
-      ExecStart=/usr/bin/bash -c 'echo "DIGITALOCEAN_IPV4_PUBLIC_0=$(curl\
-        --url http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address\
-        --retry 10)\nDIGITALOCEAN_IPV4_PRIVATE_0=$(curl\
+      ExecStart=/usr/bin/bash -c 'echo "PRIVATE_IPV4=$(curl\
         --url http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address\
         --retry 10)" > $${OUTPUT}'
       [Install]
       WantedBy=multi-user.target
-  - path: /etc/systemd/system/kubelet.service
+  - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
     content: |
       [Unit]
-      Description=Kubelet
       Requires=cloud-metadata.service
       After=cloud-metadata.service
       Wants=rpc-statd.service
       [Service]
-      WorkingDirectory=/etc/kubernetes
-      EnvironmentFile=/run/metadata/digitalocean
       ExecStartPre=/bin/mkdir -p /opt/cni/bin
       ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
       ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
-      ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
-      ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
       ExecStartPre=/bin/mkdir -p /var/lib/cni
       ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
       ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
-      # Atomic's system containers and RPMs are old and unfriendly. Use this.
-      ExecStartPre=/usr/bin/curl -L https://dl.k8s.io/v1.10.0/kubernetes-node-linux-amd64.tar.gz -o kubernetes-node-linux-amd64.tar.gz
-      ExecStartPre=/usr/bin/tar xzf kubernetes-node-linux-amd64.tar.gz -C /usr/local/bin --strip-components=3 kubernetes/node/bin/kubelet 
-      ExecStart=
-      ExecStart=/usr/local/bin/kubelet \
-        --allow-privileged \
+      Restart=always
+      RestartSec=10
+  - path: /etc/kubernetes/kubelet.conf
+    content: |
+      ARGS="--allow-privileged \
         --anonymous-auth=false \
-        --cgroup-driver=systemd \
         --client-ca-file=/etc/kubernetes/ca.crt \
         --cluster_dns=${k8s_dns_service_ip} \
         --cluster_domain=${cluster_domain_suffix} \
         --cni-conf-dir=/etc/kubernetes/cni/net.d \
         --exit-on-lock-contention \
-        --hostname-override=$${DIGITALOCEAN_IPV4_PRIVATE_0} \
         --kubeconfig=/etc/kubernetes/kubeconfig \
         --lock-file=/var/run/lock/kubelet.lock \
         --network-plugin=cni \
         --node-labels=node-role.kubernetes.io/node \
         --pod-manifest-path=/etc/kubernetes/manifests \
-        --volume-plugin-dir=/var/lib/kubelet/volumeplugins
-      Restart=always
-      RestartSec=10
-      [Install]
-      WantedBy=multi-user.target 
+        --volume-plugin-dir=/var/lib/kubelet/volumeplugins"
   - path: /etc/systemd/system/kubelet.path
     content: |
       [Unit]
@@ -65,7 +51,6 @@ write_files:
       PathExists=/etc/kubernetes/kubeconfig
       [Install]
       WantedBy=multi-user.target
-  - path: /etc/kubernetes/.keep
   - path: /etc/selinux/config
     owner: root:root
     permissions: '0644'
@@ -75,11 +60,12 @@ write_files:
 bootcmd:
   - [setenforce, Permissive]
 runcmd:
-  - [systemctl, daemon-reload]
-  - [systemctl, enable, kubelet.path]
-  - [systemctl, enable, cloud-metadata.service]
-  - [systemctl, start, --no-block, kubelet.path]
-  - [systemctl, disable, firewalld, --now]
+  - systemctl daemon-reload
+  - systemctl enable cloud-metadata.service
+  - "atomic install --system --name=kubelet quay.io/dghubble/hyper:f384aae1ffb04fbe303ee55d1fa3c09bc72bf146"
+  - systemctl enable kubelet.path
+  - systemctl start --no-block kubelet.path
+  - systemctl disable firewalld --now
 users:
   - default
   - name: fedora
