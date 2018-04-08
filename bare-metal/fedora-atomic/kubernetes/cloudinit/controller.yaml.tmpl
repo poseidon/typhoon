@@ -8,6 +8,7 @@ write_files:
       ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380
       ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
       ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
+      ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381
       ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}
       ETCD_STRICT_RECONFIG_CHECK=true
       ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt
@@ -96,7 +97,7 @@ bootcmd:
   - [setenforce, Permissive]
 runcmd:
   - [systemctl, daemon-reload]
-  - "atomic install --system --name=etcd quay.io/dghubble/etcd:99f87f9245ef2b2104fe2fc3550c21327b5a980f"
+  - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
   - [systemctl, start, --no-block, etcd.service]
   - [hostnamectl, set-hostname, ${domain_name}]
   - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:d97cd9265ef6f6d0d9aab54ad9f66d4f5daaf397"
