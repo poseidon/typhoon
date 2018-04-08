@@ -22,10 +22,7 @@ Collect a MAC address from each machine. For machines with multiple PXE-enabled 
 * 52:54:00:b2:2f:86 (node2)
 * 52:54:00:c3:61:77 (node3)
 
-Configure each machine to boot from the disk [^1] through IPMI or the BIOS menu.
-
-
-[^1]: Configuring "diskless" workers that always PXE boot is possible, but not in the scope of this tutorial.
+Configure each machine to boot from the disk through IPMI or the BIOS menu.
 
 ```
 ipmitool -H node1 -U USER -P PASS chassis bootdev disk options=persistent
@@ -295,10 +292,19 @@ module.bare-metal-mercury.null_resource.bootkube-start: Creation complete (ID: 5
 Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 ```
 
+To watch the install to disk (until machines reboot from disk), SSH to port 2222.
+
+```
+# before v1.10.1
+$ ssh debug@node1.example.com
+# after v1.10.1
+$ ssh -p 2222 core@node1.example.com
+```
+
 To watch the bootstrap process in detail, SSH to the first controller and journal the logs.
 
 ```
-$ ssh node1.example.com
+$ ssh core@node1.example.com
 $ journalctl -f -u bootkube
 bootkube[5]:         Pod Status:        pod-checkpointer        Running
 bootkube[5]:         Pod Status:          kube-apiserver        Running
