@@ -93,7 +93,7 @@ runcmd:
   - [systemctl, daemon-reload]
   - "atomic install --system --name=etcd quay.io/dghubble/etcd:99f87f9245ef2b2104fe2fc3550c21327b5a980f"
   - [systemctl, start, --no-block, etcd.service]
-  - "atomic install --system --name=kubelet quay.io/dghubble/hyper:f384aae1ffb04fbe303ee55d1fa3c09bc72bf146"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:d97cd9265ef6f6d0d9aab54ad9f66d4f5daaf397"
   - [systemctl, start, --no-block, kubelet.service]
   - [systemctl, disable, firewalld, --now]
 users:
