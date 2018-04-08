@@ -15,12 +15,6 @@ spec:
         name: prometheus
         phase: prod
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/master: ""
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: NoSchedule
       serviceAccountName: prometheus
       containers:
       - name: prometheus
