@@ -26,6 +26,16 @@ systemd:
             Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
     - name: docker.service
       enable: true
+      drop-ins:
+       - name: 50-insecure-registry.conf
+         content: |
+            [Unit]
+            #Description=Docker on flannel network
+            #Requires=flanneld.service
+            #After=flanneld.service
+
+            [Service]
+            Environment=DOCKER_OPTS='--insecure-registry=navinet-docker-feature.dml.navimedix.com --insecure-registry=navinet-docker-integration.dml.navimedix.com --insecure-registry=navinet-docker-release.dml.navimedix.com --log-driver=journald'
     - name: locksmithd.service
       mask: true
     - name: kubelet.path
