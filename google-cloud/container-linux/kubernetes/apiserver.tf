@@ -17,7 +17,7 @@ resource "google_dns_record_set" "controllers" {
   rrdatas = ["${google_compute_address.controllers-ip.address}"]
 }
 
-# Network Load Balancer (i.e. forwarding rule)
+# Network Load Balancer for controllers
 resource "google_compute_forwarding_rule" "controller-https-rule" {
   name       = "${var.cluster_name}-controller-https-rule"
   ip_address = "${google_compute_address.controllers-ip.address}"

@@ -16,6 +16,10 @@ Notable changes between versions.
   * To SSH during a disk install for debugging, SSH as user "core" with port 2222
   * Remove the old trick of using a user "debug" during disk install
 
+#### Google Cloud
+
+* Refactor out the `controller` internal module
+
 #### Addons
 
 * Add Prometheus discovery for etcd peers on controller nodes ([#175](https://github.com/poseidon/typhoon/pull/175))

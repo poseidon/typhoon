@@ -4,7 +4,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   connection {
     type    = "ssh"
-    host    = "${element(module.controllers.ipv4_public, count.index)}"
+    host    = "${element(local.controllers_ipv4_public, count.index)}"
     user    = "core"
     timeout = "15m"
   }
@@ -65,14 +65,14 @@ resource "null_resource" "copy-controller-secrets" {
 resource "null_resource" "bootkube-start" {
   depends_on = [
     "module.bootkube",
-    "module.controllers",
     "module.workers",
+    "google_dns_record_set.controllers",
     "null_resource.copy-controller-secrets",
   ]
 
   connection {
     type    = "ssh"
-    host    = "${element(module.controllers.ipv4_public, 0)}"
+    host    = "${element(local.controllers_ipv4_public, 0)}"
     user    = "core"
     timeout = "15m"
   }
