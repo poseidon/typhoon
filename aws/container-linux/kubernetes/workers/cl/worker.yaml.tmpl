@@ -39,8 +39,6 @@ systemd:
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
         ExecStartPre=/bin/mkdir -p /var/lib/cni
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
         ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
