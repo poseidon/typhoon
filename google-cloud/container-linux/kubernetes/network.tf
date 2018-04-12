@@ -56,6 +56,20 @@ resource "google_compute_firewall" "internal-etcd" {
   target_tags = ["${var.cluster_name}-controller"]
 }
 
+# Allow Prometheus to scrape etcd metrics
+resource "google_compute_firewall" "internal-etcd-metrics" {
+  name    = "${var.cluster_name}-internal-etcd-metrics"
+  network = "${google_compute_network.network.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = [2381]
+  }
+
+  source_tags = ["${var.cluster_name}-worker"]
+  target_tags = ["${var.cluster_name}-controller"]
+}
+
 # Calico BGP and IPIP
 # https://docs.projectcalico.org/v2.5/reference/public-cloud/gce
 resource "google_compute_firewall" "internal-calico" {
@@ -93,7 +107,7 @@ resource "google_compute_firewall" "internal-flannel" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
-# Allow prometheus (workload) to scrape node-exporter daemonset
+# Allow Prometheus to scrape node-exporter daemonset
 resource "google_compute_firewall" "internal-node-exporter" {
   name    = "${var.cluster_name}-internal-node-exporter"
   network = "${google_compute_network.network.name}"

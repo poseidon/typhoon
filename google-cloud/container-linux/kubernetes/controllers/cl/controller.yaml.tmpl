@@ -7,12 +7,13 @@ systemd:
         - name: 40-etcd-cluster.conf
           contents: |
             [Service]
-            Environment="ETCD_IMAGE_TAG=v3.3.2"
+            Environment="ETCD_IMAGE_TAG=v3.3.3"
             Environment="ETCD_NAME=${etcd_name}"
             Environment="ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379"
             Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380"
             Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379"
             Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
+            Environment="ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381"
             Environment="ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}"
             Environment="ETCD_STRICT_RECONFIG_CHECK=true"
             Environment="ETCD_SSL_DIR=/etc/ssl/etcd"
@@ -117,7 +118,7 @@ storage:
       mode: 0644
       contents:
         inline: |
-          KUBELET_IMAGE_URL=docker://gcr.io/google_containers/hyperkube
+          KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
           KUBELET_IMAGE_TAG=v1.10.0
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root

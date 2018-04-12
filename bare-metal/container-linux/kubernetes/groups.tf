@@ -8,10 +8,6 @@ resource "matchbox_group" "container-linux-install" {
   selector {
     mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
   }
-
-  metadata {
-    ssh_authorized_key = "${var.ssh_authorized_key}"
-  }
 }
 
 resource "matchbox_group" "controller" {
