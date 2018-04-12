@@ -133,10 +133,6 @@ storage:
     - path: /etc/systemd/system/docker.service.d/override.conf
       filesystem: root
       mode: 0644
-      user:
-        id: 500
-      group:
-        id: 500
       contents:
         inline: |
           [Service]
