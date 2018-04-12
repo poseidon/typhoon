@@ -100,7 +100,7 @@ storage:
         inline: |
         [Service]
           ExecStart=
-          ExecStart=/usr/bin/env PATH=${TORCX_BINDIR}:${PATH} ${TORCX_BINDIR}/dockerd --host=fd:// --containerd=/var/run/docker/libcontainerd/docker-containerd.sock $DOCKER_SELINUX --insecure-registry=navinet-docker-feature.dml.navimedix.com --insecure-registry=navinet-docker-integration.dml.navimedix.com --insecure-registry=navinet-docker-release.dml.navimedix.com --log-driver=journald $DOCKER_OPTS $DOCKER_CGROUPS $DOC
+          ExecStart=/usr/bin/env PATH="$${TORCX_BINDIR}":"$${PATH}" "$${TORCX_BINDIR}"/dockerd --host=fd:// --containerd=/var/run/docker/libcontainerd/docker-containerd.sock "$$DOCKER_SELINUX" --insecure-registry=navinet-docker-feature.dml.navimedix.com --insecure-registry=navinet-docker-integration.dml.navimedix.com --insecure-registry=navinet-docker-release.dml.navimedix.com --log-driver=journald "$$DOCKER_OPTS" "$$DOCKER_CGROUPS" "$$DOC"
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
