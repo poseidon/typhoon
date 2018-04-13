@@ -1,6 +1,6 @@
 # Digital Ocean
 
-In this tutorial, we'll create a Kubernetes v1.10.0 cluster on Digital Ocean.
+In this tutorial, we'll create a Kubernetes v1.10.1 cluster on Digital Ocean.
 
 We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, firewall rules, DNS records, tags, and droplets for Kubernetes controllers and workers will be created.
 
@@ -90,7 +90,7 @@ Define a Kubernetes cluster using the module `digital-ocean/container-linux/kube
 
 ```tf
 module "digital-ocean-nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes?ref=v1.10.0"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes?ref=v1.10.1"
   
   providers = {
     digitalocean = "digitalocean.default"
@@ -143,7 +143,7 @@ Get or update Terraform modules.
 $ terraform get            # downloads missing modules
 $ terraform get --update   # updates all modules
 Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.11.0 (update)
+Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.12.0 (update)
 ```
 
 Plan the resources to be created.
@@ -176,9 +176,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION
-10.132.110.130   Ready     10m       v1.10.0
-10.132.115.81    Ready     10m       v1.10.0
-10.132.124.107   Ready     10m       v1.10.0
+10.132.110.130   Ready     10m       v1.10.1
+10.132.115.81    Ready     10m       v1.10.1
+10.132.124.107   Ready     10m       v1.10.1
 ```
 
 List the pods.

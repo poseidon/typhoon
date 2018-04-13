@@ -4,11 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.10.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1101)
 * Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
 * Use `k8s.gcr.io` instead of `gcr.io/google_containers` ([#180](https://github.com/poseidon/typhoon/pull/180))
   * Kubernetes [recommends](https://groups.google.com/forum/#!msg/kubernetes-dev/ytjk_rNrTa0/3EFUHvovCAAJ) using the alias to pull from the nearest regional mirror and to abstract the backing container registry
 * Update kube-dns from v1.14.8 to v1.14.9
 * Update etcd from v3.3.2 to v3.3.3
+* Use kubernetes-incubator/bootkube v0.12.0
 
 #### Bare-Metal
 
@@ -102,7 +104,7 @@ Notable changes between versions.
 * Allow flexvolume plugins to be used on any Typhoon cluster (not just bare-metal)
 * Upgrade etcd from v3.2.15 to v3.3.2
 * Update Calico from v3.0.2 to v3.0.3
-* Use kubernetes-incubator/bootkube v0.10.0
+* Use kubernetes-incubator/bootkube v0.11.0
 * [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-provider-ct-v021) updating `terraform-provider-ct` plugin from v0.2.0 to [v0.2.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.2.1) (action recommended)
 
 #### AWS
