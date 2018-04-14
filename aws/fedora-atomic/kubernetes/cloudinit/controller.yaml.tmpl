@@ -81,7 +81,7 @@ write_files:
         --volume /etc/kubernetes:/etc/kubernetes:Z \
         --volume /var/bootkube/assets:/assets:Z \
         --entrypoint=/bootkube \
-        quay.io/coreos/bootkube:v0.11.0 start --asset-dir=/assets
+        quay.io/coreos/bootkube:v0.12.0 start --asset-dir=/assets
   - path: /etc/selinux/config
     owner: root:root
     permissions: '0644'
@@ -94,7 +94,7 @@ runcmd:
   - [systemctl, daemon-reload]
   - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
   - [systemctl, start, --no-block, etcd.service]
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:d97cd9265ef6f6d0d9aab54ad9f66d4f5daaf397"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8767d4433f7c5a38c55edf6e682efb53fcd06f61"
   - [systemctl, start, --no-block, kubelet.service]
   - [systemctl, disable, firewalld, --now]
 users:

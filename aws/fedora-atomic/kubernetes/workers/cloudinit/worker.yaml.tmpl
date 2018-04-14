@@ -40,11 +40,11 @@ write_files:
       SELINUXTYPE=targeted
 bootcmd:
   - [setenforce, Permissive]
+  - [systemctl, disable, firewalld, --now]
 runcmd:
-  - systemctl daemon-reload
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:d97cd9265ef6f6d0d9aab54ad9f66d4f5daaf397"
-  - systemctl start --no-block kubelet.service
-  - systemctl disable firewalld --now
+  - [systemctl, daemon-reload]
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8767d4433f7c5a38c55edf6e682efb53fcd06f61"
+  - [systemctl, start, --no-block, kubelet.service]
 users:
   - default
   - name: fedora
