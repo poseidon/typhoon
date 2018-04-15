@@ -66,7 +66,7 @@ resource "null_resource" "bootkube-start" {
   depends_on = [
     "module.bootkube",
     "module.workers",
-    "google_dns_record_set.controllers",
+    "google_dns_record_set.apiserver",
     "null_resource.copy-controller-secrets",
   ]
 

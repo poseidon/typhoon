@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+#### Google Cloud
+
+* Add support for multi-controller clusters (i.e. multi-master) ([#54](https://github.com/poseidon/typhoon/issues/54), [#190](https://github.com/poseidon/typhoon/pull/190))
+  * Switch from Google Cloud network load balancer to a TCP proxy load balancer. Avoid a [bug](https://issuetracker.google.com/issues/67366622) in Google network load balancers that limited clusters to only bootstrapping one controller node. 
+  * Add TCP health check for apiserver pods on controllers. Replace kubelet check approximation.
+
 #### Addons
 
 * Update kube-state-metrics from v1.3.0 to v1.3.1

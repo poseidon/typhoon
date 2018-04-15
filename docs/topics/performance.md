@@ -9,7 +9,7 @@ Provisioning times vary based on the platform. Sampling the time to create (appl
 | AWS           | 6 min | 5 min   |
 | Bare-Metal    | 10-14 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
-| Google Cloud  | 4 min | 4 min 30 sec |
+| Google Cloud  | 7 min | 4 min 30 sec |
 
 Notes:
 

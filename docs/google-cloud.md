@@ -252,7 +252,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| controller_count | Number of controllers (i.e. masters) | 1 | 1 |
+| controller_count | Number of controllers (i.e. masters) | 1 | 3 |
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
@@ -267,9 +267,6 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by kube-dns. | "cluster.local" | "k8s.example.com" |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
-
-!!! warning
-    Set controller_count to 1. A bug in Google Cloud network load balancer health checking prevents multiple controllers from bootstrapping. There are workarounds, but they all involve tradeoffs we're uncomfortable recommending. See [#54](https://github.com/poseidon/typhoon/issues/54).
 
 #### Preemption
 

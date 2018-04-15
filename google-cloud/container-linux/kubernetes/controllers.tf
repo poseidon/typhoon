@@ -19,12 +19,19 @@ data "google_compute_zones" "all" {
   region = "${var.region}"
 }
 
+locals {
+  # TCP proxy load balancers require a fixed number of zonal backends. Spread
+  # controllers over up to 3 zones, since all GCP regions have at least 3.
+  zones = "${slice(data.google_compute_zones.all.names, 0, 3)}"
+  controllers_ipv4_public = ["${google_compute_instance.controllers.*.network_interface.0.access_config.0.assigned_nat_ip}"]
+}
+
 # Controller instances
 resource "google_compute_instance" "controllers" {
   count = "${var.controller_count}"
 
   name         = "${var.cluster_name}-controller-${count.index}"
-  zone         = "${element(data.google_compute_zones.all.names, count.index)}"
+  zone         = "${element(local.zones, count.index)}"
   machine_type = "${var.controller_type}"
 
   metadata {
@@ -49,10 +56,6 @@ resource "google_compute_instance" "controllers" {
 
   can_ip_forward = true
   tags           = ["${var.cluster_name}-controller"]
-}
-
-locals {
-  controllers_ipv4_public = ["${google_compute_instance.controllers.*.network_interface.0.access_config.0.assigned_nat_ip}"]
 }
 
 # Controller Container Linux Config
