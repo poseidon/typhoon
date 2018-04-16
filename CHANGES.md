@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update kube-state-metrics from v1.3.0 to v1.3.1
+
+## v1.10.1
+
 * Kubernetes [v1.10.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1101)
 * Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
 * Use `k8s.gcr.io` instead of `gcr.io/google_containers` ([#180](https://github.com/poseidon/typhoon/pull/180))
