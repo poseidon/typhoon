@@ -26,8 +26,8 @@ mkdir /var/cloud-init
 curl --retry 10 "${matchbox_http_endpoint}/generic?mac=${mac}&os=installed" -o /var/cloud-init/user-data
 echo "instance-id: iid-local01" > /var/cloud-init/meta-data
 
-rm -f /etc/ostree/remotes.d/fedora-atomic-27.conf
-ostree remote add fedora-atomic-27 https://kojipkgs.fedoraproject.org/atomic/27 --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-27-primary
+rm -f /etc/ostree/remotes.d/fedora-atomic.conf
+ostree remote add fedora-atomic https://kojipkgs.fedoraproject.org/atomic/27 --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-27-primary
 
 # lock root user
 passwd -l root
