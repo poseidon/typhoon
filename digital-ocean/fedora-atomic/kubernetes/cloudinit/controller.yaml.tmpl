@@ -115,7 +115,7 @@ runcmd:
   - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
   - [systemctl, start, --no-block, etcd.service]
   - [systemctl, enable, cloud-metadata.service]
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:0c2a541d26c1716f495f1dd17c26e9b36304eede"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:460dc13da365a56c5d5419f4d476fbc9d25e0ad7"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
 users:
