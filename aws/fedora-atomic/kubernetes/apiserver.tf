@@ -1,4 +1,4 @@
-# kube-apiserver Network Load Balancer DNS Record
+# Network Load Balancer DNS Record
 resource "aws_route53_record" "apiserver" {
   zone_id = "${var.dns_zone_id}"
 
@@ -24,7 +24,7 @@ resource "aws_lb" "apiserver" {
   enable_cross_zone_load_balancing = true
 }
 
-# Forward HTTP traffic to controllers
+# Forward TCP traffic to controllers
 resource "aws_lb_listener" "apiserver-https" {
   load_balancer_arn = "${aws_lb.apiserver.arn}"
   protocol          = "TCP"
@@ -45,7 +45,7 @@ resource "aws_lb_target_group" "controllers" {
   protocol = "TCP"
   port     = 443
 
-  # Kubelet HTTP health check
+  # TCP health check for apiserver
   health_check {
     protocol = "TCP"
     port     = 443

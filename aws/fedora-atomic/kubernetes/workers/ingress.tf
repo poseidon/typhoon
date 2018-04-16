@@ -43,7 +43,7 @@ resource "aws_lb_target_group" "workers-http" {
   protocol = "TCP"
   port     = 80
 
-  # Ingress Controller HTTP health check
+  # HTTP health check for ingress
   health_check {
     protocol = "HTTP"
     port     = 10254
@@ -66,7 +66,7 @@ resource "aws_lb_target_group" "workers-https" {
   protocol = "TCP"
   port     = 443
 
-  # Ingress Controller HTTP health check
+  # HTTP health check for ingress
   health_check {
     protocol = "HTTP"
     port     = 10254

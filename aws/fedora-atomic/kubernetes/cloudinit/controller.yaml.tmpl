@@ -19,9 +19,24 @@ write_files:
       ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
       ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
       ETCD_PEER_CLIENT_CERT_AUTH=true
+  - path: /etc/systemd/system/cloud-metadata.service
+    content: |
+      [Unit]
+      Description=Cloud metadata agent
+      [Service]
+      Type=oneshot
+      Environment=OUTPUT=/run/metadata/cloud
+      ExecStart=/usr/bin/mkdir -p /run/metadata
+      ExecStart=/usr/bin/bash -c 'echo "HOSTNAME_OVERRIDE=$(curl\
+        --url http://169.254.169.254/latest/meta-data/local-ipv4\
+        --retry 10)" > $${OUTPUT}'
+      [Install]
+      WantedBy=multi-user.target
   - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
     content: |
       [Unit]
+      Requires=cloud-metadata.service
+      After=cloud-metadata.service
       Wants=rpc-statd.service
       [Service]
       ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -90,13 +105,14 @@ write_files:
       SELINUXTYPE=targeted
 bootcmd:
   - [setenforce, Permissive]
+  - [systemctl, disable, firewalld, --now]
 runcmd:
   - [systemctl, daemon-reload]
   - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
   - [systemctl, start, --no-block, etcd.service]
+  - [systemctl, enable, cloud-metadata.service]
   - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8767d4433f7c5a38c55edf6e682efb53fcd06f61"
   - [systemctl, start, --no-block, kubelet.service]
-  - [systemctl, disable, firewalld, --now]
 users:
   - default
   - name: fedora
