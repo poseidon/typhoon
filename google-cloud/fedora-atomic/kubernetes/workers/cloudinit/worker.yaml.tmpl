@@ -60,7 +60,7 @@ bootcmd:
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, cloud-metadata.service]
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8767d4433f7c5a38c55edf6e682efb53fcd06f61"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:0c2a541d26c1716f495f1dd17c26e9b36304eede"
   - [systemctl, start, --no-block, kubelet.service]
 users:
   - default
