@@ -49,7 +49,7 @@ bootcmd:
 runcmd:
   - [systemctl, daemon-reload]
   - [hostnamectl, set-hostname, ${domain_name}]
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:460dc13da365a56c5d5419f4d476fbc9d25e0ad7"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8baca5cbaf7b7ee0710380c7d8897e444ebdcb27"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
 users:
