@@ -14,7 +14,7 @@ kubectl port-forward grafana-POD-ID 8080 -n monitoring
 
 Visit [127.0.0.1:8080](http://127.0.0.1:8080) to view the bundled dashboards.
 
-![Grafana Capacity Planning](/img/grafana-capacity.png)
-![Grafana Control Plane](/img/grafana-control-plane.png)
-![Grafana Node View](/img/grafana-node.png)
+![Grafana Capacity Planning](../img/grafana-capacity.png)
+![Grafana Control Plane](../img/grafana-control-plane.png)
+![Grafana Node View](../img/grafana-node.png)
 
