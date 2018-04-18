@@ -71,33 +71,7 @@ write_files:
     permissions: '0644'
     content: |
       ${kubeconfig}
-  - path: /etc/systemd/system/bootkube.service
-    content: |
-      [Unit]
-      Description=Bootstrap a Kubernetes cluster
-      ConditionPathExists=!/var/bootkube/init_bootkube.done
-      [Service]
-      Type=oneshot
-      RemainAfterExit=true
-      WorkingDirectory=/var/bootkube
-      ExecStartPre=/bin/mkdir -p /var/bootkube
-      ExecStart=/usr/local/bin/bootkube-start
-      ExecStartPost=/bin/touch /var/bootkube/init_bootkube.done
-      [Install]
-      WantedBy=multi-user.target
-  - path: /var/bootkube/.keep
-  - path: /usr/local/bin/bootkube-start
-    permissions: '0755'
-    content: |
-      #!/bin/bash -e
-      # Wrapper for bootkube start
-      [ -n "$(ls /var/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /var/bootkube/assets/manifests-*/* /var/bootkube/assets/manifests && rm -rf /var/bootkube/assets/manifests-*
-      /usr/bin/docker run --rm --name bootkube \
-        --net=host \
-        --volume /etc/kubernetes:/etc/kubernetes:Z \
-        --volume /var/bootkube/assets:/assets:Z \
-        --entrypoint=/bootkube \
-        quay.io/coreos/bootkube:v0.12.0 start --asset-dir=/assets
+  - path: /var/lib/bootkube/.keep
   - path: /etc/selinux/config
     owner: root:root
     permissions: '0644'
@@ -110,9 +84,10 @@ bootcmd:
 runcmd:
   - [systemctl, daemon-reload]
   - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
+  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8baca5cbaf7b7ee0710380c7d8897e444ebdcb27"
+  - "atomic install --system --name=bootkube quay.io/dghubble/bootkube:3cc2345503c60186db5272fa918514259e3c4a9d"
   - [systemctl, start, --no-block, etcd.service]
   - [systemctl, enable, cloud-metadata.service]
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8baca5cbaf7b7ee0710380c7d8897e444ebdcb27"
   - [systemctl, start, --no-block, kubelet.service]
 users:
   - default
