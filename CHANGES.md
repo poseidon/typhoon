@@ -12,6 +12,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update nginx-ingress from 0.12.0 to 0.13.0
 * Update kube-state-metrics from v1.3.0 to v1.3.1
 
 ## v1.10.1
