@@ -1,3 +1,8 @@
+locals {
+  default_assets_endpoint = "${var.matchbox_http_endpoint}/assets/fedora/27"
+  atomic_assets_endpoint = "${var.atomic_assets_endpoint != "" ? var.atomic_assets_endpoint : local.default_assets_endpoint}"
+}
+
 // Cached Fedora Install profile (from matchbox /assets cache)
 // Note: Admin must have downloaded Fedora kernel, initrd, and repo into
 // matchbox assets.
@@ -5,15 +10,15 @@ resource "matchbox_profile" "cached-fedora-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-cached-fedora-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  kernel = "/assets/fedora/27/vmlinuz"
+  kernel = "${local.atomic_assets_endpoint}/images/pxeboot/vmlinuz"
 
   initrd = [
-    "/assets/fedora/27/initrd.img",
+    "${local.atomic_assets_endpoint}/images/pxeboot/initrd.img",
   ]
 
   args = [
     "initrd=initrd.img",
-    "inst.repo=${var.matchbox_http_endpoint}/assets/fedora/27/Server/x86_64/os/",
+    "inst.repo=${local.atomic_assets_endpoint}",
     "inst.ks=${var.matchbox_http_endpoint}/generic?mac=${element(concat(var.controller_macs, var.worker_macs), count.index)}",
     "inst.text",
     "${var.kernel_args}",
@@ -30,6 +35,7 @@ data "template_file" "install-kickstarts" {
 
   vars {
     matchbox_http_endpoint = "${var.matchbox_http_endpoint}"
+    atomic_assets_endpoint = "${local.atomic_assets_endpoint}"
     mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
   }
 }

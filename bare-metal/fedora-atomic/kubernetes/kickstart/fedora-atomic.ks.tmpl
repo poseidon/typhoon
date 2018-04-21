@@ -17,7 +17,7 @@ network --bootproto=dhcp --device=link --activate --onboot=on
 bootloader --timeout=1 --append="ds=nocloud\;seedfrom=/var/cloud-init/"
 services --enabled=cloud-init,cloud-init-local,cloud-config,cloud-final
 
-ostreesetup --osname="fedora-atomic" --remote="fedora-atomic-27" --url="${matchbox_http_endpoint}/assets/fedora/27/repo" --ref=fedora/27/x86_64/atomic-host --nogpg
+ostreesetup --osname="fedora-atomic" --remote="fedora-atomic-27" --url="${atomic_assets_endpoint}/repo" --ref=fedora/27/x86_64/atomic-host --nogpg
 
 reboot
 

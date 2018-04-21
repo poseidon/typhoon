@@ -10,6 +10,16 @@ variable "matchbox_http_endpoint" {
   description = "Matchbox HTTP read-only endpoint (e.g. http://matchbox.example.com:8080)"
 }
 
+variable "atomic_assets_endpoint" {
+  type = "string"
+  default = ""
+  description = <<EOD
+HTTP endpoint serving the Fedora Atomic Host vmlinuz, initrd, os repo, and ostree repo (.e.g `http://example.com/some/path`).
+
+Ensure the HTTP server directory contains `vmlinuz` and `initrd` files and `os` and `repo` directories. Leave unset to assume ${matchbox_http_endpoint}/assets/fedora/27
+EOD
+}
+
 # machines
 # Terraform's crude "type system" does not properly support lists of maps so we do this.
 
@@ -81,8 +91,6 @@ EOD
   type    = "string"
   default = "10.3.0.0/16"
 }
-
-# optional
 
 variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
