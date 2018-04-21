@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.0.4 to v3.1.1 ([#197](https://github.com/poseidon/typhoon/pull/197))
+  * https://www.projectcalico.org/announcing-calico-v3-1/
+  * https://github.com/projectcalico/calico/releases/tag/v3.1.0
+
 #### Google Cloud
 
 * Add support for multi-controller clusters (i.e. multi-master) ([#54](https://github.com/poseidon/typhoon/issues/54), [#190](https://github.com/poseidon/typhoon/pull/190))
