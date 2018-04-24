@@ -2,14 +2,14 @@
 
 ## Provision Time
 
-Provisioning times vary based on the platform. Sampling the time to create (apply) and destroy clusters with 1 controller and 2 workers shows (roughly) what to expect.
+Provisioning times vary based on the operating system and platform. Sampling the time to create (apply) and destroy clusters with 1 controller and 2 workers shows (roughly) what to expect.
 
 | Platform      | Apply | Destroy |
 |---------------|-------|---------|
 | AWS           | 6 min | 5 min   |
-| Bare-Metal    | 10-14 min | NA  |
+| Bare-Metal    | 10-15 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
-| Google Cloud  | 7 min | 4 min 30 sec |
+| Google Cloud  | 9 min | 4 min 30 sec |
 
 Notes:
 

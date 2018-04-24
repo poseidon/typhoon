@@ -1,16 +1,20 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.10.1 cluster on bare-metal.
+!!! danger
+    Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
+In this tutorial, we'll network boot and provision a Kubernetes v1.10.1 cluster on bare-metal with Fedora Atomic.
 
-Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kubelet`. Workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora Atomic via kickstart, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via cloud-init.
+
+Controllers are provisioned to run `etcd` and `kubelet` [system containers](http://www.projectatomic.io/blog/2016/09/intro-to-system-containers/). Workers run just a `kubelet` system container. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
 * Machines with 2GB RAM, 30GB disk, PXE-enabled NIC, IPMI
 * PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment
-* Matchbox v0.6+ deployment with API enabled
+* Matchbox v0.7+ deployment with API enabled
+* HTTP server for Fedora install assets and ostree repo
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
 * Terraform v0.11.x and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
 
@@ -104,13 +108,69 @@ Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup
 !!! note ""
     TFTP chainloading to modern boot firmware, like iPXE, avoids issues with old NICs and allows faster transfer protocols like HTTP to be used.
 
+## Atomic Assets
+
+Fedora Atomic network installations require a local mirror of assets. Configure an HTTP server to serve the Atomic install tree and ostree repo.
+
+```
+sudo dnf install -y httpd
+sudo firewall-cmd --permenant --add-port=80/tcp
+sudo systemctl enable httpd --now
+```
+
+Download the [Fedora Atomic](https://getfedora.org/en/atomic/download/) ISO which contains install files and add them to the serve directory.
+
+```
+sudo mount -o loop,ro Fedora-Atomic-ostree-*.iso /mnt
+sudo mkdir -p /var/www/html/fedora/27
+sudo cp -av /mnt/* /var/www/html/fedora/27/
+```
+
+Checkout the [fedora-atomic](https://pagure.io/fedora-atomic) ostree manifest repo.
+
+```
+git clone https://pagure.io/fedora-atomic.git && cd fedora-atomic
+git checkout f27
+```
+
+Compose an ostree repo from RPM sources.
+
+```
+mkdir repo
+ostree init --repo=repo --mode=archive
+sudo dnf install rpm-ostree
+sudo rpm-ostree compose tree --repo=repo fedora-atomic-host.json
+```
+
+Serve the ostree `repo` as well.
+
+```
+sudo cp -r repo /var/www/html/fedora/27/
+tree /var/www/html/fedora/27/                       
+├── images             
+│   ├── pxeboot        
+│       ├── initrd.img 
+│       └── vmlinuz    
+├── isolinux/
+├── repo/
+```
+
+Verify `vmlinuz`, `initrd.img`, and `repo` are accessible from the HTTP server (i.e. `atomic_assets_endpoint`).
+
+```
+curl http://example.com/fedora/27/
+```
+
+!!! note
+    It is possible to use the Matchbox `/assets` [cache](https://github.com/coreos/matchbox/blob/master/Documentation/matchbox.md#assets) as an HTTP server.
+
 ## Terraform Setup
 
 Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.11.1
+Terraform v0.11.7
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system.
@@ -170,11 +230,11 @@ provider "tls" {
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `bare-metal/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `bare-metal/fedora-atomic/kubernetes`.
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.10.1"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-atomic/kubernetes?ref=v1.10.1"
   
   providers = {
     local = "local.default"
@@ -184,10 +244,9 @@ module "bare-metal-mercury" {
   }
   
   # bare-metal
-  cluster_name            = "mercury"
-  matchbox_http_endpoint  = "http://matchbox.example.com"
-  container_linux_channel = "stable"
-  container_linux_version = "1632.3.0"
+  cluster_name           = "mercury"
+  matchbox_http_endpoint = "http://matchbox.example.com"
+  atomic_assets_endpoint = "http://example.com/fedora/27"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -213,7 +272,7 @@ module "bare-metal-mercury" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/fedora-atomic/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -224,9 +283,6 @@ ssh-add ~/.ssh/id_rsa
 ssh-add -L
 ```
 
-!!! warning
-    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
-
 ## Apply
 
 Initialize the config directory if this is the first use with Terraform.
@@ -235,20 +291,11 @@ Initialize the config directory if this is the first use with Terraform.
 terraform init
 ```
 
-Get or update Terraform modules.
-
-```sh
-$ terraform get            # downloads missing modules
-$ terraform get --update   # updates all modules
-Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.12.0 (update)
-```
-
 Plan the resources to be created.
 
 ```sh
 $ terraform plan
-Plan: 55 to add, 0 to change, 0 to destroy.
+Plan: 58 to add, 0 to change, 0 to destroy.
 ```
 
 Apply the changes. Terraform will generate bootkube assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
@@ -273,7 +320,7 @@ ipmitool -H node1.example.com -U USER -P PASS chassis bootdev pxe
 ipmitool -H node1.example.com -U USER -P PASS power on
 ```
 
-Machines will network boot, install Container Linux to disk, reboot into the disk install, and provision themselves as controllers or workers.
+Machines will network boot, install Fedora Atomic to disk via kickstart, reboot into the disk install, and provision themselves as controllers or workers via cloud-init.
 
 !!! tip ""
     If this is the first test of your PXE-enabled network boot environment, watch the SOL console of a machine to spot any misconfigurations.
@@ -289,22 +336,13 @@ module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m30s
 module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m40s elapsed)
 module.bare-metal-mercury.null_resource.bootkube-start: Creation complete (ID: 5441741360626669024)
 
-Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
-```
-
-To watch the install to disk (until machines reboot from disk), SSH to port 2222.
-
-```
-# before v1.10.1
-$ ssh debug@node1.example.com
-# after v1.10.1
-$ ssh -p 2222 core@node1.example.com
+Apply complete! Resources: 58 added, 0 changed, 0 destroyed.
 ```
 
 To watch the bootstrap process in detail, SSH to the first controller and journal the logs.
 
 ```
-$ ssh core@node1.example.com
+$ ssh fedora@node1.example.com
 $ journalctl -f -u bootkube
 bootkube[5]:         Pod Status:        pod-checkpointer        Running
 bootkube[5]:         Pod Status:          kube-apiserver        Running
@@ -352,21 +390,19 @@ kube-system   pod-checkpointer-wf65d-node1.example.com   1/1       Running   0  
 
 Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
 
-!!! note
-    On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
-
 ## Variables
+
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/fedora-atomic/kubernetes/variables.tf) source.
 
 ### Required
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name | mercury |
-| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:8080 |
-| container_linux_channel | Container Linux channel | stable, beta, alpha |
-| container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
+| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
+| atomic_assets_endpoint | HTTP endpoint serving the Fedora Atomic vmlinuz, initrd.img, and ostree repo | "http://example.com/fedora/27" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
+| ssh_authorized_key | SSH public key for user 'fedora' | "ssh-rsa AAAAB3Nz..." |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
 | controller_names | Ordered list of controller short names | ["node1"] |
 | controller_macs | Ordered list of controller identifying MAC addresses | ["52:54:00:a1:9c:ae"] |
@@ -379,9 +415,6 @@ Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overv
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| cached_install | Whether machines should PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux images into the cache to use this | false | true |
-| install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
-| container_linux_oem | Specify alternative OEM image ids for the disk install | "" | "vmware_raw", "xen" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

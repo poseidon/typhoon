@@ -1,16 +1,19 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.10.1 cluster on AWS.
+!!! danger
+    Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a VPC, gateway, subnets, auto-scaling groups of controllers and workers, network load balancers for controllers and workers, and security groups will be created.
+In this tutorial, we'll create a Kubernetes v1.10.1 cluster on AWS with Fedora Atomic.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancers, and TLS assets. Instances are provisioned on first boot with cloud-init.
+
+Controllers are provisioned to run an `etcd` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
 * AWS Account and IAM credentials
 * AWS Route53 DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.11.x and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
+* Terraform v0.11.x installed locally
 
 ## Terraform Setup
 
@@ -18,23 +21,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.1
-```
-
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
-
-```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
-```
-
-Add the plugin to your `~/.terraformrc`.
-
-```
-providers {
-  ct = "/usr/local/bin/terraform-provider-ct"
-}
+Terraform v0.11.7
 ```
 
 Read [concepts](../concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -92,11 +79,11 @@ Additional configuration options are described in the `aws` provider [docs](http
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `aws/fedora-atomic/kubernetes`.
 
 ```tf
 module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.10.1"
+  source = "git::https://github.com/poseidon/typhoon//aws/fedora-atomic/kubernetes?ref=v1.10.1"
 
   providers = {
     aws = "aws.default"
@@ -121,7 +108,7 @@ module "aws-tempest" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/fedora-atomic/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -132,9 +119,6 @@ ssh-add ~/.ssh/id_rsa
 ssh-add -L
 ```
 
-!!! warning
-    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
-
 ## Apply
 
 Initialize the config directory if this is the first use with Terraform.
@@ -143,20 +127,11 @@ Initialize the config directory if this is the first use with Terraform.
 terraform init
 ```
 
-Get or update Terraform modules.
-
-```sh
-$ terraform get            # downloads missing modules
-$ terraform get --update   # updates all modules
-Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.12.0 (update)
-```
-
 Plan the resources to be created.
 
 ```sh
 $ terraform plan
-Plan: 98 to add, 0 to change, 0 to destroy.
+Plan: 106 to add, 0 to change, 0 to destroy.
 ```
 
 Apply the changes to create the cluster.
@@ -168,10 +143,10 @@ module.aws-tempest.null_resource.bootkube-start: Still creating... (4m50s elapse
 module.aws-tempest.null_resource.bootkube-start: Still creating... (5m0s elapsed)
 module.aws-tempest.null_resource.bootkube-start: Creation complete after 11m8s (ID: 3961816482286168143)
 
-Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 106 added, 0 changed, 0 destroyed.
 ```
 
-In 4-8 minutes, the Kubernetes cluster will be ready.
+In 5-10 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 
@@ -211,10 +186,9 @@ kube-system   pod-checkpointer-4kxtl-ip-10-0-12-221     1/1    Running   0      
 
 Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
 
-!!! note
-    On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
-
 ## Variables
+
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/fedora-atomic/kubernetes/variables.tf) source.
 
 ### Required
 
@@ -223,14 +197,14 @@ Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overv
 | cluster_name | Unique cluster name (prepended to dns_zone) | "tempest" |
 | dns_zone | AWS Route53 DNS zone | "aws.example.com" |
 | dns_zone_id | AWS Route53 DNS zone id | "Z3PAABBCFAKEC0" |
-| ssh_authorized_key | SSH public key for ~/.ssh_authorized_keys | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'fedora' | "ssh-rsa AAAAB3NZ..." |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/tempest" |
 
 #### DNS Zone
 
-Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `tempest.aws.example.com`.
+Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver(s). In this example, the cluster's apiserver would be accessible at `tempest.aws.example.com`.
 
-You'll need a registered domain name or subdomain registered in a AWS Route53 DNS zone. You can set this up once and create many clusters with unique names.
+You'll need a registered domain name or delegated subdomain on AWS Route53. You can set this up once and create many clusters with unique names.
 
 ```tf
 resource "aws_route53_zone" "zone-for-clusters" {
@@ -241,7 +215,7 @@ resource "aws_route53_zone" "zone-for-clusters" {
 Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`.
 
 !!! tip ""
-    If you have an existing domain name with a zone file elsewhere, just carve out a subdomain that can be managed on Route53 (e.g. aws.mydomain.com) and [update nameservers](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html).
+    If you have an existing domain name with a zone file elsewhere, just delegate a subdomain that can be managed on Route53 (e.g. aws.mydomain.com) and [update nameservers](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html).
 
 ### Optional
 
@@ -251,11 +225,8 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | EC2 instance type for controllers | "t2.small" | See below |
 | worker_type | EC2 instance type for workers | "t2.small" | See below |
-| os_channel | Container Linux AMI channel | stable | stable, beta, alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
-| controller_clc_snippets | Controller Container Linux Config snippets | [] | |
-| worker_clc_snippets | Worker Container Linux Config snippets | [] | |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |

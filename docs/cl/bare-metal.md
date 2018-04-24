@@ -1,10 +1,10 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.10.1 cluster on bare-metal.
+In this tutorial, we'll network boot and provision a Kubernetes v1.10.1 cluster on bare-metal with Container Linux.
 
-First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers.
+First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
-Controllers are provisioned as etcd peers and run `etcd-member` (etcd3) and `kubelet`. Workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -224,24 +224,12 @@ ssh-add ~/.ssh/id_rsa
 ssh-add -L
 ```
 
-!!! warning
-    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
-
 ## Apply
 
 Initialize the config directory if this is the first use with Terraform.
 
 ```sh
 terraform init
-```
-
-Get or update Terraform modules.
-
-```sh
-$ terraform get            # downloads missing modules
-$ terraform get --update   # updates all modules
-Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.12.0 (update)
 ```
 
 Plan the resources to be created.
@@ -357,12 +345,14 @@ Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overv
 
 ## Variables
 
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/container-linux/kubernetes/variables.tf) source.
+
 ### Required
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name | mercury |
-| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:8080 |
+| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:port |
 | container_linux_channel | Container Linux channel | stable, beta, alpha |
 | container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |

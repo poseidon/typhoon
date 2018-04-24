@@ -1,10 +1,10 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.10.1 cluster on Google Compute Engine (not GKE).
+In this tutorial, we'll create a Kubernetes v1.10.1 cluster on Google Compute Engine with Container Linux.
 
-We'll declare a Kubernetes cluster in Terraform using the Typhoon Terraform module. On apply, a network, firewall rules, managed instance groups of Kubernetes controllers and workers, network load balancers for controllers and workers, and health checks will be created.
+We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
-Controllers and workers are provisioned to run a `kubelet`. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules an `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and runs `kube-proxy` and `calico` or `flannel` on each node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -47,7 +47,7 @@ cd infra/clusters
 
 Login to your Google Console [API Manager](https://console.cloud.google.com/apis/dashboard) and select a project, or [signup](https://cloud.google.com/free/) if you don't have an account.
 
-Select "Credentials", and create service account key credentials. Choose the "Compute Engine default service account" and save the JSON private key to a file that can be referenced in configs.
+Select "Credentials" and create a service account key. Choose the "Compute Engine Admin" role and save the JSON private key to a file that can be referenced in configs.
 
 ```sh
 mv ~/Downloads/project-id-43048204.json ~/.config/google-cloud/terraform.json
@@ -89,7 +89,7 @@ provider "tls" {
 Additional configuration options are described in the `google` provider [docs](https://www.terraform.io/docs/providers/google/index.html).
 
 !!! tip
-    A project may contain multiple clusters if you wish. Regions are listed in [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`.
+    Regions are listed in [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`. A project may contain multiple clusters across different regions.
 
 ## Cluster
 
@@ -133,24 +133,12 @@ ssh-add ~/.ssh/id_rsa
 ssh-add -L
 ```
 
-!!! warning
-    `terraform apply` will hang connecting to a controller if `ssh-agent` does not contain the SSH key.
-
 ## Apply
 
 Initialize the config directory if this is the first use with Terraform.
 
 ```sh
 terraform init
-```
-
-Get or update Terraform modules.
-
-```sh
-$ terraform get            # downloads missing modules
-$ terraform get --update   # updates all modules
-Get: git::https://github.com/poseidon/typhoon (update)
-Get: git::https://github.com/poseidon/bootkube-terraform.git?ref=v0.12.0 (update)
 ```
 
 Plan the resources to be created.
@@ -218,6 +206,8 @@ Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overv
 
 ## Variables
 
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+
 ### Required
 
 | Name | Description | Example |
@@ -233,9 +223,9 @@ Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-
 
 #### DNS Zone
 
-Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a network load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver. In this example, the cluster's apiserver would be accessible at `yavin.google-cloud.example.com`.
+Clusters create a DNS A record `${cluster_name}.${dns_zone}` to resolve a TCP proxy load balancer backed by controller instances. This FQDN is used by workers and `kubectl` to access the apiserver(s). In this example, the cluster's apiserver would be accessible at `yavin.google-cloud.example.com`.
 
-You'll need a registered domain name or subdomain registered in a Google Cloud DNS zone. You can set this up once and create many clusters with unique names.
+You'll need a registered domain name or delegated subdomain on Google Cloud DNS. You can set this up once and create many clusters with unique names.
 
 ```tf
 resource "google_dns_managed_zone" "zone-for-clusters" {
@@ -246,7 +236,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 ```
 
 !!! tip ""
-    If you have an existing domain name with a zone file elsewhere, just carve out a subdomain that can be managed on Google Cloud (e.g. google-cloud.mydomain.com) and [update nameservers](https://cloud.google.com/dns/update-name-servers).
+    If you have an existing domain name with a zone file elsewhere, just delegate a subdomain that can be managed on Google Cloud (e.g. google-cloud.mydomain.com) and [update nameservers](https://cloud.google.com/dns/update-name-servers).
 
 ### Optional
 

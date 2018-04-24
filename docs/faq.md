@@ -8,9 +8,19 @@ Formats rise and evolve. Typhoon may choose to adapt the format over time (with 
 
 ## Operating Systems
 
-Only Container Linux is supported currently. This just due to operational familiarity, rather than intentional exclusion. It's important that another operating system be added, to reduce the risk of making narrowly-scoped design decisions.
+Typhoon supports Container Linux and Fedora Atomic 27. Both operating systems offer:
 
-Fedora Cloud will likely be next. 
+* Minimalism and focus on clustered operation
+* Automated and atomic operating system upgrades
+* Declarative and immutable configuration
+* Optimization for containerized applications
+
+Together, they diversify Typhoon to support a range of container technologies.
+
+* Container Linux
+  * Gentoo core, rkt-fly, docker
+* Fedora Atomic
+  * RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O
 
 ## Get Help
 
