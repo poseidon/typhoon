@@ -9,7 +9,7 @@ Internal Terraform Modules:
 
 ## AWS
 
-Create a cluster following the AWS [tutorial](../aws.md#cluster). Define a worker pool using the AWS internal `workers` module.
+Create a cluster following the AWS [tutorial](../cl/aws.md#cluster). Define a worker pool using the AWS internal `workers` module.
 
 ```tf
 module "tempest-worker-pool" {
@@ -73,7 +73,7 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 ## Google Cloud
 
-Create a cluster following the Google Cloud [tutorial](../google-cloud.md#cluster). Define a worker pool using the Google Cloud internal `workers` module.
+Create a cluster following the Google Cloud [tutorial](../cl/google-cloud.md#cluster). Define a worker pool using the Google Cloud internal `workers` module.
 
 ```tf
 module "yavin-worker-pool" {

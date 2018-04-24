@@ -1,6 +1,6 @@
 # Hardware
 
-While bare-metal Kubernetes clusters have no special hardware requirements (beyond the [min reqs](/bare-metal.md#requirements)), Typhoon does ensure certain router and server hardware integrates well with Kubernetes.
+Typhoon ensures certain router and server hardware integrates well with bare-metal Kubernetes.
 
 ## Ubiquiti
 

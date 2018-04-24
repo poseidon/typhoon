@@ -78,7 +78,7 @@ $ terraform apply
 Apply complete! Resources: 0 added, 0 changed, 55 destroyed.
 ```
 
-Re-provision a new cluster by following the bare-metal [tutorial](../bare-metal.md#cluster).
+Re-provision a new cluster by following the bare-metal [tutorial](../cl/bare-metal.md#cluster).
 
 ### Cloud
 

@@ -37,7 +37,7 @@ providers {
 }
 ```
 
-Read [concepts](concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](../concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -203,7 +203,7 @@ kube-system   pod-checkpointer-pr1lq-10.132.115.81       1/1       Running   0  
 
 ## Going Further
 
-Learn about [maintenance](topics/maintenance.md) and [addons](addons/overview.md).
+Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.

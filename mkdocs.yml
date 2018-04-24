@@ -1,4 +1,8 @@
-site_name: Typhoon
+site_name: 'Typhoon'
+site_description: 'A minimal and free Kubernetes distribution' 
+site_author: 'Dalton Hubble'
+repo_name: 'poseidon/typhoon'
+repo_url: 'https://github.com/poseidon/typhoon'
 theme:
   name: 'material'
   palette:
@@ -9,13 +13,12 @@ theme:
   font:
     text: 'Roboto Slab'
     code: 'Roboto Mono'
+extra:
   social:
     - type: 'github'
       link: 'https://github.com/poseidon'
     - type: 'twitter'
       link: 'https://twitter.com/typhoon8s'
-repo_name: 'poseidon/typhoon'
-repo_url: 'https://github.com/poseidon/typhoon'
 google_analytics:
   - 'UA-38995133-6'
   - 'auto'
@@ -40,10 +43,26 @@ markdown_extensions:
 pages:
   - Home: 'index.md'
   - 'Concepts': 'concepts.md'
-  - 'AWS': 'aws.md'
-  - 'Bare-Metal': 'bare-metal.md'
-  - 'Digital Ocean': 'digital-ocean.md'
-  - 'Google Cloud': 'google-cloud.md'
+  - 'Container Linux': 
+    - 'AWS': 'cl/aws.md'
+    - 'Bare-Metal': 'cl/bare-metal.md'
+    - 'Digital Ocean': 'cl/digital-ocean.md'
+    - 'Google Cloud': 'cl/google-cloud.md'
+  - 'Fedora Atomic':
+    - 'AWS': 'atomic/aws.md'
+    - 'Bare-Metal': 'atomic/bare-metal.md'
+    - 'Digital Ocean': 'atomic/digital-ocean.md'
+    - 'Google Cloud': 'atomic/google-cloud.md'
+  - 'Topics':
+    - 'Maintenance': 'topics/maintenance.md'
+    - 'Hardware': 'topics/hardware.md'
+    - 'Security': 'topics/security.md'
+    - 'Performance': 'topics/performance.md'
+    - 'FAQ': 'faq.md'
+  - 'Advanced':
+    - 'Overview': 'advanced/overview.md'
+    - 'Customization': 'advanced/customization.md'
+    - 'Worker Pools': 'advanced/worker-pools.md'
   - 'Addons':
     - 'Overview': 'addons/overview.md'
     - 'CLUO': 'addons/cluo.md'
@@ -51,13 +70,3 @@ pages:
     - 'Nginx Ingress': 'addons/ingress.md'
     - 'Prometheus': 'addons/prometheus.md'
     - 'Grafana': 'addons/grafana.md'
-  - 'Topics':
-    - 'Maintenance': 'topics/maintenance.md'
-    - 'Hardware': 'topics/hardware.md'
-    - 'Security': 'topics/security.md'
-    - 'Performance': 'topics/performance.md'
-  - 'FAQ': 'faq.md'
-  - 'Advanced':
-    - 'Overview': 'advanced/overview.md'
-    - 'Customization': 'advanced/customization.md'
-    - 'Worker Pools': 'advanced/worker-pools.md'

@@ -24,19 +24,19 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws.md) | stable |
-| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal.md) | stable |
-| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean.md) | beta |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud.md) | beta |
+| AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
+| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
+| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
+| Bare-Metal    | Fedora Atomic  | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
+| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
+| Digital Ocean | Fedora Atomic  | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
+| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | beta |
+| Google Cloud  | Fedora Atomic  | [google-cloud/container-linux/kubernetes](atomic/google-cloud.md) | very alpha |
 
-## Usage
+## Documentation
 
 * [Concepts](concepts.md)
-* Tutorials
-    * [AWS](aws.md)
-    * [Bare-Metal](bare-metal.md)
-    * [Digital Ocean](digital-ocean.md)
-    * [Google-Cloud](google-cloud.md)
+* Tutorials for [AWS](cl/aws.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
 
 ## Example
 
