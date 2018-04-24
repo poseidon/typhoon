@@ -8,7 +8,7 @@ Formats rise and evolve. Typhoon may choose to adapt the format over time (with 
 
 ## Operating Systems
 
-Typhoon supports Container Linux and Fedora Atomic 27. Both operating systems offer:
+Typhoon supports Container Linux and Fedora Atomic 27. These two operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades
@@ -17,10 +17,8 @@ Typhoon supports Container Linux and Fedora Atomic 27. Both operating systems of
 
 Together, they diversify Typhoon to support a range of container technologies.
 
-* Container Linux
-  * Gentoo core, rkt-fly, docker
-* Fedora Atomic
-  * RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O
+* Container Linux: Gentoo core, rkt-fly, docker
+* Fedora Atomic: RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O
 
 ## Get Help
 

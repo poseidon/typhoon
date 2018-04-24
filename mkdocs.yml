@@ -5,6 +5,8 @@ repo_name: 'poseidon/typhoon'
 repo_url: 'https://github.com/poseidon/typhoon'
 theme:
   name: 'material'
+  feature:
+    tabs: true
   palette:
     primary: 'blue'
     accent: 'pink'
@@ -42,7 +44,9 @@ markdown_extensions:
   - pymdownx.tilde
 pages:
   - Home: 'index.md'
-  - 'Concepts': 'concepts.md'
+  - 'Architecture':
+    - 'Concepts': 'concepts.md'
+    - 'Operating Systems': 'architecture/operating-systems.md'
   - 'Container Linux': 
     - 'AWS': 'cl/aws.md'
     - 'Bare-Metal': 'cl/bare-metal.md'
@@ -58,7 +62,7 @@ pages:
     - 'Hardware': 'topics/hardware.md'
     - 'Security': 'topics/security.md'
     - 'Performance': 'topics/performance.md'
-    - 'FAQ': 'faq.md'
+    - 'FAQ': 'topics/faq.md'
   - 'Advanced':
     - 'Overview': 'advanced/overview.md'
     - 'Customization': 'advanced/customization.md'
