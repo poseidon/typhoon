@@ -83,7 +83,7 @@ Define a Kubernetes cluster using the module `aws/fedora-atomic/kubernetes`.
 
 ```tf
 module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/fedora-atomic/kubernetes?ref=v1.10.2"
+  source = "git::https://github.com/poseidon/typhoon//aws/fedora-atomic/kubernetes?ref=567e18f015bf7d8e1f111084a04e2d531a2d4a7d"
 
   providers = {
     aws = "aws.default"

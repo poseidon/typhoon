@@ -234,7 +234,7 @@ Define a Kubernetes cluster using the module `bare-metal/fedora-atomic/kubernete
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-atomic/kubernetes?ref=v1.10.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-atomic/kubernetes?ref=567e18f015bf7d8e1f111084a04e2d531a2d4a7d"
   
   providers = {
     local = "local.default"
