@@ -72,6 +72,12 @@ write_files:
     content: |
       ${kubeconfig}
   - path: /var/lib/bootkube/.keep
+  - path: /etc/NetworkManager/conf.d/typhoon.conf
+    content: |
+      [main]
+      plugins=keyfile
+      [keyfile]
+      unmanaged-devices=interface-name:cali*;interface-name:tunl*
   - path: /etc/selinux/config
     owner: root:root
     permissions: '0644'
@@ -85,6 +91,7 @@ bootcmd:
   - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
+  - [systemctl, restart, NetworkManager]
   - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.3"
   - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.1"
   - "atomic install --system --name=bootkube quay.io/poseidon/bootkube:v0.12.0"

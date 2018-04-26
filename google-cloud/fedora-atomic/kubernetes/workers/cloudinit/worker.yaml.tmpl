@@ -48,6 +48,12 @@ write_files:
     permissions: '0644'
     content: |
       ${kubeconfig}
+  - path: /etc/NetworkManager/conf.d/typhoon.conf
+    content: |
+      [main]
+      plugins=keyfile
+      [keyfile]
+      unmanaged-devices=interface-name:cali*;interface-name:tunl*
   - path: /etc/selinux/config
     owner: root:root
     permissions: '0644'
@@ -61,6 +67,7 @@ bootcmd:
   - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
+  - [systemctl, restart, NetworkManager]
   - [systemctl, enable, cloud-metadata.service]
   - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.1"
   - [systemctl, start, --no-block, kubelet.service]
