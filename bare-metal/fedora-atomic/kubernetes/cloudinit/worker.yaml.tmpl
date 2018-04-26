@@ -46,6 +46,8 @@ write_files:
 bootcmd:
   - [setenforce, Permissive]
   - [systemctl, disable, firewalld, --now]
+  # https://github.com/kubernetes/kubernetes/issues/60869
+  - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
   - [hostnamectl, set-hostname, ${domain_name}]
