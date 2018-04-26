@@ -110,7 +110,7 @@ Add a DNS record resolving to the WAN for each application.
 ```tf
 resource "google_dns_record_set" "some-application" {
   # Managed DNS Zone name
-  managed_zone = "dghubble-io"
+  managed_zone = "zone-name"
 
   # Name of the DNS record
   name    = "app.example.com."

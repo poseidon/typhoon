@@ -83,9 +83,9 @@ bootcmd:
   - [systemctl, disable, firewalld, --now]
 runcmd:
   - [systemctl, daemon-reload]
-  - "atomic install --system --name=etcd quay.io/dghubble/etcd:0265e6680d2533f3fbf4512af868d29ff07451ca"
-  - "atomic install --system --name=kubelet quay.io/dghubble/kubelet:8baca5cbaf7b7ee0710380c7d8897e444ebdcb27"
-  - "atomic install --system --name=bootkube quay.io/dghubble/bootkube:3cc2345503c60186db5272fa918514259e3c4a9d"
+  - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.3"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.1"
+  - "atomic install --system --name=bootkube quay.io/poseidon/bootkube:v0.12.0"
   - [systemctl, start, --no-block, etcd.service]
   - [systemctl, enable, cloud-metadata.service]
   - [systemctl, start, --no-block, kubelet.service]
