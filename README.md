@@ -24,18 +24,18 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| AWS           | Fedora Atomic  | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | alpha |
+| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
-| Bare-Metal    | Fedora Atomic  | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | alpha |
+| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
-| Digital Ocean | Fedora Atomic  | [digital-ocean/fedora-atomic/kubernetes](digital-ocean/fedora-atomic/kubernetes) | alpha |
+| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](digital-ocean/fedora-atomic/kubernetes) | alpha |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | beta |
-| Google Cloud  | Fedora Atomic  | [google-cloud/fedora-atomic/kubernetes](google-cloud/fedora-atomic/kubernetes) | very alpha |
+| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](google-cloud/fedora-atomic/kubernetes) | very alpha |
 
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)
-* [Concepts](https://typhoon.psdn.io/concepts/)
+* Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
 * Tutorials for [AWS](https://typhoon.psdn.io/cl/aws/), [Bare-Metal](https://typhoon.psdn.io/cl/bare-metal/), [Digital Ocean](https://typhoon.psdn.io/cl/digital-ocean/), and [Google-Cloud](https://typhoon.psdn.io/cl/google-cloud/)
 
 ## Usage

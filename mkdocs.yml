@@ -6,7 +6,7 @@ repo_url: 'https://github.com/poseidon/typhoon'
 theme:
   name: 'material'
   feature:
-    tabs: true
+    tabs: 'true'
   palette:
     primary: 'blue'
     accent: 'pink'
@@ -44,8 +44,9 @@ markdown_extensions:
   - pymdownx.tilde
 pages:
   - Home: 'index.md'
+  - 'Announce': 'announce.md'
   - 'Architecture':
-    - 'Concepts': 'concepts.md'
+    - 'Concepts': 'architecture/concepts.md'
     - 'Operating Systems': 'architecture/operating-systems.md'
   - 'Container Linux': 
     - 'AWS': 'cl/aws.md'

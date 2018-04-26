@@ -16,7 +16,6 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) and [preemption](https://typhoon.psdn.io/google-cloud/#preemption) (varies by platform)
 * Ready for Ingress, Prometheus, Grafana, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
-* Provided via Terraform Modules
 
 ## Modules
 
@@ -27,15 +26,15 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
 | AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
-| Bare-Metal    | Fedora Atomic  | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
+| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
-| Digital Ocean | Fedora Atomic  | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
+| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | beta |
-| Google Cloud  | Fedora Atomic  | [google-cloud/container-linux/kubernetes](atomic/google-cloud.md) | very alpha |
+| Google Cloud  | Fedora Atomic    | [google-cloud/container-linux/kubernetes](atomic/google-cloud.md) | very alpha |
 
 ## Documentation
 
-* [Concepts](concepts.md)
+* Architecture [concepts](architecture/concepts.md) and [operating-systems](architecture/operating-systems.md)
 * Tutorials for [AWS](cl/aws.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
 
 ## Example

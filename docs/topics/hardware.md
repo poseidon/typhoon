@@ -1,6 +1,6 @@
 # Hardware
 
-Typhoon ensures certain router and server hardware integrates well with bare-metal Kubernetes.
+Typhoon ensures certain networking hardware integrates well with bare-metal Kubernetes.
 
 ## Ubiquiti
 

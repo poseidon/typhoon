@@ -24,7 +24,7 @@ $ terraform version
 Terraform v0.11.7
 ```
 
-Read [concepts](../concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](../architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -77,7 +77,7 @@ Define a Kubernetes cluster using the module `digital-ocean/fedora-atomic/kubern
 
 ```tf
 module "digital-ocean-nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.10.1"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.10.2"
   
   providers = {
     digitalocean = "digitalocean.default"

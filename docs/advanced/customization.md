@@ -1,6 +1,6 @@
 # Customization
 
-Typhoon provides minimal Kubernetes clusters with defaults we recommend for production. Terraform variables provide easy to use and supported customizations for clusters. Advanced options are available for customizing the architecture or hosts.
+Typhoon provides Kubernetes clusters with defaults recommended for production. Terraform variables expose supported customization options. Advanced options are available for customizing the architecture or hosts as well.
 
 ## Variables
 
@@ -115,9 +115,13 @@ Container Linux Configs (and the CoreOS Ignition system) create immutable infras
 !!! danger
     Destroying and recreating controller instances is destructive! etcd runs on controller instances and stores data there. Do not modify controller snippets. See [blue/green](https://typhoon.psdn.io/topics/maintenance/#upgrades) clusters.
 
+### Fedora Atomic
+
+Cloud-Init and kickstart (bare-metal only) declare how a Fedora Atomic instance should be provisioned. Customizing these declarations in ways beyond the provided Terraform variables is unsupported.
+
 ## Architecture
 
-To customize clusters in ways that aren't supported by input variables, fork Typhoon and maintain a repository with customizations. Reference the repository by changing the username.
+Typhoon chooses variables to expose with purpose. If you must customize clusters in ways that aren't supported by input variables, fork Typhoon and maintain a repository with customizations. Reference the repository by changing the username.
 
 ```
 module "digital-ocean-nemo" {

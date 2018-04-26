@@ -5,7 +5,9 @@ Typhoon AWS and Google Cloud allow additional groups of workers to be defined an
 Internal Terraform Modules:
 
 * `aws/container-linux/kubernetes/workers`
+* `aws/fedora-atomic/kubernetes/workers`
 * `google-cloud/container-linux/kubernetes/workers`
+* `google-cloud/fedora-atomic/kubernetes/workers`
 
 ## AWS
 

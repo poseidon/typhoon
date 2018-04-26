@@ -189,7 +189,7 @@ providers {
 }
 ```
 
-Read [concepts](../concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](../architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -234,7 +234,7 @@ Define a Kubernetes cluster using the module `bare-metal/fedora-atomic/kubernete
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-atomic/kubernetes?ref=v1.10.1"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-atomic/kubernetes?ref=v1.10.2"
   
   providers = {
     local = "local.default"

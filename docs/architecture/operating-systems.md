@@ -10,28 +10,36 @@ Typhoon supports [Container Linux](https://coreos.com/why/) and Fedora [Atomic](
 Together, they diversify Typhoon to support a range of container technologies.
 
 * Container Linux: Gentoo core, rkt-fly, docker
-* Fedora Atomic: RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O
+* Fedora Atomic: RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O (future)
 
-## Kubernetes
+## Host Properties
 
 | Property          | Container Linux | Fedora Atomic |
 |-------------------|-----------------|---------------|
-| control plane     | self-hosted | self-hosted |
-| kubelet image     | upstream hyperkube | upstream hyperkube in system container |
-| controller images | upstream hyperkube | upstream hyperkube |
-| on-host etcd      | rkt-fly   | system container (runc) |
-| on-host kubelet   | rkt-fly   | system container (runc) |
-| host spec (bare-metal) | Container Linux Config | kickstart, cloud-init | 
+| host spec (bare-metal) | Container Linux Config | kickstart, cloud-init |
 | host spec (cloud)      | Container Linux Config | cloud-init |
-| CNI plugins       | calico or flannel | calico or flannel |
-| container runtime | docker    | docker (CRIO soon) |
+| container runtime | docker    | docker (CRIO planned) |
 | cgroup driver     | cgroupfs  | systemd  |
 | logging driver    | json-file | journald |
 | storage driver    | overlay2  | overlay2 |
 
-## Locations
+## Kubernetes Properties
 
-Typhoon standard locations.
+| Property          | Container Linux | Fedora Atomic |
+|-------------------|-----------------|---------------|
+| single-master     | all platforms | all platforms |
+| multi-master      | all platforms | all platforms |
+| control plane     | self-hosted   | self-hosted   |
+| kubelet image     | upstream hyperkube | upstream hyperkube via [system container](https://github.com/poseidon/system-containers) |
+| control plane images | upstream hyperkube | upstream hyperkube |
+| on-host etcd      | rkt-fly   | system container (runc) |
+| on-host kubelet   | rkt-fly   | system container (runc) |
+| CNI plugins       | calico or flannel | calico or flannel |
+| coordinated drain & OS update | [CLUO](https://github.com/coreos/container-linux-update-operator) addon | manual (planned) |
+
+## Directory Locations
+
+Typhoon conventional directories.
 
 | Kubelet setting   | Host location                  |
 |-------------------|--------------------------------|
@@ -77,5 +85,5 @@ Typhoon standard locations.
 | /lib/modules       | /lib/modules     | ro |
 | /etc/hosts         | /etc/hosts       | ro |
 | /etc/resolv.conf   | /etc/resolv.conf | ro |
-| /opt/cni/bin       | /opt/cni/bin     | |
+| /opt/cni/bin       | /opt/cni/bin (changing in future) | |
 
