@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* [Introduce](https://typhoon.psdn.io/announce/#april-26-2018) Typhoon for Fedora Atomic ([#199](https://github.com/poseidon/typhoon/pull/199))
 * Update Calico from v3.0.4 to v3.1.1 ([#197](https://github.com/poseidon/typhoon/pull/197))
   * https://www.projectcalico.org/announcing-calico-v3-1/
   * https://github.com/projectcalico/calico/releases/tag/v3.1.0
