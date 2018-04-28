@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.10.1 cluster on bare-metal with Fedora Atomic.
+In this tutorial, we'll network boot and provision a Kubernetes v1.10.2 cluster on bare-metal with Fedora Atomic.
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora Atomic via kickstart, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via cloud-init.
 
@@ -360,9 +360,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS    AGE       VERSION
-node1.example.com   Ready     11m       v1.10.1
-node2.example.com   Ready     11m       v1.10.1
-node3.example.com   Ready     11m       v1.10.1
+node1.example.com   Ready     11m       v1.10.2
+node2.example.com   Ready     11m       v1.10.2
+node3.example.com   Ready     11m       v1.10.2
 ```
 
 List the pods.

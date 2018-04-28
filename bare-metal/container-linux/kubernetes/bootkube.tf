@@ -1,6 +1,6 @@
 # Self-hosted Kubernetes assets (kubeconfig, manifests)
 module "bootkube" {
-  source = "git::https://github.com/poseidon/terraform-render-bootkube.git?ref=6ec5e3c3af34346e5563d2434481effc780a288c"
+  source = "git::https://github.com/poseidon/terraform-render-bootkube.git?ref=a43af2562c92638b0267a417b8b3d6005791348f"
 
   cluster_name          = "${var.cluster_name}"
   api_servers           = ["${var.k8s_domain_name}"]

@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-In this tutorial, we'll create a Kubernetes v1.10.1 cluster on AWS with Fedora Atomic.
+In this tutorial, we'll create a Kubernetes v1.10.2 cluster on AWS with Fedora Atomic.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancers, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
@@ -156,9 +156,9 @@ In 5-10 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION        
-ip-10-0-12-221   Ready     34m       v1.10.1
-ip-10-0-19-112   Ready     34m       v1.10.1
-ip-10-0-4-22     Ready     34m       v1.10.1
+ip-10-0-12-221   Ready     34m       v1.10.2
+ip-10-0-19-112   Ready     34m       v1.10.2
+ip-10-0-4-22     Ready     34m       v1.10.2
 ```
 
 List the pods.
