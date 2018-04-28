@@ -8,6 +8,7 @@ Notable changes between versions.
 * Update Calico from v3.0.4 to v3.1.1 ([#197](https://github.com/poseidon/typhoon/pull/197))
   * https://www.projectcalico.org/announcing-calico-v3-1/
   * https://github.com/projectcalico/calico/releases/tag/v3.1.0
+* Update etcd from v3.3.3 to v3.3.4
 
 #### Google Cloud
 
