@@ -119,7 +119,7 @@ Define a Kubernetes cluster using the module `google-cloud/fedora-atomic/kuberne
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=567e18f015bf7d8e1f111084a04e2d531a2d4a7d"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=v1.10.2"
   
   providers = {
     google   = "google.default"
