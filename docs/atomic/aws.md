@@ -227,6 +227,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | worker_type | EC2 instance type for workers | "t2.small" | See below |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
+| worker_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |

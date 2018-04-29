@@ -53,6 +53,12 @@ variable "disk_type" {
   description = "Type of the EBS volume (e.g. standard, gp2, io1)"
 }
 
+variable "worker_price" {
+  type        = "string"
+  default     = ""
+  description = "Spot price in USD for autoscaling group spot instances. Leave as default empty string for autoscaling group to use on-demand instances. Note, switching in-place from spot to on-demand is not possible: https://github.com/terraform-providers/terraform-provider-aws/issues/4320"
+}
+
 # configuration
 
 variable "ssh_authorized_key" {

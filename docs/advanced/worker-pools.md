@@ -68,10 +68,11 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | instance_type | EC2 instance type | "t2.small" | "t2.medium" |
 | os_channel | Container Linux AMI channel | stable| "beta", "alpha" |
 | disk_size | Size of the disk in GB | 40 | 100 |
+| spot_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |
 
-Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/).
+Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/) or per-region and per-type [spot prices](https://aws.amazon.com/ec2/spot/pricing/).
 
 ## Google Cloud
 

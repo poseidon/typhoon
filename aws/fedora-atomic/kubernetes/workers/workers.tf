@@ -26,6 +26,12 @@ resource "aws_autoscaling_group" "workers" {
     create_before_destroy = true
   }
 
+  # Waiting for instance creation delays adding the ASG to state. If instances
+  # can't be created (e.g. spot price too low), the ASG will be orphaned.
+  # Orphaned ASGs escape cleanup, can't be updated, and keep bidding if spot is
+  # used. Disable wait to avoid issues and align with other clouds.
+  wait_for_capacity_timeout = "0"
+
   tags = [{
     key                 = "Name"
     value               = "${var.name}-worker"
@@ -37,6 +43,7 @@ resource "aws_autoscaling_group" "workers" {
 resource "aws_launch_configuration" "worker" {
   image_id      = "${data.aws_ami.fedora.image_id}"
   instance_type = "${var.instance_type}"
+  spot_price    = "${var.spot_price}"
 
   user_data = "${data.template_file.worker-cloudinit.rendered}"
 

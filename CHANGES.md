@@ -2,7 +2,14 @@
 
 Notable changes between versions.
 
-## Latest
+#### AWS
+
+* Allow "preemptible" workers via spot instances ([#202](https://github.com/poseidon/typhoon/pull/202))
+  * Add `worker_price` to allow worker spot instances. Defaults to empty string for the worker autoscaling group to use regular on-demand instances.
+  * Add `spot_price` to internal `workers` module for spot [worker pools](https://typhoon.psdn.io/advanced/worker-pools/)
+  * Note: Unlike GCP `preemptible` workers, spot instances require you to pick a bid price.
+
+## v1.10.2
 
 * [Introduce](https://typhoon.psdn.io/announce/#april-26-2018) Typhoon for Fedora Atomic ([#199](https://github.com/poseidon/typhoon/pull/199))
 * Kubernetes [v1.10.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1102)

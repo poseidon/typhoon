@@ -9,6 +9,7 @@ module "workers" {
   count           = "${var.worker_count}"
   instance_type   = "${var.worker_type}"
   disk_size       = "${var.disk_size}"
+  spot_price      = "${var.worker_price}"
 
   # configuration
   kubeconfig            = "${module.bootkube.kubeconfig}"
