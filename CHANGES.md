@@ -10,6 +10,7 @@ Notable changes between versions.
   * https://www.projectcalico.org/announcing-calico-v3-1/
   * https://github.com/projectcalico/calico/releases/tag/v3.1.0
 * Update etcd from v3.3.3 to v3.3.4
+* Update kube-dns from v1.14.9 to v1.14.10
 
 #### Google Cloud
 
@@ -19,7 +20,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Update nginx-ingress from 0.12.0 to 0.13.0
+* Update nginx-ingress from 0.12.0 to 0.14.0
 * Update kube-state-metrics from v1.3.0 to v1.3.1
 
 ## v1.10.1
@@ -28,8 +29,8 @@ Notable changes between versions.
 * Enable etcd v3.3 metrics endpoint ([#175](https://github.com/poseidon/typhoon/pull/175))
 * Use `k8s.gcr.io` instead of `gcr.io/google_containers` ([#180](https://github.com/poseidon/typhoon/pull/180))
   * Kubernetes [recommends](https://groups.google.com/forum/#!msg/kubernetes-dev/ytjk_rNrTa0/3EFUHvovCAAJ) using the alias to pull from the nearest regional mirror and to abstract the backing container registry
-* Update kube-dns from v1.14.8 to v1.14.9
 * Update etcd from v3.3.2 to v3.3.3
+* Update kube-dns from v1.14.8 to v1.14.9
 * Use kubernetes-incubator/bootkube v0.12.0
 
 #### Bare-Metal
