@@ -57,7 +57,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version = "~> 1.11.0"
+  version = "~> 1.13.0"
   alias   = "default"
 
   region                  = "eu-central-1"
@@ -258,4 +258,3 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 !!! tip "MTU"
     If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8991! You will get better pod-to-pod bandwidth.
-
