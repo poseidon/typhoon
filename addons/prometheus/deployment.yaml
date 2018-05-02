@@ -20,7 +20,8 @@ spec:
       - name: prometheus
         image: quay.io/prometheus/prometheus:v2.2.1
         args:
-          - '--config.file=/etc/prometheus/prometheus.yaml'
+          - --config.file=/etc/prometheus/prometheus.yaml
+          - --storage.tsdb.path=/var/lib/prometheus
         ports:
         - name: web
           containerPort: 9090

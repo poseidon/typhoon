@@ -9,6 +9,10 @@ Notable changes between versions.
   * Add `spot_price` to internal `workers` module for spot [worker pools](https://typhoon.psdn.io/advanced/worker-pools/)
   * Note: Unlike GCP `preemptible` workers, spot instances require you to pick a bid price.
 
+#### Addons
+
+* Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
+
 ## v1.10.2
 
 * [Introduce](https://typhoon.psdn.io/announce/#april-26-2018) Typhoon for Fedora Atomic ([#199](https://github.com/poseidon/typhoon/pull/199))
