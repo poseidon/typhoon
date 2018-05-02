@@ -1,6 +1,6 @@
 locals {
   default_assets_endpoint = "${var.matchbox_http_endpoint}/assets/fedora/27"
-  atomic_assets_endpoint = "${var.atomic_assets_endpoint != "" ? var.atomic_assets_endpoint : local.default_assets_endpoint}"
+  atomic_assets_endpoint  = "${var.atomic_assets_endpoint != "" ? var.atomic_assets_endpoint : local.default_assets_endpoint}"
 }
 
 // Cached Fedora Install profile (from matchbox /assets cache)
@@ -36,14 +36,15 @@ data "template_file" "install-kickstarts" {
   vars {
     matchbox_http_endpoint = "${var.matchbox_http_endpoint}"
     atomic_assets_endpoint = "${local.atomic_assets_endpoint}"
-    mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
+    mac                    = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
   }
 }
 
 // Kubernetes Controller profiles
 resource "matchbox_profile" "controllers" {
-  count                  = "${length(var.controller_names)}"
-  name                   = "${format("%s-controller-%s", var.cluster_name, element(var.controller_names, count.index))}"
+  count = "${length(var.controller_names)}"
+  name  = "${format("%s-controller-%s", var.cluster_name, element(var.controller_names, count.index))}"
+
   # cloud-init
   generic_config = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
 }
@@ -65,8 +66,9 @@ data "template_file" "controller-configs" {
 
 // Kubernetes Worker profiles
 resource "matchbox_profile" "workers" {
-  count                  = "${length(var.worker_names)}"
-  name                   = "${format("%s-worker-%s", var.cluster_name, element(var.worker_names, count.index))}"
+  count = "${length(var.worker_names)}"
+  name  = "${format("%s-worker-%s", var.cluster_name, element(var.worker_names, count.index))}"
+
   # cloud-init
   generic_config = "${element(data.template_file.worker-configs.*.rendered, count.index)}"
 }

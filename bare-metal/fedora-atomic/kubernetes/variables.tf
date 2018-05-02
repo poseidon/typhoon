@@ -11,8 +11,9 @@ variable "matchbox_http_endpoint" {
 }
 
 variable "atomic_assets_endpoint" {
-  type = "string"
+  type    = "string"
   default = ""
+
   description = <<EOD
 HTTP endpoint serving the Fedora Atomic Host vmlinuz, initrd, os repo, and ostree repo (.e.g `http://example.com/some/path`).
 

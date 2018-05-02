@@ -46,7 +46,7 @@ resource "digitalocean_droplet" "controllers" {
 
   user_data = "${element(data.template_file.controller-cloudinit.*.rendered, count.index)}"
   ssh_keys  = ["${var.ssh_fingerprints}"]
-  
+
   tags = [
     "${digitalocean_tag.controllers.id}",
   ]
