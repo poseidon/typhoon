@@ -11,12 +11,10 @@ Notable changes between versions.
 
 * Switch `kube-apiserver` port from 443 to 6443 ([#248](https://github.com/poseidon/typhoon/pull/248))
 * Combine apiserver and ingress NLBs ([#249](https://github.com/poseidon/typhoon/pull/249))
-  * Simplify clusters to come with one NLB. Reduce cost by ~$18/month per cluster.
+  * Reduce cost by ~$18/month per cluster. Typhoon AWS clusters now use one network load balancer
   * Users may keep using CNAME records to `ingress_dns_name` and the `nginx-ingress` addon for Ingress (up to a few million RPS)
   * Users with heavy traffic (many million RPS) should create a separate NLB(s) for Ingress instead
-  * Listen for apiserver traffic on port 6443 and forward to controllers (with healthy apiserver)
-  * Listen for ingress traffic on ports 80/443 and forward to workers (with healthy ingress controller)
-* Worker pools (advanced) no longer include an extraneous load balancer
+* Worker pools no longer include an extraneous load balancer
 * Disable detailed (paid) monitoring on worker nodes ([#251](https://github.com/poseidon/typhoon/pull/251))
   * Favor Prometheus for cloud-agnostic metrics, aggregation, alerting, and visualization
 
@@ -30,6 +28,18 @@ Notable changes between versions.
 
 * Switch `kube-apiserver` port from 443 to 6443 ([#248](https://github.com/poseidon/typhoon/pull/248))
   * Update firewall rules and generated kubeconfig's
+
+#### Google Cloud
+
+* Use global HTTP and TCP proxy load balancing for Kubernetes Ingress ([#252](https://github.com/poseidon/typhoon/pull/252))
+  * Switch Ingress from regional network load balancers to global HTTP/TCP Proxy load balancing
+  * Reduce cost by ~$19/month per cluster. Google bills the first 5 global and regional forwarding rules separately. Typhoon clusters now use 3 global and 0 regional forwarding rules.
+* Worker pools no longer include an extraneous load balancer. Remove worker module's `ingress_static_ip` output
+* Allow using nginx-ingress addon on Typhoon for Fedora Atomic ([#200](https://github.com/poseidon/typhoon/issues/200))
+* Add `ingress_static_ipv4` module output
+* Add `worker_instance_group` module output to allow custom global load balancing
+* Deprecate `controllers_ipv4_public` module output
+* Deprecate `ingress_static_ip` module output. Use `ingress_static_ipv4`
 
 #### Addons
 

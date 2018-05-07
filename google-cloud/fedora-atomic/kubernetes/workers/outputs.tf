@@ -1,3 +1,4 @@
-output "ingress_static_ip" {
-  value = "${google_compute_address.ingress-ip.address}"
+output "instance_group" {
+  description = "Full URL of the worker managed instance group"
+  value = "${google_compute_region_instance_group_manager.workers.instance_group}"
 }

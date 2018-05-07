@@ -1,5 +1,4 @@
-# Regional managed instance group maintains a homogeneous set of workers that
-# span the zones in the region.
+# Regional managed instance group of workers
 resource "google_compute_region_instance_group_manager" "workers" {
   name        = "${var.name}-worker-group"
   description = "Compute instance group of ${var.name} workers"
@@ -11,12 +10,18 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
   target_size = "${var.count}"
 
-  # target pool to which instances in the group should be added
-  target_pools = [
-    "${google_compute_target_pool.workers.self_link}",
-  ]
+  named_port {
+    name = "http"
+    port = "80"
+  }
+
+  named_port {
+    name = "https"
+    port = "443"
+  }
 }
 
+# Worker instance template
 resource "google_compute_instance_template" "worker" {
   name_prefix  = "${var.name}-worker-"
   description  = "Worker Instance template"
