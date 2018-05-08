@@ -79,18 +79,6 @@ systemd:
         RestartSec=5
         [Install]
         WantedBy=multi-user.target
-    - name: delete-node.service
-      enable: true
-      contents: |
-        [Unit]
-        Description=Waiting to delete Kubernetes node on shutdown
-        [Service]
-        Type=oneshot
-        RemainAfterExit=true
-        ExecStart=/bin/true
-        ExecStop=/etc/kubernetes/delete-node
-        [Install]
-        WantedBy=multi-user.target
 storage:
   files:
     - path: /etc/kubernetes/kubelet.env
@@ -105,19 +93,3 @@ storage:
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
-    - path: /etc/kubernetes/delete-node
-      filesystem: root
-      mode: 0744
-      contents:
-        inline: |
-          #!/bin/bash
-          set -e
-          exec /usr/bin/rkt run \
-            --trust-keys-from-https \
-            --volume config,kind=host,source=/etc/kubernetes \
-            --mount volume=config,target=/etc/kubernetes \
-            --insecure-options=image \
-            docker://k8s.gcr.io/hyperkube:v1.10.2 \
-            --net=host \
-            --dns=host \
-            --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
