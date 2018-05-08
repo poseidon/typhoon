@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
+* Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
 
 #### AWS
 
