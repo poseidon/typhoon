@@ -9,10 +9,12 @@ Notable changes between versions.
 
 #### AWS
 
-* Allow "preemptible" workers via spot instances ([#202](https://github.com/poseidon/typhoon/pull/202))
-  * Add `worker_price` to allow worker spot instances. Defaults to empty string for the worker autoscaling group to use regular on-demand instances.
+* Allow preemptible workers via spot instances ([#202](https://github.com/poseidon/typhoon/pull/202))
+  * Add `worker_price` to allow worker spot instances. Default to empty string for the worker autoscaling group to use regular on-demand instances.
   * Add `spot_price` to internal `workers` module for spot [worker pools](https://typhoon.psdn.io/advanced/worker-pools/)
-  * Note: Unlike GCP `preemptible` workers, spot instances require you to pick a bid price.
+* Allow Container Linux derivative [Flatcar Linux](https://docs.flatcar-linux.org/) by setting `os_image` to `flatcar-stable`, `flatcar-beta`, `flatcar-alpha`.
+* Replace `os_channel` variable with `os_image` to align naming across clouds
+  * Please change values `stable`, `beta`, or `alpha` to `coreos-stable` (default), `coreos-beta`, `coreos-alpha` (action required!)
 
 #### Addons
 

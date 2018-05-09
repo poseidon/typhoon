@@ -8,7 +8,7 @@ module "workers" {
   security_groups = ["${aws_security_group.worker.id}"]
   count           = "${var.worker_count}"
   instance_type   = "${var.worker_type}"
-  os_channel      = "${var.os_channel}"
+  os_image      = "${var.os_image}"
   disk_size       = "${var.disk_size}"
   spot_price      = "${var.worker_price}"
 

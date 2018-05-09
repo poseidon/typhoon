@@ -23,7 +23,7 @@ resource "aws_instance" "controllers" {
 
   instance_type = "${var.controller_type}"
 
-  ami       = "${data.aws_ami.coreos.image_id}"
+  ami       = "${local.ami_id}"
   user_data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
 
   # storage
