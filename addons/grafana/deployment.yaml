@@ -31,6 +31,8 @@ spec:
               value: "true"
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
               value: Viewer
+            - name: GF_ANALYTICS_REPORTING_ENABLED
+              value: "false"
           ports:
             - name: http
               containerPort: 8080
