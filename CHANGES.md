@@ -2,6 +2,10 @@
 
 Notable changes between versions.
 
+## Latest
+
+* Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
+
 #### AWS
 
 * Allow "preemptible" workers via spot instances ([#202](https://github.com/poseidon/typhoon/pull/202))
