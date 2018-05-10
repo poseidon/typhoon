@@ -12,7 +12,7 @@ Notable changes between versions.
 #### Addons
 
 * Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
-* Update Grafana from v5.04 to v5.1.1 ([#208](https://github.com/poseidon/typhoon/pull/208))
+* Update Grafana from v5.04 to v5.1.2 ([#208](https://github.com/poseidon/typhoon/pull/208), [#214](https://github.com/poseidon/typhoon/pull/214))
 
 ## v1.10.2
 
