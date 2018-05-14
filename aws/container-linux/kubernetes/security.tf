@@ -104,27 +104,6 @@ resource "aws_security_group_rule" "controller-kubelet-self" {
   self      = true
 }
 
-# Allow heapster / metrics-server to scrape kubelet read-only
-resource "aws_security_group_rule" "controller-kubelet-read" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 10255
-  to_port                  = 10255
-  source_security_group_id = "${aws_security_group.worker.id}"
-}
-
-resource "aws_security_group_rule" "controller-kubelet-read-self" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10255
-  to_port   = 10255
-  self      = true
-}
-
 resource "aws_security_group_rule" "controller-bgp" {
   security_group_id = "${aws_security_group.controller.id}"
 
@@ -297,27 +276,6 @@ resource "aws_security_group_rule" "worker-kubelet-self" {
   protocol  = "tcp"
   from_port = 10250
   to_port   = 10250
-  self      = true
-}
-
-# Allow heapster / metrics-server to scrape kubelet read-only
-resource "aws_security_group_rule" "worker-kubelet-read" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 10255
-  to_port                  = 10255
-  source_security_group_id = "${aws_security_group.controller.id}"
-}
-
-resource "aws_security_group_rule" "worker-kubelet-read-self" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 10255
-  to_port   = 10255
   self      = true
 }
 

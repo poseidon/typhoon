@@ -117,22 +117,6 @@ resource "azurerm_network_security_rule" "controller-kubelet" {
   destination_address_prefix = "${azurerm_subnet.controller.address_prefix}"
 }
 
-# Allow heapster / metrics-server to scrape kubelet read-only
-resource "azurerm_network_security_rule" "controller-kubelet-read" {
-  resource_group_name = "${azurerm_resource_group.cluster.name}"
-
-  name                        = "allow-kubelet-read"
-  network_security_group_name = "${azurerm_network_security_group.controller.name}"
-  priority                    = "2035"
-  access                      = "Allow"
-  direction                   = "Inbound"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "10255"
-  source_address_prefix       = "${azurerm_subnet.worker.address_prefix}"
-  destination_address_prefix  = "${azurerm_subnet.controller.address_prefix}"
-}
-
 # Override Azure AllowVNetInBound and AllowAzureLoadBalancerInBound
 # https://docs.microsoft.com/en-us/azure/virtual-network/security-overview#default-security-rules
 
@@ -267,22 +251,6 @@ resource "azurerm_network_security_rule" "worker-kubelet" {
   # allow Prometheus to scrape kubelet metrics too
   source_address_prefixes    = ["${azurerm_subnet.controller.address_prefix}", "${azurerm_subnet.worker.address_prefix}"]
   destination_address_prefix = "${azurerm_subnet.worker.address_prefix}"
-}
-
-# Allow heapster / metrics-server to scrape kubelet read-only
-resource "azurerm_network_security_rule" "worker-kubelet-read" {
-  resource_group_name = "${azurerm_resource_group.cluster.name}"
-
-  name                        = "allow-kubelet-read"
-  network_security_group_name = "${azurerm_network_security_group.worker.name}"
-  priority                    = "2030"
-  access                      = "Allow"
-  direction                   = "Inbound"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "10255"
-  source_address_prefix       = "${azurerm_subnet.worker.address_prefix}"
-  destination_address_prefix  = "${azurerm_subnet.worker.address_prefix}"
 }
 
 # Override Azure AllowVNetInBound and AllowAzureLoadBalancerInBound

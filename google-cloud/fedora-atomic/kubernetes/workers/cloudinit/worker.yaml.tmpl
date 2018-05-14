@@ -44,6 +44,7 @@ write_files:
         --network-plugin=cni \
         --node-labels=node-role.kubernetes.io/node \
         --pod-manifest-path=/etc/kubernetes/manifests \
+        --read-only-port=0 \
         --volume-plugin-dir=/var/lib/kubelet/volumeplugins"
   - path: /etc/kubernetes/kubeconfig
     permissions: '0644'
