@@ -6,6 +6,9 @@ Notable changes between versions.
 
 * Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
 * Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
+* Allow bearer token authentication to the Kubelet ([#216](https://github.com/poseidon/typhoon/issues/215))
+  * Require Webhook authorization to the Kubelet
+  * Switch apiserver X509 client cert org to satisfy new authorization requirement
 
 #### AWS
 

@@ -76,6 +76,8 @@ systemd:
         ExecStart=/usr/lib/coreos/kubelet-wrapper \
           --allow-privileged \
           --anonymous-auth=false \
+          --authentication-token-webhook \
+          --authorization-mode=Webhook \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${k8s_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
