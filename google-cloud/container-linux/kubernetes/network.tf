@@ -121,7 +121,7 @@ resource "google_compute_firewall" "internal-node-exporter" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
-# kubelet API to allow kubectl exec and log
+# kubelet API to allow apiserver exec and log or metrics scraping
 resource "google_compute_firewall" "internal-kubelet" {
   name    = "${var.cluster_name}-internal-kubelet"
   network = "${google_compute_network.network.name}"
@@ -131,7 +131,7 @@ resource "google_compute_firewall" "internal-kubelet" {
     ports    = [10250]
   }
 
-  source_tags = ["${var.cluster_name}-controller"]
+  source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 

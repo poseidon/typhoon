@@ -6,7 +6,7 @@ Notable changes between versions.
 
 * Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
 * Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
-* Allow bearer token authentication to the Kubelet ([#216](https://github.com/poseidon/typhoon/issues/215))
+* Allow bearer token authentication to the Kubelet ([#216](https://github.com/poseidon/typhoon/issues/216))
   * Require Webhook authorization to the Kubelet
   * Switch apiserver X509 client cert org to satisfy new authorization requirement
 
@@ -22,6 +22,9 @@ Notable changes between versions.
 #### Addons
 
 * Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
+* Configure Prometheus to scrape Kubelets directly with bearer token auth instead of proxying through the apiserver ([#217](https://github.com/poseidon/typhoon/pull/217))
+  * Security improvement: Drop RBAC permission from `nodes/proxy` to `nodes/metrics`
+  * Scale: Remove per-node proxied scrape load from the apiserver
 * Update Grafana from v5.04 to v5.1.2 ([#208](https://github.com/poseidon/typhoon/pull/208))
   * Disable Grafana Google Analytics by default ([#214](https://github.com/poseidon/typhoon/issues/214))
 

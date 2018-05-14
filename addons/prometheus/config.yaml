@@ -56,12 +56,7 @@ data:
         target_label: job
 
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
-    # metrics from a node by scraping kubelet (127.0.0.1:10255/metrics).
-    #
-    # Rather than connecting directly to the node, the scrape is proxied though the
-    # Kubernetes apiserver.  This means it will work if Prometheus is running out of
-    # cluster, or can't connect to nodes for some other reason (e.g. because of
-    # firewalling).
+    # metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).
     - job_name: 'kubelet'
       kubernetes_sd_configs:
       - role: node
@@ -69,50 +64,34 @@ data:
       scheme: https
       tls_config:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        # Kubelet certs don't have any fixed IP SANs
+        insecure_skip_verify: true
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
 
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics
 
     # Scrape config for Kubelet cAdvisor. Explore metrics from a node by
-    # scraping kubelet (127.0.0.1:10255/metrics/cadvisor).
-    #
-    # This is required for Kubernetes 1.7.3 and later, where cAdvisor metrics
-    # (those whose names begin with 'container_') have been removed from the
-    # Kubelet metrics endpoint.  This job scrapes the cAdvisor endpoint to
-    # retrieve those metrics.
-    #
-    # Rather than connecting directly to the node, the scrape is proxied though the
-    # Kubernetes apiserver.  This means it will work if Prometheus is running out of
-    # cluster, or can't connect to nodes for some other reason (e.g. because of
-    # firewalling).
+    # scraping kubelet (127.0.0.1:10250/metrics/cadvisor).
     - job_name: 'kubernetes-cadvisor'
       kubernetes_sd_configs:
       - role: node
-      
+
       scheme: https
+      metrics_path: /metrics/cadvisor
       tls_config:
+        # Kubelet certs don't have any fixed IP SANs
+        insecure_skip_verify: true
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
 
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
-      - target_label: __address__
-        replacement: kubernetes.default.svc:443
-      - source_labels: [__meta_kubernetes_node_name]
-        regex: (.+)
-        target_label: __metrics_path__
-        replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-    
-    # Scrap etcd metrics from controllers 
+
+
+    # Scrap etcd metrics from controllers via listen-metrics-urls
     - job_name: 'etcd'
       kubernetes_sd_configs:
       - role: node
