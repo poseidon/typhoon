@@ -76,6 +76,12 @@ variable "network_mtu" {
   default     = "1480"
 }
 
+variable "network_ip_autodetection_method" {
+  description = "Method to autodetect the host IPv4 address (applies to calico only)"
+  type        = "string"
+  default     = "first-found"
+}
+
 variable "pod_cidr" {
   description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = "string"

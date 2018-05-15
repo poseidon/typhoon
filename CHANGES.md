@@ -19,6 +19,12 @@ Notable changes between versions.
 * Replace `os_channel` variable with `os_image` to align naming across clouds
   * Please change values `stable`, `beta`, or `alpha` to `coreos-stable` (default), `coreos-beta`, `coreos-alpha` (action required!)
 
+#### Bare-Metal
+
+* Add `network_ip_autodetection_method` variable for Calico host IPv4 address detection
+  * Use Calico's default "first-found" to support single NIC and bonded NIC nodes 
+  * Allow [alternative](https://docs.projectcalico.org/v3.1/reference/node/configuration#ip-autodetection-methods) methods for multi NIC nodes, like `can-reach=IP` or `interface=REGEX`
+
 #### Addons
 
 * Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
