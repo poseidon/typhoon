@@ -186,8 +186,8 @@ module "bare-metal-mercury" {
   # bare-metal
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
-  container_linux_channel = "stable"
-  container_linux_version = "1632.3.0"
+  os_channel              = "stable"
+  os_version              = "1632.3.0"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -353,8 +353,8 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name | mercury |
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:port |
-| container_linux_channel | Container Linux channel | stable, beta, alpha |
-| container_linux_version | Container Linux version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
+| os_channel | Container Linux derivative channel | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
+| os_version | Container Linux derivative version of the kernel/initrd to PXE and the image to install | 1632.3.0 |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
