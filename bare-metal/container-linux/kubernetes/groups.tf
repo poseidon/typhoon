@@ -1,8 +1,7 @@
-// Install Container Linux to disk
-resource "matchbox_group" "container-linux-install" {
+resource "matchbox_group" "install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
 
-  name    = "${format("container-linux-install-%s", element(concat(var.controller_names, var.worker_names), count.index))}"
+  name    = "${format("install-%s", element(concat(var.controller_names, var.worker_names), count.index))}"
   profile = "${var.cached_install == "true" ? element(matchbox_profile.cached-container-linux-install.*.name, count.index) : element(matchbox_profile.container-linux-install.*.name, count.index)}"
 
   selector {

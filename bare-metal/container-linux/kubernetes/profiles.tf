@@ -1,12 +1,18 @@
+locals {
+  # coreos-stable -> coreos flavor, stable channel
+  flavor  = "${element(split("-", var.os_channel), 0)}"
+  channel = "${element(split("-", var.os_channel), 1)}" 
+}
+
 // Container Linux Install profile (from release.core-os.net)
 resource "matchbox_profile" "container-linux-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  kernel = "http://${var.container_linux_channel}.release.core-os.net/amd64-usr/${var.container_linux_version}/coreos_production_pxe.vmlinuz"
+  kernel = "http://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe.vmlinuz"
 
   initrd = [
-    "http://${var.container_linux_channel}.release.core-os.net/amd64-usr/${var.container_linux_version}/coreos_production_pxe_image.cpio.gz",
+    "http://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe_image.cpio.gz",
   ]
 
   args = [
@@ -24,15 +30,15 @@ resource "matchbox_profile" "container-linux-install" {
 data "template_file" "container-linux-install-configs" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
 
-  template = "${file("${path.module}/cl/container-linux-install.yaml.tmpl")}"
+  template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
   vars {
-    container_linux_channel = "${var.container_linux_channel}"
-    container_linux_version = "${var.container_linux_version}"
-    ignition_endpoint       = "${format("%s/ignition", var.matchbox_http_endpoint)}"
-    install_disk            = "${var.install_disk}"
-    container_linux_oem     = "${var.container_linux_oem}"
-    ssh_authorized_key      = "${var.ssh_authorized_key}"
+    os_channel          = "${local.channel}"
+    os_version          = "${var.os_version}"
+    ignition_endpoint   = "${format("%s/ignition", var.matchbox_http_endpoint)}"
+    install_disk        = "${var.install_disk}"
+    container_linux_oem = "${var.container_linux_oem}"
+    ssh_authorized_key  = "${var.ssh_authorized_key}"
 
     # only cached-container-linux profile adds -b baseurl
     baseurl_flag = ""
@@ -40,15 +46,15 @@ data "template_file" "container-linux-install-configs" {
 }
 
 // Container Linux Install profile (from matchbox /assets cache)
-// Note: Admin must have downloaded container_linux_version into matchbox assets.
+// Note: Admin must have downloaded os_version into matchbox assets.
 resource "matchbox_profile" "cached-container-linux-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-cached-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  kernel = "/assets/coreos/${var.container_linux_version}/coreos_production_pxe.vmlinuz"
+  kernel = "/assets/coreos/${var.os_version}/coreos_production_pxe.vmlinuz"
 
   initrd = [
-    "/assets/coreos/${var.container_linux_version}/coreos_production_pxe_image.cpio.gz",
+    "/assets/coreos/${var.os_version}/coreos_production_pxe_image.cpio.gz",
   ]
 
   args = [
@@ -66,15 +72,15 @@ resource "matchbox_profile" "cached-container-linux-install" {
 data "template_file" "cached-container-linux-install-configs" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
 
-  template = "${file("${path.module}/cl/container-linux-install.yaml.tmpl")}"
+  template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
   vars {
-    container_linux_channel = "${var.container_linux_channel}"
-    container_linux_version = "${var.container_linux_version}"
-    ignition_endpoint       = "${format("%s/ignition", var.matchbox_http_endpoint)}"
-    install_disk            = "${var.install_disk}"
-    container_linux_oem     = "${var.container_linux_oem}"
-    ssh_authorized_key      = "${var.ssh_authorized_key}"
+    os_channel          = "${local.channel}"
+    os_version          = "${var.os_version}"
+    ignition_endpoint   = "${format("%s/ignition", var.matchbox_http_endpoint)}"
+    install_disk        = "${var.install_disk}"
+    container_linux_oem = "${var.container_linux_oem}"
+    ssh_authorized_key  = "${var.ssh_authorized_key}"
 
     # profile uses -b baseurl to install from matchbox cache
     baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/coreos"

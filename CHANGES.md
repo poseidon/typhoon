@@ -4,11 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-* Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
-* Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
 * Allow bearer token authentication to the Kubelet ([#216](https://github.com/poseidon/typhoon/issues/216))
   * Require Webhook authorization to the Kubelet
   * Switch apiserver X509 client cert org to satisfy new authorization requirement
+* Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
+* Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
 
 #### AWS
 
@@ -17,13 +17,17 @@ Notable changes between versions.
   * Add `spot_price` to internal `workers` module for spot [worker pools](https://typhoon.psdn.io/advanced/worker-pools/)
 * Allow Container Linux derivative [Flatcar Linux](https://docs.flatcar-linux.org/) by setting `os_image` to `flatcar-stable`, `flatcar-beta`, `flatcar-alpha`.
 * Replace `os_channel` variable with `os_image` to align naming across clouds
-  * Please change values `stable`, `beta`, or `alpha` to `coreos-stable` (default), `coreos-beta`, `coreos-alpha` (action required!)
+  * Please change values `stable`, `beta`, or `alpha` to `coreos-stable`, `coreos-beta`, `coreos-alpha` (action required!)
 
 #### Bare-Metal
 
+* Replace `container_linux_channel` variable with `os_channel`
+  * Please change values `stable`, `beta`, or `alpha` to `coreos-stable` (default), `coreos-beta`, `coreos-alpha` (action required!)
+* Replace `container_linux_version` variable with `os_version`
 * Add `network_ip_autodetection_method` variable for Calico host IPv4 address detection
   * Use Calico's default "first-found" to support single NIC and bonded NIC nodes 
   * Allow [alternative](https://docs.projectcalico.org/v3.1/reference/node/configuration#ip-autodetection-methods) methods for multi NIC nodes, like `can-reach=IP` or `interface=REGEX`
+* Deprecate `container_linux_oem` variable
 
 #### Addons
 

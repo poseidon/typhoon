@@ -33,8 +33,8 @@ storage:
           curl --retry 10 "${ignition_endpoint}?{{.request.raw_query}}&os=installed" -o ignition.json
           coreos-install \
             -d ${install_disk} \
-            -C ${container_linux_channel} \
-            -V ${container_linux_version} \
+            -C ${os_channel} \
+            -V ${os_version} \
             -o "${container_linux_oem}" \
             ${baseurl_flag} \
             -i ignition.json

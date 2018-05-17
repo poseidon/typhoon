@@ -10,14 +10,14 @@ variable "matchbox_http_endpoint" {
   description = "Matchbox HTTP read-only endpoint (e.g. http://matchbox.example.com:8080)"
 }
 
-variable "container_linux_channel" {
+variable "os_channel" {
   type        = "string"
-  description = "Container Linux channel corresponding to the container_linux_version"
+  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha)"
 }
 
-variable "container_linux_version" {
+variable "os_version" {
   type        = "string"
-  description = "Container Linux version of the kernel/initrd to PXE or the image to install"
+  description = "Version for a Container Linux derivative to PXE and install (coreos-stable, coreos-beta, coreos-alpha)"
 }
 
 # machines
@@ -109,7 +109,7 @@ variable "cluster_domain_suffix" {
 variable "cached_install" {
   type        = "string"
   default     = "false"
-  description = "Whether Container Linux should PXE boot and install from matchbox /assets cache. Note that the admin must have downloaded the container_linux_version into matchbox assets."
+  description = "Whether Container Linux should PXE boot and install from matchbox /assets cache. Note that the admin must have downloaded the os_version into matchbox assets."
 }
 
 variable "install_disk" {
@@ -121,7 +121,7 @@ variable "install_disk" {
 variable "container_linux_oem" {
   type        = "string"
   default     = ""
-  description = "Specify an OEM image id to use as base for the installation (e.g. ami, vmware_raw, xen) or leave blank for the default image"
+  description = "DEPRECATED: Specify an OEM image id to use as base for the installation (e.g. ami, vmware_raw, xen) or leave blank for the default image"
 }
 
 variable "kernel_args" {
