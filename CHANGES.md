@@ -25,6 +25,18 @@ Notable changes between versions.
   * Use Calico's default "first-found" to support single NIC and bonded NIC nodes 
   * Allow [alternative](https://docs.projectcalico.org/v3.1/reference/node/configuration#ip-autodetection-methods) methods for multi NIC nodes, like `can-reach=IP` or `interface=REGEX`
 
+#### DigitalOcean
+
+* Discontinue worker self-deletion on graceful shutdown ([#207](https://github.com/poseidon/typhoon/pull/207))
+  * Leave worker nodes registered during reboots to alert in additional scenarios
+  * As a tradeoff, scale-down requires an admin unregister (e.g. `kubectl delete`) nodes
+
+#### Google Cloud
+
+* Discontinue worker self-deletion on graceful shutdown ([#207](https://github.com/poseidon/typhoon/pull/207))
+  * Leave worker nodes registered during reboots to alert in additional scenarios
+  * As a tradeoff, scale-down requires an admin unregister (e.g. `kubectl delete`) nodes
+
 #### Addons
 
 * Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
