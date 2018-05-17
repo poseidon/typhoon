@@ -12,12 +12,12 @@ variable "matchbox_http_endpoint" {
 
 variable "os_channel" {
   type        = "string"
-  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha)"
+  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha)"
 }
 
 variable "os_version" {
   type        = "string"
-  description = "Version for a Container Linux derivative to PXE and install (coreos-stable, coreos-beta, coreos-alpha)"
+  description = "Version for a Container Linux derivative to PXE and install (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha)"
 }
 
 # machines

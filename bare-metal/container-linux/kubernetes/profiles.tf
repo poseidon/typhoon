@@ -1,5 +1,6 @@
 locals {
   # coreos-stable -> coreos flavor, stable channel
+  # flatcar-stable -> flatcar flavor, stable channel
   flavor  = "${element(split("-", var.os_channel), 0)}"
   channel = "${element(split("-", var.os_channel), 1)}" 
 }
@@ -33,6 +34,7 @@ data "template_file" "container-linux-install-configs" {
   template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
   vars {
+    os_flavor           = "${local.flavor}"
     os_channel          = "${local.channel}"
     os_version          = "${var.os_version}"
     ignition_endpoint   = "${format("%s/ignition", var.matchbox_http_endpoint)}"
@@ -75,6 +77,7 @@ data "template_file" "cached-container-linux-install-configs" {
   template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
   vars {
+    os_flavor           = "${local.flavor}"
     os_channel          = "${local.channel}"
     os_version          = "${var.os_version}"
     ignition_endpoint   = "${format("%s/ignition", var.matchbox_http_endpoint)}"
@@ -85,6 +88,29 @@ data "template_file" "cached-container-linux-install-configs" {
     # profile uses -b baseurl to install from matchbox cache
     baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/coreos"
   }
+}
+
+// Flatcar Linux install profile (from release.flatcar-linux.net)
+resource "matchbox_profile" "flatcar-install" {
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+  name  = "${format("%s-flatcar-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
+
+  kernel = "http://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe.vmlinuz"
+
+  initrd = [
+    "http://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe_image.cpio.gz",
+  ]
+
+  args = [
+    "initrd=flatcar_production_pxe_image.cpio.gz",
+    "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
+    "flatcar.first_boot=yes",
+    "console=tty0",
+    "console=ttyS0",
+    "${var.kernel_args}",
+  ]
+
+  container_linux_config = "${element(data.template_file.container-linux-install-configs.*.rendered, count.index)}"
 }
 
 // Kubernetes Controller profiles

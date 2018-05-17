@@ -31,7 +31,7 @@ storage:
         inline: |
           #!/bin/bash -ex
           curl --retry 10 "${ignition_endpoint}?{{.request.raw_query}}&os=installed" -o ignition.json
-          coreos-install \
+          ${os_flavor}-install \
             -d ${install_disk} \
             -C ${os_channel} \
             -V ${os_version} \
