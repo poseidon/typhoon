@@ -19,5 +19,5 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Docs
 
-Please see the [official docs](https://typhoon.psdn.io) and the AWS [tutorial](https://typhoon.psdn.io/aws/).
+Please see the [official docs](https://typhoon.psdn.io) and the AWS [tutorial](https://typhoon.psdn.io/cl/aws/).
 
