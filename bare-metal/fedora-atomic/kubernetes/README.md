@@ -18,5 +18,5 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Docs
 
-Please see the [official docs](https://typhoon.psdn.io) and the bare-metal [tutorial](https://typhoon.psdn.io/bare-metal/).
+Please see the [official docs](https://typhoon.psdn.io) and the bare-metal [tutorial](https://typhoon.psdn.io/cl/bare-metal/).
 

@@ -18,5 +18,5 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Docs
 
-Please see the [official docs](https://typhoon.psdn.io) and the Google Cloud [tutorial](https://typhoon.psdn.io/google-cloud/).
+Please see the [official docs](https://typhoon.psdn.io) and the Google Cloud [tutorial](https://typhoon.psdn.io/cl/google-cloud/).
 
