@@ -40,6 +40,7 @@ Notable changes between versions.
 * Update Grafana from v5.04 to v5.1.3 ([#208](https://github.com/poseidon/typhoon/pull/208))
   * Disable Grafana Google Analytics by default ([#214](https://github.com/poseidon/typhoon/issues/214))
 * Update nginx-ingress from 0.14.0 to 0.15.0
+* Annotate nginx-ingress service so Prometheus auto-discovers and scrapes service endpoints ([#222](https://github.com/poseidon/typhoon/pull/222))
 
 ## v1.10.2
 

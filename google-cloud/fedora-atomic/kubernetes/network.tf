@@ -135,6 +135,20 @@ resource "google_compute_firewall" "internal-kubelet" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
+# Allow Prometheus to scrape ingress-controller
+resource "google_compute_firewall" "ingress-health" {
+  name    = "${var.cluster_name}-ingress-health"
+  network = "${google_compute_network.network.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = [10254]
+  }
+
+  source_tags = ["${var.cluster_name}-worker"]
+  target_tags = ["${var.cluster_name}-worker"]
+}
+
 resource "google_compute_firewall" "internal-kubelet-readonly" {
   name    = "${var.cluster_name}-internal-kubelet-readonly"
   network = "${google_compute_network.network.name}"

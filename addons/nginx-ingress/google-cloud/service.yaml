@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: nginx-ingress-controller
   namespace: ingress
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '10254'
 spec:
   type: ClusterIP
   selector:
