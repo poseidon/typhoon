@@ -15,7 +15,7 @@ Create a cluster following the AWS [tutorial](../cl/aws.md#cluster). Define a wo
 
 ```tf
 module "tempest-worker-pool" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.10.2"
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.10.3"
   
   providers = {
     aws = "aws.default"
@@ -80,7 +80,7 @@ Create a cluster following the Google Cloud [tutorial](../cl/google-cloud.md#clu
 
 ```tf
 module "yavin-worker-pool" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes/workers?ref=v1.10.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes/workers?ref=v1.10.3"
 
   providers = {
     google = "google.default"
@@ -114,11 +114,11 @@ Verify a managed instance group of workers joins the cluster within a few minute
 ```
 $ kubectl get nodes
 NAME                                             STATUS   AGE    VERSION
-yavin-controller-0.c.example-com.internal        Ready    6m     v1.10.2
-yavin-worker-jrbf.c.example-com.internal         Ready    5m     v1.10.2
-yavin-worker-mzdm.c.example-com.internal         Ready    5m     v1.10.2
-yavin-16x-worker-jrbf.c.example-com.internal     Ready    3m     v1.10.2
-yavin-16x-worker-mzdm.c.example-com.internal     Ready    3m     v1.10.2
+yavin-controller-0.c.example-com.internal        Ready    6m     v1.10.3
+yavin-worker-jrbf.c.example-com.internal         Ready    5m     v1.10.3
+yavin-worker-mzdm.c.example-com.internal         Ready    5m     v1.10.3
+yavin-16x-worker-jrbf.c.example-com.internal     Ready    3m     v1.10.3
+yavin-16x-worker-mzdm.c.example-com.internal     Ready    3m     v1.10.3
 ```
 
 ### Variables

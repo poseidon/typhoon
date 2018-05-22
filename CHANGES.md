@@ -4,12 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.10.3
+
+* Kubernetes [v1.10.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1103)
 * Add [Flatcar Linux](https://docs.flatcar-linux.org/) (Container Linux derivative) as an option for AWS and bare-metal (thanks @kinvolk folks)
 * Allow bearer token authentication to the Kubelet ([#216](https://github.com/poseidon/typhoon/issues/216))
   * Require Webhook authorization to the Kubelet
   * Switch apiserver X509 client cert org to satisfy new authorization requirement
 * Require Terraform v0.11.x and drop support for v0.10.x ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-v011x))
 * Update etcd from v3.3.4 to v3.3.5 ([#213](https://github.com/poseidon/typhoon/pull/213))
+* Update Calico from v3.1.1 to v3.1.2
 
 #### AWS
 
@@ -49,8 +53,8 @@ Notable changes between versions.
 
 ## v1.10.2
 
-* [Introduce](https://typhoon.psdn.io/announce/#april-26-2018) Typhoon for Fedora Atomic ([#199](https://github.com/poseidon/typhoon/pull/199))
 * Kubernetes [v1.10.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1102)
+* [Introduce](https://typhoon.psdn.io/announce/#april-26-2018) Typhoon for Fedora Atomic ([#199](https://github.com/poseidon/typhoon/pull/199))
 * Update Calico from v3.0.4 to v3.1.1 ([#197](https://github.com/poseidon/typhoon/pull/197))
   * https://www.projectcalico.org/announcing-calico-v3-1/
   * https://github.com/projectcalico/calico/releases/tag/v3.1.0
