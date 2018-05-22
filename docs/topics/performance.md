@@ -9,7 +9,7 @@ Provisioning times vary based on the operating system and platform. Sampling the
 | AWS           | 6 min | 5 min   |
 | Bare-Metal    | 10-15 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
-| Google Cloud  | 9 min | 4 min 30 sec |
+| Google Cloud  | 10 min | 4 min 30 sec |
 
 Notes:
 
