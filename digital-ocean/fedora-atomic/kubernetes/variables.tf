@@ -43,8 +43,8 @@ variable "worker_type" {
 
 variable "image" {
   type        = "string"
-  default     = "fedora-27-x64-atomic"
-  description = "OS image from which to initialize the disk (e.g. fedora-27-x64-atomic)"
+  default     = "fedora-28-x64-atomic"
+  description = "OS image from which to initialize the disk (e.g. fedora-28-x64-atomic)"
 }
 
 # configuration

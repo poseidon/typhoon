@@ -31,6 +31,11 @@ Notable changes between versions.
   * Allow [alternative](https://docs.projectcalico.org/v3.1/reference/node/configuration#ip-autodetection-methods) methods for multi NIC nodes, like can-reach=IP or interface=REGEX
 * Deprecate `container_linux_oem` variable
 
+#### DigitalOcean
+
+* Update Fedora Atomic module to use Fedora Atomic 28 ([#225](https://github.com/poseidon/typhoon/pull/225))
+  * Fedora Atomic 27 images disappeared from DigitalOcean and forced this early update
+
 #### Addons
 
 * Fix Prometheus data directory location ([#203](https://github.com/poseidon/typhoon/pull/203))
