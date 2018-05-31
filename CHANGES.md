@@ -9,6 +9,7 @@ Notable changes between versions.
 #### Addons
 
 * Add Prometheus liveness and readiness probes
+* Annotate Grafana service so Prometheus scrapes metrics
 
 ## v1.10.3
 
