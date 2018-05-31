@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update Calico from v3.1.2 to v3.1.3
 
+#### Addons
+
+* Add Prometheus liveness and readiness probes
+
 ## v1.10.3
 
 * Kubernetes [v1.10.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1103)
