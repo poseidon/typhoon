@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.10.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1104)
 * Update etcd from v3.3.5 to v3.3.6
 * Update Calico from v3.1.2 to v3.1.3
 

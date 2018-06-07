@@ -18,7 +18,7 @@ module "google-cloud-yavin" {
 }
 
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.10.3"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.10.4"
   ...
 }
 ```
