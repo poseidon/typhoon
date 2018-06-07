@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.3.5 to v3.3.6
 * Update Calico from v3.1.2 to v3.1.3
 
 #### Addons
