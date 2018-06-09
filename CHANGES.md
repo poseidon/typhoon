@@ -4,12 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.10.4
+
 * Kubernetes [v1.10.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1104)
 * Update etcd from v3.3.5 to v3.3.6
 * Update Calico from v3.1.2 to v3.1.3
 
 #### Addons
 
+* Update Prometheus from v2.2.1 to v2.3.0
 * Add Prometheus liveness and readiness probes
 * Annotate Grafana service so Prometheus scrapes metrics
 
