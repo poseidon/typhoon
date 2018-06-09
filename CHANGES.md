@@ -15,6 +15,7 @@ Notable changes between versions.
 * Update Prometheus from v2.2.1 to v2.3.0
 * Add Prometheus liveness and readiness probes
 * Annotate Grafana service so Prometheus scrapes metrics
+* Label namespaces to ease writing Network Policies
 
 ## v1.10.3
 
