@@ -21,9 +21,6 @@ extra:
       link: 'https://github.com/poseidon'
     - type: 'twitter'
       link: 'https://twitter.com/typhoon8s'
-google_analytics:
-  - 'UA-38995133-6'
-  - 'auto'
 markdown_extensions:
   - admonition
   - codehilite
