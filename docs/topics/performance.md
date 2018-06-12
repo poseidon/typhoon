@@ -25,7 +25,7 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 |----------------------------|-------:|-------------:|-------------:|
 | AWS (flannel)              | ?      | 976 MB/s     | 900-999 MB/s |
 | AWS (calico, MTU 1480)     | ?      | 976 MB/s     | 100-350 MB/s |
-| AWS (calico, MTU 8991)     | ?      | 976 MB/s     | 900-999 MB/s |
+| AWS (calico, MTU 8981)     | ?      | 976 MB/s     | 900-999 MB/s |
 | Bare-Metal (flannel)       | 1 GB/s | 934 MB/s     | 903 MB/s     | 
 | Bare-Metal (calico)        | 1 GB/s | 941 MB/s     | 931 MB/s     |
 | Bare-Metal (flannel, bond) | 3 GB/s |  2.3 GB/s    | 1.17 GB/s    | 
