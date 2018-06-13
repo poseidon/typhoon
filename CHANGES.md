@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update CLUO from v0.6.0 to v0.7.0 ([#242](https://github.com/poseidon/typhoon/pull/242))
+
 ## v1.10.4
 
 * Kubernetes [v1.10.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1104)
