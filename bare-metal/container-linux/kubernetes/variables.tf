@@ -143,3 +143,16 @@ variable "worker_networkds" {
   description = "Worker Container Linux config networkd section"
   default     = []
 }
+
+variable "worker_clc_snippets" {
+  type        = "list"
+  description = "Container Linux Config snippets"
+  default     = []
+}
+
+variable "controller_clc_snippets" {
+  type        = "list"
+  description = "Container Linux Config snippets"
+  default     = []
+}
+
