@@ -4,7 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-* Update etcd from v3.3.6 to v3.3.7
+* Update etcd from v3.3.6 to v3.3.7 ([#243](https://github.com/poseidon/typhoon/pull/243))
+
+#### Bare-Metal
+
+* Fix possible deadlock when provisioning clusters larger than 10 nodes ([#244](https://github.com/poseidon/typhoon/pull/244)) 
 
 #### Addons
 

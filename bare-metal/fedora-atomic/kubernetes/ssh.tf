@@ -2,6 +2,14 @@
 resource "null_resource" "copy-controller-secrets" {
   count = "${length(var.controller_names)}"
 
+  # Without depends_on, remote-exec could start and wait for machines before
+  # matchbox groups are written, causing a deadlock.
+  depends_on = [
+    "matchbox_group.install",
+    "matchbox_group.controller",
+    "matchbox_group.worker",
+  ]
+
   connection {
     type    = "ssh"
     host    = "${element(var.controller_domains, count.index)}"
@@ -67,6 +75,14 @@ resource "null_resource" "copy-controller-secrets" {
 # Secure copy kubeconfig to all workers. Activates kubelet.service
 resource "null_resource" "copy-worker-secrets" {
   count = "${length(var.worker_names)}"
+
+  # Without depends_on, remote-exec could start and wait for machines before
+  # matchbox groups are written, causing a deadlock.
+  depends_on = [
+    "matchbox_group.install",
+    "matchbox_group.controller",
+    "matchbox_group.worker",
+  ]
 
   connection {
     type    = "ssh"
