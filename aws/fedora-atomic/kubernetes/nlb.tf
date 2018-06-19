@@ -7,15 +7,15 @@ resource "aws_route53_record" "apiserver" {
 
   # AWS recommends their special "alias" records for ELBs
   alias {
-    name                   = "${aws_lb.apiserver.dns_name}"
-    zone_id                = "${aws_lb.apiserver.zone_id}"
+    name                   = "${aws_lb.nlb.dns_name}"
+    zone_id                = "${aws_lb.nlb.zone_id}"
     evaluate_target_health = true
   }
 }
 
-# Network Load Balancer for apiservers
-resource "aws_lb" "apiserver" {
-  name               = "${var.cluster_name}-apiserver"
+# Network Load Balancer for apiservers and ingress
+resource "aws_lb" "nlb" {
+  name               = "${var.cluster_name}-nlb"
   load_balancer_type = "network"
   internal           = false
 
@@ -24,15 +24,39 @@ resource "aws_lb" "apiserver" {
   enable_cross_zone_load_balancing = true
 }
 
-# Forward TCP traffic to controllers
+# Forward TCP apiserver traffic to controllers
 resource "aws_lb_listener" "apiserver-https" {
-  load_balancer_arn = "${aws_lb.apiserver.arn}"
+  load_balancer_arn = "${aws_lb.nlb.arn}"
   protocol          = "TCP"
   port              = "6443"
 
   default_action {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.controllers.arn}"
+  }
+}
+
+# Forward HTTP ingress traffic to workers
+resource "aws_lb_listener" "ingress-http" {
+  load_balancer_arn = "${aws_lb.nlb.arn}"
+  protocol          = "TCP"
+  port              = 80
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${module.workers.target_group_http_arn}"
+  }
+}
+
+# Forward HTTPS ingress traffic to workers
+resource "aws_lb_listener" "ingress-https" {
+  load_balancer_arn = "${aws_lb.nlb.arn}"
+  protocol          = "TCP"
+  port              = 443
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${module.workers.target_group_https_arn}"
   }
 }
 

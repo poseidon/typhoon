@@ -10,7 +10,13 @@ Notable changes between versions.
 #### AWS
 
 * Switch `kube-apiserver` port from 443 to 6443 ([#248](https://github.com/poseidon/typhoon/pull/248))
-  * Update NLB, security groups, and generated kubeconfig's
+* Combine apiserver and ingress NLBs ([#249](https://github.com/poseidon/typhoon/pull/249))
+  * Simplify clusters to come with one NLB. Reduce cost by ~$18/month per cluster.
+  * Users may keep using CNAME records to `ingress_dns_name` and the `nginx-ingress` addon for Ingress (up to a few million RPS)
+  * Users with heavy traffic (many million RPS) should create a separate NLB(s) for Ingress instead
+  * Listen for apiserver traffic on port 6443 and forward to controllers (with healthy apiserver)
+  * Listen for ingress traffic on ports 80/443 and forward to workers (with healthy ingress controller)
+* Worker pools (advanced) no longer include an extraneous load balancer
 
 #### Bare-Metal
 

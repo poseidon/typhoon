@@ -1,6 +1,16 @@
 output "ingress_dns_name" {
-  value       = "${module.workers.ingress_dns_name}"
+  value       = "${aws_lb.nlb.dns_name}"
   description = "DNS name of the network load balancer for distributing traffic to Ingress controllers"
+}
+
+output "target_group_http_arn" {
+  description = "ARN of a target group of workers for HTTP traffic"
+  value = "${module.workers.target_group_http_arn}"
+}
+
+output "target_group_https_arn" {
+  description = "ARN of a target group of workers for HTTPS traffic"
+  value = "${module.workers.target_group_https_arn}"
 }
 
 # Outputs for worker pools
