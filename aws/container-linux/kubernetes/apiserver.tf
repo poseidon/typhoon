@@ -28,7 +28,7 @@ resource "aws_lb" "apiserver" {
 resource "aws_lb_listener" "apiserver-https" {
   load_balancer_arn = "${aws_lb.apiserver.arn}"
   protocol          = "TCP"
-  port              = "443"
+  port              = "6443"
 
   default_action {
     type             = "forward"
@@ -43,12 +43,12 @@ resource "aws_lb_target_group" "controllers" {
   target_type = "instance"
 
   protocol = "TCP"
-  port     = 443
+  port     = 6443
 
   # TCP health check for apiserver
   health_check {
     protocol = "TCP"
-    port     = 443
+    port     = 6443
 
     # NLBs required to use same healthy and unhealthy thresholds
     healthy_threshold   = 3
@@ -65,5 +65,5 @@ resource "aws_lb_target_group_attachment" "controllers" {
 
   target_group_arn = "${aws_lb_target_group.controllers.arn}"
   target_id        = "${element(aws_instance.controllers.*.id, count.index)}"
-  port             = 443
+  port             = 6443
 }

@@ -3,7 +3,7 @@ resource "digitalocean_firewall" "rules" {
 
   tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 
-  # allow ssh, http/https ingress, and peer-to-peer traffic
+  # allow ssh, apiserver, http/https ingress, and peer-to-peer traffic
   inbound_rule = [
     {
       protocol         = "tcp"
@@ -18,6 +18,11 @@ resource "digitalocean_firewall" "rules" {
     {
       protocol         = "tcp"
       port_range       = "443"
+      source_addresses = ["0.0.0.0/0", "::/0"]
+    },
+    {
+      protocol         = "tcp"
+      port_range       = "6443"
       source_addresses = ["0.0.0.0/0", "::/0"]
     },
     {

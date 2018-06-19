@@ -4,7 +4,7 @@ Nginx Ingress controller pods accept and demultiplex HTTP, HTTPS, TCP, or UDP tr
 
 ## AWS
 
-On AWS, an elastic load balancer distributes traffic across worker nodes (i.e. an auto-scaling group) running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a health Ingress controller receive traffic.
+On AWS, a network load balancer (NLB) distributes traffic across a target group  of worker nodes running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a health Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
