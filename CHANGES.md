@@ -4,7 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
-* Update etcd from v3.3.6 to v3.3.7 ([#243](https://github.com/poseidon/typhoon/pull/243))
+* Update etcd from v3.3.6 to v3.3.8 ([#243](https://github.com/poseidon/typhoon/pull/243), [#247](https://github.com/poseidon/typhoon/pull/247))
 
 #### Bare-Metal
 
