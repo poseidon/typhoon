@@ -34,6 +34,11 @@ Notable changes between versions.
 #### Addons
 
 * Update CLUO from v0.6.0 to v0.7.0 ([#242](https://github.com/poseidon/typhoon/pull/242))
+* Update Prometheus from v2.3.0 to v2.3.1
+* Update Grafana from 5.1.3 to 5.1.4
+* Drop `hostNetwork` from nginx-ingress addon
+  * Both flannel and Calico support host port via `portmap`
+  * Allows writing NetworkPolicies that reference ingress pods in `from` or `to`. HostNetwork pods were difficult to write network policy for since they could circumvent the CNI network to communicate with pods on the same node.
 
 ## v1.10.4
 
@@ -43,9 +48,8 @@ Notable changes between versions.
 
 #### Addons
 
-* Update Prometheus from v2.2.1 to v2.3.1
+* Update Prometheus from v2.2.1 to v2.3.0
 * Add Prometheus liveness and readiness probes
-* Update Grafana from 5.1.3 to 5.1.4
 * Annotate Grafana service so Prometheus scrapes metrics
 * Label namespaces to ease writing Network Policies
 
