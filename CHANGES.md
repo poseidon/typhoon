@@ -17,6 +17,8 @@ Notable changes between versions.
   * Listen for apiserver traffic on port 6443 and forward to controllers (with healthy apiserver)
   * Listen for ingress traffic on ports 80/443 and forward to workers (with healthy ingress controller)
 * Worker pools (advanced) no longer include an extraneous load balancer
+* Disable detailed (paid) monitoring on worker nodes ([#251](https://github.com/poseidon/typhoon/pull/251))
+  * Favor Prometheus for cloud-agnostic metrics, aggregation, alerting, and visualization
 
 #### Bare-Metal
 

@@ -41,9 +41,10 @@ resource "aws_autoscaling_group" "workers" {
 
 # Worker template
 resource "aws_launch_configuration" "worker" {
-  image_id      = "${local.ami_id}"
-  instance_type = "${var.instance_type}"
-  spot_price    = "${var.spot_price}"
+  image_id          = "${local.ami_id}"
+  instance_type     = "${var.instance_type}"
+  spot_price        = "${var.spot_price}"
+  enable_monitoring = false
 
   user_data = "${data.ct_config.worker_ign.rendered}"
 
