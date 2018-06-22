@@ -1,8 +1,9 @@
 locals {
   # coreos-stable -> coreos flavor, stable channel
   # flatcar-stable -> flatcar flavor, stable channel
-  flavor  = "${element(split("-", var.os_channel), 0)}"
-  channel = "${element(split("-", var.os_channel), 1)}" 
+  flavor = "${element(split("-", var.os_channel), 0)}"
+
+  channel = "${element(split("-", var.os_channel), 1)}"
 }
 
 // Container Linux Install profile (from release.core-os.net)

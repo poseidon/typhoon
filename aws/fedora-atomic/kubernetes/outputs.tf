@@ -5,12 +5,12 @@ output "ingress_dns_name" {
 
 output "target_group_http_arn" {
   description = "ARN of a target group of workers for HTTP traffic"
-  value = "${module.workers.target_group_http_arn}"
+  value       = "${module.workers.target_group_http_arn}"
 }
 
 output "target_group_https_arn" {
   description = "ARN of a target group of workers for HTTPS traffic"
-  value = "${module.workers.target_group_https_arn}"
+  value       = "${module.workers.target_group_https_arn}"
 }
 
 # Outputs for worker pools

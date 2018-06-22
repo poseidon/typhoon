@@ -14,7 +14,7 @@ module "bootkube" {
 
   # Fedora
   trusted_certs_dir = "/etc/pki/tls/certs"
-  
+
   // temporary
   apiserver_port = 443
 }

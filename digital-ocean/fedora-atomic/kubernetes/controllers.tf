@@ -82,8 +82,8 @@ data "template_file" "etcds" {
   template = "etcd$${index}=https://$${cluster_name}-etcd$${index}.$${dns_zone}:2380"
 
   vars {
-    index = "${count.index}"
+    index        = "${count.index}"
     cluster_name = "${var.cluster_name}"
-    dns_zone = "${var.dns_zone}"
+    dns_zone     = "${var.dns_zone}"
   }
 }
