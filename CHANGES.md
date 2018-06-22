@@ -4,13 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.10.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105)
 * Update etcd from v3.3.6 to v3.3.8 ([#243](https://github.com/poseidon/typhoon/pull/243), [#247](https://github.com/poseidon/typhoon/pull/247))
 
 #### AWS
 
 * Switch `kube-apiserver` port from 443 to 6443 ([#248](https://github.com/poseidon/typhoon/pull/248))
   * Update NLB, security groups, and generated kubeconfig's
-  * Facilitates some future simplifications and cost reductions
 
 #### Bare-Metal
 

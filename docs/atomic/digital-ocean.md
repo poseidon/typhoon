@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-In this tutorial, we'll create a Kubernetes v1.10.4 cluster on DigitalOcean with Fedora Atomic.
+In this tutorial, we'll create a Kubernetes v1.10.5 cluster on DigitalOcean with Fedora Atomic.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
@@ -77,7 +77,7 @@ Define a Kubernetes cluster using the module `digital-ocean/fedora-atomic/kubern
 
 ```tf
 module "digital-ocean-nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.10.4"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.10.5"
   
   providers = {
     digitalocean = "digitalocean.default"
@@ -152,9 +152,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION
-10.132.110.130   Ready     10m       v1.10.4
-10.132.115.81    Ready     10m       v1.10.4
-10.132.124.107   Ready     10m       v1.10.4
+10.132.110.130   Ready     10m       v1.10.5
+10.132.115.81    Ready     10m       v1.10.5
+10.132.124.107   Ready     10m       v1.10.5
 ```
 
 List the pods.

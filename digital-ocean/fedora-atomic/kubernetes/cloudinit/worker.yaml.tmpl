@@ -67,7 +67,7 @@ bootcmd:
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, cloud-metadata.service]
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.4"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.5"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
 users:
