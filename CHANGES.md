@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.10.5
+
 * Kubernetes [v1.10.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105)
 * Update etcd from v3.3.6 to v3.3.8 ([#243](https://github.com/poseidon/typhoon/pull/243), [#247](https://github.com/poseidon/typhoon/pull/247))
 
@@ -11,12 +13,14 @@ Notable changes between versions.
 
 * Switch `kube-apiserver` port from 443 to 6443 ([#248](https://github.com/poseidon/typhoon/pull/248))
 * Combine apiserver and ingress NLBs ([#249](https://github.com/poseidon/typhoon/pull/249))
-  * Reduce cost by ~$18/month per cluster. Typhoon AWS clusters now use one network load balancer
-  * Users may keep using CNAME records to `ingress_dns_name` and the `nginx-ingress` addon for Ingress (up to a few million RPS)
-  * Users with heavy traffic (many million RPS) should create a separate NLB(s) for Ingress instead
-* Worker pools no longer include an extraneous load balancer
+  * Reduce cost by ~$18/month per cluster. Typhoon AWS clusters now use one network load balancer.
+  * Ingress addon users may keep using CNAME records to the `ingress_dns_name` module output (few million RPS)
+  * Ingress users with heavy traffic (many million RPS) should create a separate NLB(s)
+* Worker pools no longer include an extraneous load balancer. Remove worker module's `ingress_dns_name` output
 * Disable detailed (paid) monitoring on worker nodes ([#251](https://github.com/poseidon/typhoon/pull/251))
-  * Favor Prometheus for cloud-agnostic metrics, aggregation, alerting, and visualization
+  * Favor Prometheus for cloud-agnostic metrics, aggregation, and alerting
+* Add `worker_target_group_http` and `worker_target_group_https` module outputs to allow custom load balancing
+* Add `target_group_http` and `target_group_https` worker module outputs to allow custom load balancing
 
 #### Bare-Metal
 
@@ -35,11 +39,11 @@ Notable changes between versions.
   * Switch Ingress from regional network load balancers to global HTTP/TCP Proxy load balancing
   * Reduce cost by ~$19/month per cluster. Google bills the first 5 global and regional forwarding rules separately. Typhoon clusters now use 3 global and 0 regional forwarding rules.
 * Worker pools no longer include an extraneous load balancer. Remove worker module's `ingress_static_ip` output
-* Allow using nginx-ingress addon on Typhoon for Fedora Atomic ([#200](https://github.com/poseidon/typhoon/issues/200))
-* Add `ingress_static_ipv4` module output
+* Allow using nginx-ingress addon on Fedora Atomic clusters ([#200](https://github.com/poseidon/typhoon/issues/200))
 * Add `worker_instance_group` module output to allow custom global load balancing
+* Add `instance_group` worker module output to allow custom global load balancing
+* Deprecate `ingress_static_ip` module output. Add `ingress_static_ipv4` module output instead.
 * Deprecate `controllers_ipv4_public` module output
-* Deprecate `ingress_static_ip` module output. Use `ingress_static_ipv4`
 
 #### Addons
 

@@ -44,7 +44,7 @@ resource "aws_lb_listener" "ingress-http" {
 
   default_action {
     type             = "forward"
-    target_group_arn = "${module.workers.target_group_http_arn}"
+    target_group_arn = "${module.workers.target_group_http}"
   }
 }
 
@@ -56,7 +56,7 @@ resource "aws_lb_listener" "ingress-https" {
 
   default_action {
     type             = "forward"
-    target_group_arn = "${module.workers.target_group_https_arn}"
+    target_group_arn = "${module.workers.target_group_https}"
   }
 }
 

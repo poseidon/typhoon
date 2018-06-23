@@ -5,7 +5,7 @@
 
 In this tutorial, we'll create a Kubernetes v1.10.5 cluster on AWS with Fedora Atomic.
 
-We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancers, and TLS assets. Instances are provisioned on first boot with cloud-init.
+We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
 Controllers are provisioned to run an `etcd` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `kube-dns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
