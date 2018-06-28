@@ -30,8 +30,7 @@ write_files:
       RestartSec=10
   - path: /etc/kubernetes/kubelet.conf
     content: |
-      ARGS="--allow-privileged \
-        --anonymous-auth=false \
+      ARGS="--anonymous-auth=false \
         --authentication-token-webhook \
         --authorization-mode=Webhook \
         --client-ca-file=/etc/kubernetes/ca.crt \
