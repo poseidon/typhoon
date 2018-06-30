@@ -84,7 +84,7 @@ runcmd:
   - [systemctl, restart, NetworkManager]
   - [hostnamectl, set-hostname, ${domain_name}]
   - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.8"
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.10.5"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.11.0"
   - "atomic install --system --name=bootkube quay.io/poseidon/bootkube:v0.12.0"
   - [systemctl, start, --no-block, etcd.service]
   - [systemctl, enable, kubelet.path]
