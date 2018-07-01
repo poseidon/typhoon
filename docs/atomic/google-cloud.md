@@ -1,7 +1,7 @@
 # Google Cloud
 
 !!! danger
-    Typhoon for Fedora Atomic is very alpha. Fedora does not publish official images for Google Cloud so you must prepare them yourself. Some addons don't work yet. Expect rough edges and changes.
+    Typhoon for Fedora Atomic is alpha. Fedora does not publish official images for Google Cloud so you must prepare them yourself. Expect rough edges and changes.
 
 In this tutorial, we'll create a Kubernetes v1.11.0 cluster on Google Compute Engine with Fedora Atomic.
 
@@ -83,35 +83,37 @@ Additional configuration options are described in the `google` provider [docs](h
 
 Project Atomic does not publish official Fedora Atomic images to Google Cloud. However, Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into your project.
 
-Download the Fedora Atomic 27 [raw image](https://getfedora.org/en/atomic/download/) and decompress the file.
+Download the Fedora Atomic 28 [raw image](https://getfedora.org/en/atomic/download/) and decompress the file.
 
 ```
-xz -d Fedora-Atomic-27-20180326.1.x86_64.raw.xz
+xz -d Fedora-AtomicHost-28-20180528.0.x86_64.raw.xz
 ```
+
+!!! warning
+    Download the exact dated version shown in docs. Fedora has no official Atomic images for Google Cloud. We've verified specific versions and found others to have problems.
 
 Rename the image `disk.raw`. Gzip compress and tar the image.
 
 ```
-mv Fedora-Atomic-27-20180326.1.x86_64.raw disk.raw
-tar cvzf fedora-atomic-27.tar.gz disk.raw
+mv Fedora-AtomicHost-28-20180528.0.x86_64.raw disk.raw
+tar cvzf fedora-atomic-28.tar.gz disk.raw
 ```
 
 List available storage buckets and upload the tar.gz.
 
 ```
 gsutil list
-gsutil cp fedora-atomic-27.tar.gz gs://BUCKET_NAME
+gsutil cp fedora-atomic-28.tar.gz gs://BUCKET_NAME
 ```
 
 Create a Google Compute Engine image from the bucket file.
 
 ```
 gcloud compute images list
-gcloud compute images create fedora-atomic-27 --source-uri gs://BUCKET/fedora-atomic-27.tar.gz
+gcloud compute images create fedora-atomic-28 --source-uri gs://BUCKET/fedora-atomic-28.tar.gz
 ```
 
-Note your project id and the image name for setting `os_image` later (e.g. proj-id/fedora-atomic-27).
-
+Note your project id and the image name for setting `os_image` later (e.g. proj-id/fedora-atomic-28).
 
 ## Cluster
 
@@ -138,7 +140,7 @@ module "google-cloud-yavin" {
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
   asset_dir          = "/home/user/.secrets/clusters/yavin"
-  os_image           = "MY-PROJECT_ID/fedora-atomic-27"
+  os_image           = "MY-PROJECT_ID/fedora-atomic-28"
   
   # optional
   worker_count = 2
@@ -236,7 +238,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | region | Google Cloud region | "us-central1" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
-| os_image | Custom uploaded Fedora Atomic 27 image | "PROJECT-ID/fedora-atomic-27" |
+| os_image | Custom uploaded Fedora Atomic image | "PROJECT-ID/fedora-atomic-28" |
 | ssh_authorized_key | SSH public key for user 'fedora' | "ssh-rsa AAAAB3NZ..." |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
 
