@@ -14,6 +14,6 @@ data "aws_ami" "fedora" {
 
   filter {
     name   = "name"
-    values = ["Fedora-Atomic-27-20180419.0.x86_64-*-gp2-*"]
+    values = ["Fedora-AtomicHost-28-20180625.1.x86_64-*-gp2-*"]
   }
 }

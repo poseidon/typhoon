@@ -7,6 +7,10 @@ Notable changes between versions.
 * Kubernetes [v1.11.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1110)
 * Force apiserver to stop listening on `127.0.0.1:8080`
 
+#### AWS
+
+* Update from Fedora Atomic 27 to 28 ([#258](https://github.com/poseidon/typhoon/pull/258))
+
 ## v1.10.5
 
 * Kubernetes [v1.10.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105)
