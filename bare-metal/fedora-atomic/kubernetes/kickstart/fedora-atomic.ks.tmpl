@@ -17,7 +17,7 @@ network --bootproto=dhcp --device=link --activate --onboot=on
 bootloader --timeout=1 --append="ds=nocloud\;seedfrom=/var/cloud-init/"
 services --enabled=cloud-init,cloud-init-local,cloud-config,cloud-final
 
-ostreesetup --osname="fedora-atomic" --remote="fedora-atomic" --url="${atomic_assets_endpoint}/repo" --ref=fedora/27/x86_64/atomic-host --nogpg
+ostreesetup --osname="fedora-atomic" --remote="fedora-atomic" --url="${atomic_assets_endpoint}/repo" --ref=fedora/28/x86_64/atomic-host --nogpg
 
 reboot
 
@@ -27,7 +27,7 @@ curl --retry 10 "${matchbox_http_endpoint}/generic?mac=${mac}&os=installed" -o /
 echo "instance-id: iid-local01" > /var/cloud-init/meta-data
 
 rm -f /etc/ostree/remotes.d/fedora-atomic.conf
-ostree remote add fedora-atomic https://kojipkgs.fedoraproject.org/atomic/27 --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-27-primary
+ostree remote add fedora-atomic https://dl.fedoraproject.org/atomic/repo/ --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-28-primary
 
 # lock root user
 passwd -l root
