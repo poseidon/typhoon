@@ -80,7 +80,7 @@ aap2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
-Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's output `ingress_static_ip`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
 
 ```tf
 resource "google_dns_record_set" "some-application" {
@@ -91,7 +91,7 @@ resource "google_dns_record_set" "some-application" {
   name    = "app.example.com."
   type    = "A"
   ttl     = 300
-  rrdatas = ["${module.google-cloud-yavin.ingress_static_ip}"]
+  rrdatas = ["${module.google-cloud-yavin.ingress_static_ipv4}"]
 }
 ```
 
