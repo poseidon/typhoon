@@ -16,6 +16,10 @@ Notable changes between versions.
 * Remove `ingress_static_ip` module output. Use `ingress_static_ipv4`.
 * Remove `controllers_ipv4_public` module output.
 
+#### Addons
+
+* Update Grafana from 5.1.4 to [5.2.1](http://docs.grafana.org/guides/whats-new-in-v5-2/)
+
 ## v1.10.5
 
 * Kubernetes [v1.10.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105)
