@@ -103,7 +103,7 @@ variable "pod_cidr" {
 variable "service_cidr" {
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
-The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for kube-dns.
+The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
 
   type    = "string"
@@ -111,7 +111,7 @@ EOD
 }
 
 variable "cluster_domain_suffix" {
-  description = "Queries for domains with the suffix will be answered by kube-dns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
 }

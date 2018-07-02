@@ -6,6 +6,8 @@ Notable changes between versions.
 
 * Kubernetes [v1.11.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1110)
 * Force apiserver to stop listening on `127.0.0.1:8080`
+* Replace `kube-dns` with [CoreDNS](https://coredns.io/) ([#261](https://github.com/poseidon/typhoon/pull/261))
+  * Edit the `coredns` ConfigMap to [customize](https://coredns.io/plugins/)
 
 #### AWS
 

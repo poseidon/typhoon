@@ -85,7 +85,7 @@ Restart `dnsmasq`.
 sudo /etc/init.d/dnsmasq restart
 ```
 
-Configure queries for `*.svc.cluster.local` to be forwarded to a Kubernetes `kube-dns` service IP to allow hosts to resolve cluster-local Kubernetes names.
+Configure queries for `*.svc.cluster.local` to be forwarded to the Kubernetes `coredns` service IP to allow hosts to resolve cluster-local Kubernetes names.
 
 ```
 configure
@@ -108,7 +108,7 @@ commit-confirm
 
 ### Port Forwarding
 
-Expose the [Ingress Controller](/addons/ingress.md#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP like kube-dns (e.g. 10.3.0.12).
+Expose the [Ingress Controller](/addons/ingress.md#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP (e.g. 10.3.0.12).
 
 ```
 configure

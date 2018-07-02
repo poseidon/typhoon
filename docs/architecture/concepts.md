@@ -12,7 +12,7 @@ Cluster nodes provision themselves from a declarative configuration upfront. Nod
 
 #### Controllers
 
-Controller nodes are scheduled to run the Kubernetes `apiserver`, `scheduler`, `controller-manager`, `kube-dns`, and `kube-proxy`. A fully qualified domain name (e.g. cluster_name.domain.com) resolving to a network load balancer or round-robin DNS (depends on platform) is used to refer to the control plane.
+Controller nodes are scheduled to run the Kubernetes `apiserver`, `scheduler`, `controller-manager`, `coredns`, and `kube-proxy`. A fully qualified domain name (e.g. cluster_name.domain.com) resolving to a network load balancer or round-robin DNS (depends on platform) is used to refer to the control plane.
 
 #### Workers
 

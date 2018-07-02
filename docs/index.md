@@ -99,10 +99,10 @@ NAMESPACE     NAME                                      READY  STATUS    RESTART
 kube-system   calico-node-1cs8z                         2/2    Running   0         6m
 kube-system   calico-node-d1l5b                         2/2    Running   0         6m
 kube-system   calico-node-sp9ps                         2/2    Running   0         6m
+kube-system   coredns-1187388186-zj5dl                  1/1    Running   0         6m
 kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
 kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1         6m
-kube-system   kube-dns-1187388186-zj5dl                 3/3    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m
