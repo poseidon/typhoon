@@ -11,6 +11,11 @@ Notable changes between versions.
 
 * Update from Fedora Atomic 27 to 28 ([#258](https://github.com/poseidon/typhoon/pull/258))
 
+#### Google
+
+* Remove `ingress_static_ip` module output. Use `ingress_static_ipv4`.
+* Remove `controllers_ipv4_public` module output.
+
 ## v1.10.5
 
 * Kubernetes [v1.10.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105)

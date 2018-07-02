@@ -5,12 +5,6 @@ output "ingress_static_ipv4" {
   value = "${google_compute_global_address.ingress-ipv4.address}"
 }
 
-# Deprecated, use ingress_static_ipv4
-output "ingress_static_ip" {
-  description = "Global IPv4 address for proxy load balancing to the nearest Ingress controller"
-  value = "${google_compute_global_address.ingress-ipv4.address}"
-}
-
 # Outputs for worker pools
 
 output "network_name" {
