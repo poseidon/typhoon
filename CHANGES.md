@@ -13,6 +13,7 @@ Notable changes between versions.
 
 #### Google
 
+* Promote Google Cloud to stable
 * Update from Fedora Atomic 27 to 28 ([#259](https://github.com/poseidon/typhoon/pull/259))
 * Remove `ingress_static_ip` module output. Use `ingress_static_ipv4`.
 * Remove `controllers_ipv4_public` module output.
