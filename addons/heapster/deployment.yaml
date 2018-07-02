@@ -14,11 +14,13 @@ spec:
       labels:
         name: heapster
         phase: prod
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       serviceAccountName: heapster
       containers:
         - name: heapster
-          image: k8s.gcr.io/heapster-amd64:v1.5.2
+          image: k8s.gcr.io/heapster-amd64:v1.5.3
           command:
             - /heapster
             - --source=kubernetes.summary_api:''

@@ -19,6 +19,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Grafana from 5.1.4 to [5.2.1](http://docs.grafana.org/guides/whats-new-in-v5-2/)
+* Update heapster from v1.5.2 to v1.5.3
 
 ## v1.10.5
 
