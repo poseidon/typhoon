@@ -22,6 +22,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update nginx-ingress from 0.15.0 to 0.16.2
 * Update Grafana from 5.1.4 to [5.2.1](http://docs.grafana.org/guides/whats-new-in-v5-2/)
 * Update heapster from v1.5.2 to v1.5.3
 

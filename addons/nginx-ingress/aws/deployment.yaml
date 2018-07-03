@@ -22,7 +22,7 @@ spec:
         node-role.kubernetes.io/node: ""
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.15.0
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.16.2
           args:
             - /nginx-ingress-controller
             - --default-backend-service=$(POD_NAMESPACE)/default-backend
@@ -67,6 +67,11 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           securityContext:
-            runAsNonRoot: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            runAsUser: 33 # www-data
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
