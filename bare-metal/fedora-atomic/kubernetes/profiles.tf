@@ -1,5 +1,5 @@
 locals {
-  default_assets_endpoint = "${var.matchbox_http_endpoint}/assets/fedora/27"
+  default_assets_endpoint = "${var.matchbox_http_endpoint}/assets/fedora/28"
   atomic_assets_endpoint  = "${var.atomic_assets_endpoint != "" ? var.atomic_assets_endpoint : local.default_assets_endpoint}"
 }
 

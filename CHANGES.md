@@ -13,6 +13,10 @@ Notable changes between versions.
 
 * Update from Fedora Atomic 27 to 28 ([#258](https://github.com/poseidon/typhoon/pull/258))
 
+#### Bare-Metal
+
+* Update from Fedora Atomic 27 to 28 ([#263](https://github.com/poseidon/typhoon/pull/263))
+
 #### Google
 
 * Promote Google Cloud to stable

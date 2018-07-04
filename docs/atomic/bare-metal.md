@@ -121,16 +121,17 @@ sudo systemctl enable httpd --now
 Download the [Fedora Atomic](https://getfedora.org/en/atomic/download/) ISO which contains install files and add them to the serve directory.
 
 ```
-sudo mount -o loop,ro Fedora-Atomic-ostree-*.iso /mnt
-sudo mkdir -p /var/www/html/fedora/27
-sudo cp -av /mnt/* /var/www/html/fedora/27/
+sudo mount -o loop,ro Fedora-AtomicHost-ostree-*.iso /mnt
+sudo mkdir -p /var/www/html/fedora/28
+sudo cp -av /mnt/* /var/www/html/fedora/28/
+sudo umount /mnt
 ```
 
 Checkout the [fedora-atomic](https://pagure.io/fedora-atomic) ostree manifest repo.
 
 ```
 git clone https://pagure.io/fedora-atomic.git && cd fedora-atomic
-git checkout f27
+git checkout f28
 ```
 
 Compose an ostree repo from RPM sources.
@@ -145,12 +146,12 @@ sudo rpm-ostree compose tree --repo=repo fedora-atomic-host.json
 Serve the ostree `repo` as well.
 
 ```
-sudo cp -r repo /var/www/html/fedora/27/
-tree /var/www/html/fedora/27/                       
-├── images             
-│   ├── pxeboot        
-│       ├── initrd.img 
-│       └── vmlinuz    
+sudo cp -r repo /var/www/html/fedora/28/
+tree /var/www/html/fedora/28/
+├── images
+│   ├── pxeboot
+│       ├── initrd.img
+│       └── vmlinuz
 ├── isolinux/
 ├── repo/
 ```
@@ -158,7 +159,7 @@ tree /var/www/html/fedora/27/
 Verify `vmlinuz`, `initrd.img`, and `repo` are accessible from the HTTP server (i.e. `atomic_assets_endpoint`).
 
 ```
-curl http://example.com/fedora/27/
+curl http://example.com/fedora/28/
 ```
 
 !!! note
@@ -246,7 +247,7 @@ module "bare-metal-mercury" {
   # bare-metal
   cluster_name           = "mercury"
   matchbox_http_endpoint = "http://matchbox.example.com"
-  atomic_assets_endpoint = "http://example.com/fedora/27"
+  atomic_assets_endpoint = "http://example.com/fedora/28"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -400,7 +401,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name | mercury |
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
-| atomic_assets_endpoint | HTTP endpoint serving the Fedora Atomic vmlinuz, initrd.img, and ostree repo | "http://example.com/fedora/27" |
+| atomic_assets_endpoint | HTTP endpoint serving the Fedora Atomic vmlinuz, initrd.img, and ostree repo | "http://example.com/fedora/28" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'fedora' | "ssh-rsa AAAAB3Nz..." |
 | asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |

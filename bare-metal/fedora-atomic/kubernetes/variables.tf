@@ -17,7 +17,7 @@ variable "atomic_assets_endpoint" {
   description = <<EOD
 HTTP endpoint serving the Fedora Atomic Host vmlinuz, initrd, os repo, and ostree repo (.e.g `http://example.com/some/path`).
 
-Ensure the HTTP server directory contains `vmlinuz` and `initrd` files and `os` and `repo` directories. Leave unset to assume ${matchbox_http_endpoint}/assets/fedora/27
+Ensure the HTTP server directory contains `vmlinuz` and `initrd` files and `os` and `repo` directories. Leave unset to assume ${matchbox_http_endpoint}/assets/fedora/28
 EOD
 }
 

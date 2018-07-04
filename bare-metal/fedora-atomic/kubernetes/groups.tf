@@ -1,5 +1,5 @@
 // Install Fedora to disk
-resource "matchbox_group" "fedora-install" {
+resource "matchbox_group" "install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
 
   name    = "${format("fedora-install-%s", element(concat(var.controller_names, var.worker_names), count.index))}"
