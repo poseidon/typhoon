@@ -239,6 +239,3 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 !!! warning
     Do not choose a `controller_type` smaller than `t2.small`. Smaller instances are not sufficient for running a controller.
-
-!!! tip "MTU"
-    If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8981! You will get better pod-to-pod bandwidth.
