@@ -31,13 +31,14 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | stable |
 | Google Cloud  | Fedora Atomic    | [google-cloud/container-linux/kubernetes](atomic/google-cloud.md) | alpha |
+| Libvirt | Container Linux | [libvirt/container-linux/kubernetes](cl/libvirt.md) | alpha |
 
 The AWS and bare-metal `container-linux` modules allow picking Red Hat Container Linux (formerly CoreOS Container Linux) or Kinvolk's Flatcar Linux friendly fork.
 
 ## Documentation
 
 * Architecture [concepts](architecture/concepts.md) and [operating-systems](architecture/operating-systems.md)
-* Tutorials for [AWS](cl/aws.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
+* Tutorials for [AWS](cl/aws.md), [Bare-Metal](cl/bare-metal.md), [Libvirt](cl/libvirt.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
 
 ## Example
 
