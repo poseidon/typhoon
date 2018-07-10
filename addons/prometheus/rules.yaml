@@ -496,6 +496,13 @@ data:
         annotations:
           description: device {{$labels.device}} on node {{$labels.instance}} is running
             full within the next 2 hours (mounted at {{$labels.mountpoint}})
+      - alert: InactiveRAIDDisk
+        expr: node_md_disks - node_md_disks_active > 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: '{{$value}} RAID disk(s) on node {{$labels.instance}} are inactive'
   prometheus.rules.yaml: |
     groups:
     - name: prometheus.rules
