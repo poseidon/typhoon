@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Fedora does not publish official images for Google Cloud so you must prepare them yourself. Expect rough edges and changes.
 
-In this tutorial, we'll create a Kubernetes v1.11.0 cluster on Google Compute Engine with Fedora Atomic.
+In this tutorial, we'll create a Kubernetes v1.11.1 cluster on Google Compute Engine with Fedora Atomic.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
@@ -121,7 +121,7 @@ Define a Kubernetes cluster using the module `google-cloud/fedora-atomic/kuberne
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=v1.11.0"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=v1.11.1"
   
   providers = {
     google   = "google.default"
@@ -197,9 +197,9 @@ In 5-10 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                          STATUS   AGE    VERSION
-yavin-controller-0.c.example-com.internal     Ready    6m     v1.11.0
-yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.11.0
-yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.11.0
+yavin-controller-0.c.example-com.internal     Ready    6m     v1.11.1
+yavin-worker-jrbf.c.example-com.internal      Ready    5m     v1.11.1
+yavin-worker-mzdm.c.example-com.internal      Ready    5m     v1.11.1
 ```
 
 List the pods.

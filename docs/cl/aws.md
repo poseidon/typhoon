@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.11.0 cluster on AWS with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.11.1 cluster on AWS with Container Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -96,7 +96,7 @@ Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
 
 ```tf
 module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.11.0"
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.11.1"
 
   providers = {
     aws = "aws.default"
@@ -169,9 +169,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
 NAME             STATUS    AGE       VERSION        
-ip-10-0-12-221   Ready     34m       v1.11.0
-ip-10-0-19-112   Ready     34m       v1.11.0
-ip-10-0-4-22     Ready     34m       v1.11.0
+ip-10-0-12-221   Ready     34m       v1.11.1
+ip-10-0-19-112   Ready     34m       v1.11.1
+ip-10-0-4-22     Ready     34m       v1.11.1
 ```
 
 List the pods.
