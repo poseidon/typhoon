@@ -118,7 +118,14 @@ resource "matchbox_profile" "flatcar-install" {
 resource "matchbox_profile" "controllers" {
   count                  = "${length(var.controller_names)}"
   name                   = "${format("%s-controller-%s", var.cluster_name, element(var.controller_names, count.index))}"
-  container_linux_config = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
+  raw_ignition           = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
+}
+
+data "ct_config" "controller_ign" {
+  count        = "${length(var.controller_names)}"
+  content      = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
+  pretty_print = false
+  snippets     = ["${var.controller_clc_snippets}"]
 }
 
 data "template_file" "controller-configs" {
@@ -143,7 +150,14 @@ data "template_file" "controller-configs" {
 resource "matchbox_profile" "workers" {
   count                  = "${length(var.worker_names)}"
   name                   = "${format("%s-worker-%s", var.cluster_name, element(var.worker_names, count.index))}"
-  container_linux_config = "${element(data.template_file.worker-configs.*.rendered, count.index)}"
+  raw_ignition           = "${element(data.ct_config.worker_ign.*.rendered, count.index)}"
+}
+
+data "ct_config" "worker_ign" {
+  count        = "${length(var.worker_names)}"
+  content      = "${element(data.template_file.worker-configs.*.rendered, count.index)}"
+  pretty_print = false
+  snippets     = ["${var.worker_clc_snippets}"]
 }
 
 data "template_file" "worker-configs" {
