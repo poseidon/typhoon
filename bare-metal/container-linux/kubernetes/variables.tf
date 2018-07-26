@@ -25,26 +25,44 @@ variable "os_version" {
 
 variable "controller_names" {
   type = "list"
+  description = "Ordered list of controller names (e.g. [node1])"
 }
 
 variable "controller_macs" {
   type = "list"
+  description = "Ordered list of controller identifying MAC addresses (e.g. [52:54:00:a1:9c:ae])"
 }
 
 variable "controller_domains" {
   type = "list"
+  description = "Ordered list of controller FQDNs (e.g. [node1.example.com])"
+}
+
+variable "controller_clc_snippets" {
+  type = "map"
+  description = "Map from controller names to a lists of Container Linux Config snippets"
+  default = {}
 }
 
 variable "worker_names" {
   type = "list"
+  description = "Ordered list of worker names (e.g. [node2, node3])"
 }
 
 variable "worker_macs" {
   type = "list"
+  description = "Ordered list of worker identifying MAC addresses (e.g. [52:54:00:b2:2f:86, 52:54:00:c3:61:77])"
 }
 
 variable "worker_domains" {
   type = "list"
+  description = "Ordered list of worker FQDNs (e.g. [node2.example.com, node3.example.com])"
+}
+
+variable "worker_clc_snippets" {
+  type = "map"
+  description = "Map from worker names to a lists of Container Linux Config snippets"
+  default = {}
 }
 
 # configuration

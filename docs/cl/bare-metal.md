@@ -12,7 +12,7 @@ Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service
 * PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment
 * Matchbox v0.6+ deployment with API enabled
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
-* Terraform v0.11.x and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
+* Terraform v0.11.x, [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox), and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
 
 ## Machines
 
@@ -119,6 +119,14 @@ Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provid
 wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.2/terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
 tar xzf terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
 sudo mv terraform-provider-matchbox-v0.2.2-linux-amd64/terraform-provider-matchbox /usr/local/bin/
+```
+
+Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
+
+```sh
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
+sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
 ```
 
 Add the plugin to your `~/.terraformrc`.
@@ -373,6 +381,8 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
+| controller_clc_snippets | Map from controller names to lists of Container Linux Config snippets | {} | |
+| worker_clc_snippets | Map from worker names to lists of Container Linux Config snippets | {} | |
 | network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | first-found | can-reach=10.0.0.1 |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

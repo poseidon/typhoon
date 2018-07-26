@@ -69,7 +69,7 @@ View the Container Linux Config [format](https://coreos.com/os/docs/1576.4.0/con
 
 Write Container Linux Configs *snippets* as files in the repository where you keep Terraform configs for clusters (perhaps in a `clc` or `snippets` subdirectory). You may organize snippets in multiple files as desired, provided they are each valid.
 
-Define an [AWS](https://typhoon.psdn.io/aws/#cluster), [Google Cloud](https://typhoon.psdn.io/google-cloud/#cluster), or [Digital Ocean](https://typhoon.psdn.io/digital-ocean/#cluster) cluster and fill in the optional `controller_clc_snippets` or `worker_clc_snippets` fields.
+For [AWS](https://typhoon.psdn.io/aws/#cluster), [Google Cloud](https://typhoon.psdn.io/google-cloud/#cluster), or [Digital Ocean](https://typhoon.psdn.io/digital-ocean/#cluster) clusters, define the optional `controller_clc_snippets` or `worker_clc_snippets` list variables.
 
 ```
 module "digital-ocean-nemo" {
@@ -85,6 +85,28 @@ module "digital-ocean-nemo" {
     "${file("./custom-files")}",
     "${file("./custom-units")}",
   ]
+  ...
+}
+```
+
+Bare-Metal clusters allow different Container Linux snippets to be used for each node (since hardware may be heterogeneous). Define the optional `controller_clc_snippets` and `worker_clc_snippets` map variables using controller or worker keys.
+
+```
+module "bare-metal-mercury" {
+  ...
+  worker_names = [
+    "node2",
+    "node3",
+  ]
+  worker_clc_snippets = {
+    "node2" = [
+      "${file("./units/hello.yaml")}"
+    ]
+    "node3" = [
+      "${file("./units/world.yaml")}",
+      "${file("./units/hello.yaml")}",
+    ]
+  }
   ...
 }
 ```

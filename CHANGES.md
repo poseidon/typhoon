@@ -4,6 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+#### Bare-Metal
+
+* Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on bare-metal
+  * Validate and additively merge custom Container Linux Configs during terraform plan
+  * Define files, systemd units, dropins, networkd configs, mounts, users, and more
+  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (action required!)
+
+## v1.11.1
+
 * Kubernetes [v1.11.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1111)
 
 #### Addons
