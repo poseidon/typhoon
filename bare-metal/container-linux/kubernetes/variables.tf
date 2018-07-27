@@ -38,12 +38,6 @@ variable "controller_domains" {
   description = "Ordered list of controller FQDNs (e.g. [node1.example.com])"
 }
 
-variable "controller_clc_snippets" {
-  type = "map"
-  description = "Map from controller names to a lists of Container Linux Config snippets"
-  default = {}
-}
-
 variable "worker_names" {
   type = "list"
   description = "Ordered list of worker names (e.g. [node2, node3])"
@@ -59,9 +53,9 @@ variable "worker_domains" {
   description = "Ordered list of worker FQDNs (e.g. [node2.example.com, node3.example.com])"
 }
 
-variable "worker_clc_snippets" {
+variable "clc_snippets" {
   type = "map"
-  description = "Map from worker names to a lists of Container Linux Config snippets"
+  description = "Map from machine names to lists of Container Linux Config snippets"
   default = {}
 }
 

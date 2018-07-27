@@ -381,8 +381,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
-| controller_clc_snippets | Map from controller names to lists of Container Linux Config snippets | {} | |
-| worker_clc_snippets | Map from worker names to lists of Container Linux Config snippets | {} | |
+| clc_snippets | Map from machine names to lists of Container Linux Config snippets | {} | [example](/advanced/customization/#usage) |
 | network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | first-found | can-reach=10.0.0.1 |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

@@ -126,7 +126,7 @@ data "ct_config" "controller-ignitions" {
   content = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
   pretty_print = false
   # Must use direct lookup. Cannot use lookup(map, key) since it only works for flat maps
-  snippets = ["${local.controller_clc_map[element(var.controller_names, count.index)]}"]
+  snippets = ["${local.clc_map[element(var.controller_names, count.index)]}"]
 }
 
 
@@ -161,7 +161,7 @@ data "ct_config" "worker-ignitions" {
   content = "${element(data.template_file.worker-configs.*.rendered, count.index)}"
   pretty_print = false
   # Must use direct lookup. Cannot use lookup(map, key) since it only works for flat maps
-  snippets = ["${local.worker_clc_map[element(var.worker_names, count.index)]}"]
+  snippets = ["${local.clc_map[element(var.worker_names, count.index)]}"]
 }
 
 data "template_file" "worker-configs" {
@@ -182,23 +182,15 @@ data "template_file" "worker-configs" {
 
 locals {
   # Hack to workaround https://github.com/hashicorp/terraform/issues/17251
-  # Default CLC snippets map every worker to list("\n") so all lookups succeed
-  controller_clc_default = "${zipmap(var.controller_names, chunklist(data.template_file.controller-clc-snippets.*.rendered, 1))}"
-  worker_clc_default = "${zipmap(var.worker_names, chunklist(data.template_file.worker-clc-snippets.*.rendered, 1))}"
+  # Default Container Linux config snippets map every node names to list("\n") so
+  # all lookups succeed
+  clc_defaults = "${zipmap(concat(var.controller_names, var.worker_names), chunklist(data.template_file.clc-default-snippets.*.rendered, 1))}"
   # Union of the default and user specific snippets, later overrides prior.
-  controller_clc_map = "${merge(local.controller_clc_default, var.controller_clc_snippets)}"
-  worker_clc_map = "${merge(local.worker_clc_default, var.worker_clc_snippets)}"
+  clc_map = "${merge(local.clc_defaults, var.clc_snippets)}"
 }
 
-// Horrible hack to generate a Terraform list of controller count length
-data "template_file" "controller-clc-snippets" {
-  count = "${length(var.controller_names)}"
+// Horrible hack to generate a Terraform list of node count length
+data "template_file" "clc-default-snippets" {
+  count = "${length(var.controller_names) + length(var.worker_names)}"
   template = "\n"
 }
-
-// Horrible hack to generate a Terraform list of worker count length
-data "template_file" "worker-clc-snippets" {
-  count = "${length(var.worker_names)}"
-  template = "\n"
-}
-

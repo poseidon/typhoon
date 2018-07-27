@@ -89,16 +89,17 @@ module "digital-ocean-nemo" {
 }
 ```
 
-Bare-Metal clusters allow different Container Linux snippets to be used for each node (since hardware may be heterogeneous). Define the optional `controller_clc_snippets` and `worker_clc_snippets` map variables using controller or worker keys.
+Bare-Metal clusters allow different Container Linux snippets to be used for each node (since hardware may be heterogeneous). Populate the optional `clc_snippets` map variable with any controller or worker name keys and lists of snippets.
 
 ```
 module "bare-metal-mercury" {
   ...
+  controller_names = ["node1"]
   worker_names = [
     "node2",
     "node3",
   ]
-  worker_clc_snippets = {
+  clc_snippets = {
     "node2" = [
       "${file("./units/hello.yaml")}"
     ]
