@@ -11,6 +11,10 @@ Notable changes between versions.
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
   * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (action required!)
 
+#### Addons
+
+* Update Grafana from 5.2.1 to 5.2.2
+
 ## v1.11.1
 
 * Kubernetes [v1.11.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1111)
