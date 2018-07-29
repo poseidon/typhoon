@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Update etcd from v3.3.8 to [v3.3.9](https://github.com/coreos/etcd/blob/master/CHANGELOG-3.3.md#v339-2018-07-24)
 * Use kubernetes-incubator/bootkube v0.13.0
+* Fix Fedora Atomic modules' Kubelet version ([#270](https://github.com/poseidon/typhoon/issues/270))
 
 #### Bare-Metal
 
@@ -26,6 +27,10 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from v2.3.1 to v2.3.2
+
+#### Errata
+
+* Fedora Atomic modules shipped with Kubelet v1.11.0, instead of v1.11.1. Fixed in [#270](https://github.com/poseidon/typhoon/issues/270).
 
 ## v1.11.0
 

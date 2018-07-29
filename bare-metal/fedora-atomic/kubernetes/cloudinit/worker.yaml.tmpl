@@ -59,7 +59,7 @@ runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, restart, NetworkManager]
   - [hostnamectl, set-hostname, ${domain_name}]
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.11.0"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.11.1"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
 users:
