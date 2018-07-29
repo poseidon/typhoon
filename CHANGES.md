@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Use kubernetes-incubator/bootkube v0.13.0
+
 #### Bare-Metal
 
 * Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on bare-metal
