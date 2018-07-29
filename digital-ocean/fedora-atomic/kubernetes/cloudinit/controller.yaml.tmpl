@@ -89,7 +89,7 @@ bootcmd:
   - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
-  - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.8"
+  - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.9"
   - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.11.0"
   - "atomic install --system --name=bootkube quay.io/poseidon/bootkube:v0.13.0"
   - [systemctl, start, --no-block, etcd.service]
