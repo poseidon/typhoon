@@ -110,3 +110,9 @@ variable "kernel_args" {
   type        = "list"
   default     = []
 }
+
+variable "apiserver_port" {
+  description = "kube-apiserver port"
+  type        = "string"
+  default     = "6443"
+}
