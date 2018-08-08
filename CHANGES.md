@@ -2,8 +2,9 @@
 
 Notable changes between versions.
 
-## Latest
+## v1.11.2
 
+* Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)
 * Update etcd from v3.3.8 to [v3.3.9](https://github.com/coreos/etcd/blob/master/CHANGELOG-3.3.md#v339-2018-07-24)
 * Use kubernetes-incubator/bootkube v0.13.0
 * Fix Fedora Atomic modules' Kubelet version ([#270](https://github.com/poseidon/typhoon/issues/270))
