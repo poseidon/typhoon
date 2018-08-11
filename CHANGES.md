@@ -19,6 +19,7 @@ Notable changes between versions.
 #### Addons
 
 * Update nginx-ingress from 0.16.2 to 0.17.1
+* Add nginx-ingress manifests for bare-metal
 * Update Grafana from 5.2.1 to 5.2.2
 * Update heapster from v1.5.3 to v1.5.4
 

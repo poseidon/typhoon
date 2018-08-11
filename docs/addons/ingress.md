@@ -101,11 +101,17 @@ On bare-metal, routing traffic to Ingress controller pods can be done in number 
 
 ### Equal-Cost Multi-Path
 
-Deploy the Nginx Ingress Controller as a deployment. Deploy the service with a fixed ClusterIP (e.g. 10.3.0.12) in the Kubernetes service IPv4 CIDR range. There is no need for a NodePort or for pods to bind host ports. Any node can proxy packets destined for the service's ClusterIP to a node which has a pod endpoint.
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and default backend. The service should use a fixed ClusterIP (e.g. 10.3.0.12) in the Kubernetes service IPv4 CIDR range.
 
-Configure the network router or load balancer with a static route for the Kubernetes service range and set the next hop to a node. Repeat for each node and set the metric (i.e. cost) of each. Finally, DNAT traffic destined for the WAN on ports 80 or 443 to the service's fixed ClusterIP.
+```
+kubectl apply -R -f addons/nginx-ingress/bare-metal
+```
 
-Add a DNS record resolving to the WAN for each application.
+There is no need for pods to use host networking or for the ingress service to use NodePort or LoadBalancer. Nodes already proxy packets destined for the service's ClusterIP to node(s) with a pod endpoint.
+
+Configure the network router or load balancer with a static route for the Kubernetes service range and set the next hop to a node. Repeat for each node, as desired, and set the metric (i.e. cost) of each. Finally, DNAT traffic destined for the WAN on ports 80 or 443 to the service's fixed ClusterIP.
+
+For each application, add a DNS record resolving to the WAN(s).
 
 ```tf
 resource "google_dns_record_set" "some-application" {

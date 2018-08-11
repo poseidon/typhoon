@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-controller-public
+  namespace: ingress
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '10254'
+spec:
+  type: ClusterIP
+  clusterIP: 10.3.0.12
+  selector:
+    name: ingress-controller-public
+    phase: prod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
