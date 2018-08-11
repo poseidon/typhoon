@@ -2,6 +2,8 @@
 
 Notable changes between versions.
 
+* [Recommend](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) updating `terraform-provider-ct` plugin from v0.2.1 to [v0.3.0](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.3.0) (action recommended)
+
 ## v1.11.2
 
 * Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)
