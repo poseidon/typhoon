@@ -2,6 +2,12 @@
 
 Notable changes between versions.
 
+## Latest
+
+#### Bare-Metal
+
+* Remove `controller_networkds` and `worker_networkds` variables. Use Container Linux Config snippets [#277](https://github.com/poseidon/typhoon/pull/277)
+
 ## v1.11.2
 
 * Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)

@@ -163,8 +163,6 @@ storage:
             --net=host \
             --dns=host \
             --exec=/bootkube -- start --asset-dir=/assets "$@"
-networkd:
-  ${networkd_content}
 passwd:
   users:
     - name: core

@@ -141,17 +141,3 @@ variable "kernel_args" {
   type        = "list"
   default     = []
 }
-
-# unofficial, undocumented, unsupported, temporary
-
-variable "controller_networkds" {
-  type        = "list"
-  description = "Controller Container Linux config networkd section"
-  default     = []
-}
-
-variable "worker_networkds" {
-  type        = "list"
-  description = "Worker Container Linux config networkd section"
-  default     = []
-}
