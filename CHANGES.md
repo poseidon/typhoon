@@ -8,6 +8,11 @@ Notable changes between versions.
 
 * Remove `controller_networkds` and `worker_networkds` variables. Use Container Linux Config snippets [#277](https://github.com/poseidon/typhoon/pull/277)
 
+#### Google Cloud
+
+* Remove firewall rule allowing workers to access Nginx Ingress health check
+  * Nginx Ingress addon no longer uses hostNetwork, Prometheus scrapes via CNI network
+
 ## v1.11.2
 
 * Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)
