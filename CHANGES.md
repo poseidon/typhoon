@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### AWS
+
+* Remove firewall rule allowing ICMP packets to nodes
+
 #### Bare-Metal
 
 * Remove `controller_networkds` and `worker_networkds` variables. Use Container Linux Config snippets [#277](https://github.com/poseidon/typhoon/pull/277)

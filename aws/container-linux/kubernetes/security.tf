@@ -11,16 +11,6 @@ resource "aws_security_group" "controller" {
   tags = "${map("Name", "${var.cluster_name}-controller")}"
 }
 
-resource "aws_security_group_rule" "controller-icmp" {
-  security_group_id = "${aws_security_group.controller.id}"
-
-  type        = "ingress"
-  protocol    = "icmp"
-  from_port   = 0
-  to_port     = 0
-  cidr_blocks = ["0.0.0.0/0"]
-}
-
 resource "aws_security_group_rule" "controller-ssh" {
   security_group_id = "${aws_security_group.controller.id}"
 
@@ -215,16 +205,6 @@ resource "aws_security_group" "worker" {
   vpc_id = "${aws_vpc.network.id}"
 
   tags = "${map("Name", "${var.cluster_name}-worker")}"
-}
-
-resource "aws_security_group_rule" "worker-icmp" {
-  security_group_id = "${aws_security_group.worker.id}"
-
-  type        = "ingress"
-  protocol    = "icmp"
-  from_port   = 0
-  to_port     = 0
-  cidr_blocks = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "worker-ssh" {
