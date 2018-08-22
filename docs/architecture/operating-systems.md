@@ -1,6 +1,6 @@
 # Operating Systems
 
-Typhoon supports [Container Linux](https://coreos.com/why/) and Fedora [Atomic](https://www.projectatomic.io/) 27. These two operating systems were chosen because they offer:
+Typhoon supports [Container Linux](https://coreos.com/why/) and Fedora [Atomic](https://www.projectatomic.io/) 28. These two operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades
