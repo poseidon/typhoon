@@ -6,7 +6,7 @@ Notable changes between versions.
 
 #### AWS
 
-* Remove firewall rule allowing ICMP packets to nodes
+* Remove firewall rule allowing ICMP packets to nodes ([#285](https://github.com/poseidon/typhoon/pull/285))
 
 #### Bare-Metal
 
@@ -14,7 +14,7 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Remove firewall rule allowing workers to access Nginx Ingress health check
+* Remove firewall rule allowing workers to access Nginx Ingress health check ([#284](https://github.com/poseidon/typhoon/pull/284))
   * Nginx Ingress addon no longer uses hostNetwork, Prometheus scrapes via CNI network
 
 ## v1.11.2
@@ -29,7 +29,7 @@ Notable changes between versions.
 * Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on bare-metal
   * Validate and additively merge custom Container Linux Configs during terraform plan
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
-  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (action required!)
+  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (**action required!**)
 
 #### Addons
 

@@ -12,7 +12,7 @@ Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, de
 kubectl apply -R -f addons/nginx-ingress/aws
 ```
 
-For each application, add a DNS CNAME resolving to the ELB's DNS record.
+For each application, add a DNS CNAME resolving to the NLB's DNS record.
 
 ```
 app1.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
@@ -20,7 +20,7 @@ aap2.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 app3.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 ```
 
-Find the ELB's DNS name through the console or use the Typhoon module's output `ingress_dns_name`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the NLB's DNS name through the console or use the Typhoon module's output `ingress_dns_name`. For example, you might use Terraform to manage a Google Cloud DNS record:
 
 ```tf
 resource "google_dns_record_set" "some-application" {
