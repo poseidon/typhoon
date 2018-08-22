@@ -23,7 +23,7 @@ resource "google_compute_firewall" "internal-etcd" {
 
   allow {
     protocol = "tcp"
-    ports    = [2380]
+    ports    = [2379, 2380]
   }
 
   source_tags = ["${var.cluster_name}-controller"]

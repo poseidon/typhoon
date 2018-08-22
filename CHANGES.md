@@ -14,6 +14,9 @@ Notable changes between versions.
 
 #### Google Cloud
 
+* Fix firewall to allow etcd client port 2379 traffic between controller nodes ([#287](https://github.com/poseidon/typhoon/pull/287))
+  * kube-apiservers were only able to connect to their node's local etcd peer. While master node outages were tolerated, reaching a healthy peer took longer than neccessary in some cases
+  * Reduce time needed to bootstrap the cluster
 * Remove firewall rule allowing workers to access Nginx Ingress health check ([#284](https://github.com/poseidon/typhoon/pull/284))
   * Nginx Ingress addon no longer uses hostNetwork, Prometheus scrapes via CNI network
 
