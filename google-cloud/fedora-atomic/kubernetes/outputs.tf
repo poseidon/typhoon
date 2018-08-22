@@ -2,7 +2,7 @@
 
 output "ingress_static_ipv4" {
   description = "Global IPv4 address for proxy load balancing to the nearest Ingress controller"
-  value = "${google_compute_global_address.ingress-ipv4.address}"
+  value       = "${google_compute_global_address.ingress-ipv4.address}"
 }
 
 # Outputs for worker pools
@@ -25,5 +25,5 @@ output "network_self_link" {
 
 output "worker_instance_group" {
   description = "Full URL of the worker managed instance group"
-  value = "${module.workers.instance_group}"
+  value       = "${module.workers.instance_group}"
 }

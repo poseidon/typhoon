@@ -25,21 +25,22 @@ resource "google_compute_global_forwarding_rule" "ingress-https" {
 
 # HTTP proxy load balancer for ingress controllers
 resource "google_compute_target_http_proxy" "ingress-http" {
-  name = "${var.cluster_name}-ingress-http"
+  name        = "${var.cluster_name}-ingress-http"
   description = "Distribute HTTP load across ${var.cluster_name} workers"
-  url_map = "${google_compute_url_map.ingress-http.self_link}"
+  url_map     = "${google_compute_url_map.ingress-http.self_link}"
 }
 
 # TCP proxy load balancer for ingress controllers
 resource "google_compute_target_tcp_proxy" "ingress-https" {
-  name = "${var.cluster_name}-ingress-https"
-  description = "Distribute HTTPS load across ${var.cluster_name} workers"
+  name            = "${var.cluster_name}-ingress-https"
+  description     = "Distribute HTTPS load across ${var.cluster_name} workers"
   backend_service = "${google_compute_backend_service.ingress-https.self_link}"
 }
 
 # HTTP URL Map (required)
 resource "google_compute_url_map" "ingress-http" {
   name = "${var.cluster_name}-ingress-http"
+
   # Do not add host/path rules for applications here. Use Ingress resources.
   default_service = "${google_compute_backend_service.ingress-http.self_link}"
 }
@@ -90,7 +91,7 @@ resource "google_compute_health_check" "ingress" {
   unhealthy_threshold = 4
 
   http_health_check {
-    port = 10254
+    port         = 10254
     request_path = "/healthz"
   }
 }
