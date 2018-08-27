@@ -61,7 +61,7 @@ variable "disk_size" {
 variable "worker_priority" {
   type        = "string"
   default     = "Regular"
-  description = "Set worker priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be evicted at any time."
+  description = "Set worker priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time."
 }
 
 variable "controller_clc_snippets" {
@@ -89,7 +89,7 @@ variable "asset_dir" {
 }
 
 variable "host_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
+  description = "CIDR IPv4 range to assign to instances"
   type        = "string"
   default     = "10.0.0.0/16"
 }

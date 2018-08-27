@@ -47,6 +47,7 @@ pages:
     - 'Operating Systems': 'architecture/operating-systems.md'
   - 'Container Linux': 
     - 'AWS': 'cl/aws.md'
+    - 'Azure': 'cl/azure.md'
     - 'Bare-Metal': 'cl/bare-metal.md'
     - 'Digital Ocean': 'cl/digital-ocean.md'
     - 'Google Cloud': 'cl/google-cloud.md'

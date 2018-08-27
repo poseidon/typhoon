@@ -19,7 +19,7 @@ Clusters are kept to a minimal Kubernetes control plane by offering components l
 
 Container Linux Configs (CLCs) declare how a Container Linux instance's disk should be provisioned on first boot from disk. CLCs define disk partitions, filesystems, files, systemd units, dropins, networkd configs, mount units, raid arrays, and users. Typhoon creates controller and worker instances with base Container Linux Configs to create a minimal, secure Kubernetes cluster on each platform.
 
-Typhoon AWS, Google Cloud, and Digital Ocean give users the ability to provide CLC *snippets* - valid Container Linux Configs that are validated and additively merged into the Typhoon base config during `terraform plan`. This allows advanced host customizations and experimentation.
+Typhoon AWS, Azure, bare-metal, DigitalOcean, and Google Cloud support CLC *snippets* - valid Container Linux Configs that are validated and additively merged into the Typhoon base config during `terraform plan`. This allows advanced host customizations and experimentation.
 
 #### Examples
 
@@ -69,7 +69,7 @@ View the Container Linux Config [format](https://coreos.com/os/docs/1576.4.0/con
 
 Write Container Linux Configs *snippets* as files in the repository where you keep Terraform configs for clusters (perhaps in a `clc` or `snippets` subdirectory). You may organize snippets in multiple files as desired, provided they are each valid.
 
-[AWS](/cl/aws/#cluster), [Google Cloud](/cl/google-cloud/#cluster), and [Digital Ocean](/cl/digital-ocean/#cluster) clusters allow populating a list of `controller_clc_snippets` or `worker_clc_snippets`.
+[AWS](/cl/aws/#cluster), [Azure](/cl/azure/#cluster), [DigitalOcean](/cl/digital-ocean/#cluster), and [Google Cloud](/cl/google-cloud/#cluster) clusters allow populating a list of `controller_clc_snippets` or `worker_clc_snippets`.
 
 ```
 module "digital-ocean-nemo" {

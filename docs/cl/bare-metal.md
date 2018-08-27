@@ -110,7 +110,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.1
+Terraform v0.11.7
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system.
@@ -137,7 +137,7 @@ providers {
 }
 ```
 
-Read [concepts](../architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](/architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -346,7 +346,7 @@ kube-system   pod-checkpointer-wf65d-node1.example.com   1/1       Running   0  
 
 ## Going Further
 
-Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
+Learn about [maintenance](/topics/maintenance.md) and [addons](/addons/overview.md).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.

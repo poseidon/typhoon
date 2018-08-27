@@ -8,7 +8,7 @@ Let's cover the concepts you'll need to get started.
 
 #### Nodes
 
-Cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the higher order cluster. All nodes run `kube-proxy` and `calico` or `flannel` pods.
+All cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the cluster. All nodes run `kube-proxy` and `calico` or `flannel` pods.
 
 #### Controllers
 
@@ -77,6 +77,7 @@ infra/
 └── terraform
     └── clusters
         ├── aws-tempest.tf
+        ├── azure-ramius.tf
         ├── bare-metal-mercury.tf
         ├── google-cloud-yavin.tf
         ├── digital-ocean-nemo.tf

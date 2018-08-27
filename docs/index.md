@@ -25,6 +25,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
 | AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
+| Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
 | Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
@@ -37,7 +38,7 @@ The AWS and bare-metal `container-linux` modules allow picking Red Hat Container
 ## Documentation
 
 * Architecture [concepts](architecture/concepts.md) and [operating-systems](architecture/operating-systems.md)
-* Tutorials for [AWS](cl/aws.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
+* Tutorials for [AWS](cl/aws.md), [Azure](cl/azure.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
 
 ## Example
 
@@ -70,10 +71,10 @@ module "google-cloud-yavin" {
 }
 ```
 
-Fetch modules, plan the changes to be made, and apply the changes.
+Initialize modules, plan the changes to be made, and apply the changes.
 
 ```sh
-$ terraform get --update
+$ terraform init
 $ terraform plan
 Plan: 64 to add, 0 to change, 0 to destroy.
 $ terraform apply

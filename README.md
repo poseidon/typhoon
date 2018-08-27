@@ -25,6 +25,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
 | AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | alpha |
+| Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
 | Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
@@ -38,7 +39,7 @@ The AWS and bare-metal `container-linux` modules allow picking Red Hat Container
 
 * [Docs](https://typhoon.psdn.io)
 * Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
-* Tutorials for [AWS](https://typhoon.psdn.io/cl/aws/), [Bare-Metal](https://typhoon.psdn.io/cl/bare-metal/), [Digital Ocean](https://typhoon.psdn.io/cl/digital-ocean/), and [Google-Cloud](https://typhoon.psdn.io/cl/google-cloud/)
+* Tutorials for [AWS](cl/aws.md), [Azure](cl/azure.md), [Bare-Metal](cl/bare-metal.md), [Digital Ocean](cl/digital-ocean.md), and [Google-Cloud](cl/google-cloud.md)
 
 ## Usage
 
@@ -71,15 +72,14 @@ module "google-cloud-yavin" {
 }
 ```
 
-Fetch modules, plan the changes to be made, and apply the changes.
+Initialize modules, plan the changes to be made, and apply the changes.
 
 ```sh
 $ terraform init
-$ terraform get --update
 $ terraform plan
-Plan: 37 to add, 0 to change, 0 to destroy.
+Plan: 64 to add, 0 to change, 0 to destroy.
 $ terraform apply
-Apply complete! Resources: 37 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes (varies by platform), the cluster will be ready. This Google Cloud example creates a `yavin.example.com` DNS record to resolve to a network load balancer across controller nodes.

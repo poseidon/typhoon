@@ -12,7 +12,7 @@ Controllers are provisioned to run an `etcd` peer and a `kubelet` service. Worke
 ## Requirements
 
 * Google Cloud Account and Service Account
-* Google Cloud DNS Zone (registered Domain Name or delegated subdomain)
+* Google Cloud DNS Zone (registered main Name or delegated subdomain)
 * Terraform v0.11.x installed locally
 * `gcloud` and `gsutil` for uploading a disk image to Google Cloud (temporary)
 
@@ -25,7 +25,7 @@ $ terraform version
 Terraform v0.11.7
 ```
 
-Read [concepts](../architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](/architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -224,7 +224,7 @@ kube-system   pod-checkpointer-l6lrt                    1/1    Running   0      
 
 ## Going Further
 
-Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
+Learn about [maintenance](/topics/maintenance.md) and [addons](/addons/overview.md).
 
 ## Variables
 

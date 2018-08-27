@@ -12,7 +12,7 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 * Workloads run on worker nodes only, unless they tolerate the master taint
 * Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [Policy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/policy) support [^1]
 
-[^1]: Requires `networking = "calico"`. Calico is the default on AWS, bare-metal, and Google Cloud. Digital Ocean is limited to `networking = "flannel"`.
+[^1]: Requires `networking = "calico"`. Calico is the default on AWS, bare-metal, and Google Cloud. Azure and Digital Ocean are limited to `networking = "flannel"`.
 
 **Hosts**
 
@@ -24,11 +24,13 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 * Cloud firewalls limit access to ssh, kube-apiserver, and ingress
 * No cluster credentials are stored in Matchbox (used for bare-metal)
 * No cluster credentials are stored in Digital Ocean metadata
-* Cluster credentials are stored in Google Cloud metadata (for managed instance groups)
 * Cluster credentials are stored in AWS metadata (for ASGs)
-* No account credentials are available to Google Cloud instances (no IAM permissions)
-* No account credentials are available to AWS EC2 instances (no IAM permissions)
+* Cluster credentials are stored in Azure metadata (for scale sets)
+* Cluster credentials are stored in Google Cloud metadata (for managed instance groups)
 * No account credentials are available to Digital Ocean droplets
+* No account credentials are available to AWS EC2 instances (no IAM permissions)
+* No account credentials are available to Azure instances (no IAM permissions)
+* No account credentials are available to Google Cloud instances (no IAM permissions)
 
 ## Precautions
 

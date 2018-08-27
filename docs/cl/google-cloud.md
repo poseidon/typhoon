@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.1
+Terraform v0.11.7
 ```
 
 Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
@@ -37,7 +37,7 @@ providers {
 }
 ```
 
-Read [concepts](../architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](/architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -199,7 +199,7 @@ kube-system   pod-checkpointer-l6lrt                    1/1    Running   0      
 
 ## Going Further
 
-Learn about [maintenance](../topics/maintenance.md) and [addons](../addons/overview.md).
+Learn about [maintenance](/topics/maintenance.md) and [addons](/addons/overview.md).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
@@ -249,8 +249,8 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-stable-1632-3-0-v20180215" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
-| controller_clc_snippets | Controller Container Linux Config snippets | [] | |
-| worker_clc_snippets | Worker Container Linux Config snippets | [] | |
+| controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization.md) |
+| worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](customization.md) |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
