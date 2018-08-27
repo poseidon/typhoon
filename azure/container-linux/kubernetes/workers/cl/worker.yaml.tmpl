@@ -113,7 +113,7 @@ storage:
             docker://k8s.gcr.io/hyperkube:v1.11.2 \
             --net=host \
             --dns=host \
-            --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
+            --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname | tr '[:upper:]' '[:lower:]')
 passwd:
   users:
     - name: core
