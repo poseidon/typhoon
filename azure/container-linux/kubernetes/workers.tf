@@ -9,11 +9,10 @@ module "workers" {
   security_group_id       = "${azurerm_network_security_group.worker.id}"
   backend_address_pool_id = "${azurerm_lb_backend_address_pool.worker.id}"
 
-  count     = "${var.worker_count}"
-  vm_type   = "${var.worker_type}"
-  os_image  = "${var.os_image}"
-  disk_size = "${var.disk_size}"
-  priority  = "${var.worker_priority}"
+  count    = "${var.worker_count}"
+  vm_type  = "${var.worker_type}"
+  os_image = "${var.os_image}"
+  priority = "${var.worker_priority}"
 
   # configuration
   kubeconfig            = "${module.bootkube.kubeconfig}"

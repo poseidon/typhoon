@@ -8,8 +8,9 @@ locals {
 resource "azurerm_virtual_machine_scale_set" "workers" {
   resource_group_name = "${var.resource_group_name}"
 
-  name     = "${var.name}-workers"
-  location = "${var.region}"
+  name                   = "${var.name}-workers"
+  location               = "${var.region}"
+  single_placement_group = false
 
   sku {
     name     = "${var.vm_type}"
@@ -76,7 +77,7 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
 resource "azurerm_autoscale_setting" "workers" {
   resource_group_name = "${var.resource_group_name}"
 
-  name     = "maintain-desired"
+  name     = "${var.name}-maintain-desired"
   location = "${var.region}"
 
   # autoscale

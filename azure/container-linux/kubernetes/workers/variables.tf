@@ -50,12 +50,6 @@ variable "os_image" {
   description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha)"
 }
 
-variable "disk_size" {
-  type        = "string"
-  default     = "40"
-  description = "Size of the disk in GB"
-}
-
 variable "priority" {
   type        = "string"
   default     = "Regular"

@@ -10,14 +10,24 @@ resource "azurerm_dns_a_record" "apiserver" {
   ttl  = 300
 
   # IPv4 address of apiserver load balancer
-  records = ["${azurerm_public_ip.lb-ipv4.ip_address}"]
+  records = ["${azurerm_public_ip.apiserver-ipv4.ip_address}"]
 }
 
-# Static IPv4 address for the cluster load balancer
-resource "azurerm_public_ip" "lb-ipv4" {
+# Static IPv4 address for the apiserver frontend
+resource "azurerm_public_ip" "apiserver-ipv4" {
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                         = "${var.cluster_name}-lb-ipv4"
+  name                         = "${var.cluster_name}-apiserver-ipv4"
+  location                     = "${var.region}"
+  sku                          = "Standard"
+  public_ip_address_allocation = "static"
+}
+
+# Static IPv4 address for the ingress frontend
+resource "azurerm_public_ip" "ingress-ipv4" {
+  resource_group_name = "${azurerm_resource_group.cluster.name}"
+
+  name                         = "${var.cluster_name}-ingress-ipv4"
   location                     = "${var.region}"
   sku                          = "Standard"
   public_ip_address_allocation = "static"
@@ -32,8 +42,13 @@ resource "azurerm_lb" "cluster" {
   sku      = "Standard"
 
   frontend_ip_configuration {
-    name                 = "public"
-    public_ip_address_id = "${azurerm_public_ip.lb-ipv4.id}"
+    name                 = "apiserver"
+    public_ip_address_id = "${azurerm_public_ip.apiserver-ipv4.id}"
+  }
+
+  frontend_ip_configuration {
+    name                 = "ingress"
+    public_ip_address_id = "${azurerm_public_ip.ingress-ipv4.id}"
   }
 }
 
@@ -42,7 +57,7 @@ resource "azurerm_lb_rule" "apiserver" {
 
   name                           = "apiserver"
   loadbalancer_id                = "${azurerm_lb.cluster.id}"
-  frontend_ip_configuration_name = "public"
+  frontend_ip_configuration_name = "apiserver"
 
   protocol                = "Tcp"
   frontend_port           = 6443
@@ -56,7 +71,7 @@ resource "azurerm_lb_rule" "ingress-http" {
 
   name                           = "ingress-http"
   loadbalancer_id                = "${azurerm_lb.cluster.id}"
-  frontend_ip_configuration_name = "public"
+  frontend_ip_configuration_name = "ingress"
 
   protocol                = "Tcp"
   frontend_port           = 80
@@ -70,7 +85,7 @@ resource "azurerm_lb_rule" "ingress-https" {
 
   name                           = "ingress-https"
   loadbalancer_id                = "${azurerm_lb.cluster.id}"
-  frontend_ip_configuration_name = "public"
+  frontend_ip_configuration_name = "ingress"
 
   protocol                = "Tcp"
   frontend_port           = 443
