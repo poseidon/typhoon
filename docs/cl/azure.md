@@ -1,7 +1,7 @@
 # Azure
 
 !!! danger
-    Typhoon for Azure is alpha. Expect rough edges and changes.
+    Typhoon for Azure is alpha. For production, use AWS, Google Cloud, or bare-metal. As Azure matures, check [errata](https://github.com/poseidon/typhoon/wiki/Errata) for known shortcomings.
 
 In this tutorial, we'll create a Kubernetes v1.11.2 cluster on Azure with Container Linux.
 

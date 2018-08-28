@@ -40,7 +40,7 @@ variable "count" {
 
 variable "vm_type" {
   type        = "string"
-  default     = "Standard_DS1_v2"
+  default     = "Standard_F1"
   description = "Machine type for instances (see `az vm list-skus --location centralus`)"
 }
 

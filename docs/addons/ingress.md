@@ -4,7 +4,7 @@ Nginx Ingress controller pods accept and demultiplex HTTP, HTTPS, TCP, or UDP tr
 
 ## AWS
 
-On AWS, a network load balancer (NLB) distributes traffic across a target group  of worker nodes running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a health Ingress controller receive traffic.
+On AWS, a network load balancer (NLB) distributes traffic across a target group of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health checks ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
@@ -35,44 +35,17 @@ resource "google_dns_record_set" "some-application" {
 }
 ```
 
-## Digital Ocean
+## Azure
 
-On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
-
-Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
-
-```
-kubectl apply -R -f addons/nginx-ingress/digital-ocean
-```
-
-For each application, add a CNAME record resolving to the worker(s) DNS record. Use the Typhoon module's output `workers_dns` to find the worker DNS value. For example, you might use Terraform to manage a Google Cloud DNS record:
-
-```tf
-resource "google_dns_record_set" "some-application" {
-  # DNS zone name
-  managed_zone = "example-zone"
-
-  # DNS record
-  name    = "app.example.com."
-  type    = "CNAME"
-  ttl     = 300
-  rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
-}
-```
-
-[^1]: Digital Ocean does offers load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
-
-## Google Cloud
-
-On Google Cloud, a network load balancer distributes traffic across worker nodes (i.e. a target pool of backends) running an Ingress controller deployment on host ports 80 and 443. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure the target pool only includes worker nodes with a healthy Nginx Ingress controller.
+On Azure, a load balancer distributes traffic across a backend pool of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
 ```
-kubectl apply -R -f addons/nginx-ingress/google-cloud
+kubectl apply -R -f addons/nginx-ingress/azure
 ```
 
-For each application, add a DNS record resolving to the network load balancer's IPv4 address.
+For each application, add a DNS record resolving to the load balancer's IPv4 address.
 
 ```
 app1.example.com -> 11.22.33.44
@@ -80,7 +53,7 @@ aap2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
-Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the load balancer's IPv4 address with the Azure console or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
 
 ```tf
 resource "google_dns_record_set" "some-application" {
@@ -91,7 +64,7 @@ resource "google_dns_record_set" "some-application" {
   name    = "app.example.com."
   type    = "A"
   ttl     = 300
-  rrdatas = ["${module.google-cloud-yavin.ingress_static_ipv4}"]
+  rrdatas = ["${module.azure-ramius.ingress_static_ipv4}"]
 }
 ```
 
@@ -123,5 +96,65 @@ resource "google_dns_record_set" "some-application" {
   type    = "A"
   ttl     = 300
   rrdatas = ["SOME-WAN-IP"]
+}
+```
+
+## Digital Ocean
+
+On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
+
+Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
+
+```
+kubectl apply -R -f addons/nginx-ingress/digital-ocean
+```
+
+For each application, add a CNAME record resolving to the worker(s) DNS record. Use the Typhoon module's output `workers_dns` to find the worker DNS value. For example, you might use Terraform to manage a Google Cloud DNS record:
+
+```tf
+resource "google_dns_record_set" "some-application" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "CNAME"
+  ttl     = 300
+  rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
+}
+```
+
+[^1]: Digital Ocean does offer load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
+
+## Google Cloud
+
+On Google Cloud, a TCP Proxy load balancer distributes traffic across a backend service of worker nodes running an Ingress controller deployment. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a healthy Ingress controller receive traffic.
+
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
+
+```
+kubectl apply -R -f addons/nginx-ingress/google-cloud
+```
+
+For each application, add a DNS record resolving to the load balancer's IPv4 address.
+
+```
+app1.example.com -> 11.22.33.44
+aap2.example.com -> 11.22.33.44
+app3.example.com -> 11.22.33.44
+```
+
+Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
+
+```tf
+resource "google_dns_record_set" "some-application" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "A"
+  ttl     = 300
+  rrdatas = ["${module.google-cloud-yavin.ingress_static_ipv4}"]
 }
 ```

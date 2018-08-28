@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Introduce Typhoon for Azure as alpha ([#288](https://github.com/poseidon/typhoon/pull/288))
+  * Special thanks @justaugustus for an earlier variant
 * Update Calico from v3.1.3 to v3.2.1 ([#278](https://github.com/poseidon/typhoon/pull/278))
 
 #### AWS
