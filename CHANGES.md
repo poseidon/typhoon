@@ -24,6 +24,10 @@ Notable changes between versions.
 * Remove firewall rule allowing workers to access Nginx Ingress health check ([#284](https://github.com/poseidon/typhoon/pull/284))
   * Nginx Ingress addon no longer uses hostNetwork, Prometheus scrapes via CNI network
 
+#### Addons
+
+* Update kube-state-metrics from v1.3.1 to v1.4.0
+
 ## v1.11.2
 
 * Kubernetes [v1.11.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1112)
