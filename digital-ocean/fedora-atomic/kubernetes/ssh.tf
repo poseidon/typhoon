@@ -5,6 +5,7 @@ resource "null_resource" "copy-controller-secrets" {
   connection {
     type    = "ssh"
     host    = "${element(concat(digitalocean_droplet.controllers.*.ipv4_address), count.index)}"
+    private_key = "${var.ssh_fingerprints}"
     user    = "fedora"
     timeout = "15m"
   }
@@ -71,6 +72,7 @@ resource "null_resource" "copy-worker-secrets" {
   connection {
     type    = "ssh"
     host    = "${element(concat(digitalocean_droplet.workers.*.ipv4_address), count.index)}"
+    private_key = "${var.ssh_fingerprints}"
     user    = "fedora"
     timeout = "15m"
   }
