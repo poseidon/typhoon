@@ -16,7 +16,7 @@ For each application, add a DNS CNAME resolving to the NLB's DNS record.
 
 ```
 app1.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
-aap2.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
+app2.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 app3.example.com -> tempest-ingress.123456.us-west2.elb.amazonaws.com
 ```
 
