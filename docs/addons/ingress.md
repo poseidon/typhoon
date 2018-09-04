@@ -49,7 +49,7 @@ For each application, add a DNS record resolving to the load balancer's IPv4 add
 
 ```
 app1.example.com -> 11.22.33.44
-aap2.example.com -> 11.22.33.44
+app2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
@@ -140,7 +140,7 @@ For each application, add a DNS record resolving to the load balancer's IPv4 add
 
 ```
 app1.example.com -> 11.22.33.44
-aap2.example.com -> 11.22.33.44
+app2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
