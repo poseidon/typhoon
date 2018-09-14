@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.11.3
+
+* Kubernetes [v1.11.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.11.md#v1113)
 * Introduce Typhoon for Azure as alpha ([#288](https://github.com/poseidon/typhoon/pull/288))
   * Special thanks @justaugustus for an earlier variant
 * Update Calico from v3.1.3 to v3.2.1 ([#278](https://github.com/poseidon/typhoon/pull/278))
