@@ -1,3 +1,20 @@
+---
+
+kind: ConfigMap
+apiVersion: v1
+data:
+  hsts-include-subdomains: "false"
+  hsts-max-age: "0"
+  hsts: "false"
+  proxy-hide-headers: "Server"
+  server-tokens: "False"
+metadata:
+  name: nginx-configuration
+  namespace: ingress
+  labels:
+    app: ingress-nginx
+---
+
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
