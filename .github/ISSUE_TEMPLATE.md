@@ -4,11 +4,11 @@
 
 ### Environment
 
-* Platform: aws, bare-metal, google-cloud, digital-ocean
+* Platform: aws, azure, bare-metal, google-cloud, digital-ocean
 * OS: container-linux, fedora-atomic
-* Terraform: `terraform version`
-* Plugins: Provider plugin versions
-* Ref: Git SHA (if applicable)
+* Ref: Release version or Git SHA (reporting latest is **not** helpful)
+* Terraform: `terraform version` (reporting latest is **not** helpful)
+* Plugins: Provider plugin versions (reporting latest is **not** helpful)
 
 ### Problem
 
