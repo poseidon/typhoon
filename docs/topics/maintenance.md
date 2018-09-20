@@ -40,7 +40,7 @@ Blue-green replacement reduces risk for clusters running critical applications. 
 Blue-green replacement provides some subtler benefits as well:
 
 * Encourages investment in tooling for traffic migration and failovers. When a cluster incident arises, shifting applications to a healthy cluster will be second nature.
-* Discourages reliance on in-place opqaue state. Retain confidence in your ability to create infrastructure from scratch.
+* Discourages reliance on in-place opaque state. Retain confidence in your ability to create infrastructure from scratch.
 * Allows Typhoon to make architecture changes between releases and eases the burden on Typhoon maintainers. By contrast, distros promising in-place upgrades get stuck with their mistakes or require complex and error-prone migrations.
 
 ### Bare-Metal
