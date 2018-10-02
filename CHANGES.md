@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Update CoreDNS from 1.1.3 to 1.2.2
+* Update Calico from v3.2.1 to v3.2.3
+
 #### Addons
 
 * Update Prometheus from v2.3.2 to v2.4.2
