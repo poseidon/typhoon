@@ -10,7 +10,7 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 * Generated kubelet TLS certificates and `kubeconfig` (365 days)
 * [Role-Based Access Control](https://kubernetes.io/docs/admin/authorization/rbac/) is enabled. Apps must define RBAC policies
 * Workloads run on worker nodes only, unless they tolerate the master taint
-* Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [Policy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/policy) support [^1]
+* Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [NetworkPolicy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/networkpolicy) support [^1]
 
 [^1]: Requires `networking = "calico"`. Calico is the default on AWS, bare-metal, and Google Cloud. Azure and Digital Ocean are limited to `networking = "flannel"`.
 
