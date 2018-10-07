@@ -91,7 +91,7 @@ For networks already supporting iPXE clients, you can add a `default.ipxe` confi
 chain http://matchbox.foo:8080/boot.ipxe
 ```
 
-For networks with Ubiquiti Routers, you can [configure the router](/topics/hardware.md#ubiquiti) itself to chainload machines to iPXE and Matchbox.
+For networks with Ubiquiti Routers, you can [configure the router](/topics/hardware/#ubiquiti) itself to chainload machines to iPXE and Matchbox.
 
 For a small lab, you may wish to checkout the [quay.io/coreos/dnsmasq](https://quay.io/repository/coreos/dnsmasq) container image and [copy-paste examples](https://github.com/coreos/matchbox/blob/master/Documentation/network-setup.md#coreosdnsmasq).
 
@@ -137,7 +137,7 @@ providers {
 }
 ```
 
-Read [concepts](/architecture/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -346,7 +346,7 @@ kube-system   pod-checkpointer-wf65d-node1.example.com   1/1       Running   0  
 
 ## Going Further
 
-Learn about [maintenance](/topics/maintenance.md) and [addons](/addons/overview.md).
+Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.

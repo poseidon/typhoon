@@ -47,4 +47,4 @@ Visit [127.0.0.1:9090](http://127.0.0.1:9090) to query [expressions](http://127.
 <br/>
 ![Prometheus Alerts](../img/prometheus-alerts.png)
 
-Use [Grafana](/addons/grafana.md) to view or build dashboards that use Prometheus as the datasource.
+Use [Grafana](/addons/grafana/) to view or build dashboards that use Prometheus as the datasource.
