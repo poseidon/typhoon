@@ -25,9 +25,11 @@ markdown_extensions:
   - admonition
   - codehilite
   - footnotes
-  - toc(permalink=true)
+  - toc:
+      permalink: true
   - pymdownx.arithmatex
-  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.caret
   - pymdownx.critic
   - pymdownx.emoji:
@@ -37,7 +39,8 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.tilde
 pages:
   - Home: 'index.md'
