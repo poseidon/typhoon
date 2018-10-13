@@ -7,6 +7,8 @@ Notable changes between versions.
 * Update etcd from v3.3.9 to [v3.3.10](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3310-2018-10-10)
 * Update CoreDNS from 1.1.3 to 1.2.2
 * Update Calico from v3.2.1 to v3.2.3
+* On multi-controller clusters, raise scheduler and controller-manager replics to equal the number of controller nodes ([#312](https://github.com/poseidon/typhoon/pull/312))
+  * Single-controller clusters continue to run 2 replicas as before
 
 #### DigitalOcean
 
