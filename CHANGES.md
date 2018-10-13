@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.3.9 to [v3.3.10](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3310-2018-10-10)
 * Update CoreDNS from 1.1.3 to 1.2.2
 * Update Calico from v3.2.1 to v3.2.3
 
