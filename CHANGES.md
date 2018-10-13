@@ -9,6 +9,8 @@ Notable changes between versions.
 * Update Calico from v3.2.1 to v3.2.3
 * On multi-controller clusters, raise scheduler and controller-manager replics to equal the number of controller nodes ([#312](https://github.com/poseidon/typhoon/pull/312))
   * Single-controller clusters continue to run 2 replicas as before
+* Raise default CoreDNS replica count to the larger of 2 or the number of controller nodes ([#313](https://github.com/poseidon/typhoon/pull/313))
+  * Add AntiAffinity preferred rule to favor spreading CoreDNS pods
 
 #### DigitalOcean
 
