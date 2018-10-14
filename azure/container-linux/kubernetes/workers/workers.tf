@@ -37,10 +37,7 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
   os_profile {
     computer_name_prefix = "${var.name}-worker-"
     admin_username       = "core"
-
-    # Required by Azure, but password auth is disabled below
-    admin_password = ""
-    custom_data    = "${element(data.ct_config.worker-ignitions.*.rendered, count.index)}"
+    custom_data          = "${element(data.ct_config.worker-ignitions.*.rendered, count.index)}"
   }
 
   # Azure mandates setting an ssh_key, even though Ignition custom_data handles it too

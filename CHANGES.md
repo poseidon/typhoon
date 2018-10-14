@@ -12,9 +12,14 @@ Notable changes between versions.
 * Raise default CoreDNS replica count to the larger of 2 or the number of controller nodes ([#313](https://github.com/poseidon/typhoon/pull/313))
   * Add AntiAffinity preferred rule to favor spreading CoreDNS pods
 
+#### Azure
+
+* Remove admin_password field (disabled) since it is now optional
+  * Require `terraform-provider-azurerm` v1.16+ (action required)
+
 #### DigitalOcean
 
-* Require terraform-provider-digitalocean plugin 1.0 (or higher but < 2.0)
+* Require `terraform-provider-digitalocean` v1.0+ (action required)
 
 #### Addons
 
