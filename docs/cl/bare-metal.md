@@ -377,7 +377,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| cached_install | Whether machines should PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux images into the cache to use this (coreos only for now) | false | true |
+| cached_install | PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux or Flatcar images into the cache | false | true |
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 

@@ -20,6 +20,10 @@ Notable changes between versions.
 * Remove admin_password field (disabled) since it is now optional
   * Require `terraform-provider-azurerm` v1.16+ (action required)
 
+#### Bare-Metal
+
+* Add support for `cached_install` mode with Flatcar Linux ([#315](https://github.com/poseidon/typhoon/pull/315))
+
 #### DigitalOcean
 
 * Require `terraform-provider-digitalocean` v1.0+ (action required)

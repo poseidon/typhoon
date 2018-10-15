@@ -49,7 +49,7 @@ data "template_file" "container-linux-install-configs" {
 }
 
 // Container Linux Install profile (from matchbox /assets cache)
-// Note: Admin must have downloaded os_version into matchbox assets.
+// Note: Admin must have downloaded os_version into matchbox assets/coreos.
 resource "matchbox_profile" "cached-container-linux-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-cached-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
@@ -87,7 +87,7 @@ data "template_file" "cached-container-linux-install-configs" {
     ssh_authorized_key  = "${var.ssh_authorized_key}"
 
     # profile uses -b baseurl to install from matchbox cache
-    baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/coreos"
+    baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/${local.flavor}"
   }
 }
 
@@ -112,6 +112,30 @@ resource "matchbox_profile" "flatcar-install" {
   ]
 
   container_linux_config = "${element(data.template_file.container-linux-install-configs.*.rendered, count.index)}"
+}
+
+// Flatcar Linux Install profile (from matchbox /assets cache)
+// Note: Admin must have downloaded os_version into matchbox assets/flatcar.
+resource "matchbox_profile" "cached-flatcar-linux-install" {
+  count = "${length(var.controller_names) + length(var.worker_names)}"
+  name  = "${format("%s-cached-flatcar-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
+
+  kernel = "/assets/flatcar/${var.os_version}/flatcar_production_pxe.vmlinuz"
+
+  initrd = [
+    "/assets/flatcar/${var.os_version}/flatcar_production_pxe_image.cpio.gz",
+  ]
+
+  args = [
+    "initrd=flatcar_production_pxe_image.cpio.gz",
+    "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
+    "flatcar.first_boot=yes",
+    "console=tty0",
+    "console=ttyS0",
+    "${var.kernel_args}",
+  ]
+
+  container_linux_config = "${element(data.template_file.cached-container-linux-install-configs.*.rendered, count.index)}"
 }
 
 // Kubernetes Controller profiles
