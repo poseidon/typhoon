@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### AWS
+
+* Add `disk_iops` variable for EBS volume IOPS ([#314](https://github.com/poseidon/typhoon/pull/314))
+
 ## v1.12.1
 
 * Kubernetes [v1.12.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1121)
