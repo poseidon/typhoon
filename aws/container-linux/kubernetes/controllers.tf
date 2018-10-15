@@ -30,6 +30,7 @@ resource "aws_instance" "controllers" {
   root_block_device {
     volume_type = "${var.disk_type}"
     volume_size = "${var.disk_size}"
+    iops        = "${var.disk_iops}"
   }
 
   # network

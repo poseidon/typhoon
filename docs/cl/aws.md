@@ -244,6 +244,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
+| disk_iops | IOPS of the EBS volume (0 for EBS default) | "0" | "400" |
 | worker_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization.md) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization.md) |
