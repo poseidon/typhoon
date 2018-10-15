@@ -3,7 +3,7 @@ resource "matchbox_group" "install" {
 
   name = "${format("install-%s", element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  profile = "${local.flavor == "flatcar" ? element(matchbox_profile.flatcar-install.*.name, count.index) : var.cached_install == "true" ? element(matchbox_profile.cached-container-linux-install.*.name, count.index) : element(matchbox_profile.container-linux-install.*.name, count.index)}"
+  profile = "${local.flavor == "flatcar" ? var.cached_install == "true" ? element(matchbox_profile.cached-flatcar-linux-install.*.name, count.index) : element(matchbox_profile.flatcar-install.*.name, count.index) : var.cached_install == "true" ? element(matchbox_profile.cached-container-linux-install.*.name, count.index) : element(matchbox_profile.container-linux-install.*.name, count.index)}"
 
   selector {
     mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
