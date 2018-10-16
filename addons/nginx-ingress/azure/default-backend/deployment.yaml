@@ -14,6 +14,8 @@ spec:
       labels:
         name: default-backend
         phase: prod
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       containers:
         - name: default-backend

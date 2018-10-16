@@ -17,6 +17,8 @@ spec:
       labels:
         name: nginx-ingress-controller
         phase: prod
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       nodeSelector:
         node-role.kubernetes.io/node: ""

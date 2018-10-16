@@ -17,6 +17,8 @@ spec:
       labels:
         name: ingress-controller-public
         phase: prod
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       containers:
         - name: nginx-ingress-controller
