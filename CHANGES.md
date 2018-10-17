@@ -11,6 +11,8 @@ Notable changes between versions.
   * Single-controller clusters continue to run 2 replicas as before
 * Raise default CoreDNS replica count to the larger of 2 or the number of controller nodes ([#313](https://github.com/poseidon/typhoon/pull/313))
   * Add AntiAffinity preferred rule to favor spreading CoreDNS pods
+* Annotate Kubernetes control plane and addons to start containers with the Docker runtime's default seccomp profile
+  * Override Kubernetes default behavior that starts containers with seccomp=unconfined
 
 #### Azure
 

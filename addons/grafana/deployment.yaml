@@ -18,6 +18,8 @@ spec:
       labels:
         name: grafana
         phase: prod
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       containers:
         - name: grafana

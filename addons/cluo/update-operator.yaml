@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: container-linux-update-operator
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       containers:
       - name: update-operator
