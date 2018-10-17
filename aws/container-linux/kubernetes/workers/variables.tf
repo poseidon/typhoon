@@ -52,6 +52,12 @@ variable "disk_type" {
   description = "Type of the EBS volume (e.g. standard, gp2, io1)"
 }
 
+variable "disk_iops" {
+  type        = "string"
+  default     = "0"
+  description = "IOPS of the EBS volume (required for io1)"
+}
+
 variable "spot_price" {
   type        = "string"
   default     = ""
