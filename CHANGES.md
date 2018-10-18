@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Switch kube-proxy from iptables mode to ipvs mode
 * Fix CoreDNS AntiAffinity spec to prefer spreading replicas
 * Disable Kubelet read-only port ([#324](https://github.com/poseidon/typhoon/pull/324))
 
