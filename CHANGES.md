@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Fix CoreDNS AntiAffinity spec to prefer spreading replicas
+
 #### AWS
 
 * Add `disk_iops` variable for EBS volume IOPS ([#314](https://github.com/poseidon/typhoon/pull/314))
