@@ -5,7 +5,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: system:heapster
+  name: heapster
 subjects:
 - kind: ServiceAccount
   name: heapster
