@@ -24,7 +24,7 @@ resource "aws_instance" "controllers" {
   instance_type = "${var.controller_type}"
 
   ami       = "${local.ami_id}"
-  user_data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
+  user_data = "${element(data.ct_config.controller-ignitions.*.rendered, count.index)}"
 
   # storage
   root_block_device {
@@ -75,7 +75,7 @@ data "template_file" "etcds" {
   }
 }
 
-data "ct_config" "controller_ign" {
+data "ct_config" "controller-ignitions" {
   count        = "${var.controller_count}"
   content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
   pretty_print = false

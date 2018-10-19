@@ -25,7 +25,7 @@ resource "digitalocean_droplet" "workers" {
   ipv6               = true
   private_networking = true
 
-  user_data = "${data.ct_config.worker_ign.rendered}"
+  user_data = "${data.ct_config.worker-ignition.rendered}"
   ssh_keys  = ["${var.ssh_fingerprints}"]
 
   tags = [
@@ -48,7 +48,7 @@ data "template_file" "worker_config" {
   }
 }
 
-data "ct_config" "worker_ign" {
+data "ct_config" "worker-ignition" {
   content      = "${data.template_file.worker_config.rendered}"
   pretty_print = false
   snippets     = ["${var.worker_clc_snippets}"]

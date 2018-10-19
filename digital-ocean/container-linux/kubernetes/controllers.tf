@@ -44,7 +44,7 @@ resource "digitalocean_droplet" "controllers" {
   ipv6               = true
   private_networking = true
 
-  user_data = "${element(data.ct_config.controller_ign.*.rendered, count.index)}"
+  user_data = "${element(data.ct_config.controller-ignitions.*.rendered, count.index)}"
   ssh_keys  = ["${var.ssh_fingerprints}"]
 
   tags = [
@@ -86,7 +86,7 @@ data "template_file" "etcds" {
   }
 }
 
-data "ct_config" "controller_ign" {
+data "ct_config" "controller-ignitions" {
   count        = "${var.controller_count}"
   content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
   pretty_print = false
