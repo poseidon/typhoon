@@ -46,7 +46,7 @@ resource "aws_launch_configuration" "worker" {
   spot_price        = "${var.spot_price}"
   enable_monitoring = false
 
-  user_data = "${data.ct_config.worker_ign.rendered}"
+  user_data = "${data.ct_config.worker-ignition.rendered}"
 
   # storage
   root_block_device {
@@ -77,7 +77,7 @@ data "template_file" "worker_config" {
   }
 }
 
-data "ct_config" "worker_ign" {
+data "ct_config" "worker-ignition" {
   content      = "${data.template_file.worker_config.rendered}"
   pretty_print = false
   snippets     = ["${var.clc_snippets}"]
