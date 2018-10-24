@@ -4,8 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
-* Fix CoreDNS AntiAffinity spec to prefer spreading replicas
+* Update Calico from v3.2.3 to [v3.3.0](https://docs.projectcalico.org/v3.3/releases/)
 * Disable Kubelet read-only port ([#324](https://github.com/poseidon/typhoon/pull/324))
+* Fix CoreDNS AntiAffinity spec to prefer spreading replicas
 
 #### AWS
 
