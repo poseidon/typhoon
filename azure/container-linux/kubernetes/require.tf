@@ -23,4 +23,3 @@ provider "template" {
 provider "tls" {
   version = "~> 1.0"
 }
-

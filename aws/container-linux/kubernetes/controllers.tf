@@ -43,8 +43,16 @@ resource "aws_instance" "controllers" {
   }
 }
 
-# Controller Container Linux Config
-data "template_file" "controller_config" {
+# Controller Ignition configs
+data "ct_config" "controller-ignitions" {
+  count        = "${var.controller_count}"
+  content      = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
+  pretty_print = false
+  snippets     = ["${var.controller_clc_snippets}"]
+}
+
+# Controller Container Linux configs
+data "template_file" "controller-configs" {
   count = "${var.controller_count}"
 
   template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
@@ -73,11 +81,4 @@ data "template_file" "etcds" {
     cluster_name = "${var.cluster_name}"
     dns_zone     = "${var.dns_zone}"
   }
-}
-
-data "ct_config" "controller-ignitions" {
-  count        = "${var.controller_count}"
-  content      = "${element(data.template_file.controller_config.*.rendered, count.index)}"
-  pretty_print = false
-  snippets     = ["${var.controller_clc_snippets}"]
 }
