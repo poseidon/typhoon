@@ -16,6 +16,10 @@ Notable changes between versions.
 
 * Add `disk_iops` variable for EBS volume IOPS ([#314](https://github.com/poseidon/typhoon/pull/314))
 
+#### Azure
+
+* Add `primary` field to `ip_configuration`. Required by `terraform-provider-azurerm` v1.17+ ([#331](https://github.com/poseidon/typhoon/pull/331))
+
 #### Addons
 
 * Configure Heapster to scrape Kubelets with bearer token auth ([#323](https://github.com/poseidon/typhoon/pull/323))

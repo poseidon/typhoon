@@ -58,6 +58,7 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
 
     ip_configuration {
       name      = "ip0"
+      primary   = true
       subnet_id = "${var.subnet_id}"
 
       # backend address pool to which the NIC should be added
