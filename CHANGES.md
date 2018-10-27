@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.12.2
+
+* Kubernetes [v1.12.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1122)
+* Update CoreDNS from 1.2.2 to [1.2.4](https://github.com/coredns/coredns/releases/tag/v1.2.4)
 * Update Calico from v3.2.3 to [v3.3.0](https://docs.projectcalico.org/v3.3/releases/)
 * Disable Kubelet read-only port ([#324](https://github.com/poseidon/typhoon/pull/324))
 * Fix CoreDNS AntiAffinity spec to prefer spreading replicas
