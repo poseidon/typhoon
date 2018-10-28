@@ -43,6 +43,10 @@ resource "digitalocean_droplet" "workers" {
   tags = [
     "${digitalocean_tag.workers.id}",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # Tag to label workers

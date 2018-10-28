@@ -39,7 +39,10 @@ resource "aws_instance" "controllers" {
   vpc_security_group_ids      = ["${aws_security_group.controller.id}"]
 
   lifecycle {
-    ignore_changes = ["ami"]
+    ignore_changes = [
+      "ami",
+      "user_data",
+    ]
   }
 }
 

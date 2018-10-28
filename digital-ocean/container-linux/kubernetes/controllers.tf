@@ -50,6 +50,12 @@ resource "digitalocean_droplet" "controllers" {
   tags = [
     "${digitalocean_tag.controllers.id}",
   ]
+
+  lifecycle {
+    ignore_changes = [
+      "user_data",
+    ]
+  }
 }
 
 # Tag to label controllers

@@ -11,6 +11,8 @@ Notable changes between versions.
 * Update Calico from v3.2.3 to [v3.3.0](https://docs.projectcalico.org/v3.3/releases/)
 * Disable Kubelet read-only port ([#324](https://github.com/poseidon/typhoon/pull/324))
 * Fix CoreDNS AntiAffinity spec to prefer spreading replicas
+* Ignore controller node user-data changes ([#335](https://github.com/poseidon/typhoon/pull/335))
+  * Once all managed clusters use v1.12.2, it is possible to update `terraform-provider-ct`
 
 #### AWS
 
@@ -29,7 +31,7 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Add an IPv6 address and IPv6 forwarding rules for load balancing IPv6 Ingress 
+* Add an IPv6 address and IPv6 forwarding rules for load balancing IPv6 Ingress ([#334](https://github.com/poseidon/typhoon/pull/334))
   * Add `ingress_static_ipv6` output variable for use in AAAA DNS records
   * Allow serving IPv6 applications via Kubernetes Ingress
 

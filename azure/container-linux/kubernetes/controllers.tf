@@ -85,6 +85,7 @@ resource "azurerm_virtual_machine" "controllers" {
   lifecycle {
     ignore_changes = [
       "storage_os_disk",
+      "os_profile",
     ]
   }
 }
