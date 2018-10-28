@@ -3,7 +3,8 @@ output "controllers_dns" {
 }
 
 output "workers_dns" {
-  value = "${digitalocean_record.workers.0.fqdn}"
+  # Multiple A and AAAA records with the same FQDN
+  value = "${digitalocean_record.workers-record-a.0.fqdn}"
 }
 
 output "controllers_ipv4" {
