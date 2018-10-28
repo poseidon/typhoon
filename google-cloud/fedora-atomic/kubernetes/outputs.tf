@@ -5,6 +5,11 @@ output "ingress_static_ipv4" {
   value       = "${google_compute_global_address.ingress-ipv4.address}"
 }
 
+output "ingress_static_ipv6" {
+  description = "Global IPv6 address for proxy load balancing to the nearest Ingress controller"
+  value       = "${google_compute_global_address.ingress-ipv6.address}"
+}
+
 # Outputs for worker pools
 
 output "network_name" {

@@ -48,6 +48,11 @@ nav:
   - 'Architecture':
     - 'Concepts': 'architecture/concepts.md'
     - 'Operating Systems': 'architecture/operating-systems.md'
+    - 'AWS': 'architecture/aws.md'
+    - 'Azure': 'architecture/azure.md'
+    - 'Bare-Metal': 'architecture/bare-metal.md'
+    - 'DigitalOcean': 'architecture/digitalocean.md'
+    - 'Google Cloud': 'architecture/google-cloud.md'
   - 'Container Linux': 
     - 'AWS': 'cl/aws.md'
     - 'Azure': 'cl/azure.md'

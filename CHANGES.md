@@ -27,6 +27,12 @@ Notable changes between versions.
 * Add AAAA DNS records resolving to worker nodes ([#333](https://github.com/poseidon/typhoon/pull/333))
   * Hosting IPv6 apps requires editing nginx-ingress with `hostNetwork: true`
 
+#### Google Cloud
+
+* Add an IPv6 address and IPv6 forwarding rules for load balancing IPv6 Ingress 
+  * Add `ingress_static_ipv6` output variable for use in AAAA DNS records
+  * Allow serving IPv6 applications via Kubernetes Ingress
+
 #### Addons
 
 * Configure Heapster to scrape Kubelets with bearer token auth ([#323](https://github.com/poseidon/typhoon/pull/323))

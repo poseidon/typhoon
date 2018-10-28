@@ -131,7 +131,7 @@ resource "google_dns_record_set" "some-application" {
 
 ## Google Cloud
 
-On Google Cloud, a TCP Proxy load balancer distributes traffic across a backend service of worker nodes running an Ingress controller deployment. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a healthy Ingress controller receive traffic.
+On Google Cloud, a TCP Proxy load balancer distributes IPv4 and IPv6 TCP traffic across a backend service of worker nodes running an Ingress controller deployment. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
@@ -139,7 +139,7 @@ Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, de
 kubectl apply -R -f addons/nginx-ingress/google-cloud
 ```
 
-For each application, add a DNS record resolving to the load balancer's IPv4 address.
+For each application, add DNS A records resolving to the load balancer's IPv4 address and DNS AAAA records resolving to the load balancer's IPv6 address.
 
 ```
 app1.example.com -> 11.22.33.44
@@ -147,10 +147,10 @@ app2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
-Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the IPv4 address with `gcloud compute addresses list` or use the Typhoon module's outputs `ingress_static_ipv4` and `ingress_static_ipv6`. For example, you might use Terraform to manage a Google Cloud DNS record:
 
 ```tf
-resource "google_dns_record_set" "some-application" {
+resource "google_dns_record_set" "app-record-a" {
   # DNS zone name
   managed_zone = "example-zone"
 
@@ -159,5 +159,16 @@ resource "google_dns_record_set" "some-application" {
   type    = "A"
   ttl     = 300
   rrdatas = ["${module.google-cloud-yavin.ingress_static_ipv4}"]
+}
+
+resource "google_dns_record_set" "app-record-aaaa" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "AAAA"
+  ttl     = 300
+  rrdatas = ["${module.google-cloud-yavin.ingress_static_ipv6}"]
 }
 ```
