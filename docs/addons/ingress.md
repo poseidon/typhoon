@@ -4,7 +4,7 @@ Nginx Ingress controller pods accept and demultiplex HTTP, HTTPS, TCP, or UDP tr
 
 ## AWS
 
-On AWS, a network load balancer (NLB) distributes traffic across a target group of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health checks ensure only workers with a healthy Ingress controller receive traffic.
+On AWS, a network load balancer (NLB) distributes TCP traffic across two target groups (port 80 and 443) of worker nodes running an Ingress controller deployment. Security groups rules allow traffic to ports 80 and 443. Health checks ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
@@ -37,7 +37,7 @@ resource "google_dns_record_set" "some-application" {
 
 ## Azure
 
-On Azure, a load balancer distributes traffic across a backend pool of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
+On Azure, a load balancer distributes traffic across a backend address pool of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
@@ -101,7 +101,7 @@ resource "google_dns_record_set" "some-application" {
 
 ## Digital Ocean
 
-On Digital Ocean, a DNS A record (e.g. `nemo-workers.example.com`) resolves to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
+On Digital Ocean, DNS A and AAAA records (e.g. FQDN `nemo-workers.example.com`) resolve to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
 
 Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
 
@@ -123,6 +123,9 @@ resource "google_dns_record_set" "some-application" {
   rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
 }
 ```
+
+!!! note
+    Hosting IPv6 apps is possible, but requires editing the nginx-ingress addon to use `hostNetwork: true`.
 
 [^1]: Digital Ocean does offer load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
 

@@ -22,6 +22,11 @@ Notable changes between versions.
   * Require `terraform-provider-azurerm` v1.17+ (action required)
 * Add `primary` field to `ip_configuration` needed by v1.17+ ([#331](https://github.com/poseidon/typhoon/pull/331))
 
+#### DigitalOcean
+
+* Add AAAA DNS records resolving to worker nodes ([#333](https://github.com/poseidon/typhoon/pull/333))
+  * Hosting IPv6 apps requires editing nginx-ingress with `hostNetwork: true`
+
 #### Addons
 
 * Configure Heapster to scrape Kubelets with bearer token auth ([#323](https://github.com/poseidon/typhoon/pull/323))

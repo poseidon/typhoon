@@ -1,5 +1,5 @@
 # Worker DNS records
-resource "digitalocean_record" "workers" {
+resource "digitalocean_record" "workers-record-a" {
   count = "${var.worker_count}"
 
   # DNS zone where record should be created
@@ -9,6 +9,18 @@ resource "digitalocean_record" "workers" {
   type  = "A"
   ttl   = 300
   value = "${element(digitalocean_droplet.workers.*.ipv4_address, count.index)}"
+}
+
+resource "digitalocean_record" "workers-record-aaaa" {
+  count = "${var.worker_count}"
+
+  # DNS zone where record should be created
+  domain = "${var.dns_zone}"
+
+  name  = "${var.cluster_name}-workers"
+  type  = "AAAA"
+  ttl   = 300
+  value = "${element(digitalocean_droplet.workers.*.ipv6_address, count.index)}"
 }
 
 # Worker droplet instances
