@@ -18,7 +18,9 @@ Notable changes between versions.
 
 #### Azure
 
-* Add `primary` field to `ip_configuration`. Required by `terraform-provider-azurerm` v1.17+ ([#331](https://github.com/poseidon/typhoon/pull/331))
+* Use new `azurerm_network_interface_backend_address_pool_association` ([#332](https://github.com/poseidon/typhoon/pull/332))
+  * Require `terraform-provider-azurerm` v1.17+ (action required)
+* Add `primary` field to `ip_configuration` needed by v1.17+ ([#331](https://github.com/poseidon/typhoon/pull/331))
 
 #### Addons
 

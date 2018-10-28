@@ -105,10 +105,14 @@ resource "azurerm_network_interface" "controllers" {
 
     # public IPv4
     public_ip_address_id = "${element(azurerm_public_ip.controllers.*.id, count.index)}"
-
-    # backend address pool to which the NIC should be added
-    load_balancer_backend_address_pools_ids = ["${azurerm_lb_backend_address_pool.controller.id}"]
   }
+}
+
+# Add controller NICs to the controller backend address pool
+resource "azurerm_network_interface_backend_address_pool_association" "controllers" {
+  network_interface_id    = "${azurerm_network_interface.controllers.id}"
+  ip_configuration_name   = "ip0"
+  backend_address_pool_id = "${azurerm_lb_backend_address_pool.controller.id}"
 }
 
 # Controller public IPv4 addresses
