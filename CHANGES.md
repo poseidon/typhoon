@@ -38,6 +38,7 @@ Notable changes between versions.
 #### Addons
 
 * Configure Heapster to scrape Kubelets with bearer token auth ([#323](https://github.com/poseidon/typhoon/pull/323))
+* Update Grafana from v5.3.1 to v5.3.2
 
 ## v1.12.1
 
