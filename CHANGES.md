@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
+
 ## v1.12.2
 
 * Kubernetes [v1.12.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1122)

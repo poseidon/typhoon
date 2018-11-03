@@ -1,23 +1,8 @@
 #cloud-config
 write_files:
-  - path: /etc/systemd/system/cloud-metadata.service
-    content: |
-      [Unit]
-      Description=Cloud metadata agent
-      [Service]
-      Type=oneshot
-      Environment=OUTPUT=/run/metadata/cloud
-      ExecStart=/usr/bin/mkdir -p /run/metadata
-      ExecStart=/usr/bin/bash -c 'echo "HOSTNAME_OVERRIDE=$(curl\
-        --url http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address\
-        --retry 10)" > $${OUTPUT}'
-      [Install]
-      WantedBy=multi-user.target
   - path: /etc/systemd/system/kubelet.service.d/10-typhoon.conf
     content: |
       [Unit]
-      Requires=cloud-metadata.service
-      After=cloud-metadata.service
       Wants=rpc-statd.service
       [Service]
       ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -66,7 +51,6 @@ bootcmd:
   - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
-  - [systemctl, enable, cloud-metadata.service]
   - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.12.2"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]

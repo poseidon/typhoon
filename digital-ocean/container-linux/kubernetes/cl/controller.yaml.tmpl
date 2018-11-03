@@ -56,12 +56,9 @@ systemd:
       contents: |
         [Unit]
         Description=Kubelet via Hyperkube
-        Requires=coreos-metadata.service
-        After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
         EnvironmentFile=/etc/kubernetes/kubelet.env
-        EnvironmentFile=/run/metadata/coreos
         Environment="RKT_RUN_ARGS=--uuid-file-save=/var/cache/kubelet-pod.uuid \
           --volume=resolv,kind=host,source=/etc/resolv.conf \
           --mount volume=resolv,target=/etc/resolv.conf \
@@ -93,7 +90,6 @@ systemd:
           --cluster_domain=${cluster_domain_suffix} \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --exit-on-lock-contention \
-          --hostname-override=$${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0} \
           --kubeconfig=/etc/kubernetes/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \

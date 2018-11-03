@@ -112,7 +112,7 @@ module "azure-ramius" {
   asset_dir          = "/home/user/.secrets/clusters/ramius"
 
   # optional
-  worker_count    = 3
+  worker_count    = 2
   host_cidr       = "10.0.0.0/20"
 }
 ```
@@ -168,7 +168,6 @@ NAME                  STATUS  ROLES              AGE  VERSION
 ramius-controller-0   Ready   controller,master  24m  v1.12.2
 ramius-worker-000001  Ready   node               25m  v1.12.2
 ramius-worker-000002  Ready   node               24m  v1.12.2
-ramius-worker-000005  Ready   node               24m  v1.12.2
 ```
 
 List the pods.

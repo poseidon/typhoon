@@ -317,10 +317,10 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
-NAME                STATUS    AGE       VERSION
-node1.example.com   Ready     11m       v1.12.2
-node2.example.com   Ready     11m       v1.12.2
-node3.example.com   Ready     11m       v1.12.2
+NAME                STATUS  ROLES              AGE  VERSION
+node1.example.com   Ready   controller,master  10m  v1.12.2
+node2.example.com   Ready   node               10m  v1.12.2
+node3.example.com   Ready   node               10m  v1.12.2
 ```
 
 List the pods.
@@ -331,6 +331,7 @@ NAMESPACE     NAME                                       READY     STATUS    RES
 kube-system   calico-node-6qp7f                          2/2       Running   1          11m
 kube-system   calico-node-gnjrm                          2/2       Running   0          11m
 kube-system   calico-node-llbgt                          2/2       Running   0          11m
+kube-system   coredns-1187388186-dj3pd                   1/1       Running   0          11m
 kube-system   coredns-1187388186-mx9rt                   1/1       Running   0          11m
 kube-system   kube-apiserver-7336w                       1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-b9chx   1/1       Running   0          11m

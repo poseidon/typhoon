@@ -168,10 +168,10 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
-NAME             STATUS    AGE       VERSION        
-ip-10-0-12-221   Ready     34m       v1.12.2
-ip-10-0-19-112   Ready     34m       v1.12.2
-ip-10-0-4-22     Ready     34m       v1.12.2
+NAME           STATUS  ROLES              AGE  VERSION
+ip-10-0-3-155  Ready   controller,master  10m  v1.12.2
+ip-10-0-26-65  Ready   node               10m  v1.12.2
+ip-10-0-41-21  Ready   node               10m  v1.12.2
 ```
 
 List the pods.
@@ -183,6 +183,7 @@ kube-system   calico-node-1m5bf                         2/2    Running   0      
 kube-system   calico-node-7jmr1                         2/2    Running   0         34m              
 kube-system   calico-node-bknc8                         2/2    Running   0         34m              
 kube-system   coredns-1187388186-wx1lg                  1/1    Running   0         34m              
+kube-system   coredns-1187388186-qjnvp                  1/1    Running   0         34m
 kube-system   kube-apiserver-4mjbk                      1/1    Running   0         34m              
 kube-system   kube-controller-manager-3597210155-j2jbt  1/1    Running   1         34m              
 kube-system   kube-controller-manager-3597210155-j7g7x  1/1    Running   0         34m              
@@ -192,7 +193,7 @@ kube-system   kube-proxy-sbbsh                          1/1    Running   0      
 kube-system   kube-scheduler-3359497473-5plhf           1/1    Running   0         34m              
 kube-system   kube-scheduler-3359497473-r7zg7           1/1    Running   1         34m              
 kube-system   pod-checkpointer-4kxtl                    1/1    Running   0         34m              
-kube-system   pod-checkpointer-4kxtl-ip-10-0-12-221     1/1    Running   0         33m
+kube-system   pod-checkpointer-4kxtl-ip-10-0-3-155      1/1    Running   0         33m
 ```
 
 ## Going Further
