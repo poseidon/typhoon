@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
+* Use kubernetes-incubator/bootkube v0.14.0
 
 #### Addons
 
