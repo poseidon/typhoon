@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
 
+#### Addons
+
+* Update Prometheus from v2.4.3 to v2.5.0
+
 ## v1.12.2
 
 * Kubernetes [v1.12.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1122)
