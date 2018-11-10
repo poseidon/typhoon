@@ -175,12 +175,12 @@ List the pods.
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   coredns-1187388186-ld1j7                   1/1       Running   0          11m
 kube-system   coredns-1187388186-rdhf7                   1/1       Running   0          11m
+kube-system   flannel-1cq1v                              2/2       Running   0          11m
+kube-system   flannel-hq9t0                              2/2       Running   1          11m
+kube-system   flannel-v0g9w                              2/2       Running   0          11m
 kube-system   kube-apiserver-n10qr                       1/1       Running   0          11m
 kube-system   kube-controller-manager-3271970485-37gtw   1/1       Running   1          11m
 kube-system   kube-controller-manager-3271970485-p52t5   1/1       Running   0          11m
-kube-system   kube-flannel-1cq1v                         2/2       Running   0          11m
-kube-system   kube-flannel-hq9t0                         2/2       Running   1          11m
-kube-system   kube-flannel-v0g9w                         2/2       Running   0          11m
 kube-system   kube-proxy-6kxjf                           1/1       Running   0          11m
 kube-system   kube-proxy-fh3td                           1/1       Running   0          11m
 kube-system   kube-proxy-k35rc                           1/1       Running   0          11m

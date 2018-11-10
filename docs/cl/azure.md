@@ -176,17 +176,16 @@ List the pods.
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                        READY  STATUS    RESTARTS  AGE
 kube-system   coredns-7c6fbb4f4b-b6qzx                    1/1    Running   0         26m
+kube-system   coredns-7c6fbb4f4b-j2k3d                    1/1    Running   0         26m
+kube-system   flannel-bwf24                               2/2    Running   2         26m
+kube-system   flannel-ks5qb                               2/2    Running   0         26m
+kube-system   flannel-tq2wg                               2/2    Running   0         26m
 kube-system   kube-apiserver-hxgsx                        1/1    Running   3         26m
 kube-system   kube-controller-manager-5ff9cd7bb6-b942n    1/1    Running   0         26m
 kube-system   kube-controller-manager-5ff9cd7bb6-bbr6w    1/1    Running   0         26m
-kube-system   kube-flannel-bwf24                          2/2    Running   2         26m
-kube-system   kube-flannel-ks5qb                          2/2    Running   0         26m
-kube-system   kube-flannel-nghsx                          2/2    Running   2         26m
-kube-system   kube-flannel-tq2wg                          2/2    Running   0         26m
 kube-system   kube-proxy-j4vpq                            1/1    Running   0         26m
 kube-system   kube-proxy-jxr5d                            1/1    Running   0         26m
 kube-system   kube-proxy-lbdw5                            1/1    Running   0         26m
-kube-system   kube-proxy-v8r7c                            1/1    Running   0         26m
 kube-system   kube-scheduler-5f76d69686-s4fbx             1/1    Running   0         26m
 kube-system   kube-scheduler-5f76d69686-vgdgn             1/1    Running   0         26m
 kube-system   pod-checkpointer-cnqdg                      1/1    Running   0         26m

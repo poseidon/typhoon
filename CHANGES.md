@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
 * Update Calico from v3.3.0 to [v3.3.1](https://docs.projectcalico.org/v3.3/releases/)
+* Change name of `kube-flannel` DaemonSet to `flannel`
 * Use kubernetes-incubator/bootkube v0.14.0
 
 #### Addons
