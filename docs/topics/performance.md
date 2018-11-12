@@ -24,17 +24,17 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 
 | Platform / Plugin          | Theory | Host to Host | Pod to Pod   |
 |----------------------------|-------:|-------------:|-------------:|
-| AWS (flannel)              | ?      | 976 MB/s     | 900-999 MB/s |
-| AWS (calico, MTU 1480)     | ?      | 976 MB/s     | 100-350 MB/s |
-| AWS (calico, MTU 8981)     | ?      | 976 MB/s     | 900-999 MB/s |
-| Azure (flannel)            | ?      | 749 MB/s     | 680 MB/s     |
-| Bare-Metal (flannel)       | 1 GB/s | ~940 MB/s    | 903 MB/s     | 
-| Bare-Metal (calico)        | 1 GB/s | ~940 MB/s    | 931 MB/s     |
-| Bare-Metal (flannel, bond) | 3 GB/s |  2.3 GB/s    | 1.17 GB/s    | 
-| Bare-Metal (calico, bond)  | 3 GB/s |  2.3 GB/s    | 1.17 GB/s    |
-| Digital Ocean              | ?      | ~940 MB/s     | 820-880 MB/s |
-| Google Cloud (flannel)     | ?      | 1.94 GB/s    | 1.76 GB/s    |
-| Google Cloud (calico)      | ?      | 1.94 GB/s    | 1.81 GB/s    |
+| AWS (flannel)              | Varies | 976 Mb/s     | 900-999 Mb/s |
+| AWS (calico, MTU 1480)     | Varies | 976 Mb/s     | 100-350 Mb/s |
+| AWS (calico, MTU 8981)     | Varies | 976 Mb/s     | 900-999 Mb/s |
+| Azure (flannel)            | Varies | 749 Mb/s     | 680 Mb/s     |
+| Bare-Metal (flannel)       | 1 Gb/s | ~940 Mb/s    | 903 Mb/s     |
+| Bare-Metal (calico)        | 1 Gb/s | ~940 Mb/s    | 931 Mb/s     |
+| Bare-Metal (flannel, bond) | 3 Gb/s |  2.3 Gb/s    | 1.17 Gb/s    |
+| Bare-Metal (calico, bond)  | 3 Gb/s |  2.3 Gb/s    | 1.17 Gb/s    |
+| Digital Ocean              | 2 Gb/s | 1.97 Gb/s    | 1.64 Gb/s    |
+| Google Cloud (flannel)     | 2 Gb/s | 1.94 Gb/s    | 1.76 Gb/s    |
+| Google Cloud (calico)      | 2 Gb/s | 1.94 Gb/s    | 1.81 Gb/s    |
 
 Notes:
 
