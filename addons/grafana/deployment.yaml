@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:5.3.2
+          image: grafana/grafana:5.3.4
           env:
             - name: GF_SERVER_HTTP_PORT
               value: "8080"
