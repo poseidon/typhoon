@@ -67,8 +67,9 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
   }
 
   # lifecycle
-  priority            = "${var.priority}"
   upgrade_policy_mode = "Manual"
+  priority            = "${var.priority}"
+  eviction_policy     = "Delete"
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.

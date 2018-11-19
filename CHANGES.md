@@ -13,6 +13,12 @@ Notable changes between versions.
   * Enable CoreDNS `loop` and `loadbalance` plugins ([#340](https://github.com/poseidon/typhoon/pull/340))
 * Use kubernetes-incubator/bootkube v0.14.0
 
+#### Azure
+
+* Use eviction policy `Delete` for `Low` priority virtual machine scale set workers ([#343](https://github.com/poseidon/typhoon/pull/343))
+  * Fix issue where Azure defaults to `Deallocate` eviction policy, which required manually restarting deallocated instances. `Delete` policy aligns Azure with AWS and GCP behavior.
+  * Require `terraform-provider-azurerm` v1.19+ (action required)
+
 #### Addons
 
 * Update Prometheus from v2.4.3 to v2.5.0
