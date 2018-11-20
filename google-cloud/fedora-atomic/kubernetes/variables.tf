@@ -102,3 +102,9 @@ variable "cluster_domain_suffix" {
   type        = "string"
   default     = "cluster.local"
 }
+
+variable "enable_reporting" {
+  type        = "string"
+  description = "Enable usage or analytics reporting to upstreams (Calico)"
+  default     = "false"
+}
