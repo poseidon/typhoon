@@ -13,6 +13,7 @@ Notable changes between versions.
 * Update CoreDNS from v1.2.4 to [v1.2.6](https://coredns.io/2018/11/05/coredns-1.2.6-release/)
   * Enable CoreDNS `loop` and `loadbalance` plugins ([#340](https://github.com/poseidon/typhoon/pull/340))
 * Add `enable_reporting` variable (default "false") to provide upstreams with usage data ([#345](https://github.com/poseidon/typhoon/pull/345))
+* Fix pod-checkpointer detection for new checkpointable pods and log noise ([#346](https://github.com/poseidon/typhoon/pull/346))
 * Use kubernetes-incubator/bootkube v0.14.0
 
 #### Azure
