@@ -16,6 +16,9 @@ Notable changes between versions.
   * Enable CoreDNS `loop` and `loadbalance` plugins ([#340](https://github.com/poseidon/typhoon/pull/340))
 * Fix pod-checkpointer log noise and checkpointable pods detection ([#346](https://github.com/poseidon/typhoon/pull/346))
 * Use kubernetes-incubator/bootkube v0.14.0
+* [Recommend](https://typhoon.psdn.io/topics/maintenance/#terraform-plugins-directory) switching from `~/.terraformrc` to the Terraform [third-party plugins](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) directory `~/.terraform.d/plugins/`.
+  * Allows pinning `terraform-provider-ct` and `terraform-provider-matchbox` versions
+  * Improves safety of later plugin version migrations
 
 #### Azure
 

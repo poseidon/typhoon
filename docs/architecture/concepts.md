@@ -69,7 +69,7 @@ Module versioning ensures `terraform get --update` only fetches the desired vers
 
 Maintain Terraform configs for "live" infrastructure in a versioned repository. Seek to organize configs to reflect resources that should be managed together in a `terraform apply` invocation.
 
-You may choose to organize resources all together, by team, by project, or some other scheme. Here's an example that manages four clusters together:
+You may choose to organize resources all together, by team, by project, or some other scheme. Here's an example that manages clusters together:
 
 ```sh
 .git/

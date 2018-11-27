@@ -21,20 +21,12 @@ $ terraform version
 Terraform v0.11.7
 ```
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
+Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
 wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
 tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
-```
-
-Add the plugin to your `~/.terraformrc`.
-
-```
-providers {
-  ct = "/usr/local/bin/terraform-provider-ct"
-}
+mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.2.1
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -62,6 +54,10 @@ provider "aws" {
 
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
+}
+
+provider "ct" {
+  version = "0.2.1"
 }
 
 provider "local" {
