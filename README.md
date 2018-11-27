@@ -12,28 +12,31 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
 * Kubernetes v1.12.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
-* Single or multi-master, workloads isolated on workers, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
+* Single or multi-master, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
-* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) and [preemption](https://typhoon.psdn.io/cl/google-cloud/#preemption) (varies by platform)
-* Ready for Ingress, Prometheus, Grafana, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
+* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/), [preemptible](https://typhoon.psdn.io/cl/google-cloud/#preemption) workers, and [snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) customization
+* Ready for Ingress, Prometheus, Grafana, CSI, or other [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Modules
 
-Typhoon provides a Terraform Module for each supported operating system and platform.
+Typhoon provides a Terraform Module for each supported operating system and platform. Container Linux is a mature and reliable choice. Also, Kinvolk's Flatcar Linux fork is selectable on AWS and bare-metal.
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | alpha |
 | Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
-| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
-| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](digital-ocean/fedora-atomic/kubernetes) | alpha |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
-| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](google-cloud/fedora-atomic/kubernetes) | alpha |
 
-The AWS and bare-metal `container-linux` modules allow picking Red Hat Container Linux (formerly CoreOS Container Linux) or Kinvolk's Flatcar Linux friendly fork.
+Fedora Atomic support is alpha and will evolve as Fedora Atomic is replaced by Fedora CoreOS.
+
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | alpha |
+| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | alpha |
+| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](digital-ocean/fedora-atomic/kubernetes) | alpha |
+| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](google-cloud/fedora-atomic/kubernetes) | alpha |
 
 ## Documentation
 

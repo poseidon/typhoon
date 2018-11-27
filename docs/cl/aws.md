@@ -263,3 +263,8 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 !!! tip "MTU"
     If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8981! You will get better pod-to-pod bandwidth.
+
+#### Spot
+
+Add `worker_price = "0.10"` to use spot instance workers (instead of "on-demand") and set a maximum spot price in USD. Clusters can tolerate spot market interuptions fairly well (reschedules pods, but cannot drain) to save money, with the tradeoff that requests for workers may go unfulfilled.
+
