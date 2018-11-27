@@ -25,6 +25,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update nginx-ingress from v0.20.0 to v0.21.0
 * Update Prometheus from v2.4.3 to v2.5.0
 * Update Grafana from v5.3.2 to v5.3.4
 
