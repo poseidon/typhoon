@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.12.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1123)
+* Add `enable_reporting` variable (default "false") to provide upstreams with usage data ([#345](https://github.com/poseidon/typhoon/pull/345))
 * Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
 * Update Calico from v3.3.0 to [v3.3.1](https://docs.projectcalico.org/v3.3/releases/)
   * Disable Felix usage reporting by default ([#345](https://github.com/poseidon/typhoon/pull/345))
@@ -12,8 +14,7 @@ Notable changes between versions.
   * [Drop](https://github.com/poseidon/terraform-render-bootkube/commit/39f9afb3360ec642e5b98457c8bd07eda35b6c96) unused mounts and add a CPU resource request
 * Update CoreDNS from v1.2.4 to [v1.2.6](https://coredns.io/2018/11/05/coredns-1.2.6-release/)
   * Enable CoreDNS `loop` and `loadbalance` plugins ([#340](https://github.com/poseidon/typhoon/pull/340))
-* Add `enable_reporting` variable (default "false") to provide upstreams with usage data ([#345](https://github.com/poseidon/typhoon/pull/345))
-* Fix pod-checkpointer detection for new checkpointable pods and log noise ([#346](https://github.com/poseidon/typhoon/pull/346))
+* Fix pod-checkpointer log noise and checkpointable pods detection ([#346](https://github.com/poseidon/typhoon/pull/346))
 * Use kubernetes-incubator/bootkube v0.14.0
 
 #### Azure
