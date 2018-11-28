@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.12.3
+
 * Kubernetes [v1.12.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1123)
 * Add `enable_reporting` variable (default "false") to provide upstreams with usage data ([#345](https://github.com/poseidon/typhoon/pull/345))
 * Change kube-apiserver `--kubelet-preferred-address-types` to InternalIP,ExternalIP,Hostname
