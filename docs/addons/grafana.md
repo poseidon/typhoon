@@ -12,7 +12,7 @@ Use `kubectl` to authenticate to the apiserver and create a local port-forward t
 kubectl port-forward grafana-POD-ID 8080 -n monitoring
 ```
 
-Visit [127.0.0.1:8080](http://127.0.0.1:8080) to view the bundled dashboards.
+Visit [127.0.0.1:8080](http://127.0.0.1:8080) to view the bundled dashboards. Click the Sign In button in the lower-left corner and use the username/password `admin`/`admin` to create more dashboards, add users, etc.
 
 ![Grafana Capacity Planning](../img/grafana-capacity.png)
 ![Grafana Control Plane](../img/grafana-control-plane.png)
