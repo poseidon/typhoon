@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Disable Grafana login form, since admin user can't be disabled ([#352](https://github.com/poseidon/typhoon/pull/352))
+  * Example manifests aim to provide a read-only dashboard view
+
 ## v1.12.3
 
 * Kubernetes [v1.12.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.12.md#v1123)
