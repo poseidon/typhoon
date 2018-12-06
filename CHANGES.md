@@ -8,6 +8,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update Grafana from v5.3.4 to v5.4.0
 * Disable Grafana login form, since admin user can't be disabled ([#352](https://github.com/poseidon/typhoon/pull/352))
   * Example manifests aim to provide a read-only dashboard view
 
