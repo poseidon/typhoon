@@ -62,7 +62,7 @@ resource "google_compute_firewall" "allow-apiserver" {
 resource "google_compute_firewall" "internal-bgp" {
   count = "${var.networking != "flannel" ? 1 : 0}"
 
-  name    = "${var.cluster_name}-internal-bpg"
+  name    = "${var.cluster_name}-internal-bgp"
   network = "${google_compute_network.network.name}"
 
   allow {
