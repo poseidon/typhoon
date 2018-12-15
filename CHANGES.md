@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
+
+## v1.13.0
+
 * Kubernetes [v1.13.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1130)
 * Update Calico from v3.3.1 to [v3.3.2](https://docs.projectcalico.org/v3.3/releases/)
 
