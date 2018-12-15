@@ -6,6 +6,11 @@ Notable changes between versions.
 
 * Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
 
+#### Google Cloud
+
+* Increase TCP proxy apiserver backend service timeout from 1 minute to 5 minutes ([#361](https://github.com/poseidon/typhoon/pull/361))
+  * Align `port-forward` behavior closer to AWS/Azure (no timeout)
+
 #### Addons
 
 * Update Grafana from v5.4.0 to v5.4.2
