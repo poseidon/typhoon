@@ -5,6 +5,9 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
+* Update Calico from v3.3.2 to [v3.4.0](https://docs.projectcalico.org/v3.4/releases/)
+  * Install CNI plugins with an init container rather than a sidecar
+  * Improve the `calico-node` ClusterRole
 
 #### Google Cloud
 
