@@ -1,3 +1,7 @@
+output "kubeconfig-admin" {
+  value = "${module.bootkube.user-kubeconfig}"
+}
+
 output "controllers_dns" {
   value = "${digitalocean_record.controllers.0.fqdn}"
 }

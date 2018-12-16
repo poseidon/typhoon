@@ -1,3 +1,7 @@
+output "kubeconfig-admin" {
+  value = "${module.bootkube.user-kubeconfig}"
+}
+
 # Outputs for Kubernetes Ingress
 
 output "ingress_dns_name" {
