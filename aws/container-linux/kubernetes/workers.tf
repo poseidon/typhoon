@@ -3,8 +3,8 @@ module "workers" {
   name   = "${var.cluster_name}"
 
   # AWS
-  vpc_id          = "${aws_vpc.network.id}"
-  subnet_ids      = ["${aws_subnet.public.*.id}"]
+  vpc_id          = "${local.manage_vpc ? join("", aws_vpc.network.*.id) : var.vpc_id}"
+  subnet_ids      = ["${split(":", length(var.public_subnets) > 0 ? join(":", var.public_subnets) : join(":", aws_subnet.public.*.id))}"]
   security_groups = ["${aws_security_group.worker.id}"]
   count           = "${var.worker_count}"
   instance_type   = "${var.worker_type}"

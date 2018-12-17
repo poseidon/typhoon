@@ -140,3 +140,21 @@ variable "enable_reporting" {
   description = "Enable usage or analytics reporting to upstreams (Calico)"
   default     = "false"
 }
+
+# Variables that control things for an existing VPC
+
+variable "vpc_id" {
+  type        = "string"
+  description = "Deploy into an existing vpc"
+  default     = ""
+}
+
+variable "public_subnets" {
+  description = "List of existing public subnet IDs"
+  type        = "list"
+  default     = []
+}
+
+locals {
+  manage_vpc = "${var.vpc_id == "" ? 1 : 0}"
+}

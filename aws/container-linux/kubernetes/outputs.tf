@@ -17,12 +17,13 @@ output "ingress_zone_id" {
 # Outputs for worker pools
 
 output "vpc_id" {
-  value       = "${aws_vpc.network.id}"
+  value       = "${local.manage_vpc ? join("", aws_vpc.network.*.id) : var.vpc_id}"
   description = "ID of the VPC for creating worker instances"
 }
 
 output "subnet_ids" {
-  value       = ["${aws_subnet.public.*.id}"]
+  # work around for https://github.com/hashicorp/terraform/issues/18259
+  value       = ["${split(":", length(var.public_subnets) > 0 ? join(":", var.public_subnets) : join(":", aws_subnet.public.*.id))}"]
   description = "List of subnet IDs for creating worker instances"
 }
 
@@ -33,6 +34,14 @@ output "worker_security_groups" {
 
 output "kubeconfig" {
   value = "${module.bootkube.kubeconfig-kubelet}"
+}
+
+output "server" {
+  value = "${module.bootkube.server}"
+}
+
+output "ca_cert" {
+  value = "${module.bootkube.ca_cert}"
 }
 
 # Outputs for custom load balancing

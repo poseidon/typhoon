@@ -6,7 +6,7 @@ resource "aws_security_group" "controller" {
   name        = "${var.cluster_name}-controller"
   description = "${var.cluster_name} controller security group"
 
-  vpc_id = "${aws_vpc.network.id}"
+  vpc_id = "${local.manage_vpc ? join("", aws_vpc.network.*.id) : var.vpc_id}"
 
   tags = "${map("Name", "${var.cluster_name}-controller")}"
 }
@@ -181,7 +181,7 @@ resource "aws_security_group" "worker" {
   name        = "${var.cluster_name}-worker"
   description = "${var.cluster_name} worker security group"
 
-  vpc_id = "${aws_vpc.network.id}"
+  vpc_id = "${local.manage_vpc ? join("", aws_vpc.network.*.id) : var.vpc_id}"
 
   tags = "${map("Name", "${var.cluster_name}-worker")}"
 }
