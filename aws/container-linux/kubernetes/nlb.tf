@@ -2,7 +2,7 @@
 resource "aws_route53_record" "apiserver" {
   zone_id = "${var.dns_zone_id}"
 
-  name = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"
+  name = "${format("%s.%s.", var.cluster_name, local.dns_zone)}"
   type = "A"
 
   # AWS recommends their special "alias" records for NLBs

@@ -1,9 +1,13 @@
+locals {
+  dns_zone = "${replace(var.dns_zone, "/[.]$/", "")}"
+}
+
 # Self-hosted Kubernetes assets (kubeconfig, manifests)
 module "bootkube" {
   source = "git::https://github.com/poseidon/terraform-render-bootkube.git?ref=c5bc23ef7a3f5d8e5be976ee60b58dbbfcc3e7c9"
 
   cluster_name          = "${var.cluster_name}"
-  api_servers           = ["${format("%s.%s", var.cluster_name, var.dns_zone)}"]
+  api_servers           = ["${format("%s.%s", var.cluster_name, local.dns_zone)}"]
   etcd_servers          = ["${aws_route53_record.etcds.*.fqdn}"]
   asset_dir             = "${var.asset_dir}"
   networking            = "${var.networking}"
