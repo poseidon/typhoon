@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.13.1
+
 * Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
 * Update Calico from v3.3.2 to [v3.4.0](https://docs.projectcalico.org/v3.4/releases/) ([#362](https://github.com/poseidon/typhoon/pull/362))
   * Install CNI plugins with an init container rather than a sidecar
