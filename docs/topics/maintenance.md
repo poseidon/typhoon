@@ -193,3 +193,80 @@ $ terraform init
 $ terraform plan
 ```
 
+### Upgrade terraform-provider-ct
+
+The [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin parses, validates, and converts Container Linux Configs into Ignition user-data for provisioning instances. Previously, updating the plugin re-provisioned controller nodes and was destructive to clusters. With Typhoon v1.12.2+, the plugin can be updated in-place and on apply, only workers will be replaced.
+
+First, [migrate](#terraform-plugins-directory) to the Terraform 3rd-party plugin directory to allow 3rd-party plugins to be defined and versioned independently (rather than globally).
+
+Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
+
+```sh
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.0/terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.0
+```
+
+Binary names are versioned. This enables the ability to upgrade different plugins and have clusters pin different versions.
+
+```
+$ tree ~/.terraform.d/
+/home/user/.terraform.d/
+└── plugins
+    ├── terraform-provider-ct_v0.2.1
+    ├── terraform-provider-ct_v0.3.0
+    └── terraform-provider-matchbox_v0.2.2
+```
+
+
+Update the version of the `ct` plugin in each Terraform working directory. Typhoon clusters managed in the working directory **must** be v1.12.2 or higher.
+
+```
+# providers.tf
+provider "ct" {
+  version = "0.3.0"
+}
+```
+
+Run init and plan to check that no diff is proposed for the controller nodes (a diff would destroy cluster state).
+
+```
+terraform init
+terraform plan
+```
+
+Apply the change. Worker nodes' user-data will be changed and workers will be replaced. Rollout happens slightly differently on each platform:
+
+
+#### AWS
+
+AWS creates a new worker ASG, then removes the old ASG. New workers join the cluster and old workers disappear. `terraform apply` will hang during this process.
+
+#### Azure
+
+Azure edits the worker scale set in-place instantly. Manually terminate workers to create replacement workers using the new user-data.
+
+#### Bare-Metal
+
+No action is needed. Bare-Metal machines do not re-PXE unless explicitly made to do so.
+
+#### DigitalOcean
+
+DigitalOcean destroys existing worker nodes and DNS records, then creates new workers and DNS records. DigitalOcean lacks a "managed group" notion. For worker droplets to join the cluster, you **must** taint the secret copying step to indicate it must be repeated to add the kubeconfig to new workers.
+
+```
+# old workers destroyed, new workers created
+terraform apply
+
+# add kubeconfig to new workers
+terraform state list | grep null_resource
+terraform taint -module digital-ocean-nemo null_resource.copy-worker-secrets.N
+terraform apply
+```
+
+Expect downtime.
+
+#### Google Cloud
+
+Google Cloud creates a new worker template and edits the worker instance group instantly. Manually terminate workers and replacement workers will use the user-data.
+

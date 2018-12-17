@@ -5,9 +5,13 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
-* Update Calico from v3.3.2 to [v3.4.0](https://docs.projectcalico.org/v3.4/releases/)
+* Update Calico from v3.3.2 to [v3.4.0](https://docs.projectcalico.org/v3.4/releases/) ([#362](https://github.com/poseidon/typhoon/pull/362))
   * Install CNI plugins with an init container rather than a sidecar
   * Improve the `calico-node` ClusterRole
+* Recommend updating `terraform-provider-ct` plugin from v0.2.1 to v0.3.0 ([#363](https://github.com/poseidon/typhoon/pull/363))
+  * [Migration](https://typhoon.psdn.io/topics/maintenance/#upgrade-terraform-provider-ct) instructions for upgrading `terraform-provider-ct` in-place for v1.12.2+ clusters (**action required**)
+  * [Require](https://typhoon.psdn.io/topics/maintenance/#terraform-plugins-directory) switching from `~/.terraformrc` to the Terraform [third-party plugins](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) directory `~/.terraform.d/plugins/`
+  * Require Container Linux 1688.5.3 or newer
 
 #### Google Cloud
 
