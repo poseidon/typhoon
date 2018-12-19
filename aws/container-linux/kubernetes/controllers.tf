@@ -1,6 +1,7 @@
 # Discrete DNS records for each controller's private IPv4 for etcd usage
 resource "aws_route53_record" "etcds" {
-  count = "${var.controller_count}"
+  provider = "aws.dns"
+  count    = "${var.controller_count}"
 
   # DNS Zone where record should be created
   zone_id = "${var.dns_zone_id}"

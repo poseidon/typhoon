@@ -1,5 +1,7 @@
 # Network Load Balancer DNS Record
 resource "aws_route53_record" "apiserver" {
+  provider = "aws.dns"
+
   zone_id = "${var.dns_zone_id}"
 
   name = "${format("%s.%s.", var.cluster_name, var.dns_zone)}"

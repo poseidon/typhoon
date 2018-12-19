@@ -8,6 +8,11 @@ provider "aws" {
   version = "~> 1.13"
 }
 
+provider "aws" {
+  alias   = "dns"
+  version = "~> 1.13"
+}
+
 provider "local" {
   version = "~> 1.0"
 }
