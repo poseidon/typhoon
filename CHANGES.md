@@ -9,6 +9,10 @@ Notable changes between versions.
 * Change `controller_type` and `worker_type` default from t2.small to t3.small
   * t3.small is cheaper, provides 2 vCPU (instead of 1), and 5 Gbps of pod-to-pod bandwidth!
 
+#### Addons
+
+* Update Prometheus from v2.5.0 to v2.6.0
+
 ## v1.13.1
 
 * Kubernetes [v1.13.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1131)
