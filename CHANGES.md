@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Add ServiceAccounts for `kube-apiserver` and `kube-scheduler`
+
 #### AWS
 
 * Change `controller_type` and `worker_type` default from t2.small to t3.small
