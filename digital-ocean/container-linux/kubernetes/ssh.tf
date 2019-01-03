@@ -10,7 +10,7 @@ resource "null_resource" "copy-controller-secrets" {
   }
 
   provisioner "file" {
-    content     = "${module.bootkube.kubeconfig}"
+    content     = "${module.bootkube.kubeconfig-kubelet}"
     destination = "$HOME/kubeconfig"
   }
 
@@ -78,7 +78,7 @@ resource "null_resource" "copy-worker-secrets" {
   }
 
   provisioner "file" {
-    content     = "${module.bootkube.kubeconfig}"
+    content     = "${module.bootkube.kubeconfig-kubelet}"
     destination = "$HOME/kubeconfig"
   }
 

@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = "${module.bootkube.user-kubeconfig}"
+  value = "${module.bootkube.kubeconfig-admin-context}"
 }
 
 # Outputs for Kubernetes Ingress
@@ -32,5 +32,5 @@ output "backend_address_pool_id" {
 }
 
 output "kubeconfig" {
-  value = "${module.bootkube.kubeconfig}"
+  value = "${module.bootkube.kubeconfig-kubelet}"
 }

@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = "${module.bootkube.user-kubeconfig}"
+  value = "${module.bootkube.kubeconfig-admin-context}"
 }
 
 # Outputs for Kubernetes Ingress
@@ -21,7 +21,7 @@ output "network_name" {
 }
 
 output "kubeconfig" {
-  value = "${module.bootkube.kubeconfig}"
+  value = "${module.bootkube.kubeconfig-kubelet}"
 }
 
 # Outputs for custom firewalling

@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = "${module.bootkube.user-kubeconfig}"
+  value = "${module.bootkube.kubeconfig-admin-context}"
 }
 
 # Outputs for Kubernetes Ingress
@@ -27,7 +27,7 @@ output "worker_security_groups" {
 }
 
 output "kubeconfig" {
-  value = "${module.bootkube.kubeconfig}"
+  value = "${module.bootkube.kubeconfig-kubelet}"
 }
 
 # Outputs for custom load balancing

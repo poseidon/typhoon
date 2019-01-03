@@ -4,12 +4,18 @@ Notable changes between versions.
 
 ## Latest
 
-* Add ServiceAccounts for `kube-apiserver` and `kube-scheduler`
+* Add ServiceAccounts for `kube-apiserver` and `kube-scheduler` ([#370](https://github.com/poseidon/typhoon/pull/370))
+* Use a lower-privilege TLS client certificate with org `system:nodes` for Kubelets ([#372](https://github.com/poseidon/typhoon/pull/372))
+  * Bind the `system:nodes` group to the `system:node` ClusterRole
 
 #### AWS
 
 * Change `controller_type` and `worker_type` default from t2.small to t3.small
   * t3.small is cheaper, provides 2 vCPU (instead of 1), and 5 Gbps of pod-to-pod bandwidth!
+
+#### Bare-Metal
+
+* Remove the `kubeconfig` output variable
 
 #### Addons
 
