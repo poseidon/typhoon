@@ -194,7 +194,7 @@ kube-system   pod-checkpointer-4kxtl-ip-10-0-3-155      1/1    Running   0      
 
 ## Going Further
 
-Learn about [maintenance](/topics/maintenance) and [addons](/addons/overview).
+Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
