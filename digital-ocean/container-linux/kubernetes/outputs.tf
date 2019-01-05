@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = "${module.bootkube.user-kubeconfig}"
+  value = "${module.bootkube.kubeconfig-admin}"
 }
 
 output "controllers_dns" {

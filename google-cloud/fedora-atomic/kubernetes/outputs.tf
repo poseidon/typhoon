@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = "${module.bootkube.kubeconfig-admin-context}"
+  value = "${module.bootkube.kubeconfig-admin}"
 }
 
 # Outputs for Kubernetes Ingress
