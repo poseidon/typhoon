@@ -70,9 +70,9 @@ data "template_file" "worker-cloudinit" {
   template = "${file("${path.module}/cloudinit/worker.yaml.tmpl")}"
 
   vars = {
-    kubeconfig            = "${indent(6, var.kubeconfig)}"
-    ssh_authorized_key    = "${var.ssh_authorized_key}"
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    kubeconfig             = "${indent(6, var.kubeconfig)}"
+    ssh_authorized_key     = "${var.ssh_authorized_key}"
+    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
   }
 }

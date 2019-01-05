@@ -90,7 +90,7 @@ systemd:
           --authentication-token-webhook \
           --authorization-mode=Webhook \
           --client-ca-file=/etc/kubernetes/ca.crt \
-          --cluster_dns=${k8s_dns_service_ip} \
+          --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --exit-on-lock-contention \
