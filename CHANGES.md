@@ -7,6 +7,8 @@ Notable changes between versions.
 * Add ServiceAccounts for `kube-apiserver` and `kube-scheduler` ([#370](https://github.com/poseidon/typhoon/pull/370))
 * Use a lower-privilege TLS client certificate with org `system:nodes` for Kubelets ([#372](https://github.com/poseidon/typhoon/pull/372))
   * Bind the `system:nodes` group to the `system:node` ClusterRole
+* Allow the `certificates.k8s.io` API to issue certificates signed by the cluster CA ([#376](https://github.com/poseidon/typhoon/pull/376))
+  * Configure controller manager to sign CSRs that are manually [approved](https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster) by an administrator
 * Update CoreDNS from v1.2.6 to [v1.3.0](https://coredns.io/2018/12/15/coredns-1.3.0-release/)
 
 #### AWS
