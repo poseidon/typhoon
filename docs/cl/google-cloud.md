@@ -1,6 +1,6 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.13.1 cluster on Google Compute Engine with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.13.2 cluster on Google Compute Engine with Container Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
@@ -93,7 +93,7 @@ Define a Kubernetes cluster using the module `google-cloud/container-linux/kuber
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.13.1"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.13.2"
   
   providers = {
     google   = "google.default"
@@ -168,9 +168,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.1
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.1
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.1
+yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.2
+yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.2
+yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.2
 ```
 
 List the pods.
