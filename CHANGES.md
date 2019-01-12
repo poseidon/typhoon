@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update etcd from v3.3.10 to [v3.3.11](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3311-2019-1-11)
 
+#### Addons
+
+* Update kube-state-metrics from v1.4.0 to v1.5.0
+
 ## v1.13.2
 
 * Kubernetes [v1.13.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1132)
