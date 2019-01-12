@@ -14,7 +14,7 @@ Notable changes between versions.
 
 #### AWS
 
-* Change `controller_type` and `worker_type` default from t2.small to t3.small
+* Change `controller_type` and `worker_type` default from t2.small to t3.small ([#365](https://github.com/poseidon/typhoon/pull/365))
   * t3.small is cheaper, provides 2 vCPU (instead of 1), and 5 Gbps of pod-to-pod bandwidth!
 
 #### Bare-Metal

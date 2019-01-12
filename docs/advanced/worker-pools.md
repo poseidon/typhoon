@@ -67,7 +67,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
 | count | Number of instances | 1 | 3 |
-| instance_type | EC2 instance type | "t2.small" | "t2.medium" |
+| instance_type | EC2 instance type | "t3.small" | "t3.medium" |
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | spot_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
