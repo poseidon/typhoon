@@ -9,6 +9,11 @@ output "ingress_dns_name" {
   description = "DNS name of the network load balancer for distributing traffic to Ingress controllers"
 }
 
+output "ingress_zone_id" {
+  value       = "${aws_lb.nlb.zone_id}"
+  description = "Route53 zone id of the network load balancer DNS name that can be used in Route53 alias records"
+}
+
 # Outputs for worker pools
 
 output "vpc_id" {

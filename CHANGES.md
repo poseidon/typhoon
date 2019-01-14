@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update etcd from v3.3.10 to [v3.3.11](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3311-2019-1-11)
 
+#### AWS
+
+* Add `ingress_zone_id` output with the NLB DNS name's Route53 zone for use in alias records ([#380](https://github.com/poseidon/typhoon/pull/380))
+
 #### Addons
 
 * Update kube-state-metrics from v1.4.0 to v1.5.0
