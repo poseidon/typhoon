@@ -6,7 +6,7 @@ Notable changes between versions.
 
 * Update etcd from v3.3.10 to [v3.3.11](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3311-2019-1-11)
 * Update CoreDNS from v1.3.0 to [v1.3.1](https://coredns.io/2019/01/13/coredns-1.3.1-release/)
-* Fix instance shutdown automatic worker deletion on cloud platforms
+* Fix automatic worker deletion on shutdown for cloud platforms
   * Lowering Kubelet privileges in [#372](https://github.com/poseidon/typhoon/pull/372) dropped a needed node deletion authorization. Scale-in due to manual terraform apply (any cloud), AWS spot termination, or Azure low priority deletion left old nodes registered, requiring manual deletion (`kubectl delete node name`)
 
 #### AWS
@@ -15,6 +15,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update nginx-ingress from v0.21.0 to v0.22.0
 * Update Prometheus from v2.6.0 to v2.6.1
 * Update kube-state-metrics from v1.4.0 to v1.5.0
 * Update Grafana from v5.4.2 to v5.4.3
