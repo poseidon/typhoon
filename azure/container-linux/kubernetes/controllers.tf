@@ -121,10 +121,10 @@ resource "azurerm_public_ip" "controllers" {
   count               = "${var.controller_count}"
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                         = "${var.cluster_name}-controller-${count.index}"
-  location                     = "${azurerm_resource_group.cluster.location}"
-  sku                          = "Standard"
-  public_ip_address_allocation = "static"
+  name              = "${var.cluster_name}-controller-${count.index}"
+  location          = "${azurerm_resource_group.cluster.location}"
+  sku               = "Standard"
+  allocation_method = "Static"
 }
 
 # Controller Ignition configs

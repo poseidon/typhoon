@@ -14,6 +14,11 @@ Notable changes between versions.
 
 * Add `ingress_zone_id` output with the NLB DNS name's Route53 zone for use in alias records ([#380](https://github.com/poseidon/typhoon/pull/380))
 
+#### Azure
+
+* Fix azure provider warning, `public_ip` `allocation_method` replaces `public_ip_address_allocation`
+  * Require `terraform-provider-azurerm` v1.21+ (action required)
+
 #### Addons
 
 * Update nginx-ingress from v0.21.0 to v0.22.0
