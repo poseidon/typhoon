@@ -1,0 +1,202 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maya-apiserver
+  namespace: openebs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: maya-apiserver
+    spec:
+      serviceAccountName: openebs-maya-operator
+      containers:
+      - name: maya-apiserver
+        imagePullPolicy: IfNotPresent
+        image: quay.io/openebs/m-apiserver:ci
+        ports:
+        - containerPort: 5656
+        env:
+        # OPENEBS_IO_KUBE_CONFIG enables maya api service to connect to K8s
+        # based on this config. This is ignored if empty.
+        # This is supported for maya api server version 0.5.2 onwards
+        #- name: OPENEBS_IO_KUBE_CONFIG
+        #  value: "/home/ubuntu/.kube/config"
+        # OPENEBS_IO_K8S_MASTER enables maya api service to connect to K8s
+        # based on this address. This is ignored if empty.
+        # This is supported for maya api server version 0.5.2 onwards
+        #- name: OPENEBS_IO_K8S_MASTER
+        #  value: "http://172.28.128.3:8080"
+        # OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL decides whether default cstor sparse pool should be
+        # configured as a part of openebs installation.
+        # If "true" a default cstor sparse pool will be configured, if "false" it will not be configured.
+        - name: OPENEBS_IO_INSTALL_DEFAULT_CSTOR_SPARSE_POOL
+          value: "true"
+        # OPENEBS_NAMESPACE provides the namespace of this deployment as an
+        # environment variable
+        - name: OPENEBS_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        # OPENEBS_SERVICE_ACCOUNT provides the service account of this pod as
+        # environment variable
+        - name: OPENEBS_SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
+        # OPENEBS_MAYA_POD_NAME provides the name of this pod as
+        # environment variable
+        - name: OPENEBS_MAYA_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: OPENEBS_IO_JIVA_CONTROLLER_IMAGE
+          value: "quay.io/openebs/jiva:ci"
+        - name: OPENEBS_IO_JIVA_REPLICA_IMAGE
+          value: "quay.io/openebs/jiva:ci"
+        - name: OPENEBS_IO_JIVA_REPLICA_COUNT
+          value: "3"
+        - name: OPENEBS_IO_CSTOR_TARGET_IMAGE
+          value: "quay.io/openebs/cstor-istgt:ci"
+        - name: OPENEBS_IO_CSTOR_POOL_IMAGE
+          value: "quay.io/openebs/cstor-pool:ci"
+        - name: OPENEBS_IO_CSTOR_POOL_MGMT_IMAGE
+          value: "quay.io/openebs/cstor-pool-mgmt:ci"
+        - name: OPENEBS_IO_CSTOR_VOLUME_MGMT_IMAGE
+          value: "quay.io/openebs/cstor-volume-mgmt:ci"
+        - name: OPENEBS_IO_VOLUME_MONITOR_IMAGE
+          value: "quay.io/openebs/m-exporter:ci"
+        # OPENEBS_IO_ENABLE_ANALYTICS if set to true sends anonymous usage
+        # events to Google Analytics
+        - name: OPENEBS_IO_ENABLE_ANALYTICS
+          value: "true"
+        # OPENEBS_IO_ANALYTICS_PING_INTERVAL can be used to specify the duration (in hours)
+        # for periodic ping events sent to Google Analytics.
+        # Default is 24h.
+        # Minimum is 1h. You can convert this to weekly by setting 168h
+        #- name: OPENEBS_IO_ANALYTICS_PING_INTERVAL
+        #  value: "24h"
+        livenessProbe:
+          exec:
+            command:
+            - /usr/local/bin/mayactl
+            - version
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - /usr/local/bin/mayactl
+            - version
+          initialDelaySeconds: 30
+          periodSeconds: 60
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openebs-provisioner
+  namespace: openebs
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openebs-provisioner
+    spec:
+      serviceAccountName: openebs-maya-operator
+      containers:
+      - name: openebs-provisioner
+        imagePullPolicy: IfNotPresent
+        image: quay.io/openebs/openebs-k8s-provisioner:ci
+        env:
+        # OPENEBS_IO_K8S_MASTER enables openebs provisioner to connect to K8s
+        # based on this address. This is ignored if empty.
+        # This is supported for openebs provisioner version 0.5.2 onwards
+        #- name: OPENEBS_IO_K8S_MASTER
+        #  value: "http://10.128.0.12:8080"
+        # OPENEBS_IO_KUBE_CONFIG enables openebs provisioner to connect to K8s
+        # based on this config. This is ignored if empty.
+        # This is supported for openebs provisioner version 0.5.2 onwards
+        #- name: OPENEBS_IO_KUBE_CONFIG
+        #  value: "/home/ubuntu/.kube/config"
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: OPENEBS_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        # OPENEBS_MAYA_SERVICE_NAME provides the maya-apiserver K8s service name,
+        # that provisioner should forward the volume create/delete requests.
+        # If not present, "maya-apiserver-service" will be used for lookup.
+        # This is supported for openebs provisioner version 0.5.3-RC1 onwards
+        #- name: OPENEBS_MAYA_SERVICE_NAME
+        #  value: "maya-apiserver-apiservice"
+        livenessProbe:
+          exec:
+            command:
+            - pgrep
+            - ".*openebs"
+          initialDelaySeconds: 30
+          periodSeconds: 60
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openebs-snapshot-operator
+  namespace: openebs
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: openebs-snapshot-operator
+    spec:
+      serviceAccountName: openebs-maya-operator
+      containers:
+        - name: snapshot-controller
+          image: quay.io/openebs/snapshot-controller:ci
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: OPENEBS_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          livenessProbe:
+            exec:
+              command:
+              - pgrep
+              - ".*controller"
+            initialDelaySeconds: 30
+            periodSeconds: 60
+        # OPENEBS_MAYA_SERVICE_NAME provides the maya-apiserver K8s service name,
+        # that snapshot controller should forward the snapshot create/delete requests.
+        # If not present, "maya-apiserver-service" will be used for lookup.
+        # This is supported for openebs provisioner version 0.5.3-RC1 onwards
+        #- name: OPENEBS_MAYA_SERVICE_NAME
+        #  value: "maya-apiserver-apiservice"
+        - name: snapshot-provisioner
+          image: quay.io/openebs/snapshot-provisioner:ci
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: OPENEBS_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        # OPENEBS_MAYA_SERVICE_NAME provides the maya-apiserver K8s service name,
+        # that snapshot provisioner  should forward the clone create/delete requests.
+        # If not present, "maya-apiserver-service" will be used for lookup.
+        # This is supported for openebs provisioner version 0.5.3-RC1 onwards
+        #- name: OPENEBS_MAYA_SERVICE_NAME
+        #  value: "maya-apiserver-apiservice"
+          livenessProbe:
+            exec:
+              command:
+              - pgrep
+              - ".*provisioner"
+            initialDelaySeconds: 30
+            periodSeconds: 60
