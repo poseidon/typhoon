@@ -113,7 +113,7 @@ module "aws-tempest" {
 
   # optional
   worker_count = 2
-  worker_type  = "t2.medium"
+  worker_type  = "t3.small"
 }
 ```
 

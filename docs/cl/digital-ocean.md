@@ -214,9 +214,9 @@ Clusters create DNS A records `${cluster_name}.${dns_zone}` to resolve to contro
 You'll need a registered domain name or delegated subdomain in Digital Ocean Domains (i.e. DNS zones). You can set this up once and create many clusters with unique names.
 
 ```tf
+# Declare a DigitalOcean record to also create a zone file
 resource "digitalocean_domain" "zone-for-clusters" {
   name       = "do.example.com"
-  # Digital Ocean oddly requires an IP here. You may have to delete the A record it makes. :(
   ip_address = "8.8.8.8"
 }
 ```
