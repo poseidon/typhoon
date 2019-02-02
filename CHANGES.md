@@ -4,12 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.13.3
+
 * Kubernetes [v1.13.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1133)
 * Update etcd from v3.3.10 to [v3.3.11](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md#v3311-2019-1-11)
 * Update CoreDNS from v1.3.0 to [v1.3.1](https://coredns.io/2019/01/13/coredns-1.3.1-release/)
   * Switch from the `proxy` plugin to the faster `forward` plugin for upsteam resolvers
 * Update Calico from v3.4.0 to [v3.5.0](https://docs.projectcalico.org/v3.5/releases/)
 * Update flannel from v0.10.0 to [v0.11.0](https://github.com/coreos/flannel/releases/tag/v0.11.0)
+* Reduce pod eviction timeout for deleting pods on unready nodes to 1 minute
+  * Respond more quickly to node preemption (previously 5 minutes)
 * Fix automatic worker deletion on shutdown for cloud platforms
   * Lowering Kubelet privileges in [#372](https://github.com/poseidon/typhoon/pull/372) dropped a needed node deletion authorization. Scale-in due to manual terraform apply (any cloud), AWS spot termination, or Azure low priority deletion left old nodes registered, requiring manual deletion (`kubectl delete node name`)
 
