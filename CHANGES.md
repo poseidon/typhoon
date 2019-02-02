@@ -25,7 +25,7 @@ Notable changes between versions.
 #### Addons
 
 * Update nginx-ingress from v0.21.0 to v0.22.0
-* Update Prometheus from v2.6.0 to v2.7.0
+* Update Prometheus from v2.6.0 to v2.7.1
 * Update kube-state-metrics from v1.4.0 to v1.5.0
   * Fix ClusterRole to collect and export PodDisruptionBudget metrics ([#383](https://github.com/poseidon/typhoon/pull/383))
 * Update node-exporter from v0.15.2 to v0.17.0
