@@ -51,7 +51,7 @@ bootcmd:
   - [modprobe, ip_vs]
 runcmd:
   - [systemctl, daemon-reload]
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.13.2"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.13.3"
   - [systemctl, enable, kubelet.path]
   - [systemctl, start, --no-block, kubelet.path]
 users:
