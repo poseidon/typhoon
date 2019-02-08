@@ -10,6 +10,9 @@ Notable changes between versions.
 #### Addons
 
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
+* Improve Prometheus metrics labels
+  * Add `pod` name label to metrics discovered via service endpoints
+  * Rename `kubernetes_namespace` label to `namespace`
 
 ## v1.13.3
 
