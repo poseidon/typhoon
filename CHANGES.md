@@ -7,6 +7,10 @@ Notable changes between versions.
 * Update etcd from v3.3.11 to [v3.3.12](https://github.com/etcd-io/etcd/releases/tag/v3.3.12)
 * Update Calico from v3.5.0 to v3.5.1
 
+#### Addons
+
+* Raise nginx-ingress liveness/readiness timeout to 5 seconds
+
 ## v1.13.3
 
 * Kubernetes [v1.13.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1133)
