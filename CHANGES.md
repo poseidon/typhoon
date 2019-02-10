@@ -10,7 +10,7 @@ Notable changes between versions.
 #### Addons
 
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
-* Improve Prometheus metrics labels
+* Improve Prometheus metrics labels and drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
   * Add `pod` name label to metrics discovered via service endpoints
   * Rename `kubernetes_namespace` label to `namespace`
 

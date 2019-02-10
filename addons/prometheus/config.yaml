@@ -55,6 +55,17 @@ data:
         action: replace
         target_label: job
 
+      metric_relabel_configs:
+      - source_labels: [__name__]
+        action: drop
+        regex: etcd_(debugging|disk|request|server).*
+      - source_labels: [__name__]
+        action: drop
+        regex: apiserver_admission_controller_admission_latencies_seconds_.*
+      - source_labels: [__name__]
+        action: drop
+        regex: apiserver_admission_step_admission_latencies_seconds_.*
+
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
     # metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).
     - job_name: 'kubelet'
@@ -89,6 +100,13 @@ data:
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
+      metric_relabel_configs:
+      - source_labels: [__name__, image]
+        action: drop
+        regex: container_([a-z_]+);
+      - source_labels: [__name__]
+        action: drop
+        regex: container_(network_tcp_usage_total|network_udp_usage_total|tasks_state|cpu_load_average_10s)
 
 
     # Scrap etcd metrics from controllers via listen-metrics-urls
@@ -151,6 +169,11 @@ data:
       - source_labels: [__meta_kubernetes_service_name]
         action: replace
         target_label: job
+      
+      metric_relabel_configs:
+      - source_labels: [__name__]
+        action: drop
+        regex: etcd_(debugging|disk|request|server).*
 
     # Example scrape config for probing services via the Blackbox Exporter.
     #
