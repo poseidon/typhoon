@@ -27,7 +27,6 @@ spec:
           image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.22.0
           args:
             - /nginx-ingress-controller
-            - --default-backend-service=$(POD_NAMESPACE)/default-backend
             - --ingress-class=public
           # use downward API
           env:

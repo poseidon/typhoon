@@ -10,6 +10,8 @@ Notable changes between versions.
 #### Addons
 
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
+* Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
+  * nginx-ingress now responds with its own 404 page by default
 * Improve Prometheus metrics labels and drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
   * Add `pod` name label to metrics discovered via service endpoints
   * Rename `kubernetes_namespace` label to `namespace`
