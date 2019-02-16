@@ -156,9 +156,9 @@ mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct ~/.terraform.d
 If you use bare-metal, add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the versioned name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.2/terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
-tar xzf terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
-mv terraform-provider-matchbox-v0.2.2-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.2
+wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+tar xzf terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.3
 ```
 
 Binary names are versioned. This enables the ability to upgrade different plugins and have clusters pin different versions.
@@ -168,7 +168,7 @@ $ tree ~/.terraform.d/
 /home/user/.terraform.d/
 └── plugins
     ├── terraform-provider-ct_v0.2.1
-    └── terraform-provider-matchbox_v0.2.2
+    └── terraform-provider-matchbox_v0.2.3
 ```
 
 In each Terraform working directory, set the version of each provider.
@@ -177,7 +177,7 @@ In each Terraform working directory, set the version of each provider.
 # providers.tf
 
 provider "matchbox" {
-  version = "0.2.2"
+  version = "0.2.3"
   ...
 }
 
@@ -215,7 +215,7 @@ $ tree ~/.terraform.d/
 └── plugins
     ├── terraform-provider-ct_v0.2.1
     ├── terraform-provider-ct_v0.3.0
-    └── terraform-provider-matchbox_v0.2.2
+    └── terraform-provider-matchbox_v0.2.3
 ```
 
 

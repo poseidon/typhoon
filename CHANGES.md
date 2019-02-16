@@ -7,6 +7,10 @@ Notable changes between versions.
 * Update etcd from v3.3.11 to [v3.3.12](https://github.com/etcd-io/etcd/releases/tag/v3.3.12)
 * Update Calico from v3.5.0 to v3.5.1
 
+#### Bare-Metal
+
+* Recommend updating [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin from v0.2.2 to [v0.2.3](https://github.com/coreos/terraform-provider-matchbox/releases/tag/v0.2.3) ([#402](https://github.com/poseidon/typhoon/pull/402))
+
 #### Addons
 
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
