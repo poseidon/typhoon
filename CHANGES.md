@@ -19,6 +19,9 @@ Notable changes between versions.
 * Improve Prometheus metrics labels and drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
   * Add `pod` name label to metrics discovered via service endpoints
   * Rename `kubernetes_namespace` label to `namespace`
+* Revamp the Grafana addon ([#403](https://github.com/poseidon/typhoon/pull/403))
+  * Upgrade Grafana from v5.4.3 to 6.0.0-beta2
+  * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
 
 ## v1.13.3
 

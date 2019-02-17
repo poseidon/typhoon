@@ -10,7 +10,15 @@ data:
     - name: prometheus
       type: prometheus
       access: proxy
-      orgId: 1
       url: http://prometheus.monitoring.svc.cluster.local
+      version: 1
+      editable: false
+  loki.yaml: |+
+    apiVersion: 1
+    datasources:
+    - name: loki
+      type: loki
+      access: proxy
+      url: http://loki.monitoring.svc.cluster.local
       version: 1
       editable: false

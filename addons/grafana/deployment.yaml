@@ -23,20 +23,10 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:5.4.3
+          image: grafana/grafana:6.0.0-beta2
           env:
-            - name: GF_SERVER_HTTP_PORT
-              value: "8080"
-            - name: GF_AUTH_BASIC_ENABLED
-              value: "false"
-            - name: GF_AUTH_DISABLE_LOGIN_FORM
-              value: "true"
-            - name: GF_AUTH_ANONYMOUS_ENABLED
-              value: "true"
-            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-              value: Viewer
-            - name: GF_ANALYTICS_REPORTING_ENABLED
-              value: "false"
+            - name: GF_PATHS_CONFIG
+              value: "/etc/grafana/custom.ini"
           ports:
             - name: http
               containerPort: 8080
@@ -48,19 +38,24 @@ spec:
               memory: 200Mi
               cpu: 200m
           volumeMounts:
+            - name: config
+              mountPath: /etc/grafana
             - name: datasources
               mountPath: /etc/grafana/provisioning/datasources
-            - name: dashboard-providers
+            - name: providers
               mountPath: /etc/grafana/provisioning/dashboards
             - name: dashboards
-              mountPath: /var/lib/grafana/dashboards
+              mountPath: /etc/grafana/dashboards
       volumes:
+        - name: config
+          configMap:
+            name: grafana-config
         - name: datasources
           configMap:
             name: grafana-datasources
-        - name: dashboard-providers
+        - name: providers
           configMap:
-            name: grafana-dashboard-providers
+            name: grafana-providers
         - name: dashboards
           configMap:
             name: grafana-dashboards

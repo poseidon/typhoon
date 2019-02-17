@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+  namespace: monitoring
+data:
+  custom.ini: |+
+    [server]
+    http_port = 8080
+
+    [paths]
+    data    = /var/lib/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+
+    [users]
+    allow_sign_up    = false
+    allow_org_create = false
+    # viewers can edit/inspect, but not save
+    viewers_can_edit = true
+
+    # Disable login form, since Grafana always creates an admin user
+    [auth]
+    disable_login_form = true
+
+    # Disable the user/pass login system
+    [auth.basic]
+    enabled = false
+
+    # Allow anonymous authentication with view-only authorization
+    [auth.anonymous]
+    enabled = true
+    org_role = Viewer
+
+    [analytics]
+    reporting_enabled = false
