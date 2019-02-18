@@ -11,6 +11,12 @@ Notable changes between versions.
 
 * Recommend updating [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin from v0.2.2 to [v0.2.3](https://github.com/coreos/terraform-provider-matchbox/releases/tag/v0.2.3) ([#402](https://github.com/poseidon/typhoon/pull/402))
 
+#### Google Cloud
+
+* Set the minimum CPU platform to Intel Haswell ([#405](https://github.com/poseidon/typhoon/pull/405))
+  * Haswell or better is available in every zone (no price change)
+  * A few zones still default to Sandy/Ivy Bridge (shifts in April 2019)
+
 #### Addons
 
 * Improve Prometheus rules and alerts ([#404](https://github.com/poseidon/typhoon/pull/404))
