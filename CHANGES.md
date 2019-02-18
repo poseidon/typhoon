@@ -13,15 +13,16 @@ Notable changes between versions.
 
 #### Addons
 
+* Improve Prometheus rules and alerts ([#404](https://github.com/poseidon/typhoon/pull/404))
+  * Drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
+  * Add `pod` name label to metrics discovered via service endpoints
+  * Rename `kubernetes_namespace` label to `namespace`
+* Improve Grafana and dashboards ([#403](https://github.com/poseidon/typhoon/pull/403), [#404](https://github.com/poseidon/typhoon/pull/404))
+  * Upgrade Grafana from v5.4.3 to 6.0.0-beta2
+  * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
 * Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
   * nginx-ingress now responds with its own 404 page by default
-* Improve Prometheus metrics labels and drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
-  * Add `pod` name label to metrics discovered via service endpoints
-  * Rename `kubernetes_namespace` label to `namespace`
-* Revamp the Grafana addon ([#403](https://github.com/poseidon/typhoon/pull/403))
-  * Upgrade Grafana from v5.4.3 to 6.0.0-beta2
-  * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
 
 ## v1.13.3
 
