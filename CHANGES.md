@@ -6,6 +6,8 @@ Notable changes between versions.
 
 * Update etcd from v3.3.11 to [v3.3.12](https://github.com/etcd-io/etcd/releases/tag/v3.3.12)
 * Update Calico from v3.5.0 to v3.5.1
+* Assign priorityClassNames to critical cluster and node components
+  * Informs node out-of-resource eviction and scheduler preemption and ordering
 
 #### Bare-Metal
 
