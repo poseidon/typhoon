@@ -11,7 +11,7 @@ resource "google_dns_record_set" "etcds" {
   ttl  = 300
 
   # private IPv4 address for etcd
-  rrdatas = ["${element(google_compute_instance.controllers.*.network_interface.0.address, count.index)}"]
+  rrdatas = ["${element(google_compute_instance.controllers.*.network_interface.0.network_ip, count.index)}"]
 }
 
 # Zones in the region
@@ -24,7 +24,7 @@ locals {
   # controllers over up to 3 zones, since all GCP regions have at least 3.
   zones = "${slice(data.google_compute_zones.all.names, 0, 3)}"
 
-  controllers_ipv4_public = ["${google_compute_instance.controllers.*.network_interface.0.access_config.0.assigned_nat_ip}"]
+  controllers_ipv4_public = ["${google_compute_instance.controllers.*.network_interface.0.access_config.0.nat_ip}"]
 }
 
 # Controller instances
