@@ -8,6 +8,7 @@ Notable changes between versions.
 * Update Calico from v3.5.0 to v3.5.1
 * Assign priorityClassNames to critical cluster and node components ([#406](https://github.com/poseidon/typhoon/pull/406))
   * Informs node out-of-resource eviction and scheduler preemption and ordering
+* Add a CoreDNS readiness probe ([#410](https://github.com/poseidon/typhoon/pull/410))
 
 #### Bare-Metal
 
