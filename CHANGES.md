@@ -29,7 +29,7 @@ Notable changes between versions.
   * Add `pod` name label to metrics discovered via service endpoints
   * Rename `kubernetes_namespace` label to `namespace`
 * Improve Grafana and dashboards ([#403](https://github.com/poseidon/typhoon/pull/403), [#404](https://github.com/poseidon/typhoon/pull/404))
-  * Upgrade Grafana from v5.4.3 to 6.0.0-beta3
+  * Upgrade Grafana from v5.4.3 to [v6.0.0](https://github.com/grafana/grafana/releases/tag/v6.0.0)!
   * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
 * Raise nginx-ingress liveness/readiness timeout to 5 seconds
 * Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
