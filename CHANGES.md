@@ -5,7 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.3.11 to [v3.3.12](https://github.com/etcd-io/etcd/releases/tag/v3.3.12)
-* Update Calico from v3.5.0 to v3.5.1
+* Update Calico from v3.5.0 to [v3.5.2](https://docs.projectcalico.org/v3.5/releases/)
 * Assign priorityClassNames to critical cluster and node components ([#406](https://github.com/poseidon/typhoon/pull/406))
   * Informs node out-of-resource eviction and scheduler preemption and ordering
 * Add a CoreDNS readiness probe ([#410](https://github.com/poseidon/typhoon/pull/410))
