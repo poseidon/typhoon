@@ -4,7 +4,7 @@ Typhoon ensures certain networking hardware integrates well with bare-metal Kube
 
 ## Ubiquiti
 
-Ubiquiti EdgeRouters work well with bare-metal Kubernetes clusters. Knowledge about how to setup an EdgeRouter and use the CLI is required.
+Ubiquiti EdgeRouters and EdgeOS work well with bare-metal Kubernetes clusters. Familiarity with EdgeRouter setup and CLI usage is required.
 
 ### PXE
 
@@ -12,7 +12,7 @@ Ubiquiti EdgeRouters can provide a PXE-enabled network boot environment for clie
 
 #### ISC DHCP
 
-Add a subnet parameter to the LAN DHCP server to include an ISC DHCP config file.
+With ISC DHCP, add a subnet parameter to the LAN DHCP server to include an ISC DHCP config file.
 
 ```
 configure
@@ -21,7 +21,7 @@ set service dhcp-server shared-network-name NAME subnet SUBNET subnet-parameters
 commit-confirm
 ```
 
-Switch to root (i.e. `sudo -i`) and write the ISC DHCP config `/config/scripts/ipxe.conf`. iPXE client machines will chainload to `matchbox.example.com`, while non-iPXE clients will chainload to `undionly.kpxe` (requires TFTP to be enabled).
+Switch to root (i.e. `sudo -i`) and write the ISC DHCP config `/config/scripts/ipxe.conf`. iPXE client machines will chainload to `matchbox.example.com`, while non-iPXE clients will chainload to `undionly.kpxe` (requires TFTP).
 
 ```
 allow bootp;
@@ -35,14 +35,23 @@ if exists user-class and option user-class = "iPXE" {
 }
 ```
 
+#### dnsmasq
+
+With dnsmasq for DHCP, add options to chainload PXE clients to iPXE `undionly.kpxe` (requires TFTP), tag iPXE clients, and chainload iPXE clients to `matchbox.example.com`.
+
+```
+set service dns forwarding options 'dhcp-userclass=set:ipxe,iPXE'
+set service dns forwarding options 'pxe-service=tag:#ipxe,x86PC,PXE chainload to iPXE,undionly.kpxe'
+set service dns forwarding options 'pxe-service=tag:ipxe,x86PC,iPXE,http://matchbox.example.com/boot.ipxe'
+```   
+
 ### TFTP
 
-Use `dnsmasq` as a TFTP server to serve [undionly.kpxe](http://boot.ipxe.org/undionly.kpxe).
+Use `dnsmasq` as a TFTP server to serve `undionly.kpxe`. Compiling from [source](https://github.com/ipxe/ipxe) with TLS support is recommended, but you may also download a [pre-compiled](http://boot.ipxe.org/undionly.kpxe) copy.
 
 ```
 sudo -i
-mkdir /var/lib/tftpboot
-cd /var/lib/tftpboot
+mkdir /config/tftpboot && cd /config/tftpboot
 curl http://boot.ipxe.org/undionly.kpxe -o undionly.kpxe
 ```
 
@@ -52,12 +61,9 @@ Add `dnsmasq` command line options to enable the TFTP file server.
 configure
 show service dns forwarding
 set service dns forwarding options enable-tftp
-set service dns forwarding options tftp-root=/var/lib/tftpboot
+set service dns forwarding options tftp-root=/config/tftpboot
 commit-confirm
 ```
-
-!!! warning
-    After firmware upgrades, the `/var/lib/tftpboot` directory will not exist and dnsmasq will not start properly. Repeat this process following an upgrade.
 
 ### DHCP
 
@@ -105,6 +111,9 @@ set protocols static route 10.3.0.0/16 next-hop NODE_IP
 ...
 commit-confirm
 ```
+
+!!! note
+    Adding multiple next-hop nodes provides equal-cost multi-path (ECMP) routing. EdgeOS v2.0+ is required. The kernel in prior versions used flow-hash to balanced packets, whereas with v2.0, round-robin sessions are used. 
 
 ### Port Forwarding
 
