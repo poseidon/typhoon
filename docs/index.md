@@ -11,7 +11,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
-* Kubernetes v1.13.3 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
+* Kubernetes v1.13.4 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
 * Single or multi-master, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Advanced features like [worker pools](advanced/worker-pools/), [preemptible](cl/google-cloud/#preemption) workers, and [snippets](advanced/customization/#container-linux) customization
@@ -49,7 +49,7 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.13.3"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.13.4"
   
   providers = {
     google   = "google.default"
@@ -90,9 +90,9 @@ In 4-8 minutes (varies by platform), the cluster will be ready. This Google Clou
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.3
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.3
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.3
+yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.4
+yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.4
+yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.4
 ```
 
 List the pods.
