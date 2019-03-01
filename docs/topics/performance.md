@@ -6,11 +6,11 @@ Provisioning times vary based on the operating system and platform. Sampling the
 
 | Platform      | Apply | Destroy |
 |---------------|-------|---------|
-| AWS           | 6 min | 4 min   |
-| Azure         | 7 min | 7 min   |
+| AWS           | 5 min | 3 min   |
+| Azure         | 10 min | 7 min   |
 | Bare-Metal    | 10-15 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
-| Google Cloud  | 7 min | 6 min   |
+| Google Cloud  | 8 min | 5 min   |
 
 Notes:
 
