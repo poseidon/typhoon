@@ -1301,7 +1301,7 @@ data:
               "timeShift": null,
               "title": "CPU Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1387,7 +1387,7 @@ data:
               "timeShift": null,
               "title": "CPU Saturation (Load1)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1485,7 +1485,7 @@ data:
               "timeShift": null,
               "title": "Memory Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1571,7 +1571,7 @@ data:
               "timeShift": null,
               "title": "Memory Saturation (Swap I/O)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1669,7 +1669,7 @@ data:
               "timeShift": null,
               "title": "Disk IO Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1755,7 +1755,7 @@ data:
               "timeShift": null,
               "title": "Disk IO Saturation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1853,7 +1853,7 @@ data:
               "timeShift": null,
               "title": "Net Utilisation (Transmitted)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -1939,7 +1939,7 @@ data:
               "timeShift": null,
               "title": "Net Saturation (Dropped)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2037,7 +2037,7 @@ data:
               "timeShift": null,
               "title": "Disk Capacity",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2211,7 +2211,7 @@ data:
               "timeShift": null,
               "title": "CPU Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2297,7 +2297,7 @@ data:
               "timeShift": null,
               "title": "CPU Saturation (Load1)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2395,7 +2395,7 @@ data:
               "timeShift": null,
               "title": "Memory Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2481,7 +2481,7 @@ data:
               "timeShift": null,
               "title": "Memory Saturation (Swap I/O)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2579,7 +2579,7 @@ data:
               "timeShift": null,
               "title": "Disk IO Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2665,7 +2665,7 @@ data:
               "timeShift": null,
               "title": "Disk IO Saturation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2763,7 +2763,7 @@ data:
               "timeShift": null,
               "title": "Net Utilisation (Transmitted)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2849,7 +2849,7 @@ data:
               "timeShift": null,
               "title": "Net Saturation (Dropped)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -2947,7 +2947,7 @@ data:
               "timeShift": null,
               "title": "Disk Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3146,7 +3146,7 @@ data:
               "timeShift": null,
               "title": "CPU Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3230,7 +3230,7 @@ data:
               "timeShift": null,
               "title": "CPU Requests Commitment",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3314,7 +3314,7 @@ data:
               "timeShift": null,
               "title": "CPU Limits Commitment",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3398,7 +3398,7 @@ data:
               "timeShift": null,
               "title": "Memory Utilisation",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3482,7 +3482,7 @@ data:
               "timeShift": null,
               "title": "Memory Requests Commitment",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3566,7 +3566,7 @@ data:
               "timeShift": null,
               "title": "Memory Limits Commitment",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3664,7 +3664,7 @@ data:
               "timeShift": null,
               "title": "CPU Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -3930,7 +3930,7 @@ data:
               "timeShift": null,
               "title": "CPU Quota",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -4029,7 +4029,7 @@ data:
               "timeShift": null,
               "title": "Memory Usage (w/o cache)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -4295,7 +4295,7 @@ data:
               "timeShift": null,
               "title": "Requests by Namespace",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -4470,7 +4470,7 @@ data:
               "timeShift": null,
               "title": "CPU Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -4736,7 +4736,7 @@ data:
               "timeShift": null,
               "title": "CPU Quota",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -4835,7 +4835,7 @@ data:
               "timeShift": null,
               "title": "Memory Usage (w/o cache)",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -5182,7 +5182,7 @@ data:
               "timeShift": null,
               "title": "Memory Quota",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -5384,7 +5384,7 @@ data:
               "timeShift": null,
               "title": "CPU Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -5650,7 +5650,7 @@ data:
               "timeShift": null,
               "title": "CPU Quota",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -5765,7 +5765,7 @@ data:
               "timeShift": null,
               "title": "Memory Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6112,7 +6112,7 @@ data:
               "timeShift": null,
               "title": "Memory Quota",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6367,7 +6367,7 @@ data:
               "timeShift": null,
               "title": "System load",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6458,7 +6458,7 @@ data:
               "timeShift": null,
               "title": "Usage Per Core",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6562,7 +6562,7 @@ data:
               "timeShift": null,
               "title": "CPU Utilizaion",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6665,6 +6665,9 @@ data:
               ],
               "thresholds": "80, 90",
               "title": "CPU Usage",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -6768,7 +6771,7 @@ data:
               "timeShift": null,
               "title": "Memory Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -6871,6 +6874,9 @@ data:
               ],
               "thresholds": "80, 90",
               "title": "Memory Usage",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -6974,7 +6980,7 @@ data:
               "timeShift": null,
               "title": "Disk I/O",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7065,7 +7071,7 @@ data:
               "timeShift": null,
               "title": "Disk Space Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7169,7 +7175,7 @@ data:
               "timeShift": null,
               "title": "Network Received",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7260,7 +7266,7 @@ data:
               "timeShift": null,
               "title": "Network Transmitted",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7371,7 +7377,7 @@ data:
               "timeShift": null,
               "title": "Inodes Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7474,6 +7480,9 @@ data:
               ],
               "thresholds": "80, 90",
               "title": "Inodes Usage",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -7665,7 +7674,7 @@ data:
               "timeShift": null,
               "title": "Volume Space Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -7769,7 +7778,7 @@ data:
               "timeShift": null,
               "title": "Volume inodes Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -8021,7 +8030,7 @@ data:
               "timeShift": null,
               "title": "Memory Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -8124,7 +8133,7 @@ data:
               "timeShift": null,
               "title": "CPU Usage",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -8227,7 +8236,7 @@ data:
               "timeShift": null,
               "title": "Network I/O",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
@@ -8503,6 +8512,9 @@ data:
               ],
               "thresholds": "",
               "title": "CPU",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -8583,6 +8595,9 @@ data:
               ],
               "thresholds": "",
               "title": "Memory",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -8663,6 +8678,9 @@ data:
               ],
               "thresholds": "",
               "title": "Network",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -8758,6 +8776,9 @@ data:
               ],
               "thresholds": "",
               "title": "Desired Replicas",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -8839,6 +8860,9 @@ data:
               ],
               "thresholds": "",
               "title": "Replicas of current version",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -8920,6 +8944,9 @@ data:
               ],
               "thresholds": "",
               "title": "Observed Generation",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -9001,6 +9028,9 @@ data:
               ],
               "thresholds": "",
               "title": "Metadata Generation",
+              "tooltip": {
+                "shared": false
+              },
               "type": "singlestat",
               "valueFontSize": "80%",
               "valueMaps": [
@@ -9110,7 +9140,7 @@ data:
               "timeShift": null,
               "title": "Replicas",
               "tooltip": {
-                "shared": true,
+                "shared": false,
                 "sort": 0,
                 "value_type": "individual"
               },
