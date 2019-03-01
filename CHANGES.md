@@ -35,9 +35,9 @@ Notable changes between versions.
 * Modernize Grafana and dashboards ([#403](https://github.com/poseidon/typhoon/pull/403), [#404](https://github.com/poseidon/typhoon/pull/404))
   * Upgrade Grafana from v5.4.3 to [v6.0.0](https://github.com/grafana/grafana/releases/tag/v6.0.0)!
   * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
-* Raise nginx-ingress liveness/readiness timeout to 5 seconds
-* Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
-  * nginx-ingress now responds with its own 404 page by default
+* Update nginx-ingress from v0.22.0 to v0.23.0
+  * Raise nginx-ingress liveness/readiness timeout to 5 seconds
+  * Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
 
 ## v1.13.3
 
