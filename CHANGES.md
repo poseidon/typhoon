@@ -32,12 +32,16 @@ Notable changes between versions.
   * Drop extraneous metrics ([#397](https://github.com/poseidon/typhoon/pull/397))
   * Add `pod` name label to metrics discovered via service endpoints
   * Rename `kubernetes_namespace` label to `namespace`
-* Modernize Grafana and dashboards ([#403](https://github.com/poseidon/typhoon/pull/403), [#404](https://github.com/poseidon/typhoon/pull/404))
+* Modernize Grafana and dashboards, see [docs](https://typhoon.psdn.io/addons/grafana/) ([#403](https://github.com/poseidon/typhoon/pull/403), [#404](https://github.com/poseidon/typhoon/pull/404))
   * Upgrade Grafana from v5.4.3 to [v6.0.0](https://github.com/grafana/grafana/releases/tag/v6.0.0)!
   * Enable Grafana [Explore](http://docs.grafana.org/guides/whats-new-in-v6-0/#explore) UI as a Viewer (inspect/edit without saving)
 * Update nginx-ingress from v0.22.0 to v0.23.0
   * Raise nginx-ingress liveness/readiness timeout to 5 seconds
   * Remove nginx-ingess default-backend ([#401](https://github.com/poseidon/typhoon/pull/401))
+
+#### Fedora Atomic
+
+* Build Kubelet [system container](https://github.com/poseidon/system-containers) with buildah. The image is an OCI format and slightly larger.
 
 ## v1.13.3
 
