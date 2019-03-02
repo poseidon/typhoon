@@ -39,7 +39,7 @@ cd infra/clusters
 
 Login to your Google Console [API Manager](https://console.cloud.google.com/apis/dashboard) and select a project, or [signup](https://cloud.google.com/free/) if you don't have an account.
 
-Select "Credentials" and create a service account key. Choose the "Compute Engine Admin" role and save the JSON private key to a file that can be referenced in configs.
+Select "Credentials" and create a service account key. Choose the "Compute Engine Admin" and "DNS Administrator" roles and save the JSON private key to a file that can be referenced in configs.
 
 ```sh
 mv ~/Downloads/project-id-43048204.json ~/.config/google-cloud/terraform.json
