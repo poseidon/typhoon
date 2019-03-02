@@ -45,7 +45,7 @@ Configure the Google Cloud provider to use your service account key, project-id,
 
 ```tf
 provider "google" {
-  version = "2.0.0"
+  version = "~> 2.1.0"
   alias   = "default"
 
   credentials = "${file("~/.config/google-cloud/terraform.json")}"
