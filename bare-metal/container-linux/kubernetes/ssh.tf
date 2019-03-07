@@ -70,6 +70,7 @@ resource "null_resource" "copy-controller-secrets" {
       "sudo chown -R etcd:etcd /etc/ssl/etcd",
       "sudo chmod -R 500 /etc/ssl/etcd",
       "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+      "sudo mv $HOME/vsphere.local /etc/kubernetes/vsphere.local",
     ]
   }
 }
