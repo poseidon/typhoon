@@ -67,8 +67,9 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
   }
 
   # lifecycle
-  priority            = "${var.priority}"
   upgrade_policy_mode = "Manual"
+  priority            = "${var.priority}"
+  eviction_policy     = "Delete"
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.
@@ -105,9 +106,9 @@ data "template_file" "worker-config" {
   template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 
   vars = {
-    kubeconfig            = "${indent(10, var.kubeconfig)}"
-    ssh_authorized_key    = "${var.ssh_authorized_key}"
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    kubeconfig             = "${indent(10, var.kubeconfig)}"
+    ssh_authorized_key     = "${var.ssh_authorized_key}"
+    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
   }
 }

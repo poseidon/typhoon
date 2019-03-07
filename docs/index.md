@@ -11,29 +11,32 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
-* Kubernetes v1.12.2 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
-* Single or multi-master, workloads isolated on workers, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
+* Kubernetes v1.13.4 (upstream, via [kubernetes-incubator/bootkube](https://github.com/kubernetes-incubator/bootkube))
+* Single or multi-master, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
-* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/) and [preemption](https://typhoon.psdn.io/cl/google-cloud/#preemption) (varies by platform)
-* Ready for Ingress, Prometheus, Grafana, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
+* Advanced features like [worker pools](advanced/worker-pools/), [preemptible](cl/google-cloud/#preemption) workers, and [snippets](advanced/customization/#container-linux) customization
+* Ready for Ingress, Prometheus, Grafana, CSI, or other [addons](addons/overview/)
 
 ## Modules
 
-Typhoon provides a Terraform Module for each supported operating system and platform.
+Typhoon provides a Terraform Module for each supported operating system and platform. Container Linux is a mature and reliable choice. Also, Kinvolk's Flatcar Linux fork is selectable on AWS and bare-metal.
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
-| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
 | Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
 | Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
-| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
-| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | stable |
-| Google Cloud  | Fedora Atomic    | [google-cloud/container-linux/kubernetes](atomic/google-cloud.md) | alpha |
 
-The AWS and bare-metal `container-linux` modules allow picking Red Hat Container Linux (formerly CoreOS Container Linux) or Kinvolk's Flatcar Linux friendly fork.
+Fedora Atomic support is alpha and will evolve as Fedora Atomic is replaced by Fedora CoreOS.
+
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
+| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
+| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
+| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](atomic/google-cloud.md) | alpha |
 
 ## Documentation
 
@@ -46,7 +49,7 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.12.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.13.4"
   
   providers = {
     google   = "google.default"
@@ -87,9 +90,9 @@ In 4-8 minutes (varies by platform), the cluster will be ready. This Google Clou
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.12.2
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.12.2
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.12.2
+yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.4
+yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.4
+yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.4
 ```
 
 List the pods.

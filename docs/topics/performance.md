@@ -6,11 +6,11 @@ Provisioning times vary based on the operating system and platform. Sampling the
 
 | Platform      | Apply | Destroy |
 |---------------|-------|---------|
-| AWS           | 6 min | 5 min   |
-| Azure         | 7 min | 7 min   |
+| AWS           | 5 min | 3 min   |
+| Azure         | 10 min | 7 min   |
 | Bare-Metal    | 10-15 min | NA  |
 | Digital Ocean | 3 min 30 sec | 20 sec |
-| Google Cloud  | 7 min | 6 min   |
+| Google Cloud  | 8 min | 5 min   |
 
 Notes:
 
@@ -24,12 +24,12 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 
 | Platform / Plugin          | Theory | Host to Host | Pod to Pod   |
 |----------------------------|-------:|-------------:|-------------:|
-| AWS (flannel)              | Varies | 976 Mb/s     | 900-999 Mb/s |
-| AWS (calico, MTU 1480)     | Varies | 976 Mb/s     | 100-350 Mb/s |
-| AWS (calico, MTU 8981)     | Varies | 976 Mb/s     | 900-999 Mb/s |
-| Azure (flannel)            | Varies | 749 Mb/s     | 680 Mb/s     |
-| Bare-Metal (flannel)       | 1 Gb/s | ~940 Mb/s    | 903 Mb/s     |
-| Bare-Metal (calico)        | 1 Gb/s | ~940 Mb/s    | 931 Mb/s     |
+| AWS (flannel)              | 5 Gb/s | 4.94 Gb/s    | 4.89 Gb/s    |
+| AWS (calico, MTU 1480)     | 5 Gb/s | 4.94 Gb/s    | 4.42 Gb/s    |
+| AWS (calico, MTU 8981)     | 5 Gb/s | 4.94 Gb/s    | 4.75 Gb/s    |
+| Azure (flannel)            | Varies |  749 Mb/s    | 680 Mb/s     |
+| Bare-Metal (flannel)       | 1 Gb/s |  940 Mb/s    | 903 Mb/s     |
+| Bare-Metal (calico)        | 1 Gb/s |  940 Mb/s    | 931 Mb/s     |
 | Bare-Metal (flannel, bond) | 3 Gb/s |  2.3 Gb/s    | 1.17 Gb/s    |
 | Bare-Metal (calico, bond)  | 3 Gb/s |  2.3 Gb/s    | 1.17 Gb/s    |
 | Digital Ocean              | 2 Gb/s | 1.97 Gb/s    | 1.64 Gb/s    |

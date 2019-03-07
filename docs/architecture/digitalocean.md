@@ -1,4 +1,4 @@
-# AWS
+# DigitalOcean
 
 ## IPv6
 

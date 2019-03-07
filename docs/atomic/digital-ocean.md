@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
 
-In this tutorial, we'll create a Kubernetes v1.12.2 cluster on DigitalOcean with Fedora Atomic.
+In this tutorial, we'll create a Kubernetes v1.13.4 cluster on DigitalOcean with Fedora Atomic.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
@@ -45,7 +45,7 @@ Configure the DigitalOcean provider to use your token in a `providers.tf` file.
 
 ```tf
 provider "digitalocean" {
-  version = "1.0.0"
+  version = "~> 1.1.0"
   token = "${chomp(file("~/.config/digital-ocean/token"))}"
   alias = "default"
 }
@@ -77,7 +77,7 @@ Define a Kubernetes cluster using the module `digital-ocean/fedora-atomic/kubern
 
 ```tf
 module "digital-ocean-nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.12.2"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-atomic/kubernetes?ref=v1.13.4"
   
   providers = {
     digitalocean = "digitalocean.default"
@@ -152,9 +152,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME               STATUS  ROLES              AGE  VERSION
-nemo-controller-0  Ready   controller,master  10m  v1.12.2
-nemo-worker-0      Ready   node               10m  v1.12.2
-nemo-worker-1      Ready   node               10m  v1.12.2
+nemo-controller-0  Ready   controller,master  10m  v1.13.4
+nemo-worker-0      Ready   node               10m  v1.13.4
+nemo-worker-1      Ready   node               10m  v1.13.4
 ```
 
 List the pods.
@@ -204,9 +204,9 @@ Clusters create DNS A records `${cluster_name}.${dns_zone}` to resolve to contro
 You'll need a registered domain name or delegated subdomain in Digital Ocean Domains (i.e. DNS zones). You can set this up once and create many clusters with unique names.
 
 ```tf
+# Declare a DigitalOcean record to also create a zone file
 resource "digitalocean_domain" "zone-for-clusters" {
   name       = "do.example.com"
-  # Digital Ocean oddly requires an IP here. You may have to delete the A record it makes. :(
   ip_address = "8.8.8.8"
 }
 ```

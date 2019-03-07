@@ -17,20 +17,20 @@ resource "azurerm_dns_a_record" "apiserver" {
 resource "azurerm_public_ip" "apiserver-ipv4" {
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                         = "${var.cluster_name}-apiserver-ipv4"
-  location                     = "${var.region}"
-  sku                          = "Standard"
-  public_ip_address_allocation = "static"
+  name              = "${var.cluster_name}-apiserver-ipv4"
+  location          = "${var.region}"
+  sku               = "Standard"
+  allocation_method = "Static"
 }
 
 # Static IPv4 address for the ingress frontend
 resource "azurerm_public_ip" "ingress-ipv4" {
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                         = "${var.cluster_name}-ingress-ipv4"
-  location                     = "${var.region}"
-  sku                          = "Standard"
-  public_ip_address_allocation = "static"
+  name              = "${var.cluster_name}-ingress-ipv4"
+  location          = "${var.region}"
+  sku               = "Standard"
+  allocation_method = "Static"
 }
 
 # Network Load Balancer for apiservers and ingress

@@ -40,7 +40,7 @@ write_files:
         --authentication-token-webhook \
         --authorization-mode=Webhook \
         --client-ca-file=/etc/kubernetes/ca.crt \
-        --cluster_dns=${k8s_dns_service_ip} \
+        --cluster_dns=${cluster_dns_service_ip} \
         --cluster_domain=${cluster_domain_suffix} \
         --cni-conf-dir=/etc/kubernetes/cni/net.d \
         --exit-on-lock-contention \
@@ -84,8 +84,8 @@ runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, restart, NetworkManager]
   - [hostnamectl, set-hostname, ${domain_name}]
-  - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.10"
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.12.2"
+  - "atomic install --system --name=etcd quay.io/poseidon/etcd:v3.3.12"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.13.4"
   - "atomic install --system --name=bootkube quay.io/poseidon/bootkube:v0.14.0"
   - [systemctl, start, --no-block, etcd.service]
   - [systemctl, enable, kubelet.path]

@@ -121,10 +121,10 @@ resource "azurerm_public_ip" "controllers" {
   count               = "${var.controller_count}"
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                         = "${var.cluster_name}-controller-${count.index}"
-  location                     = "${azurerm_resource_group.cluster.location}"
-  sku                          = "Standard"
-  public_ip_address_allocation = "static"
+  name              = "${var.cluster_name}-controller-${count.index}"
+  location          = "${azurerm_resource_group.cluster.location}"
+  sku               = "Standard"
+  allocation_method = "Static"
 }
 
 # Controller Ignition configs
@@ -149,10 +149,10 @@ data "template_file" "controller-configs" {
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
     etcd_initial_cluster = "${join(",", data.template_file.etcds.*.rendered)}"
 
-    kubeconfig            = "${indent(10, module.bootkube.kubeconfig)}"
-    ssh_authorized_key    = "${var.ssh_authorized_key}"
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    kubeconfig             = "${indent(10, module.bootkube.kubeconfig-kubelet)}"
+    ssh_authorized_key     = "${var.ssh_authorized_key}"
+    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
   }
 }
 

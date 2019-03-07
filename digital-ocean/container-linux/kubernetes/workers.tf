@@ -66,7 +66,7 @@ data "template_file" "worker-config" {
   template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 
   vars = {
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
   }
 }

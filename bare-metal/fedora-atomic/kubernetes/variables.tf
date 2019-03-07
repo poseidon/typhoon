@@ -110,3 +110,9 @@ variable "kernel_args" {
   type        = "list"
   default     = []
 }
+
+variable "enable_reporting" {
+  type        = "string"
+  description = "Enable usage or analytics reporting to upstreams (Calico)"
+  default     = "false"
+}

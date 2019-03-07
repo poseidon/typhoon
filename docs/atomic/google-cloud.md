@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora Atomic is alpha. Fedora does not publish official images for Google Cloud so you must prepare them yourself. Expect rough edges and changes.
 
-In this tutorial, we'll create a Kubernetes v1.12.2 cluster on Google Compute Engine with Fedora Atomic.
+In this tutorial, we'll create a Kubernetes v1.13.4 cluster on Google Compute Engine with Fedora Atomic.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets. Instances are provisioned on first boot with cloud-init.
 
@@ -35,7 +35,7 @@ cd infra/clusters
 
 Login to your Google Console [API Manager](https://console.cloud.google.com/apis/dashboard) and select a project, or [signup](https://cloud.google.com/free/) if you don't have an account.
 
-Select "Credentials" and create a service account key. Choose the "Compute Engine Admin" role and save the JSON private key to a file that can be referenced in configs.
+Select "Credentials" and create a service account key. Choose the "Compute Engine Admin" and "DNS Administrator" roles and save the JSON private key to a file that can be referenced in configs.
 
 ```sh
 mv ~/Downloads/project-id-43048204.json ~/.config/google-cloud/terraform.json
@@ -45,7 +45,7 @@ Configure the Google Cloud provider to use your service account key, project-id,
 
 ```tf
 provider "google" {
-  version = "1.6"
+  version = "~> 2.1.0"
   alias   = "default"
 
   credentials = "${file("~/.config/google-cloud/terraform.json")}"
@@ -121,7 +121,7 @@ Define a Kubernetes cluster using the module `google-cloud/fedora-atomic/kuberne
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=v1.12.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-atomic/kubernetes?ref=v1.13.4"
   
   providers = {
     google   = "google.default"
@@ -197,9 +197,9 @@ In 5-10 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
 NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.12.2
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.12.2
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.12.2
+yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.13.4
+yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.13.4
+yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.13.4
 ```
 
 List the pods.

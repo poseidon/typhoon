@@ -1,6 +1,6 @@
 # Heapster
 
-[Heapster](https://kubernetes.io/docs/user-guide/monitoring/) collects data from apiservers and kubelets and exposes it through a REST API. This API powers the `kubectl top` command and Kubernetes dashboard graphs.
+[Heapster](https://kubernetes.io/docs/user-guide/monitoring/) collects data from apiservers and kubelets and exposes it through a REST API. This API powers the `kubectl top` command.
 
 ## Create
 

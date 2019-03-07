@@ -24,10 +24,9 @@ spec:
         node-role.kubernetes.io/node: ""
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.20.0
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.23.0
           args:
             - /nginx-ingress-controller
-            - --default-backend-service=$(POD_NAMESPACE)/default-backend
             - --ingress-class=public
           # use downward API
           env:
@@ -58,7 +57,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 5
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -67,7 +66,7 @@ spec:
               scheme: HTTP
             periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 5
           securityContext:
             capabilities:
               add:

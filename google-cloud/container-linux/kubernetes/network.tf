@@ -57,12 +57,12 @@ resource "google_compute_firewall" "allow-apiserver" {
   target_tags   = ["${var.cluster_name}-controller"]
 }
 
-# Calico BGP and IPIP
-# https://docs.projectcalico.org/v2.5/reference/public-cloud/gce
-resource "google_compute_firewall" "internal-calico" {
-  count = "${var.networking == "calico" ? 1 : 0}"
+# BGP and IPIP
+# https://docs.projectcalico.org/latest/reference/public-cloud/gce
+resource "google_compute_firewall" "internal-bgp" {
+  count = "${var.networking != "flannel" ? 1 : 0}"
 
-  name    = "${var.cluster_name}-internal-calico"
+  name    = "${var.cluster_name}-internal-bgp"
   network = "${google_compute_network.network.name}"
 
   allow {

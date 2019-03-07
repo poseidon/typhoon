@@ -23,9 +23,10 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
 # Worker instance template
 resource "google_compute_instance_template" "worker" {
-  name_prefix  = "${var.name}-worker-"
-  description  = "Worker Instance template"
-  machine_type = "${var.machine_type}"
+  name_prefix      = "${var.name}-worker-"
+  description      = "Worker Instance template"
+  machine_type     = "${var.machine_type}"
+  min_cpu_platform = "Intel Haswell"
 
   metadata {
     user-data = "${data.ct_config.worker-ignition.rendered}"
@@ -76,9 +77,9 @@ data "template_file" "worker-config" {
   template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 
   vars = {
-    kubeconfig            = "${indent(10, var.kubeconfig)}"
-    ssh_authorized_key    = "${var.ssh_authorized_key}"
-    k8s_dns_service_ip    = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix = "${var.cluster_domain_suffix}"
+    kubeconfig             = "${indent(10, var.kubeconfig)}"
+    ssh_authorized_key     = "${var.ssh_authorized_key}"
+    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
+    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
   }
 }

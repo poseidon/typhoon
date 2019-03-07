@@ -31,13 +31,13 @@ variable "worker_count" {
 
 variable "controller_type" {
   type        = "string"
-  default     = "t2.small"
+  default     = "t3.small"
   description = "EC2 instance type for controllers"
 }
 
 variable "worker_type" {
   type        = "string"
-  default     = "t2.small"
+  default     = "t3.small"
   description = "EC2 instance type for workers"
 }
 
@@ -133,4 +133,10 @@ variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   type        = "string"
   default     = "cluster.local"
+}
+
+variable "enable_reporting" {
+  type        = "string"
+  description = "Enable usage or analytics reporting to upstreams (Calico)"
+  default     = "false"
 }

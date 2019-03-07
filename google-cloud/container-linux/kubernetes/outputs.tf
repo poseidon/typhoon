@@ -1,3 +1,7 @@
+output "kubeconfig-admin" {
+  value = "${module.bootkube.kubeconfig-admin}"
+}
+
 # Outputs for Kubernetes Ingress
 
 output "ingress_static_ipv4" {
@@ -17,7 +21,7 @@ output "network_name" {
 }
 
 output "kubeconfig" {
-  value = "${module.bootkube.kubeconfig}"
+  value = "${module.bootkube.kubeconfig-kubelet}"
 }
 
 # Outputs for custom firewalling

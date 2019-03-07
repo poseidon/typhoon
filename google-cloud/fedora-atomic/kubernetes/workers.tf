@@ -13,7 +13,7 @@ module "workers" {
   preemptible  = "${var.worker_preemptible}"
 
   # configuration
-  kubeconfig            = "${module.bootkube.kubeconfig}"
+  kubeconfig            = "${module.bootkube.kubeconfig-kubelet}"
   ssh_authorized_key    = "${var.ssh_authorized_key}"
   service_cidr          = "${var.service_cidr}"
   cluster_domain_suffix = "${var.cluster_domain_suffix}"

@@ -42,7 +42,7 @@ resource "google_compute_backend_service" "apiserver" {
   protocol         = "TCP"
   port_name        = "apiserver"
   session_affinity = "NONE"
-  timeout_sec      = "60"
+  timeout_sec      = "300"
 
   # controller(s) spread across zonal instance groups
   backend {

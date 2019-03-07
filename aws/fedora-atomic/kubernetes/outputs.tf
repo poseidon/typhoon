@@ -1,8 +1,17 @@
+output "kubeconfig-admin" {
+  value = "${module.bootkube.kubeconfig-admin}"
+}
+
 # Outputs for Kubernetes Ingress
 
 output "ingress_dns_name" {
   value       = "${aws_lb.nlb.dns_name}"
   description = "DNS name of the network load balancer for distributing traffic to Ingress controllers"
+}
+
+output "ingress_zone_id" {
+  value       = "${aws_lb.nlb.zone_id}"
+  description = "Route53 zone id of the network load balancer DNS name that can be used in Route53 alias records"
 }
 
 # Outputs for worker pools
@@ -23,7 +32,7 @@ output "worker_security_groups" {
 }
 
 output "kubeconfig" {
-  value = "${module.bootkube.kubeconfig}"
+  value = "${module.bootkube.kubeconfig-kubelet}"
 }
 
 # Outputs for custom load balancing

@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.12.2 cluster on bare-metal with Container Linux.
+In this tutorial, we'll network boot and provision a Kubernetes v1.13.4 cluster on bare-metal with Container Linux.
 
 First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -113,28 +113,20 @@ $ terraform version
 Terraform v0.11.7
 ```
 
-Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system.
+Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.2/terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
-tar xzf terraform-provider-matchbox-v0.2.2-linux-amd64.tar.gz
-sudo mv terraform-provider-matchbox-v0.2.2-linux-amd64/terraform-provider-matchbox /usr/local/bin/
+wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+tar xzf terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.3
 ```
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
+Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
-```
-
-Add the plugin to your `~/.terraformrc`.
-
-```
-providers {
-  matchbox = "/usr/local/bin/terraform-provider-matchbox"
-}
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.0/terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.0
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -149,10 +141,15 @@ Configure the Matchbox provider to use your Matchbox API endpoint and client cer
 
 ```tf
 provider "matchbox" {
+  version     = "0.2.3"
   endpoint    = "matchbox.example.com:8081"
   client_cert = "${file("~/.config/matchbox/client.crt")}"
   client_key  = "${file("~/.config/matchbox/client.key")}"
   ca          = "${file("~/.config/matchbox/ca.crt")}"
+}
+
+provider "ct" {
+  version = "0.3.0"
 }
 
 provider "local" {
@@ -182,7 +179,7 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.12.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.13.4"
   
   providers = {
     local = "local.default"
@@ -291,9 +288,9 @@ Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 To watch the install to disk (until machines reboot from disk), SSH to port 2222.
 
 ```
-# before v1.12.2
+# before v1.13.4
 $ ssh debug@node1.example.com
-# after v1.12.2
+# after v1.13.4
 $ ssh -p 2222 core@node1.example.com
 ```
 
@@ -318,9 +315,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS  ROLES              AGE  VERSION
-node1.example.com   Ready   controller,master  10m  v1.12.2
-node2.example.com   Ready   node               10m  v1.12.2
-node3.example.com   Ready   node               10m  v1.12.2
+node1.example.com   Ready   controller,master  10m  v1.13.4
+node2.example.com   Ready   node               10m  v1.13.4
+node3.example.com   Ready   node               10m  v1.13.4
 ```
 
 List the pods.

@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.12.2 cluster on AWS with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.13.4 cluster on AWS with Container Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -18,23 +18,15 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.7
+Terraform v0.11.11
 ```
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system.
+Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
-sudo mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct /usr/local/bin/
-```
-
-Add the plugin to your `~/.terraformrc`.
-
-```
-providers {
-  ct = "/usr/local/bin/terraform-provider-ct"
-}
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.0/terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.0
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -57,11 +49,15 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version = "~> 1.13.0"
+  version = "~> 1.60.0"
   alias   = "default"
 
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
+}
+
+provider "ct" {
+  version = "0.3.0"
 }
 
 provider "local" {
@@ -96,7 +92,7 @@ Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
 
 ```tf
 module "aws-tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.12.2"
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.13.4"
 
   providers = {
     aws = "aws.default"
@@ -117,7 +113,7 @@ module "aws-tempest" {
 
   # optional
   worker_count = 2
-  worker_type  = "t2.medium"
+  worker_type  = "t3.small"
 }
 ```
 
@@ -169,9 +165,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
 NAME           STATUS  ROLES              AGE  VERSION
-ip-10-0-3-155  Ready   controller,master  10m  v1.12.2
-ip-10-0-26-65  Ready   node               10m  v1.12.2
-ip-10-0-41-21  Ready   node               10m  v1.12.2
+ip-10-0-3-155  Ready   controller,master  10m  v1.13.4
+ip-10-0-26-65  Ready   node               10m  v1.13.4
+ip-10-0-41-21  Ready   node               10m  v1.13.4
 ```
 
 List the pods.
@@ -198,7 +194,7 @@ kube-system   pod-checkpointer-4kxtl-ip-10-0-3-155      1/1    Running   0      
 
 ## Going Further
 
-Learn about [maintenance](/topics/maintenance) and [addons](/addons/overview).
+Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 !!! note
     On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
@@ -240,8 +236,8 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 |:-----|:------------|:--------|:--------|
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
-| controller_type | EC2 instance type for controllers | "t2.small" | See below |
-| worker_type | EC2 instance type for workers | "t2.small" | See below |
+| controller_type | EC2 instance type for controllers | "t3.small" | See below |
+| worker_type | EC2 instance type for workers | "t3.small" | See below |
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the EBS volume in GB | "40" | "100" |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
@@ -263,3 +259,8 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 !!! tip "MTU"
     If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8981! You will get better pod-to-pod bandwidth.
+
+#### Spot
+
+Add `worker_price = "0.10"` to use spot instance workers (instead of "on-demand") and set a maximum spot price in USD. Clusters can tolerate spot market interuptions fairly well (reschedules pods, but cannot drain) to save money, with the tradeoff that requests for workers may go unfulfilled.
+
