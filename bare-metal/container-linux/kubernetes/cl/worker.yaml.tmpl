@@ -58,8 +58,6 @@ systemd:
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
         ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
         ExecStartPre=-/usr/bin/rkt rm --uuid-file=/var/cache/kubelet-pod.uuid
-        ExecStartPre=/usr/bin/chmod 444 /sys/class/dmi/id/product_uuid
-        ExecStartPre=/usr/bin/chmod 444 /sys/class/dmi/id/product_serial
         ExecStart=/usr/lib/coreos/kubelet-wrapper \
           --anonymous-auth=false \
           --authentication-token-webhook \
@@ -76,9 +74,6 @@ systemd:
           --node-labels=node-role.kubernetes.io/node \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
-          --max-pods=100 \
-          --cloud-provider=vsphere \
-          --cloud-config=/etc/kubernetes/vsphere.conf \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
         Restart=always
