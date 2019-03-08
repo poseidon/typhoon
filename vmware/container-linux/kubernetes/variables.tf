@@ -3,7 +3,52 @@ variable "cluster_name" {
   description = "Unique cluster name"
 }
 
-# bare-metal
+# vmware
+
+variable "vmware_pass" {
+  type        = "string"
+  description = "vmware cloud provider user password "
+}
+
+variable "vmware_user_name" {
+  type        = "string"
+  description = "vmware cloud provider user name"
+}
+
+variable "vmware_virtual_centre" {
+  type        = "string"
+  description = "vmware cloud provider virtual centre server name"
+}
+
+variable "vmware_datacentre" {
+  type        = "string"
+  description = "vmware cloud provider datacentre name"
+}
+
+variable "vmware_network_name" {
+  type        = "string"
+  description = "vmware cloud provider network name"
+}
+
+variable "vmware_resources_pool" {
+  type        = "string"
+  description = "vmware cloud provider resource pool name"
+}
+
+variable "vmware_virtual_server" {
+  type        = "string"
+  description = "vmware cloud provider wvirtual server name"
+}
+
+variable "vmware_datastore" {
+  type        = "string"
+  description = "vmware cloud provider working datastore name"
+}
+
+variable "vmware_folder_name" {
+  type        = "string"
+  description = "vmware cloud provider folder name"
+}
 
 variable "matchbox_http_endpoint" {
   type        = "string"
