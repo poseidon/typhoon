@@ -173,5 +173,6 @@ storage:
 passwd:
   users:
     - name: core
+      password_hash: "${pass_hash}"
       ssh_authorized_keys:
         - ${ssh_authorized_key}
