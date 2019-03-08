@@ -3,6 +3,13 @@ variable "cluster_name" {
   description = "Unique cluster name"
 }
 
+# coreos
+
+variable "pass_hash" {
+  type        = "string"
+  description = "coreos password hash "
+}
+
 # vmware
 
 variable "vmware_pass" {
