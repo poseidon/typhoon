@@ -7,6 +7,10 @@ Notable changes between versions.
 * Resolve in-addr.arpa reverse DNS lookups (PTR) for pod IPv4 addresses ([#415](https://github.com/poseidon/typhoon/pull/415))
   * Reverse DNS lookups for service IPv4 addresses unchanged
 
+#### AWS
+
+* Support `terraform-provider-aws` v2.0+ ([#419](https://github.com/poseidon/typhoon/pull/419))
+
 #### Addons
 
 * Update Prometheus from v2.7.1 to v2.7.2
