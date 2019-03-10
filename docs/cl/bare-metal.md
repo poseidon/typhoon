@@ -9,7 +9,7 @@ Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service
 ## Requirements
 
 * Machines with 2GB RAM, 30GB disk, PXE-enabled NIC, IPMI
-* PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment
+* PXE-enabled [network boot](https://coreos.com/matchbox/docs/latest/network-setup.html) environment (with HTTPS support)
 * Matchbox v0.6+ deployment with API enabled
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
 * Terraform v0.11.x, [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox), and [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) installed locally
@@ -82,7 +82,7 @@ $ openssl s_client -connect matchbox.example.com:8081 \
 
 ## PXE Environment
 
-Create a iPXE-enabled network boot environment. Configure PXE clients to chainload [iPXE](http://ipxe.org/cmd) and instruct iPXE clients to chainload from your Matchbox service's `/boot.ipxe` endpoint.
+Create an iPXE-enabled network boot environment. Configure PXE clients to chainload [iPXE](http://ipxe.org/cmd) firmware compiled to support [HTTPS downloads](https://ipxe.org/crypto). Instruct iPXE clients to chainload from your Matchbox service's `/boot.ipxe` endpoint.
 
 For networks already supporting iPXE clients, you can add a `default.ipxe` config.
 
@@ -93,8 +93,6 @@ chain http://matchbox.foo:8080/boot.ipxe
 
 For networks with Ubiquiti Routers, you can [configure the router](/topics/hardware/#ubiquiti) itself to chainload machines to iPXE and Matchbox.
 
-For a small lab, you may wish to checkout the [quay.io/coreos/dnsmasq](https://quay.io/repository/coreos/dnsmasq) container image and [copy-paste examples](https://github.com/coreos/matchbox/blob/master/Documentation/network-setup.md#coreosdnsmasq).
-
 Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup.html) to setup a compliant iPXE-enabled network. There is quite a bit of flexibility:
 
 * Continue using existing DHCP, TFTP, or DNS services
@@ -103,6 +101,9 @@ Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup
 
 !!! note ""
     TFTP chainloading to modern boot firmware, like iPXE, avoids issues with old NICs and allows faster transfer protocols like HTTP to be used.
+
+!!! warning
+    Compile iPXE from [source](https://github.com/ipxe/ipxe) with support for [HTTPS downloads](https://ipxe.org/crypto). iPXE's pre-built firmware binaries do not enable this. If you cannot enable HTTPS downloads, set `download_protocol = "http"` (discouraged).
 
 ## Terraform Setup
 
@@ -215,6 +216,9 @@ module "bare-metal-mercury" {
     "node2.example.com",
     "node3.example.com",
   ]
+
+  # set to http only if you cannot chainload to iPXE firmware with https support
+  # download_protocol = "http"
 }
 ```
 
@@ -375,6 +379,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
+| download_protocol | Protocol iPXE uses to download the kernel and initrd. iPXE must be compiled with [crypto](https://ipxe.org/crypto) support for https. Unused if cached_install is true | "https" | "http" |
 | cached_install | PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux or Flatcar images into the cache | false | true |
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |

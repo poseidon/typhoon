@@ -11,10 +11,10 @@ resource "matchbox_profile" "container-linux-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  kernel = "http://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe.vmlinuz"
+  kernel = "${var.download_protocol}://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe.vmlinuz"
 
   initrd = [
-    "http://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe_image.cpio.gz",
+    "${var.download_protocol}://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe_image.cpio.gz",
   ]
 
   args = [
@@ -96,10 +96,10 @@ resource "matchbox_profile" "flatcar-install" {
   count = "${length(var.controller_names) + length(var.worker_names)}"
   name  = "${format("%s-flatcar-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))}"
 
-  kernel = "http://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe.vmlinuz"
+  kernel = "${var.download_protocol}://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe.vmlinuz"
 
   initrd = [
-    "http://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe_image.cpio.gz",
+    "${var.download_protocol}://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe_image.cpio.gz",
   ]
 
   args = [

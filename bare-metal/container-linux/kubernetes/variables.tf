@@ -118,6 +118,12 @@ variable "cluster_domain_suffix" {
   default     = "cluster.local"
 }
 
+variable "download_protocol" {
+  type = "string"
+  default = "https"
+  description = "Protocol iPXE should use to download the kernel and initrd. Defaults to https, which requires iPXE compiled with crypto support. Unused if cached_install is true."
+}
+
 variable "cached_install" {
   type        = "string"
   default     = "false"

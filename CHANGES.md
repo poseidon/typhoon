@@ -11,6 +11,13 @@ Notable changes between versions.
 
 * Support `terraform-provider-aws` v2.0+ ([#419](https://github.com/poseidon/typhoon/pull/419))
 
+#### Bare-Metal
+
+* Change the default iPXE kernel and initrd download protocol from HTTP to HTTPS ([#420](https://github.com/poseidon/typhoon/pull/420))
+  * Require an iPXE-enabled network boot environment with support for TLS downloads. PXE clients must chainload to iPXE firmware compiled with `DOWNLOAD_PROTO_HTTPS` [enabled](https://ipxe.org/crypto). (**action required**)
+  * Affects Container Linux and Flatcar Linux install profiles that pull from public images (default). No affect when `cached_install=true` or Fedora Atomic, since those download from Matchbox
+  * Add `download_protocol` variable. Recognizing boot firmware TLS support is difficult in some environments, set the protocol to "http" for the old behavior (discouraged)
+
 #### Addons
 
 * Update Prometheus from v2.7.1 to v2.7.2

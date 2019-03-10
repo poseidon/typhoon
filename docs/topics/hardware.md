@@ -47,7 +47,7 @@ set service dns forwarding options 'pxe-service=tag:ipxe,x86PC,iPXE,http://match
 
 ### TFTP
 
-Use `dnsmasq` as a TFTP server to serve `undionly.kpxe`. Compiling from [source](https://github.com/ipxe/ipxe) with TLS support is recommended, but you may also download a [pre-compiled](http://boot.ipxe.org/undionly.kpxe) copy.
+Use `dnsmasq` as a TFTP server to serve `undionly.kpxe`. Compiling from [source](https://github.com/ipxe/ipxe) with TLS support is strongly recommended. If you use a [pre-compiled](http://boot.ipxe.org/undionly.kpxe) copy, you must set `download_protocol = "http"` in your cluster definition (discouraged).
 
 ```
 sudo -i
