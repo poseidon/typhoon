@@ -67,6 +67,7 @@ resource "digitalocean_tag" "controllers" {
 data "ct_config" "controller-ignitions" {
   count        = "${var.controller_count}"
   content      = "${element(data.template_file.controller-configs.*.rendered, count.index)}"
+  platform     = "digitalocean"
   pretty_print = false
   snippets     = ["${var.controller_clc_snippets}"]
 }

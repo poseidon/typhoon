@@ -1,4 +1,22 @@
 ---
+etcd:
+  version: "3.3.12"
+  name: "${etcd_name}"
+  advertise_client_urls: "https://${etcd_domain}:2379"
+  initial_advertise_peer_urls: "https://${etcd_domain}:2380"
+  listen_client_urls: "https://{PRIVATE_IPV4}:2379"
+  listen_peer_urls: "https://{PRIVATE_IPV4}:2380"
+  listen_metrics_urls: "http://{PRIVATE_IPV4}:2381"
+  initial_cluster: "${etcd_initial_cluster}"
+  strict_reconfig_check: true
+  trusted_ca_file: "/etc/ssl/certs/etcd/server-ca.crt"
+  cert_file: "/etc/ssl/certs/etcd/server.crt"
+  key_file: "/etc/ssl/certs/etcd/server.key"
+  client_cert_auth: true
+  peer_trusted_ca_file: "/etc/ssl/certs/etcd/peer-ca.crt"
+  peer_cert_file: "/etc/ssl/certs/etcd/peer.crt"
+  peer_key_file: "/etc/ssl/certs/etcd/peer.key"
+  peer_client_cert_auth: true
 systemd:
   units:
     - name: etcd-member.service
@@ -7,24 +25,7 @@ systemd:
         - name: 40-etcd-cluster.conf
           contents: |
             [Service]
-            Environment="ETCD_IMAGE_TAG=v3.3.12"
-            Environment="ETCD_NAME=${etcd_name}"
-            Environment="ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379"
-            Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380"
-            Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379"
-            Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
-            Environment="ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381"
-            Environment="ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}"
-            Environment="ETCD_STRICT_RECONFIG_CHECK=true"
             Environment="ETCD_SSL_DIR=/etc/ssl/etcd"
-            Environment="ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt"
-            Environment="ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt"
-            Environment="ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key"
-            Environment="ETCD_CLIENT_CERT_AUTH=true"
-            Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt"
-            Environment="ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt"
-            Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
-            Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
     - name: docker.service
       enable: true
     - name: locksmithd.service
