@@ -36,7 +36,7 @@ resource "google_compute_instance" "controllers" {
   machine_type     = "${var.controller_type}"
   min_cpu_platform = "Intel Haswell"
 
-  metadata {
+  metadata = {
     user-data = "${element(data.template_file.controller-cloudinit.*.rendered, count.index)}"
   }
 
@@ -91,7 +91,7 @@ data "template_file" "etcds" {
   count    = "${var.controller_count}"
   template = "etcd$${index}=https://$${cluster_name}-etcd$${index}.$${dns_zone}:2380"
 
-  vars {
+  vars = {
     index        = "${count.index}"
     cluster_name = "${var.cluster_name}"
     dns_zone     = "${var.dns_zone}"

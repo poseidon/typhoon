@@ -5,7 +5,7 @@ resource "matchbox_group" "install" {
 
   profile = "${local.flavor == "flatcar" ? var.cached_install == "true" ? element(matchbox_profile.cached-flatcar-linux-install.*.name, count.index) : element(matchbox_profile.flatcar-install.*.name, count.index) : var.cached_install == "true" ? element(matchbox_profile.cached-container-linux-install.*.name, count.index) : element(matchbox_profile.container-linux-install.*.name, count.index)}"
 
-  selector {
+  selector = {
     mac = "${element(concat(var.controller_macs, var.worker_macs), count.index)}"
   }
 }
@@ -15,7 +15,7 @@ resource "matchbox_group" "controller" {
   name    = "${format("%s-%s", var.cluster_name, element(var.controller_names, count.index))}"
   profile = "${element(matchbox_profile.controllers.*.name, count.index)}"
 
-  selector {
+  selector = {
     mac = "${element(var.controller_macs, count.index)}"
     os  = "installed"
   }
@@ -26,7 +26,7 @@ resource "matchbox_group" "worker" {
   name    = "${format("%s-%s", var.cluster_name, element(var.worker_names, count.index))}"
   profile = "${element(matchbox_profile.workers.*.name, count.index)}"
 
-  selector {
+  selector = {
     mac = "${element(var.worker_macs, count.index)}"
     os  = "installed"
   }

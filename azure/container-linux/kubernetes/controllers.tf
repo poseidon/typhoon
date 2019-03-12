@@ -160,7 +160,7 @@ data "template_file" "etcds" {
   count    = "${var.controller_count}"
   template = "etcd$${index}=https://$${cluster_name}-etcd$${index}.$${dns_zone}:2380"
 
-  vars {
+  vars = {
     index        = "${count.index}"
     cluster_name = "${var.cluster_name}"
     dns_zone     = "${var.dns_zone}"

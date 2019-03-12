@@ -34,7 +34,7 @@ data "template_file" "container-linux-install-configs" {
 
   template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
-  vars {
+  vars = {
     os_flavor           = "${local.flavor}"
     os_channel          = "${local.channel}"
     os_version          = "${var.os_version}"
@@ -77,7 +77,7 @@ data "template_file" "cached-container-linux-install-configs" {
 
   template = "${file("${path.module}/cl/install.yaml.tmpl")}"
 
-  vars {
+  vars = {
     os_flavor           = "${local.flavor}"
     os_channel          = "${local.channel}"
     os_version          = "${var.os_version}"
@@ -159,7 +159,7 @@ data "template_file" "controller-configs" {
 
   template = "${file("${path.module}/cl/controller.yaml.tmpl")}"
 
-  vars {
+  vars = {
     domain_name            = "${element(var.controller_domains, count.index)}"
     etcd_name              = "${element(var.controller_names, count.index)}"
     etcd_initial_cluster   = "${join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))}"
@@ -190,7 +190,7 @@ data "template_file" "worker-configs" {
 
   template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
 
-  vars {
+  vars = {
     domain_name            = "${element(var.worker_domains, count.index)}"
     cluster_dns_service_ip = "${module.bootkube.cluster_dns_service_ip}"
     cluster_domain_suffix  = "${var.cluster_domain_suffix}"

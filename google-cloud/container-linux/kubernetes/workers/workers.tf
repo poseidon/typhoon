@@ -28,7 +28,7 @@ resource "google_compute_instance_template" "worker" {
   machine_type     = "${var.machine_type}"
   min_cpu_platform = "Intel Haswell"
 
-  metadata {
+  metadata = {
     user-data = "${data.ct_config.worker-ignition.rendered}"
   }
 
