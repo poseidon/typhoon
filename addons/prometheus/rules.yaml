@@ -366,19 +366,19 @@ data:
               "record": "node:node_memory_swap_io_bytes:sum_rate"
             },
             {
-              "expr": "avg(irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+\"}[1m]))\n",
+              "expr": "avg(irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m]))\n",
               "record": ":node_disk_utilisation:avg_irate"
             },
             {
-              "expr": "avg by (node) (\n  irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+\"}[1m])\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
+              "expr": "avg by (node) (\n  irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m])\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
               "record": "node:node_disk_utilisation:avg_irate"
             },
             {
-              "expr": "avg(irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+\"}[1m]) / 1e3)\n",
+              "expr": "avg(irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m]) / 1e3)\n",
               "record": ":node_disk_saturation:avg_irate"
             },
             {
-              "expr": "avg by (node) (\n  irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+\"}[1m]) / 1e3\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
+              "expr": "avg by (node) (\n  irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m]) / 1e3\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
               "record": "node:node_disk_saturation:avg_irate"
             },
             {
@@ -840,7 +840,7 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) without(instance, pod)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) without(instance, pod) * 100 > 10\n",
+              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) * 100 > 3\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -852,7 +852,31 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) without(instance, pod)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) without(instance, pod) * 100 > 5\n",
+              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) * 100 > 1\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeAPIErrorsHigh",
+              "annotations": {
+                "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
+              },
+              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 10\n",
+              "for": "10m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "KubeAPIErrorsHigh",
+              "annotations": {
+                "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
+              },
+              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 5\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -1040,7 +1064,7 @@ data:
                 "description": "{{$labels.job}} at {{$labels.instance}} has a corrupted write-ahead log (WAL).",
                 "summary": "Prometheus write-ahead log is corrupted"
               },
-              "expr": "tsdb_wal_corruptions_total{job=\"prometheus\"} > 0\n",
+              "expr": "prometheus_tsdb_wal_corruptions_total{job=\"prometheus\"} > 0\n",
               "for": "4h",
               "labels": {
                 "severity": "warning"

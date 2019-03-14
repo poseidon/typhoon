@@ -44,8 +44,10 @@ spec:
               mountPath: /etc/grafana/provisioning/datasources
             - name: providers
               mountPath: /etc/grafana/provisioning/dashboards
-            - name: dashboards
-              mountPath: /etc/grafana/dashboards
+            - name: dashboards-etcd
+              mountPath: /etc/grafana/dashboards/etcd
+            - name: dashboards-k8s
+              mountPath: /etc/grafana/dashboards/k8s
       volumes:
         - name: config
           configMap:
@@ -56,6 +58,10 @@ spec:
         - name: providers
           configMap:
             name: grafana-providers
-        - name: dashboards
+        - name: dashboards-etcd
           configMap:
-            name: grafana-dashboards
+            name: grafana-dashboards-etcd
+        - name: dashboards-k8s
+          configMap:
+            name: grafana-dashboards-k8s
+

@@ -27,7 +27,9 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from v2.7.1 to [v2.8.0](https://github.com/prometheus/prometheus/releases/tag/v2.8.0)
+  * Refresh rules based on upstreams ([#426](https://github.com/poseidon/typhoon/pull/426))
 * Update Grafana from v6.0.0 to v6.0.1
+  * Refresh dashboards and organize to stay below ConfigMap size limit ([#426](https://github.com/poseidon/typhoon/pull/426))
 * Remove heapster manifests from addons ([#427](https://github.com/poseidon/typhoon/pull/427))
   * Heapster addon powers `kubectl top` (in early Kubernetes, running the addon was expected). Today, there are better monitoring options.
   * `kubectl top` reliance on a non-core extension means its not in-scope for minimal Kubernetes
