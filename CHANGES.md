@@ -18,6 +18,12 @@ Notable changes between versions.
   * Affects Container Linux and Flatcar Linux install profiles that pull from public images (default). No affect when `cached_install=true` or Fedora Atomic, since those download from Matchbox
   * Add `download_protocol` variable. Recognizing boot firmware TLS support is difficult in some environments, set the protocol to "http" for the old behavior (discouraged)
 
+#### DigitalOcean
+
+* Fix kubelet hostname-override to set node metadata InternalIP correctly ([#424](https://github.com/poseidon/typhoon/issues/424))
+  * Uniquely, DigitalOcean does not resolve hostnames to instance private IPs. Kubelet auto-detect mechanisms require the internal IP be set directly.
+  * Regressed in v1.12.3 ([#337](https://github.com/poseidon/typhoon/pull/337)) which aimed to provide friendly hostname-based node names on DigitalOcean
+
 #### Addons
 
 * Update Prometheus from v2.7.1 to [v2.8.0](https://github.com/prometheus/prometheus/releases/tag/v2.8.0)

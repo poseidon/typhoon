@@ -160,9 +160,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 $ export KUBECONFIG=/home/user/.secrets/clusters/nemo/auth/kubeconfig
 $ kubectl get nodes
 NAME               STATUS  ROLES              AGE  VERSION
-nemo-controller-0  Ready   controller,master  10m  v1.13.4
-nemo-worker-0      Ready   node               10m  v1.13.4
-nemo-worker-1      Ready   node               10m  v1.13.4
+10.132.110.130     Ready   controller,master  10m  v1.13.4
+10.132.115.81      Ready   node               10m  v1.13.4
+10.132.124.107     Ready   node               10m  v1.13.4
 ```
 
 List the pods.
@@ -183,7 +183,7 @@ kube-system   kube-proxy-k35rc                           1/1       Running   0  
 kube-system   kube-scheduler-3895335239-2bc4c            1/1       Running   0          11m
 kube-system   kube-scheduler-3895335239-b7q47            1/1       Running   1          11m
 kube-system   pod-checkpointer-pr1lq                     1/1       Running   0          11m
-kube-system   pod-checkpointer-pr1lq-nemo-controller-0   1/1       Running   0          10m
+kube-system   pod-checkpointer-pr1lq-10.132.115.81       1/1       Running   0          10m
 ```
 
 ## Going Further
