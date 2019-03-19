@@ -6,6 +6,8 @@ Notable changes between versions.
 
 * Resolve in-addr.arpa reverse DNS lookups (PTR) for pod IPv4 addresses ([#415](https://github.com/poseidon/typhoon/pull/415))
   * Reverse DNS lookups for service IPv4 addresses unchanged
+* Upgrade Calico from v3.5.2 to [v3.6.0](https://docs.projectcalico.org/v3.6/release-notes/) ([#430](https://github.com/poseidon/typhoon/pull/430))
+  * Change pod IPAM from `host-local` to `calico-ipam`. `pod_cidr` is still divided into `/24` subnets per node, but managed as `ippools` and `ipamblocks`
 
 #### AWS
 
