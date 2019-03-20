@@ -15,17 +15,25 @@ spec:
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
-      containers:
-      - name: update-operator
-        image: quay.io/coreos/container-linux-update-operator:v0.7.0
-        command:
-        - "/bin/update-operator"
-        env:
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
       tolerations:
       - key: node-role.kubernetes.io/master
         operator: Exists
         effect: NoSchedule
+      containers:
+        - name: update-operator
+          image: quay.io/coreos/container-linux-update-operator:v0.7.0
+          command:
+            - "/bin/update-operator"
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+            limits:
+              cpu: 20m
+              memory: 40Mi
+
