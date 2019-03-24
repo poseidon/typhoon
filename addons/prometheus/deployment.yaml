@@ -39,15 +39,15 @@ spec:
               mountPath: /etc/prometheus/rules
             - name: data
               mountPath: /var/lib/prometheus
-          readinessProbe:
-            httpGet:
-              path: /-/ready
-              port: 9090
-            initialDelaySeconds: 10
-            timeoutSeconds: 10
           livenessProbe:
             httpGet:
               path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /-/ready
               port: 9090
             initialDelaySeconds: 10
             timeoutSeconds: 10
