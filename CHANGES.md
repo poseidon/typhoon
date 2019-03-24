@@ -30,6 +30,7 @@ Notable changes between versions.
 
 * Update Prometheus from v2.7.1 to [v2.8.0](https://github.com/prometheus/prometheus/releases/tag/v2.8.0)
   * Refresh rules based on upstreams ([#426](https://github.com/poseidon/typhoon/pull/426))
+  * Define NetworkPolicy to allow only traffic from the Grafana addon
 * Update Grafana from v6.0.0 to v6.0.2
   * Add liveness and readiness probes
   * Refresh dashboards and organize to stay below ConfigMap size limit ([#426](https://github.com/poseidon/typhoon/pull/426))
