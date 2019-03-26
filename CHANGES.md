@@ -4,7 +4,6 @@ Notable changes between versions.
 
 ## Latest
 
-
 ## v1.13.5
 
 * Kubernetes [v1.13.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1135)
@@ -12,6 +11,7 @@ Notable changes between versions.
   * Reverse DNS lookups for service IPv4 addresses unchanged
 * Upgrade Calico from v3.5.2 to [v3.6.0](https://docs.projectcalico.org/v3.6/release-notes/) ([#430](https://github.com/poseidon/typhoon/pull/430))
   * Change pod IPAM from `host-local` to `calico-ipam`. `pod_cidr` is still divided into `/24` subnets per node, but managed as `ippools` and `ipamblocks`
+* Suggest updating [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) from v0.3.0 to [v0.3.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.3.1) ([#434](https://github.com/poseidon/typhoon/pull/434))
 
 #### AWS
 
@@ -21,7 +21,7 @@ Notable changes between versions.
 
 * Change the default iPXE kernel and initrd download protocol from HTTP to HTTPS ([#420](https://github.com/poseidon/typhoon/pull/420))
   * Require an iPXE-enabled network boot environment with support for TLS downloads. PXE clients must chainload to iPXE firmware compiled with `DOWNLOAD_PROTO_HTTPS` [enabled](https://ipxe.org/crypto). (**action required**)
-  * Affects Container Linux and Flatcar Linux install profiles that pull from public images (default). No affect when `cached_install=true` or Fedora Atomic, since those download from Matchbox
+  * Only affects Container Linux and Flatcar Linux install profiles that pull public images (default)
   * Add `download_protocol` variable. Recognizing boot firmware TLS support is difficult in some environments, set the protocol to "http" for the old behavior (discouraged)
 
 #### DigitalOcean

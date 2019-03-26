@@ -125,9 +125,9 @@ mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/
 Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.0/terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.3.0-linux-amd64.tar.gz
-mv terraform-provider-ct-v0.3.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.0
+wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.1/terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.1
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -150,7 +150,7 @@ provider "matchbox" {
 }
 
 provider "ct" {
-  version = "0.3.0"
+  version = "0.3.1"
 }
 
 provider "local" {

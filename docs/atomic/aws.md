@@ -44,7 +44,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version = "~> 2.1.0"
+  version = "~> 2.3.0"
   alias   = "default"
 
   region                  = "eu-central-1"
