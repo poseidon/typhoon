@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+
+## v1.13.5
+
+* Kubernetes [v1.13.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1135)
 * Resolve in-addr.arpa reverse DNS lookups (PTR) for pod IPv4 addresses ([#415](https://github.com/poseidon/typhoon/pull/415))
   * Reverse DNS lookups for service IPv4 addresses unchanged
 * Upgrade Calico from v3.5.2 to [v3.6.0](https://docs.projectcalico.org/v3.6/release-notes/) ([#430](https://github.com/poseidon/typhoon/pull/430))

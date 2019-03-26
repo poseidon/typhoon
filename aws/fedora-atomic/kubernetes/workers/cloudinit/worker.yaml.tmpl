@@ -54,7 +54,7 @@ bootcmd:
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, restart, NetworkManager]
-  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.13.4"
+  - "atomic install --system --name=kubelet quay.io/poseidon/kubelet:v1.13.5"
   - [systemctl, start, --no-block, kubelet.service]
 users:
   - default
