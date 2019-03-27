@@ -1,7 +1,7 @@
 # AWS
 
 !!! danger
-    Typhoon for Fedora Atomic is alpha. Expect rough edges and changes.
+    Typhoon for Fedora Atomic will not be updated much beyond Kubernetes v1.13.
 
 In this tutorial, we'll create a Kubernetes v1.13.5 cluster on AWS with Fedora Atomic.
 

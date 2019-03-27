@@ -12,6 +12,8 @@ Notable changes between versions.
 * Upgrade Calico from v3.5.2 to [v3.6.0](https://docs.projectcalico.org/v3.6/release-notes/) ([#430](https://github.com/poseidon/typhoon/pull/430))
   * Change pod IPAM from `host-local` to `calico-ipam`. `pod_cidr` is still divided into `/24` subnets per node, but managed as `ippools` and `ipamblocks`
 * Suggest updating [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) from v0.3.0 to [v0.3.1](https://github.com/coreos/terraform-provider-ct/releases/tag/v0.3.1) ([#434](https://github.com/poseidon/typhoon/pull/434))
+* Announce: Fedora Atomic modules will be not be updated beyond Kubernetes v1.13.x ([#437](https://github.com/poseidon/typhoon/pull/437))
+  * Thank you Project Atomic team and users, please see the deprecation [notice](https://typhoon.psdn.io/announce/#march-27-2019)
 
 #### AWS
 

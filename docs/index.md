@@ -33,10 +33,10 @@ Fedora Atomic support is alpha and will evolve as Fedora Atomic is replaced by F
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | alpha |
-| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | alpha |
-| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | alpha |
-| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](atomic/google-cloud.md) | alpha |
+| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](atomic/aws.md) | deprecated |
+| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](atomic/bare-metal.md) | deprecated |
+| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](atomic/digital-ocean.md) | deprecated |
+| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](atomic/google-cloud.md) | deprecated |
 
 ## Documentation
 

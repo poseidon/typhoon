@@ -1,5 +1,19 @@
 # Announce <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo-small.png">
 
+## March 27, 2019
+
+Last April, Typhoon [introduced](#april-26-2018) alpha support for creating Kubernetes clusters with Fedora Atomic on AWS, Google Cloud, DigitalOcean, and bare-metal. Fedora Atomic shared many of Container Linux's aims for a container-optimized operating system, introduced novel ideas, and provided technical diversification for an uncertain future. However, Project Atomic efforts were merged into Fedora CoreOS and future Fedora Atomic releases are [not expected](http://www.projectatomic.io/blog/2018/06/welcome-to-fedora-coreos/). *Typhoon modules for Fedora Atomic will not be updated much beyond Kubernetes v1.13*. They may later be removed.
+
+Typhoon for Fedora Atomic fell short of goals to provide a consistent, practical experience across operating systems and platforms. The modules have remained alpha, despite improvements. Features like coordinated OS updates and boot-time declarative customization were not realized. Inelegance of Cloud-Init/kickstart loomed large. With that brief but obligatory summary, I'd like to change gears and celebrate the many positives.
+
+Fedora Atomic showcased [rpm-ostree](https://github.com/projectatomic/rpm-ostree) as a different approach to Container Linux's AB update scheme. It provided a viable route toward [CRI-O](https://github.com/kubernetes-sigs/cri-o) to replace Docker as the container engine. And Fedora Atomic devised [system containers](http://www.projectatomic.io/blog/2016/09/intro-to-system-containers/) as a way to package and run raw OCI images through runc for host-level containers[^2]. Many of these ideas will live on in Fedora CoreOS, which is exciting!
+
+For Typhoon, Fedora Atomic brought fresh ideas and broader perspectives about different container-optimized base operating systems and related tools. Its sad to let go of so much work, but I think its time. Many of the concepts and technologies that were explored will surface again and Typhoon is better positioned as a result.
+
+Thank you Project Atomic team members for your work! - dghubble
+
+[^2]: Container Linux's own primordial rkt-fly shim dates back to the pre-OCI era. In some ways, rkt drove the OCI standards that made newer ideas, like system containers, appealing.
+
 ## May 23, 2018
 
 Starting in v1.10.3, Typhoon AWS and bare-metal `container-linux` modules allow picking between the Red Hat [Container Linux](https://coreos.com/os/docs/latest/) (formerly CoreOS Container Linux) and Kinvolk [Flatcar Linux](https://www.flatcar-linux.org/) operating system. Flatcar Linux serves as a drop-in compatible "friendly fork" of Container Linux. Flatcar Linux publishes the same channels and versions as Container Linux and gets provisioned, managed, and operated in an identical way (e.g. login as user "core").
