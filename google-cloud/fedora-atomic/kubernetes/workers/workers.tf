@@ -23,10 +23,9 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
 # Worker instance template
 resource "google_compute_instance_template" "worker" {
-  name_prefix      = "${var.name}-worker-"
-  description      = "Worker Instance template"
-  machine_type     = "${var.machine_type}"
-  min_cpu_platform = "Intel Haswell"
+  name_prefix  = "${var.name}-worker-"
+  description  = "Worker Instance template"
+  machine_type = "${var.machine_type}"
 
   metadata = {
     user-data = "${data.template_file.worker-cloudinit.rendered}"

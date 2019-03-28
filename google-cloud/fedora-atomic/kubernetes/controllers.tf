@@ -31,10 +31,9 @@ locals {
 resource "google_compute_instance" "controllers" {
   count = "${var.controller_count}"
 
-  name             = "${var.cluster_name}-controller-${count.index}"
-  zone             = "${element(local.zones, count.index)}"
-  machine_type     = "${var.controller_type}"
-  min_cpu_platform = "Intel Haswell"
+  name         = "${var.cluster_name}-controller-${count.index}"
+  zone         = "${element(local.zones, count.index)}"
+  machine_type = "${var.controller_type}"
 
   metadata = {
     user-data = "${element(data.template_file.controller-cloudinit.*.rendered, count.index)}"

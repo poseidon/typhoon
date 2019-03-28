@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+#### Google Cloud
+
+* Remove Haswell minimum CPU platform requirement ([#439](https://github.com/poseidon/typhoon/pull/439))
+  * Google Cloud API implements `min_cpu_platform` to mean "use exactly this CPU". Revert [#405](https://github.com/poseidon/typhoon/pull/405) added in v1.13.4.
+  * Fix error creating clusters in new regions without Haswell (e.g. europe-west2) ([#438](https://github.com/poseidon/typhoon/issues/438))
+
 ## v1.13.5
 
 * Kubernetes [v1.13.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1135)
