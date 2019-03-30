@@ -8,6 +8,9 @@ Notable changes between versions.
 
 #### Google Cloud
 
+* Add ability to load balance TCP/UDP applications ([#442](https://github.com/poseidon/typhoon/pull/442))
+  * Add worker instances to a target pool, output as `worker_target_pool`
+  * Health check for workers with Ingress controllers. Forward rules don't support differing internal/external ports, but some Ingress controllers support TCP/UDP proxy as a workaround 
 * Remove Haswell minimum CPU platform requirement ([#439](https://github.com/poseidon/typhoon/pull/439))
   * Google Cloud API implements `min_cpu_platform` to mean "use exactly this CPU". Revert [#405](https://github.com/poseidon/typhoon/pull/405) added in v1.13.4.
   * Fix error creating clusters in new regions without Haswell (e.g. europe-west2) ([#438](https://github.com/poseidon/typhoon/issues/438))

@@ -1,4 +1,4 @@
-# Regional managed instance group of workers
+# Managed instance group of workers
 resource "google_compute_region_instance_group_manager" "workers" {
   name        = "${var.name}-worker-group"
   description = "Compute instance group of ${var.name} workers"
@@ -8,7 +8,8 @@ resource "google_compute_region_instance_group_manager" "workers" {
   instance_template  = "${google_compute_instance_template.worker.self_link}"
   region             = "${var.region}"
 
-  target_size = "${var.count}"
+  target_size  = "${var.count}"
+  target_pools = ["${google_compute_target_pool.workers.self_link}"]
 
   named_port {
     name = "http"
