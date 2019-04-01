@@ -11,6 +11,7 @@ module "workers" {
   os_image        = "${var.os_image}"
   disk_size       = "${var.disk_size}"
   spot_price      = "${var.worker_price}"
+  target_groups   = ["${var.worker_target_groups}"]
 
   # configuration
   kubeconfig            = "${module.bootkube.kubeconfig-kubelet}"

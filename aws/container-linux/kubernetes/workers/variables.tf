@@ -64,6 +64,12 @@ variable "spot_price" {
   description = "Spot price in USD for autoscaling group spot instances. Leave as default empty string for autoscaling group to use on-demand instances. Note, switching in-place from spot to on-demand is not possible: https://github.com/terraform-providers/terraform-provider-aws/issues/4320"
 }
 
+variable "target_groups" {
+  type        = "list"
+  description = "Additional target group ARNs to which instances should be added"
+  default     = []
+}
+
 variable "clc_snippets" {
   type        = "list"
   description = "Container Linux Config snippets"

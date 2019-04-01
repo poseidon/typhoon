@@ -6,6 +6,12 @@ Notable changes between versions.
 
 * Update Calico from v3.6.0 to v3.6.1
 
+#### AWS
+
+* Add ability to load balance TCP applications ([#443](https://github.com/poseidon/typhoon/pull/443))
+  * Output the network load balancer ARN as `nlb_id`
+  * Accept a `worker_target_groups` (ARN) list to which worker instances should be added
+
 #### Google Cloud
 
 * Add ability to load balance TCP/UDP applications ([#442](https://github.com/poseidon/typhoon/pull/442))
