@@ -10,6 +10,10 @@ Notable changes between versions.
   * Google Cloud API implements `min_cpu_platform` to mean "use exactly this CPU". Revert [#405](https://github.com/poseidon/typhoon/pull/405) added in v1.13.4.
   * Fix error creating clusters in new regions without Haswell (e.g. europe-west2) ([#438](https://github.com/poseidon/typhoon/issues/438))
 
+#### Addons
+
+* Update Prometheus from v2.8.0 to v2.8.1
+
 ## v1.13.5
 
 * Kubernetes [v1.13.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.13.md#v1135)
