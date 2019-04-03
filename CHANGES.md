@@ -12,6 +12,11 @@ Notable changes between versions.
   * Output the network load balancer ARN as `nlb_id`
   * Accept a `worker_target_groups` (ARN) list to which worker instances should be added
 
+#### DigitalOcean
+
+* Harden internal (node-to-node) firewall rules to align with other platforms
+* Output `controller_tag` and `worker_tag` to simplify custom firewall rule creation
+
 #### Google Cloud
 
 * Add ability to load balance TCP/UDP applications ([#442](https://github.com/poseidon/typhoon/pull/442))

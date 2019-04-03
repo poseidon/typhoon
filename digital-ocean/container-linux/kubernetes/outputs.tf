@@ -26,3 +26,16 @@ output "workers_ipv4" {
 output "workers_ipv6" {
   value = ["${digitalocean_droplet.workers.*.ipv6_address}"]
 }
+
+# Outputs for custom firewalls
+
+output "controller_tag" {
+  description = "Tag applied to controller droplets"
+  value = "${digitalocean_tag.controllers.name}"
+}
+
+output "worker_tag" {
+  description = "Tag applied to worker droplets"
+  value = "${digitalocean_tag.workers.name}"
+}
+
