@@ -29,6 +29,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from v2.8.0 to v2.8.1
+* Update Grafana from v6.0.2 to [v6.1.0](http://docs.grafana.org/guides/whats-new-in-v6-1/)
 
 ## v1.13.5
 
