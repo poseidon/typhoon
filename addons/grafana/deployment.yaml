@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:6.1.0
+          image: grafana/grafana:6.1.1
           env:
             - name: GF_PATHS_CONFIG
               value: "/etc/grafana/custom.ini"
