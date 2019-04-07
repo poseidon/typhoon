@@ -30,6 +30,8 @@ Notable changes between versions.
 
 * Update Prometheus from v2.8.0 to v2.8.1
 * Update Grafana from v6.0.2 to [v6.1.1](http://docs.grafana.org/guides/whats-new-in-v6-1/)
+  * Add dashboard for pods in a workload (deployment/daemonset/statefulset) ([#446](https://github.com/poseidon/typhoon/pull/446))
+  * Add dashboard for workloads by namespace
 
 ## v1.13.5
 

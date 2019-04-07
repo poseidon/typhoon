@@ -58,6 +58,8 @@ spec:
               mountPath: /etc/grafana/dashboards/etcd
             - name: dashboards-k8s
               mountPath: /etc/grafana/dashboards/k8s
+            - name: dashboards-k8s-resources
+              mountPath: /etc/grafana/dashboards/k8s-resources
       volumes:
         - name: config
           configMap:
@@ -74,4 +76,7 @@ spec:
         - name: dashboards-k8s
           configMap:
             name: grafana-dashboards-k8s
+        - name: dashboards-k8s-resources
+          configMap:
+            name: grafana-dashboards-k8s-resources
 
