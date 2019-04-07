@@ -6,6 +6,9 @@ Notable changes between versions.
 
 * Kubernetes [v1.14.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1140)
 * Update Calico from v3.6.0 to v3.6.1
+* Add `enable_aggregation` option for CNCF conformance
+  * Aggregation is disabled by default to retain our security stance
+  * Aggregation increases the security surface area. Extensions become part of the control plane and must be scrutinized carefully and trusted. Favor leaving aggregation disabled.
 
 #### AWS
 

@@ -153,3 +153,9 @@ variable "enable_reporting" {
   description = "Enable usage or analytics reporting to upstreams (Calico)"
   default     = "false"
 }
+
+variable "enable_aggregation" {
+  description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
+  type        = "string"
+  default     = "false"
+}

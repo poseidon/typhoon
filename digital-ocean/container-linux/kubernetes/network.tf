@@ -55,13 +55,13 @@ resource "digitalocean_firewall" "controllers" {
   # etcd, kube-apiserver, kubelet
   inbound_rule = [
     {
-      protocol         = "tcp"
-      port_range       = "2379-2380"
+      protocol    = "tcp"
+      port_range  = "2379-2380"
       source_tags = ["${digitalocean_tag.controllers.name}"]
     },
     {
-      protocol         = "tcp"
-      port_range       = "2381"
+      protocol    = "tcp"
+      port_range  = "2381"
       source_tags = ["${digitalocean_tag.workers.name}"]
     },
     {
@@ -90,10 +90,9 @@ resource "digitalocean_firewall" "workers" {
       source_addresses = ["0.0.0.0/0", "::/0"]
     },
     {
-      protocol = "tcp"
-      port_range = "10254"
+      protocol         = "tcp"
+      port_range       = "10254"
       source_addresses = ["0.0.0.0/0"]
     },
   ]
 }
-

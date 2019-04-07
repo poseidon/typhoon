@@ -31,11 +31,10 @@ output "workers_ipv6" {
 
 output "controller_tag" {
   description = "Tag applied to controller droplets"
-  value = "${digitalocean_tag.controllers.name}"
+  value       = "${digitalocean_tag.controllers.name}"
 }
 
 output "worker_tag" {
   description = "Tag applied to worker droplets"
-  value = "${digitalocean_tag.workers.name}"
+  value       = "${digitalocean_tag.workers.name}"
 }
-
