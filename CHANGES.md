@@ -6,7 +6,7 @@ Notable changes between versions.
 
 * Kubernetes [v1.14.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1140)
 * Update Calico from v3.6.0 to v3.6.1
-* Add `enable_aggregation` option for CNCF conformance
+* Add `enable_aggregation` option for CNCF conformance ([#436](https://github.com/poseidon/typhoon/pull/436))
   * Aggregation is disabled by default to retain our security stance
   * Aggregation increases the security surface area. Extensions become part of the control plane and must be scrutinized carefully and trusted. Favor leaving aggregation disabled.
 
@@ -16,10 +16,16 @@ Notable changes between versions.
   * Output the network load balancer ARN as `nlb_id`
   * Accept a `worker_target_groups` (ARN) list to which worker instances should be added
 
+#### Azure
+
+* Add ability to load balance TCP/UDP applications ([#447](https://github.com/poseidon/typhoon/pull/447))
+  * Output the load balancer ID as `loadbalancer_id`
+* Output `worker_security_group_name` and `worker_address_prefix` for extending firewall rules ([#447](https://github.com/poseidon/typhoon/pull/447))
+
 #### DigitalOcean
 
-* Harden internal (node-to-node) firewall rules to align with other platforms
-* Output `controller_tag` and `worker_tag` to simplify custom firewall rule creation
+* Harden internal (node-to-node) firewall rules to align with other platforms ([#444](https://github.com/poseidon/typhoon/pull/444))
+* Output `controller_tag` and `worker_tag` to simplify extending firewall rules ([#444](https://github.com/poseidon/typhoon/pull/444))
 
 #### Google Cloud
 
