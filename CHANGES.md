@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.14.0
+
 * Kubernetes [v1.14.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1140)
 * Update Calico from v3.6.0 to v3.6.1
 * Add `enable_aggregation` option for CNCF conformance ([#436](https://github.com/poseidon/typhoon/pull/436))
@@ -25,7 +27,8 @@ Notable changes between versions.
 #### DigitalOcean
 
 * Harden internal (node-to-node) firewall rules to align with other platforms ([#444](https://github.com/poseidon/typhoon/pull/444))
-* Output `controller_tag` and `worker_tag` to simplify extending firewall rules ([#444](https://github.com/poseidon/typhoon/pull/444))
+* Add ability to load balance TCP applications ([#444](https://github.com/poseidon/typhoon/pull/444))
+  * Output `controller_tag` and `worker_tag` for extending firewall rules ([#444](https://github.com/poseidon/typhoon/pull/444))
 
 #### Google Cloud
 
