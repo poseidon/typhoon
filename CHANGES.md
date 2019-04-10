@@ -6,6 +6,11 @@ Notable changes between versions.
 
 * Kubernetes [v1.14.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1141)
 
+#### Addons
+
+* Update Grafana from v6.1.1 to v6.1.3
+
+
 ## v1.14.0
 
 * Kubernetes [v1.14.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1140)
