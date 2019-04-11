@@ -45,9 +45,6 @@ spec:
             - name: https
               containerPort: 443
               hostPort: 443
-            - name: health
-              containerPort: 10254
-              hostPort: 10254
           livenessProbe:
             failureThreshold: 3
             httpGet:

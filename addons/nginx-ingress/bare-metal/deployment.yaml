@@ -41,8 +41,6 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
-            - name: health
-              containerPort: 10254
           livenessProbe:
             httpGet:
               path: /healthz
