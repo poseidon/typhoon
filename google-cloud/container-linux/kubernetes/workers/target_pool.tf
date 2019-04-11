@@ -1,6 +1,7 @@
 # Target pool for TCP/UDP load balancing
 resource "google_compute_target_pool" "workers" {
   name             = "${var.name}-worker-pool"
+  region           = "${var.region}"
   session_affinity = "NONE"
 
   health_checks = [
