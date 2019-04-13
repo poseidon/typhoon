@@ -8,8 +8,8 @@ Notable changes between versions.
 
 #### Addons
 
-* Update kube-state-metrics from v1.5.0 to v1.6.0-rc.0 ([#449](https://github.com/poseidon/typhoon/pull/449))
 * Update Grafana from v6.1.1 to v6.1.3
+
 
 ## v1.14.0
 
