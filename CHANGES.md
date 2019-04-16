@@ -9,7 +9,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Grafana from v6.1.1 to v6.1.3
-
+* Update nginx-ingress from v0.23.0 to v0.24.1
 
 ## v1.14.0
 
