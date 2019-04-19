@@ -6,7 +6,7 @@ Nginx Ingress controller pods accept and demultiplex HTTP, HTTPS, TCP, or UDP tr
 
 On AWS, a network load balancer (NLB) distributes TCP traffic across two target groups (port 80 and 443) of worker nodes running an Ingress controller deployment. Security groups rules allow traffic to ports 80 and 443. Health checks ensure only workers with a healthy Ingress controller receive traffic.
 
-Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and namespace.
 
 ```
 kubectl apply -R -f addons/nginx-ingress/aws
@@ -39,7 +39,7 @@ resource "google_dns_record_set" "some-application" {
 
 On Azure, a load balancer distributes traffic across a backend address pool of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
 
-Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and namespace.
 
 ```
 kubectl apply -R -f addons/nginx-ingress/azure
@@ -74,7 +74,7 @@ On bare-metal, routing traffic to Ingress controller pods can be done in number 
 
 ### Equal-Cost Multi-Path
 
-Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and default backend. The service should use a fixed ClusterIP (e.g. 10.3.0.12) in the Kubernetes service IPv4 CIDR range.
+Create the Ingress controller deployment, service, RBAC roles, and RBAC bindings. The service should use a fixed ClusterIP (e.g. 10.3.0.12) in the Kubernetes service IPv4 CIDR range.
 
 ```
 kubectl apply -R -f addons/nginx-ingress/bare-metal
@@ -103,7 +103,7 @@ resource "google_dns_record_set" "some-application" {
 
 On Digital Ocean, DNS A and AAAA records (e.g. FQDN `nemo-workers.example.com`) resolve to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
 
-Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, default backend, and namespace.
+Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, and namespace.
 
 ```
 kubectl apply -R -f addons/nginx-ingress/digital-ocean
@@ -133,7 +133,7 @@ resource "google_dns_record_set" "some-application" {
 
 On Google Cloud, a TCP Proxy load balancer distributes IPv4 and IPv6 TCP traffic across a backend service of worker nodes running an Ingress controller deployment. Firewall rules allow traffic to ports 80 and 443. Health check rules ensure only workers with a healthy Ingress controller receive traffic.
 
-Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, default backend, and namespace.
+Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and namespace.
 
 ```
 kubectl apply -R -f addons/nginx-ingress/google-cloud
