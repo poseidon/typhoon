@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update Prometheus from v2.8.1 to v2.9.1
+
 ## v1.14.1
 
 * Kubernetes [v1.14.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1141)
