@@ -1137,24 +1137,6 @@ data:
                   "unit": "short"
                 },
                 {
-                  "alias": "CPU Usage",
-                  "colorMode": null,
-                  "colors": [
-
-                  ],
-                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
-                  "decimals": 2,
-                  "link": false,
-                  "linkTooltip": "Drill down",
-                  "linkUrl": "",
-                  "pattern": "Value #C",
-                  "thresholds": [
-
-                  ],
-                  "type": "number",
-                  "unit": "short"
-                },
-                {
                   "alias": "Memory Usage",
                   "colorMode": null,
                   "colors": [
@@ -1165,7 +1147,7 @@ data:
                   "link": false,
                   "linkTooltip": "Drill down",
                   "linkUrl": "",
-                  "pattern": "Value #D",
+                  "pattern": "Value #C",
                   "thresholds": [
 
                   ],
@@ -1183,7 +1165,7 @@ data:
                   "link": false,
                   "linkTooltip": "Drill down",
                   "linkUrl": "",
-                  "pattern": "Value #E",
+                  "pattern": "Value #D",
                   "thresholds": [
 
                   ],
@@ -1201,7 +1183,7 @@ data:
                   "link": false,
                   "linkTooltip": "Drill down",
                   "linkUrl": "",
-                  "pattern": "Value #F",
+                  "pattern": "Value #E",
                   "thresholds": [
 
                   ],
@@ -1219,7 +1201,7 @@ data:
                   "link": false,
                   "linkTooltip": "Drill down",
                   "linkUrl": "",
-                  "pattern": "Value #G",
+                  "pattern": "Value #F",
                   "thresholds": [
 
                   ],
@@ -1237,7 +1219,7 @@ data:
                   "link": false,
                   "linkTooltip": "Drill down",
                   "linkUrl": "",
-                  "pattern": "Value #H",
+                  "pattern": "Value #G",
                   "thresholds": [
 
                   ],
