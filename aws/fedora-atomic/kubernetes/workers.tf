@@ -1,5 +1,5 @@
 module "workers" {
-  source = "workers"
+  source = "./workers"
   name   = "${var.cluster_name}"
 
   # AWS
