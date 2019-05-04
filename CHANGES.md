@@ -3,12 +3,15 @@
 Notable changes between versions.
 
 ## Latest
+ 
+* Update etcd from v3.3.12 to [v3.3.13](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
 
 #### Addons
 
 * Update Prometheus from v2.8.1 to v2.9.2
   * Update kube-state-metrics from v1.5.0 to v1.6.0-rc.2
 * Update Grafana from v6.1.3 to v6.1.6
+* Reduce nginx-ingress Role RBAC permissions ([#458](https://github.com/poseidon/typhoon/pull/458))
 
 ## v1.14.1
 
