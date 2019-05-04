@@ -8,7 +8,7 @@ Notable changes between versions.
 
 * Update Prometheus from v2.8.1 to v2.9.2
   * Update kube-state-metrics from v1.5.0 to v1.6.0-rc.2
-* Update Grafana from v6.1.3 to v6.1.4
+* Update Grafana from v6.1.3 to v6.1.6
 
 ## v1.14.1
 
