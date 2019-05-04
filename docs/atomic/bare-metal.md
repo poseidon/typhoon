@@ -5,7 +5,7 @@
 
 In this tutorial, we'll network boot and provision a Kubernetes v1.14.1 cluster on bare-metal with Fedora Atomic.
 
-First, we'll deploy a [Matchbox](https://github.com/coreos/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora Atomic via kickstart, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via cloud-init.
+First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora Atomic via kickstart, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via cloud-init.
 
 Controllers are provisioned to run `etcd` and `kubelet` [system containers](http://www.projectatomic.io/blog/2016/09/intro-to-system-containers/). Workers run just a `kubelet` system container. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `coredns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
@@ -16,7 +16,7 @@ Controllers are provisioned to run `etcd` and `kubelet` [system containers](http
 * Matchbox v0.7+ deployment with API enabled
 * HTTP server for Fedora install assets and ostree repo
 * Matchbox credentials `client.crt`, `client.key`, `ca.crt`
-* Terraform v0.11.x and [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) installed locally
+* Terraform v0.11.x and [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) installed locally
 
 ## Machines
 
@@ -97,7 +97,7 @@ chain http://matchbox.foo:8080/boot.ipxe
 
 For networks with Ubiquiti Routers, you can [configure the router](/topics/hardware/#ubiquiti) itself to chainload machines to iPXE and Matchbox.
 
-For a small lab, you may wish to checkout the [quay.io/coreos/dnsmasq](https://quay.io/repository/coreos/dnsmasq) container image and [copy-paste examples](https://github.com/coreos/matchbox/blob/master/Documentation/network-setup.md#coreosdnsmasq).
+For a small lab, you may wish to checkout the [quay.io/poseidon/dnsmasq](https://quay.io/repository/poseidon/dnsmasq) container image and [copy-paste examples](https://github.com/poseidon/matchbox/blob/master/Documentation/network-setup.md#coreosdnsmasq).
 
 Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup.html) to setup a compliant iPXE-enabled network. There is quite a bit of flexibility:
 
@@ -163,7 +163,7 @@ curl http://example.com/fedora/28/
 ```
 
 !!! note
-    It is possible to use the Matchbox `/assets` [cache](https://github.com/coreos/matchbox/blob/master/Documentation/matchbox.md#assets) as an HTTP server.
+    It is possible to use the Matchbox `/assets` [cache](https://github.com/poseidon/matchbox/blob/master/Documentation/matchbox.md#assets) as an HTTP server.
 
 ## Terraform Setup
 
@@ -174,10 +174,10 @@ $ terraform version
 Terraform v0.11.12
 ```
 
-Add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
+Add the [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+wget https://github.com/poseidon/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
 tar xzf terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
 mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.3
 ```

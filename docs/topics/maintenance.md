@@ -45,7 +45,7 @@ Blue-green replacement provides some subtler benefits as well:
 
 ### Bare-Metal
 
-Typhoon bare-metal clusters are provisioned by a PXE-enabled network boot environment and a [Matchbox](https://github.com/coreos/matchbox) service. To upgrade, re-provision machines into a new cluster.
+Typhoon bare-metal clusters are provisioned by a PXE-enabled network boot environment and a [Matchbox](https://github.com/poseidon/matchbox) service. To upgrade, re-provision machines into a new cluster.
 
 Failover application workloads to another cluster (varies).
 
@@ -145,18 +145,18 @@ Migrate to using the Terraform plugin directory. Move `~/.terraformrc` to a back
 mv ~/.terraformrc ~/.terraform-backup
 ```
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`. Download the **same version** of `terraform-provider-ct` you were using with `~/.terraformrc`, updating only be done as a followup and is **only** safe for v1.12.2+ clusters!
+Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`. Download the **same version** of `terraform-provider-ct` you were using with `~/.terraformrc`, updating only be done as a followup and is **only** safe for v1.12.2+ clusters!
 
 ```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
+wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.2.1/terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
 tar xzf terraform-provider-ct-v0.2.1-linux-amd64.tar.gz
 mv terraform-provider-ct-v0.2.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.2.1
 ```
 
-If you use bare-metal, add the [terraform-provider-matchbox](https://github.com/coreos/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the versioned name.
+If you use bare-metal, add the [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the versioned name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
+wget https://github.com/poseidon/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
 tar xzf terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
 mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.3
 ```
@@ -195,14 +195,14 @@ $ terraform plan
 
 ### Upgrade terraform-provider-ct
 
-The [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin parses, validates, and converts Container Linux Configs into Ignition user-data for provisioning instances. Previously, updating the plugin re-provisioned controller nodes and was destructive to clusters. With Typhoon v1.12.2+, the plugin can be updated in-place and on apply, only workers will be replaced.
+The [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin parses, validates, and converts Container Linux Configs into Ignition user-data for provisioning instances. Previously, updating the plugin re-provisioned controller nodes and was destructive to clusters. With Typhoon v1.12.2+, the plugin can be updated in-place and on apply, only workers will be replaced.
 
 First, [migrate](#terraform-plugins-directory) to the Terraform 3rd-party plugin directory to allow 3rd-party plugins to be defined and versioned independently (rather than globally).
 
-Add the [terraform-provider-ct](https://github.com/coreos/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
+Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/coreos/terraform-provider-ct/releases/download/v0.3.1/terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
+wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.3.1/terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
 tar xzf terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
 mv terraform-provider-ct-v0.3.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.1
 ```

@@ -52,7 +52,7 @@ Get started with the [basics](https://typhoon.psdn.io/architecture/concepts/) or
     Heed the warnings. Typhoon for Fedora Atomic is still alpha. Container Linux continues to be the recommended flavor for production clusters. Atomic is not meant to detract from efforts on Container Linux or its derivatives.
 
 !!! tip
-    For bare-metal, you may continue to use your v0.7+ [Matchbox](https://github.com/coreos/matchbox) service and `terraform-provider-matchbox` plugin to provision both Container Linux and Fedora Atomic clusters. No changes needed.
+    For bare-metal, you may continue to use your v0.7+ [Matchbox](https://github.com/poseidon/matchbox) service and `terraform-provider-matchbox` plugin to provision both Container Linux and Fedora Atomic clusters. No changes needed.
 
 [^1]: Using `etcd`, `kubelet`, and `bootkube` as system containers required metadata files be added in [system-containers](https://github.com/poseidon/system-containers)
 
