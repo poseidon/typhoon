@@ -37,5 +37,3 @@ rules:
       - endpoints
     verbs:
       - get
-      - create
-      - update
