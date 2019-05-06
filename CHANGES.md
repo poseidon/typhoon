@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
  
 * Update etcd from v3.3.12 to [v3.3.13](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
+* Upgrade Calico from v3.6.1 to [v3.7.0](https://docs.projectcalico.org/v3.7/release-notes/)
 
 #### Addons
 
