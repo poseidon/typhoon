@@ -7,14 +7,23 @@ Notable changes between versions.
 * Kubernetes [v1.14.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1142)
 * Update etcd from v3.3.12 to [v3.3.13](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
 * Upgrade Calico from v3.6.1 to [v3.7.2](https://docs.projectcalico.org/v3.7/release-notes/)
-* Change flannel port from 8472 (kernel default) to 4789 (IANA VXLAN)
+* Change flannel VXLAN port from 8472 (kernel default) to 4789 (IANA VXLAN)
 
 #### AWS
 
-* Only set internal VXLAN rules when `networking` is flannel (default: calico)
+* Only set internal VXLAN rules when `networking` is "flannel" (default: calico)
+
+#### Azure
+
+* Allow choosing Calico as the network provider (experimental) ([#472](https://github.com/poseidon/typhoon/pull/472))
+  * Add a `networking` variable accepting "flannel" (default) or "calico"
+  * Use VXLAN encapsulation since Azure doesn't support IPIP
 
 #### DigitalOcean
 
+* Allow choosing Calico as the network provider (experimental) ([#472](https://github.com/poseidon/typhoon/pull/472))
+  * Add a `networking` variable accepting "flannel" (default) or "calico"
+  * Use VXLAN encapsulation since DigitalOcean doesn't support IPIP
 * Add explicit ordering between firewall rule creation and secure copying Kubelet credentials ([#469](https://github.com/poseidon/typhoon/pull/469))
   * Fix race scenario if copies to nodes were before rule creation, blocking cluster creation
 

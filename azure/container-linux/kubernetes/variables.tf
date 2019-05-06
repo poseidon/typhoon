@@ -88,6 +88,12 @@ variable "asset_dir" {
   type        = "string"
 }
 
+variable "networking" {
+  description = "Choice of networking provider (flannel or calico)"
+  type        = "string"
+  default     = "flannel"
+}
+
 variable "host_cidr" {
   description = "CIDR IPv4 range to assign to instances"
   type        = "string"
