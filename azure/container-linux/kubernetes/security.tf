@@ -68,17 +68,17 @@ resource "azurerm_network_security_rule" "controller-apiserver" {
   destination_address_prefix  = "${azurerm_subnet.controller.address_prefix}"
 }
 
-resource "azurerm_network_security_rule" "controller-flannel" {
+resource "azurerm_network_security_rule" "controller-vxlan" {
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                        = "allow-flannel"
+  name                        = "allow-vxlan"
   network_security_group_name = "${azurerm_network_security_group.controller.name}"
   priority                    = "2020"
   access                      = "Allow"
   direction                   = "Inbound"
   protocol                    = "Udp"
   source_port_range           = "*"
-  destination_port_range      = "8472"
+  destination_port_range      = "4789"
   source_address_prefixes     = ["${azurerm_subnet.controller.address_prefix}", "${azurerm_subnet.worker.address_prefix}"]
   destination_address_prefix  = "${azurerm_subnet.controller.address_prefix}"
 }
@@ -204,17 +204,17 @@ resource "azurerm_network_security_rule" "worker-https" {
   destination_address_prefix  = "${azurerm_subnet.worker.address_prefix}"
 }
 
-resource "azurerm_network_security_rule" "worker-flannel" {
+resource "azurerm_network_security_rule" "worker-vxlan" {
   resource_group_name = "${azurerm_resource_group.cluster.name}"
 
-  name                        = "allow-flannel"
+  name                        = "allow-vxlan"
   network_security_group_name = "${azurerm_network_security_group.worker.name}"
   priority                    = "2015"
   access                      = "Allow"
   direction                   = "Inbound"
   protocol                    = "Udp"
   source_port_range           = "*"
-  destination_port_range      = "8472"
+  destination_port_range      = "4789"
   source_address_prefixes     = ["${azurerm_subnet.controller.address_prefix}", "${azurerm_subnet.worker.address_prefix}"]
   destination_address_prefix  = "${azurerm_subnet.worker.address_prefix}"
 }

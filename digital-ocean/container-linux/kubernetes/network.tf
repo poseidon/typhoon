@@ -12,7 +12,7 @@ resource "digitalocean_firewall" "rules" {
     },
     {
       protocol    = "udp"
-      port_range  = "8472"
+      port_range  = "4789"
       source_tags = ["${digitalocean_tag.controllers.name}", "${digitalocean_tag.workers.name}"]
     },
     {

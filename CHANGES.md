@@ -6,6 +6,11 @@ Notable changes between versions.
  
 * Update etcd from v3.3.12 to [v3.3.13](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
 * Upgrade Calico from v3.6.1 to [v3.7.0](https://docs.projectcalico.org/v3.7/release-notes/)
+* Change flannel port from 8472 (kernel default) to 4789 (IANA VXLAN)
+
+#### AWS
+
+* Only set internal VXLAN rules when `networking` is flannel (default: calico)
 
 #### Addons
 
