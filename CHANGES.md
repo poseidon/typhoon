@@ -22,6 +22,7 @@ Notable changes between versions.
 
 * Update Prometheus from v2.8.1 to v2.9.2
   * Update kube-state-metrics from v1.5.0 to v1.6.0
+* Update node-exporter from v0.17.0 to v0.18.0
 * Update Grafana from v6.1.3 to v6.1.6
 * Reduce nginx-ingress Role RBAC permissions ([#458](https://github.com/poseidon/typhoon/pull/458))
 
