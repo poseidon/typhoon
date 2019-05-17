@@ -1,6 +1,9 @@
 # Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
 resource "null_resource" "copy-controller-secrets" {
   count = "${var.controller_count}"
+  depends_on = [
+    "digitalocean_firewall.rules",
+  ]
 
   connection {
     type    = "ssh"

@@ -12,6 +12,11 @@ Notable changes between versions.
 
 * Only set internal VXLAN rules when `networking` is flannel (default: calico)
 
+#### DigitalOcean
+
+* Add explicit ordering between firewall rule creation and secure copying Kubelet credentials ([#469](https://github.com/poseidon/typhoon/pull/469))
+  * Fix race scenario if copies to nodes were before rule creation, blocking cluster creation
+
 #### Addons
 
 * Update Prometheus from v2.8.1 to v2.9.2
