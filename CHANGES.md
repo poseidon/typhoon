@@ -3,6 +3,8 @@
 Notable changes between versions.
 
 ## Latest
+
+## v1.14.2
  
 * Kubernetes [v1.14.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1142)
 * Update etcd from v3.3.12 to [v3.3.13](https://github.com/etcd-io/etcd/releases/tag/v3.3.13)
