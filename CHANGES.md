@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
+
 ## v1.14.2
  
 * Kubernetes [v1.14.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1142)
