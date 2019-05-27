@@ -8,10 +8,22 @@ Notable changes between versions.
   * Add `ready` plugin to improve readinessProbe
 * Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
 
+### AWS
+
+* Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
+  * `count` will become a reserved variable name in Terraform v0.12
+
 #### Azure
 
 * Replace `azurerm_autoscale_setting` with `azurerm_monitor_autoscale_setting` ([#482](https://github.com/poseidon/typhoon/pull/482))
   * Require `terraform-provider-azurerm` v1.22+ (action required)
+* Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
+  * `count` will become a reserved variable name in Terraform v0.12
+
+### Google Cloud
+
+* Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
+  * `count` will become a reserved variable name in Terraform v0.12
 
 #### Addons
 

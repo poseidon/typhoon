@@ -33,7 +33,7 @@ module "tempest-worker-pool" {
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
   # optional
-  count         = 2
+  worker_count  = 2
   instance_type = "m5.large"
   os_image      = "coreos-beta"
 }
@@ -66,7 +66,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| count | Number of instances | 1 | 3 |
+| worker_count | Number of instances | 1 | 3 |
 | instance_type | EC2 instance type | "t3.small" | "t3.medium" |
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
@@ -101,9 +101,9 @@ module "ramius-worker-pool" {
   ssh_authorized_key = "${var.ssh_authorized_key}"
 
   # optional
-  count    = 2
-  vm_type  = "Standard_F4"
-  priority = "Low"
+  worker_count = 2
+  vm_type      = "Standard_F4"
+  priority     = "Low"
 }
 ```
 
@@ -136,7 +136,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| count | Number of instances | 1 | 3 |
+| worker_count | Number of instances | 1 | 3 |
 | vm_type | Machine type for instances | "Standard_F1" | See below |
 | os_image | Channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha |
 | priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
@@ -169,7 +169,7 @@ module "yavin-worker-pool" {
   ssh_authorized_key = "${var.ssh_authorized_key}"
   
   # optional
-  count        = 2
+  worker_count = 2
   machine_type = "n1-standard-16"
   os_image     = "coreos-beta"
   preemptible  = true
@@ -215,7 +215,7 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| count | Number of instances | 1 | 3 |
+| worker_count | Number of instances | 1 | 3 |
 | machine_type | Compute instance machine type | "n1-standard-1" | See below |
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
 | disk_size | Size of the disk in GB | 40 | 100 |

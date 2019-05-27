@@ -22,7 +22,7 @@ variable "security_groups" {
 
 # instances
 
-variable "count" {
+variable "worker_count" {
   type        = "string"
   default     = "1"
   description = "Number of instances"

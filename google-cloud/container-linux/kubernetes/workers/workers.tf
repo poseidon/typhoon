@@ -8,7 +8,7 @@ resource "google_compute_region_instance_group_manager" "workers" {
   instance_template  = "${google_compute_instance_template.worker.self_link}"
   region             = "${var.region}"
 
-  target_size  = "${var.count}"
+  target_size  = "${var.worker_count}"
   target_pools = ["${google_compute_target_pool.workers.self_link}"]
 
   named_port {

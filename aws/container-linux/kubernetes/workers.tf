@@ -6,7 +6,7 @@ module "workers" {
   vpc_id          = "${aws_vpc.network.id}"
   subnet_ids      = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.worker.id}"]
-  count           = "${var.worker_count}"
+  worker_count    = "${var.worker_count}"
   instance_type   = "${var.worker_type}"
   os_image        = "${var.os_image}"
   disk_size       = "${var.disk_size}"

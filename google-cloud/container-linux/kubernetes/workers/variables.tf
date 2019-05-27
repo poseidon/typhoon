@@ -22,7 +22,7 @@ variable "network" {
 
 # instances
 
-variable "count" {
+variable "worker_count" {
   type        = "string"
   default     = "1"
   description = "Number of worker compute instances the instance group should manage"
