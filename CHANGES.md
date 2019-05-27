@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
 
+#### Addons
+
+* Update Prometheus from v2.9.2 to v2.10.0
+
 ## v1.14.2
  
 * Kubernetes [v1.14.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1142)
