@@ -6,6 +6,11 @@ Notable changes between versions.
 
 * Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
 
+#### Azure
+
+* Replace `azurerm_autoscale_setting` with `azurerm_monitor_autoscale_setting` ([#482](https://github.com/poseidon/typhoon/pull/482))
+  * Require `terraform-provider-azurerm` v1.22+ (action required)
+
 #### Addons
 
 * Update Prometheus from v2.9.2 to v2.10.0

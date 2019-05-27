@@ -73,7 +73,7 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.
-resource "azurerm_autoscale_setting" "workers" {
+resource "azurerm_monitor_autoscale_setting" "workers" {
   resource_group_name = "${var.resource_group_name}"
 
   name     = "${var.name}-maintain-desired"
