@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update CoreDNS from v1.3.1 to v1.5.0
+  * Add `ready` plugin to improve readinessProbe
 * Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
 
 #### Azure
