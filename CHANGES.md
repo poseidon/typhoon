@@ -13,6 +13,9 @@ Notable changes between versions.
 * Migrate from Terraform v0.11 to v0.12.x (**action required!**)
   * Require `terraform-provider-azurerm` v1.27+ to support Terraform v0.12
   * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 
+* Avoid unneeded rotations of Regular priority virtual machine scale sets
+  * Azure only allows `eviction_policy` to be set for Low priority VMs. Supporting Low priority VMs meant when Regular VMs were used, each `terraform apply` rolled workers, to set eviction_policy to null.
+  * Terraform v0.12 nullable variables fix the issue and plan does not produce a diff. 
 
 #### DigitalOcean
 
