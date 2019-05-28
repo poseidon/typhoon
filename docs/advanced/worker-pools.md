@@ -80,21 +80,17 @@ Create a cluster following the Azure [tutorial](../cl/azure.md#cluster). Define 
 module "ramius-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes/workers?ref=v1.14.3"
   
-  providers = {
-    azurerm = "azurerm.default"
-  }
-
   # Azure
-  region                  = "${module.azure-ramius.region}"
-  resource_group_name     = "${module.azure-ramius.resource_group_name}"
-  subnet_id               = "${module.azure-ramius.subnet_id}"
-  security_group_id       = "${module.azure-ramius.security_group_id}"
-  backend_address_pool_id = "${module.azure-ramius.backend_address_pool_id}"
+  region                  = module.azure-ramius.region
+  resource_group_name     = module.azure-ramius.resource_group_name
+  subnet_id               = module.azure-ramius.subnet_id
+  security_group_id       = module.azure-ramius.security_group_id
+  backend_address_pool_id = module.azure-ramius.backend_address_pool_id
 
   # configuration
   name               = "ramius-low-priority"
-  kubeconfig         = "${module.azure-ramius.kubeconfig}"
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  kubeconfig         = module.azure-ramius.kubeconfig
+  ssh_authorized_key = var.ssh_authorized_key
 
   # optional
   worker_count = 2
@@ -120,12 +116,12 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | name | Unique name (distinct from cluster name) | "ramius-f4" |
-| region | Must be set to `region` output by cluster | "${module.cluster.region}" |
-| resource_group_name | Must be set to `resource_group_name` output by cluster | "${module.cluster.resource_group_name}" |
-| subnet_id | Must be set to `subnet_id` output by cluster | "${module.cluster.subnet_id}" |
-| security_group_id | Must be set to `security_group_id` output by cluster | "${module.cluster.security_group_id}" |
-| backend_address_pool_id | Must be set to `backend_address_pool_id` output by cluster | "${module.cluster.backend_address_pool_id}" |
-| kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
+| region | Must be set to `region` output by cluster | module.cluster.region |
+| resource_group_name | Must be set to `resource_group_name` output by cluster | module.cluster.resource_group_name |
+| subnet_id | Must be set to `subnet_id` output by cluster | module.cluster.subnet_id |
+| security_group_id | Must be set to `security_group_id` output by cluster | module.cluster.security_group_id |
+| backend_address_pool_id | Must be set to `backend_address_pool_id` output by cluster | module.cluster.backend_address_pool_id |
+| kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 #### Optional

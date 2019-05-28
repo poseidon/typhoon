@@ -13,15 +13,15 @@ Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service
 
 * Azure account
 * Azure DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.11.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.11.14
+Terraform v0.12.0
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,32 +50,11 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "~> 1.29.0"
-  alias   = "default"
+  version = "1.29.0"
 }
 
 provider "ct" {
   version = "0.3.2"
-}
-
-provider "local" {
-  version = "~> 1.0"
-  alias   = "default"
-}
-
-provider "null" {
-  version = "~> 1.0"
-  alias   = "default"
-}
-
-provider "template" {
-  version = "~> 1.0"
-  alias   = "default"
-}
-
-provider "tls" {
-  version = "~> 1.0"
-  alias   = "default"
 }
 ```
 
@@ -87,15 +66,7 @@ Define a Kubernetes cluster using the module `azure/container-linux/kubernetes`.
 
 ```tf
 module "azure-ramius" {
-  source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes?ref=v1.14.3"
-
-  providers = {
-    azurerm  = "azurerm.default"
-    local    = "local.default"
-    null     = "null.default"
-    template = "template.default"
-    tls      = "tls.default"
-  }
+  source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes?ref=v1.14.4"
 
   # Azure
   cluster_name   = "ramius"
