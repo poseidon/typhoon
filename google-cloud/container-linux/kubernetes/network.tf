@@ -1,12 +1,12 @@
 resource "google_compute_network" "network" {
-  name                    = "${var.cluster_name}"
+  name                    = var.cluster_name
   description             = "Network for the ${var.cluster_name} cluster"
   auto_create_subnetworks = true
 }
 
 resource "google_compute_firewall" "allow-ssh" {
   name    = "${var.cluster_name}-allow-ssh"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -19,7 +19,7 @@ resource "google_compute_firewall" "allow-ssh" {
 
 resource "google_compute_firewall" "internal-etcd" {
   name    = "${var.cluster_name}-internal-etcd"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -33,7 +33,7 @@ resource "google_compute_firewall" "internal-etcd" {
 # Allow Prometheus to scrape etcd metrics
 resource "google_compute_firewall" "internal-etcd-metrics" {
   name    = "${var.cluster_name}-internal-etcd-metrics"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -46,7 +46,7 @@ resource "google_compute_firewall" "internal-etcd-metrics" {
 
 resource "google_compute_firewall" "allow-apiserver" {
   name    = "${var.cluster_name}-allow-apiserver"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -60,10 +60,10 @@ resource "google_compute_firewall" "allow-apiserver" {
 # BGP and IPIP
 # https://docs.projectcalico.org/latest/reference/public-cloud/gce
 resource "google_compute_firewall" "internal-bgp" {
-  count = "${var.networking != "flannel" ? 1 : 0}"
+  count = var.networking != "flannel" ? 1 : 0
 
   name    = "${var.cluster_name}-internal-bgp"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -80,10 +80,10 @@ resource "google_compute_firewall" "internal-bgp" {
 
 # flannel VXLAN
 resource "google_compute_firewall" "internal-vxlan" {
-  count = "${var.networking == "flannel" ? 1 : 0}"
+  count = var.networking == "flannel" ? 1 : 0
 
   name    = "${var.cluster_name}-internal-vxlan"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "udp"
@@ -97,7 +97,7 @@ resource "google_compute_firewall" "internal-vxlan" {
 # Allow Prometheus to scrape node-exporter daemonset
 resource "google_compute_firewall" "internal-node-exporter" {
   name    = "${var.cluster_name}-internal-node-exporter"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -111,7 +111,7 @@ resource "google_compute_firewall" "internal-node-exporter" {
 # Allow apiserver to access kubelets for exec, log, port-forward
 resource "google_compute_firewall" "internal-kubelet" {
   name    = "${var.cluster_name}-internal-kubelet"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -127,7 +127,7 @@ resource "google_compute_firewall" "internal-kubelet" {
 
 resource "google_compute_firewall" "allow-ingress" {
   name    = "${var.cluster_name}-allow-ingress"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -140,7 +140,7 @@ resource "google_compute_firewall" "allow-ingress" {
 
 resource "google_compute_firewall" "google-ingress-health-checks" {
   name    = "${var.cluster_name}-ingress-health"
-  network = "${google_compute_network.network.name}"
+  network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
@@ -149,17 +149,13 @@ resource "google_compute_firewall" "google-ingress-health-checks" {
 
   # https://cloud.google.com/load-balancing/docs/health-check-concepts#method
   source_ranges = [
-    # Global LB health checks
     "35.191.0.0/16",
-
     "130.211.0.0/22",
-
-    # Region LB health checks
     "35.191.0.0/16",
-
     "209.85.152.0/22",
     "209.85.204.0/22",
   ]
 
   target_tags = ["${var.cluster_name}-worker"]
 }
+

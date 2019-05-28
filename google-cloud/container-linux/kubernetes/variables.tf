@@ -1,77 +1,77 @@
 variable "cluster_name" {
-  type        = "string"
+  type        = string
   description = "Unique cluster name (prepended to dns_zone)"
 }
 
 # Google Cloud
 
 variable "region" {
-  type        = "string"
+  type        = string
   description = "Google Cloud Region (e.g. us-central1, see `gcloud compute regions list`)"
 }
 
 variable "dns_zone" {
-  type        = "string"
+  type        = string
   description = "Google Cloud DNS Zone (e.g. google-cloud.example.com)"
 }
 
 variable "dns_zone_name" {
-  type        = "string"
+  type        = string
   description = "Google Cloud DNS Zone name (e.g. example-zone)"
 }
 
 # instances
 
 variable "controller_count" {
-  type        = "string"
+  type        = string
   default     = "1"
   description = "Number of controllers (i.e. masters)"
 }
 
 variable "worker_count" {
-  type        = "string"
+  type        = string
   default     = "1"
   description = "Number of workers"
 }
 
 variable "controller_type" {
-  type        = "string"
+  type        = string
   default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
 }
 
 variable "worker_type" {
-  type        = "string"
+  type        = string
   default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
 }
 
 variable "os_image" {
-  type        = "string"
+  type        = string
   default     = "coreos-stable"
   description = "Container Linux image for compute instances (e.g. coreos-stable)"
 }
 
 variable "disk_size" {
-  type        = "string"
+  type        = string
   default     = "40"
   description = "Size of the disk in GB"
 }
 
 variable "worker_preemptible" {
-  type        = "string"
+  type        = string
   default     = "false"
   description = "If enabled, Compute Engine will terminate workers randomly within 24 hours"
 }
 
 variable "controller_clc_snippets" {
-  type        = "list"
+  type        = list(string)
   description = "Controller Container Linux Config snippets"
   default     = []
 }
 
 variable "worker_clc_snippets" {
-  type        = "list"
+  type        = list(string)
   description = "Worker Container Linux Config snippets"
   default     = []
 }
@@ -79,24 +79,24 @@ variable "worker_clc_snippets" {
 # configuration
 
 variable "ssh_authorized_key" {
-  type        = "string"
+  type        = string
   description = "SSH public key for user 'core'"
 }
 
 variable "asset_dir" {
   description = "Path to a directory where generated assets should be placed (contains secrets)"
-  type        = "string"
+  type        = string
 }
 
 variable "networking" {
   description = "Choice of networking provider (flannel or calico)"
-  type        = "string"
+  type        = string
   default     = "calico"
 }
 
 variable "pod_cidr" {
   description = "CIDR IPv4 range to assign Kubernetes pods"
-  type        = "string"
+  type        = string
   default     = "10.2.0.0/16"
 }
 
@@ -106,24 +106,26 @@ CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
 
-  type    = "string"
+
+  type = string
   default = "10.3.0.0/16"
 }
 
 variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  type        = "string"
-  default     = "cluster.local"
+  type = string
+  default = "cluster.local"
 }
 
 variable "enable_reporting" {
-  type        = "string"
+  type = string
   description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default     = "false"
+  default = "false"
 }
 
 variable "enable_aggregation" {
   description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
-  type        = "string"
-  default     = "false"
+  type = string
+  default = "false"
 }
+

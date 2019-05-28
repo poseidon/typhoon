@@ -10,15 +10,15 @@ Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service
 
 * Google Cloud Account and Service Account
 * Google Cloud DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.11.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
 
 ```sh
 $ terraform version
-Terraform v0.11.14
+Terraform v0.12.0
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,36 +49,14 @@ Configure the Google Cloud provider to use your service account key, project-id,
 
 ```tf
 provider "google" {
-  version = "~> 2.7.0"
-  alias   = "default"
-
-  credentials = "${file("~/.config/google-cloud/terraform.json")}"
+  version     = "2.7.0"
   project     = "project-id"
   region      = "us-central1"
+  credentials = "${file("~/.config/google-cloud/terraform.json")}"
 }
 
 provider "ct" {
   version = "0.3.2"
-}
-
-provider "local" {
-  version = "~> 1.0"
-  alias = "default"
-}
-
-provider "null" {
-  version = "~> 1.0"
-  alias = "default"
-}
-
-provider "template" {
-  version = "~> 1.0"
-  alias = "default"
-}
-
-provider "tls" {
-  version = "~> 1.0"
-  alias = "default"
 }
 ```
 
@@ -93,15 +71,7 @@ Define a Kubernetes cluster using the module `google-cloud/container-linux/kuber
 
 ```tf
 module "google-cloud-yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.14.3"
-  
-  providers = {
-    google   = "google.default"
-    local    = "local.default"
-    null     = "null.default"
-    template = "template.default"
-    tls      = "tls.default"
-  }
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.14.4"
 
   # Google Cloud
   cluster_name  = "yavin"

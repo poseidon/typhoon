@@ -5,11 +5,11 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
   # instance name prefix for instances in the group
   base_instance_name = "${var.name}-worker"
-  instance_template  = "${google_compute_instance_template.worker.self_link}"
-  region             = "${var.region}"
+  instance_template  = google_compute_instance_template.worker.self_link
+  region             = var.region
 
-  target_size  = "${var.worker_count}"
-  target_pools = ["${google_compute_target_pool.workers.self_link}"]
+  target_size  = var.worker_count
+  target_pools = [google_compute_target_pool.workers.self_link]
 
   named_port {
     name = "http"
@@ -26,37 +26,38 @@ resource "google_compute_region_instance_group_manager" "workers" {
 resource "google_compute_instance_template" "worker" {
   name_prefix  = "${var.name}-worker-"
   description  = "Worker Instance template"
-  machine_type = "${var.machine_type}"
+  machine_type = var.machine_type
 
   metadata = {
-    user-data = "${data.ct_config.worker-ignition.rendered}"
+    user-data = data.ct_config.worker-ignition.rendered
   }
 
   scheduling {
-    automatic_restart = "${var.preemptible ? false : true}"
-    preemptible       = "${var.preemptible}"
+    automatic_restart = var.preemptible ? false : true
+    preemptible       = var.preemptible
   }
 
   disk {
     auto_delete  = true
     boot         = true
-    source_image = "${var.os_image}"
-    disk_size_gb = "${var.disk_size}"
+    source_image = var.os_image
+    disk_size_gb = var.disk_size
   }
 
   network_interface {
-    network = "${var.network}"
+    network = var.network
 
     # Ephemeral external IP
-    access_config = {}
+    access_config {
+    }
   }
 
   can_ip_forward = true
   tags           = ["worker", "${var.cluster_name}-worker", "${var.name}-worker"]
 
   guest_accelerator {
-    count = "${var.accelerator_count}"
-    type  = "${var.accelerator_type}"
+    count = var.accelerator_count
+    type  = var.accelerator_type
   }
 
   lifecycle {
@@ -67,19 +68,20 @@ resource "google_compute_instance_template" "worker" {
 
 # Worker Ignition config
 data "ct_config" "worker-ignition" {
-  content      = "${data.template_file.worker-config.rendered}"
+  content      = data.template_file.worker-config.rendered
   pretty_print = false
-  snippets     = ["${var.clc_snippets}"]
+  snippets     = var.clc_snippets
 }
 
 # Worker Container Linux config
 data "template_file" "worker-config" {
-  template = "${file("${path.module}/cl/worker.yaml.tmpl")}"
+  template = file("${path.module}/cl/worker.yaml.tmpl")
 
   vars = {
-    kubeconfig             = "${indent(10, var.kubeconfig)}"
-    ssh_authorized_key     = "${var.ssh_authorized_key}"
-    cluster_dns_service_ip = "${cidrhost(var.service_cidr, 10)}"
-    cluster_domain_suffix  = "${var.cluster_domain_suffix}"
+    kubeconfig             = indent(10, var.kubeconfig)
+    ssh_authorized_key     = var.ssh_authorized_key
+    cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
+    cluster_domain_suffix  = var.cluster_domain_suffix
   }
 }
+

@@ -150,19 +150,15 @@ Create a cluster following the Google Cloud [tutorial](../cl/google-cloud.md#clu
 module "yavin-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes/workers?ref=v1.14.3"
 
-  providers = {
-    google = "google.default"
-  }
-
   # Google Cloud
   region       = "europe-west2"
-  network      = "${module.google-cloud-yavin.network_name}"
+  network      = module.google-cloud-yavin.network_name
   cluster_name = "yavin"
 
   # configuration
   name               = "yavin-16x"
-  kubeconfig         = "${module.google-cloud-yavin.kubeconfig}"
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  kubeconfig         = module.google-cloud-yavin.kubeconfig
+  ssh_authorized_key = var.ssh_authorized_key
   
   # optional
   worker_count = 2
@@ -200,9 +196,9 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 |:-----|:------------|:--------|
 | name | Unique name (distinct from cluster name) | "yavin-16x" |
 | region | Region for the worker pool instances. May differ from the cluster's region | "europe-west2" |
-| network | Must be set to `network_name` output by cluster | "${module.cluster.network_name}" |
+| network | Must be set to `network_name` output by cluster | module.cluster.network_name |
 | cluster_name | Must be set to `cluster_name` of cluster | "yavin" |
-| kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
+| kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`.
