@@ -20,6 +20,9 @@ Notable changes between versions.
 
 ### AWS
 
+* Migrate from Terraform v0.11 to v0.12.x (**action required!**)
+  * Require `terraform-provider-aws` v2.7+ to support Terraform v0.12
+  * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 
 * Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
   * `count` will become a reserved variable name in Terraform v0.12
 

@@ -16,21 +16,17 @@ Create a cluster following the AWS [tutorial](../cl/aws.md#cluster). Define a wo
 
 ```tf
 module "tempest-worker-pool" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.14.3"
-  
-  providers = {
-    aws = "aws.default"
-  }
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.14.4"
 
   # AWS
-  vpc_id          = "${module.aws-tempest.vpc_id}"
-  subnet_ids      = "${module.aws-tempest.subnet_ids}"
-  security_groups = "${module.aws-tempest.worker_security_groups}"
+  vpc_id          = module.aws-tempest.vpc_id
+  subnet_ids      = module.aws-tempest.subnet_ids
+  security_groups = module.aws-tempest.worker_security_groups
   
   # configuration
-  name               = "tempest-worker-pool"
-  kubeconfig         = "${module.aws-tempest.kubeconfig}"
-  ssh_authorized_key = "${var.ssh_authorized_key}"
+  name               = "tempest-pool"
+  kubeconfig         = module.aws-tempest.kubeconfig
+  ssh_authorized_key = var.ssh_authorized_key
 
   # optional
   worker_count  = 2
@@ -56,10 +52,10 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | name | Unique name (distinct from cluster name) | "tempest-m5s" |
-| vpc_id | Must be set to `vpc_id` output by cluster | "${module.cluster.vpc_id}" |
-| subnet_ids | Must be set to `subnet_ids` output by cluster | "${module.cluster.subnet_ids}" |
-| security_groups | Must be set to `worker_security_groups` output by cluster | "${module.cluster.worker_security_groups}" |
-| kubeconfig | Must be set to `kubeconfig` output by cluster | "${module.cluster.kubeconfig}" |
+| vpc_id | Must be set to `vpc_id` output by cluster | module.cluster.vpc_id |
+| subnet_ids | Must be set to `subnet_ids` output by cluster | module.cluster.subnet_ids |
+| security_groups | Must be set to `worker_security_groups` output by cluster | module.cluster.worker_security_groups |
+| kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 #### Optional
