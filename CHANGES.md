@@ -2,32 +2,33 @@
 
 Notable changes between versions.
 
-#### AWS
+## Latest
 
 * Migrate from Terraform v0.11 to v0.12.x (**action required!**)
-  * Require `terraform-provider-aws` v2.7+ to support Terraform v0.12
-  * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 
+  * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 (action required)
+
+#### AWS
+
+* Require `terraform-provider-aws` v2.7+ to support Terraform v0.12 (action required)
 
 #### Azure
 
-* Migrate from Terraform v0.11 to v0.12.x (**action required!**)
-  * Require `terraform-provider-azurerm` v1.27+ to support Terraform v0.12
-  * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 
+* Require `terraform-provider-azurerm` v1.27+ to support Terraform v0.12 (action required)
 * Avoid unneeded rotations of Regular priority virtual machine scale sets
   * Azure only allows `eviction_policy` to be set for Low priority VMs. Supporting Low priority VMs meant when Regular VMs were used, each `terraform apply` rolled workers, to set eviction_policy to null.
-  * Terraform v0.12 nullable variables fix the issue and plan does not produce a diff. 
+  * Terraform v0.12 nullable variables fix the issue so plan does not produce a diff. 
+
+#### Bare-Metal
+
+* Require `terraform-provider-matchbox` v0.3.0+ to support Terraform v0.12 (action required)
 
 #### DigitalOcean
 
-* Migrate from Terraform v0.11 to v0.12.x (**action required!**)
-  * Require `terraform-provider-digitalocean` v1.3+ to support Terraform v0.12
-  * Require `terraform-provider-ct` ~> v0.3.2+ to support Terraform v0.12
+* Require `terraform-provider-digitalocean` v1.3+ to support Terraform v0.12 (action required)
 
 #### Google Cloud
 
-* Migrate from Terraform v0.11 to v0.12.x (**action required!**)
-  * Require `terraform-provider-google` v2.5+ to support Terraform v0.12
-  * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 
+* Require `terraform-provider-google` v2.5+ to support Terraform v0.12 (action required)
 
 ## v1.14.3
 

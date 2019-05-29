@@ -160,7 +160,7 @@ storage:
             --mount volume=assets,target=/assets \
             --volume bootstrap,kind=host,source=/etc/kubernetes \
             --mount volume=bootstrap,target=/etc/kubernetes \
-            $$RKT_OPTS \
+            $${RKT_OPTS} \
             quay.io/coreos/bootkube:v0.14.0 \
             --net=host \
             --dns=host \
