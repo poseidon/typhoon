@@ -111,23 +111,23 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.12
+Terraform v0.11.14
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/poseidon/terraform-provider-matchbox/releases/download/v0.2.3/terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
-tar xzf terraform-provider-matchbox-v0.2.3-linux-amd64.tar.gz
-mv terraform-provider-matchbox-v0.2.3-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.2.3
+wget https://github.com/poseidon/terraform-provider-matchbox/releases/download/v0.3.0/terraform-provider-matchbox-v0.3.0-linux-amd64.tar.gz
+tar xzf terraform-provider-matchbox-v0.3.0-linux-amd64.tar.gz
+mv terraform-provider-matchbox-v0.3.0-linux-amd64/terraform-provider-matchbox ~/.terraform.d/plugins/terraform-provider-matchbox_v0.3.0
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.3.1/terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
-mv terraform-provider-ct-v0.3.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.1
+wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.3.2/terraform-provider-ct-v0.3.2-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.2-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.2-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.2
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -142,7 +142,7 @@ Configure the Matchbox provider to use your Matchbox API endpoint and client cer
 
 ```tf
 provider "matchbox" {
-  version     = "0.2.3"
+  version     = "0.3.0"
   endpoint    = "matchbox.example.com:8081"
   client_cert = "${file("~/.config/matchbox/client.crt")}"
   client_key  = "${file("~/.config/matchbox/client.key")}"
@@ -150,7 +150,7 @@ provider "matchbox" {
 }
 
 provider "ct" {
-  version = "0.3.1"
+  version = "0.3.2"
 }
 
 provider "local" {

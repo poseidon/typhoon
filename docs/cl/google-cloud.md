@@ -18,15 +18,15 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.11.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.11.12
+Terraform v0.11.14
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.3.1/terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.3.1-linux-amd64.tar.gz
-mv terraform-provider-ct-v0.3.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.1
+wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.3.2/terraform-provider-ct-v0.3.2-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.3.2-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.3.2-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.3.2
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
@@ -49,7 +49,7 @@ Configure the Google Cloud provider to use your service account key, project-id,
 
 ```tf
 provider "google" {
-  version = "~> 2.5.1"
+  version = "~> 2.7.0"
   alias   = "default"
 
   credentials = "${file("~/.config/google-cloud/terraform.json")}"
@@ -58,7 +58,7 @@ provider "google" {
 }
 
 provider "ct" {
-  version = "0.3.1"
+  version = "0.3.2"
 }
 
 provider "local" {

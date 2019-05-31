@@ -7,6 +7,7 @@ Notable changes between versions.
 * Update CoreDNS from v1.3.1 to v1.5.0
   * Add `ready` plugin to improve readinessProbe
 * Fix trailing slash in terraform-render-bootkube version ([#479](https://github.com/poseidon/typhoon/pull/479))
+* Recommend updating `terraform-provider-ct` plugin from v0.3.1 to [v0.3.2](https://github.com/poseidon/terraform-provider-ct/releases/tag/v0.3.2) ([#487](https://github.com/poseidon/typhoon/pull/487))
 
 ### AWS
 
@@ -20,7 +21,11 @@ Notable changes between versions.
 * Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
   * `count` will become a reserved variable name in Terraform v0.12
 
-### Google Cloud
+#### Bare-Metal
+
+* Recommend updating `terraform-provider-matchbox` plugin from v0.2.3 to [v0.3.0](https://github.com/poseidon/terraform-provider-matchbox/releases/tag/v0.3.0) ([#487](https://github.com/poseidon/typhoon/pull/487))
+
+#### Google Cloud
 
 * Rename `worker` pool module `count` variable to `worker_count` ([#485](https://github.com/poseidon/typhoon/pull/485)) (action required)
   * `count` will become a reserved variable name in Terraform v0.12
@@ -121,7 +126,7 @@ Notable changes between versions.
   * Reverse DNS lookups for service IPv4 addresses unchanged
 * Upgrade Calico from v3.5.2 to [v3.6.0](https://docs.projectcalico.org/v3.6/release-notes/) ([#430](https://github.com/poseidon/typhoon/pull/430))
   * Change pod IPAM from `host-local` to `calico-ipam`. `pod_cidr` is still divided into `/24` subnets per node, but managed as `ippools` and `ipamblocks`
-* Suggest updating [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) from v0.3.0 to [v0.3.1](https://github.com/poseidon/terraform-provider-ct/releases/tag/v0.3.1) ([#434](https://github.com/poseidon/typhoon/pull/434))
+* Recommend updating [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) from v0.3.0 to [v0.3.1](https://github.com/poseidon/terraform-provider-ct/releases/tag/v0.3.1) ([#434](https://github.com/poseidon/typhoon/pull/434))
 * Announce: Fedora Atomic modules will be not be updated beyond Kubernetes v1.13.x ([#437](https://github.com/poseidon/typhoon/pull/437))
   * Thank you Project Atomic team and users, please see the deprecation [notice](https://typhoon.psdn.io/announce/#march-27-2019)
 
