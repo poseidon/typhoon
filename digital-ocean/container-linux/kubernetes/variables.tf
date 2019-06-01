@@ -37,8 +37,8 @@ variable "controller_type" {
 
 variable "worker_type" {
   type        = string
-  default     = "s-1vcpu-1gb"
-  description = "Droplet type for workers (e.g. s-1vcpu-1gb, s-1vcpu-2gb, s-2vcpu-2gb)"
+  default     = "s-1vcpu-2gb"
+  description = "Droplet type for workers (e.g. s-1vcpu-2gb, s-2vcpu-2gb)"
 }
 
 variable "image" {

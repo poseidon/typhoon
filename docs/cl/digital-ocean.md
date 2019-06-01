@@ -220,7 +220,7 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Droplet type for controllers | s-2vcpu-2gb | s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb, ... |
-| worker_type | Droplet type for workers | s-1vcpu-1gb | s-1vcpu-1gb, s-1vcpu-2gb, s-2vcpu-2gb, ... |
+| worker_type | Droplet type for workers | s-1vcpu-2gb | s-1vcpu-2gb, s-2vcpu-2gb, ... |
 | image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |

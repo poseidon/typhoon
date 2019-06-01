@@ -26,6 +26,7 @@ Notable changes between versions.
 #### DigitalOcean
 
 * Require `terraform-provider-digitalocean` v1.3+ to support Terraform v0.12 (action required)
+* Change the default `worker_type` from `s-1vcpu1-1gb` to `s-1vcpu-2gb`
 
 #### Google Cloud
 
