@@ -32,6 +32,10 @@ Notable changes between versions.
 
 * Require `terraform-provider-google` v2.5+ to support Terraform v0.12 (action required)
 
+#### Addons
+
+* Update Grafana from v6.2.1 to v6.2.2
+
 ## v1.14.3
 
 * Kubernetes [v1.14.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1143)
