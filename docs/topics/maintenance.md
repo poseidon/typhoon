@@ -300,7 +300,7 @@ sudo ln -sf ~/Downloads/terraform-0.12.0/terraform /usr/local/bin/terraform12
 ```
 
 !!! note
-    For example, `terraform` may refer Terraform v0.11.14, while `terraform12` is symlinked to Terraform v0.12.0. Once migration is complete, Terraform v0.11.x can be deleted and `terraform12` renamed.
+    For example, `terraform` may refer Terraform v0.11.14, while `terraform12` is symlinked to Terraform v0.12.1. Once migration is complete, Terraform v0.11.x can be deleted and `terraform12` renamed.
 
 #### In-place
 

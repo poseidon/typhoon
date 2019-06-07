@@ -33,8 +33,6 @@ Notable changes between versions.
 
 ## v1.14.3
 
-## v1.14.3
-
 * Kubernetes [v1.14.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.14.md#v1143)
 * Update CoreDNS from v1.3.1 to v1.5.0
   * Add `ready` plugin to improve readinessProbe
