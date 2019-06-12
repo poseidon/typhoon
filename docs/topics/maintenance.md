@@ -273,7 +273,7 @@ Google Cloud creates a new worker template and edits the worker instance group i
 
 ## Terraform v0.12.x
 
-Terraform [v0.12](https://www.hashicorp.com/blog/announcing-terraform-0-12) introduces major changes to the provider plugin protocol and HCL language (first-class expressions, formal list and map types, nullable variables, variable constraints, and short-circuting ternary operators).
+Terraform [v0.12](https://www.hashicorp.com/blog/announcing-terraform-0-12) introduces major changes to the provider plugin protocol and HCL language (first-class expressions, formal list and map types, nullable variables, variable constraints, and short-circuiting ternary operators).
 
 Typhoon modules have been adapted for Terraform v0.12. Provider plugins requirements now enforce v0.12 compatibility. However, some HCL language changes were breaking. List [type hint](https://www.terraform.io/upgrade-guides/0-12.html#referring-to-list-variables) workarounds in v0.11 now have new meaning. We cannot offer both v0.11 and v0.12 compatibility at the same time. Upgrading Terraform to v0.12 is neccessary.
 
