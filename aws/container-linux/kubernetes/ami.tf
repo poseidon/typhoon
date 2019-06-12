@@ -24,7 +24,7 @@ data "aws_ami" "coreos" {
 
   filter {
     name   = "name"
-    values = ["CoreOS-${local.channel}-*"]
+    values = ["CoreOS-${local.flavor == "coreos" ? local.channel : "stable"}-*"]
   }
 }
 
@@ -44,7 +44,7 @@ data "aws_ami" "flatcar" {
 
   filter {
     name   = "name"
-    values = ["Flatcar-${local.channel}-*"]
+    values = ["Flatcar-${local.flavor == "flatcar" ? local.channel : "stable"}-*"]
   }
 }
 

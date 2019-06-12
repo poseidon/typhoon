@@ -12,6 +12,7 @@ Notable changes between versions.
 #### AWS
 
 * Require `terraform-provider-aws` v2.7+ to support Terraform v0.12 (action required)
+* Allow using Flatcar Linux Edge by setting `os_image` to "flatcar-edge"
 
 #### Azure
 
@@ -23,6 +24,7 @@ Notable changes between versions.
 #### Bare-Metal
 
 * Require `terraform-provider-matchbox` v0.3.0+ to support Terraform v0.12 (action required)
+* Allow using Flatcar Linux Edge by setting `os_channel` to "flatcar-edge"
 
 #### DigitalOcean
 

@@ -44,7 +44,7 @@ variable "worker_type" {
 variable "os_image" {
   type        = string
   default     = "coreos-stable"
-  description = "AMI channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha)"
+  description = "AMI channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
 }
 
 variable "disk_size" {
