@@ -38,6 +38,7 @@ systemd:
           --volume var-log,kind=host,source=/var/log \
           --mount volume=var-log,target=/var/log \
           --insecure-options=image"
+        Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -50,6 +51,7 @@ systemd:
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
+          --cgroup-driver=$${KUBELET_CGROUP_DRIVER} \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
