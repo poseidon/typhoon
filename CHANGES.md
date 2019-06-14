@@ -7,6 +7,7 @@ Notable changes between versions.
 * Migrate from Terraform v0.11 to v0.12.x (**action required!**)
   * [Migration](https://typhoon.psdn.io/topics/maintenance/#terraform-v012x) instructions for Terraform v0.12
 * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 (action required)
+* Update Calico from v3.7.2 to [v3.7.3](https://docs.projectcalico.org/v3.7/release-notes/)
 
 #### AWS
 
