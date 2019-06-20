@@ -35,7 +35,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Update Grafana from v6.2.1 to v6.2.2
+* Update Grafana from v6.2.1 to v6.2.4
 * Update node-exporter from v0.18.0 to v0.18.1
 
 ## v1.14.3
