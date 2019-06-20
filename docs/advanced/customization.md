@@ -136,10 +136,6 @@ Container Linux Configs (and the CoreOS Ignition system) create immutable infras
 !!! danger
     Destroying and recreating controller instances is destructive! etcd runs on controller instances and stores data there. Do not modify controller snippets. See [blue/green](/topics/maintenance/#upgrades) clusters.
 
-### Fedora Atomic
-
-Cloud-Init and kickstart (bare-metal only) declare how a Fedora Atomic instance should be provisioned. Customizing these declarations in ways beyond the provided Terraform variables is unsupported.
-
 ## Architecture
 
 Typhoon chooses variables to expose with purpose. If you must customize clusters in ways that aren't supported by input variables, fork Typhoon and maintain a repository with customizations. Reference the repository by changing the username.

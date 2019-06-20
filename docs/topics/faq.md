@@ -8,17 +8,12 @@ Formats rise and evolve. Typhoon may choose to adapt the format over time (with 
 
 ## Operating Systems
 
-Typhoon supports Container Linux and Fedora Atomic 28. These two operating systems were chosen because they offer:
+Typhoon supports Container Linux and the Flatcar Linux derivative. These operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades
 * Declarative and immutable configuration
 * Optimization for containerized applications
-
-Together, they diversify Typhoon to support a range of container technologies.
-
-* Container Linux: Gentoo core, rkt-fly, docker
-* Fedora Atomic: RHEL core, rpm-ostree, system containers (i.e. runc), CRI-O
 
 ## Get Help
 

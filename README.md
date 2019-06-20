@@ -29,15 +29,6 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
 
-Fedora Atomic support is alpha and will evolve as Fedora Atomic is replaced by Fedora CoreOS.
-
-| Platform      | Operating System | Terraform Module | Status |
-|---------------|------------------|------------------|--------|
-| AWS           | Fedora Atomic    | [aws/fedora-atomic/kubernetes](aws/fedora-atomic/kubernetes) | deprecated |
-| Bare-Metal    | Fedora Atomic    | [bare-metal/fedora-atomic/kubernetes](bare-metal/fedora-atomic/kubernetes) | deprecated |
-| Digital Ocean | Fedora Atomic    | [digital-ocean/fedora-atomic/kubernetes](digital-ocean/fedora-atomic/kubernetes) | deprecated |
-| Google Cloud  | Fedora Atomic    | [google-cloud/fedora-atomic/kubernetes](google-cloud/fedora-atomic/kubernetes) | deprecated |
-
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)
