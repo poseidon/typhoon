@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.12.1
+Terraform v0.12.2
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the DigitalOcean provider to use your token in a `providers.tf` file.
 
 ```tf
 provider "digitalocean" {
-  version = "1.3.0"
+  version = "1.4.0"
   token = "${chomp(file("~/.config/digital-ocean/token"))}"
 }
 

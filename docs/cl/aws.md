@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.12.1
+Terraform v0.12.2
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,7 +49,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version                 = "2.12.0"
+  version                 = "2.15.0"
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
 }
