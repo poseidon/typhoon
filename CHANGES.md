@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.15.0
+
+* Kubernetes [v1.15.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1150)
 * Migrate from Terraform v0.11 to v0.12.x (**action required!**)
   * [Migration](https://typhoon.psdn.io/topics/maintenance/#terraform-v012x) instructions for Terraform v0.12
 * Require `terraform-provider-ct` v0.3.2+ to support Terraform v0.12 (action required)

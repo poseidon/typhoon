@@ -18,7 +18,7 @@ module "google-cloud-yavin" {
 }
 
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.3"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.15.0"
   ...
 }
 ```
@@ -279,15 +279,15 @@ Typhoon modules have been adapted for Terraform v0.12. Provider plugins requirem
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.14.4 - ?       | v0.12.x             |
-| v1.10.3 - v1.14.3 | v0.11.x             |
+| v1.15.0 - ?       | v0.12.x             |
+| v1.10.3 - v1.15.0 | v0.11.x             |
 | v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
 | v1.7.3 - v1.9.1   | v0.10.x             |
 | v1.6.4 - v1.7.2   | v0.9.x              |
 
 ### New users
 
-New users can start with Terraform v0.12.x and follow the docs for Typhoon v1.14.4+ without issue.
+New users can start with Terraform v0.12.x and follow the docs for Typhoon v1.15.0+ without issue.
 
 ### Existing users
 
@@ -304,12 +304,12 @@ sudo ln -sf ~/Downloads/terraform-0.12.0/terraform /usr/local/bin/terraform12
 
 #### In-place
 
-For existing Typhoon v1.14.2 or v1.14.3 clusters, edit the Typhoon `ref` to the `v1.14.4` release (if published) or the first SHA that introduced Terraform v0.12 support (`3276bf587850218b8f967978a4bf2b05d5f440a2`). The aim is to minimize the diff. For example:
+For existing Typhoon v1.14.2 or v1.14.3 clusters, edit the Typhoon `ref` to first SHA that introduced Terraform v0.12 support (`3276bf587850218b8f967978a4bf2b05d5f440a2`). The aim is to minimize the diff and convert to using Terraform v0.12.x. For example:
 
 ```tf
  module "bare-metal-mercury" {
 -  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.3"
-+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.4"
++  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=3276bf587850218b8f967978a4bf2b05d5f440a2"
    ...
 ```
 
@@ -317,7 +317,7 @@ With Terraform v0.12, Typhoon clusters no longer require the `providers` block (
 
 ```tf
  module "bare-metal-mercury" {
-   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.4"
+   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=3276bf587850218b8f967978a4bf2b05d5f440a2"
 
 -  providers = {
 -    local = "local.default"
@@ -404,7 +404,7 @@ tree .
 └── infraB  <- new Terraform v0.12.x configs
 ```
 
-Define Typhoon clusters in the new config directory using Terraform v0.12 syntax. Follow the Typhoon v1.14.4+ docs (e.g. use `terraform12` in the `infraB` dir). See [AWS](/cl/aws), [Azure](/cl/azure), [Bare-Metal](/cl/bare-metal), [Digital Ocean](/cl/digital-ocean), or [Google-Cloud](/cl/google-cloud)) to create new clusters. Follow the usual [upgrade](/topics/maintenance/#upgrades) process to apply workloads and shift traffic. Later, switch back to the old config directory and deprovision clusters with Terraform v0.11.
+Define Typhoon clusters in the new config directory using Terraform v0.12 syntax. Follow the Typhoon v1.15.0+ docs (e.g. use `terraform12` in the `infraB` dir). See [AWS](/cl/aws), [Azure](/cl/azure), [Bare-Metal](/cl/bare-metal), [Digital Ocean](/cl/digital-ocean), or [Google-Cloud](/cl/google-cloud)) to create new clusters. Follow the usual [upgrade](/topics/maintenance/#upgrades) process to apply workloads and shift traffic. Later, switch back to the old config directory and deprovision clusters with Terraform v0.11.
 
 ```shell
 terraform12 init

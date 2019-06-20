@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.14.3 cluster on bare-metal with Container Linux.
+In this tutorial, we'll network boot and provision a Kubernetes v1.15.0 cluster on bare-metal with Container Linux.
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -160,7 +160,7 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.3"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.15.0"
   
   # bare-metal
   cluster_name            = "mercury"
@@ -265,9 +265,9 @@ Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 To watch the install to disk (until machines reboot from disk), SSH to port 2222.
 
 ```
-# before v1.14.3
+# before v1.15.0
 $ ssh debug@node1.example.com
-# after v1.14.3
+# after v1.15.0
 $ ssh -p 2222 core@node1.example.com
 ```
 
@@ -292,9 +292,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS  ROLES              AGE  VERSION
-node1.example.com   Ready   controller,master  10m  v1.14.3
-node2.example.com   Ready   node               10m  v1.14.3
-node3.example.com   Ready   node               10m  v1.14.3
+node1.example.com   Ready   controller,master  10m  v1.15.0
+node2.example.com   Ready   node               10m  v1.15.0
+node3.example.com   Ready   node               10m  v1.15.0
 ```
 
 List the pods.
