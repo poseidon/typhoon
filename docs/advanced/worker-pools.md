@@ -16,7 +16,7 @@ Create a cluster following the AWS [tutorial](../cl/aws.md#cluster). Define a wo
 
 ```tf
 module "tempest-worker-pool" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.14.4"
+  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.14.3"
 
   # AWS
   vpc_id          = module.aws-tempest.vpc_id

@@ -78,12 +78,12 @@ module "digital-ocean-nemo" {
   controller_count        = 1
   worker_count            = 2
   controller_clc_snippets = [
-    "${file("./custom-files")}",
-    "${file("./custom-units")}",
+    file("./custom-files"),
+    file("./custom-units"),
   ]
   worker_clc_snippets = [
-    "${file("./custom-files")}",
-    "${file("./custom-units")}",
+    file("./custom-files"),
+    file("./custom-units")",
   ]
   ...
 }
@@ -100,12 +100,10 @@ module "bare-metal-mercury" {
     "node3",
   ]
   clc_snippets = {
-    "node2" = [
-      "${file("./units/hello.yaml")}"
-    ]
+    "node2" = [file("./units/hello.yaml")]
     "node3" = [
-      "${file("./units/world.yaml")}",
-      "${file("./units/hello.yaml")}",
+      file("./units/world.yaml"),
+      file("./units/hello.yaml"),
     ]
   }
   ...
