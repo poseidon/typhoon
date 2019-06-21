@@ -136,3 +136,5 @@ Typhoon clusters will contain only [free](https://www.debian.org/intro/free) com
 ## Donations
 
 Typhoon does not accept money donations. Instead, we encourage you to donate to one of [these organizations](https://github.com/poseidon/typhoon/wiki/Donations) to show your appreciation.
+
+* [DigitalOcean](https://www.digitalocean.com/) kindly provides credits to support Typhoon test clusters.
