@@ -43,14 +43,6 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 module "google-cloud-yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.15.0"
 
-  providers = {
-    google   = "google.default"
-    local    = "local.default"
-    null     = "null.default"
-    template = "template.default"
-    tls      = "tls.default"
-  }
-
   # Google Cloud
   cluster_name  = "yavin"
   region        = "us-central1"
@@ -63,6 +55,7 @@ module "google-cloud-yavin" {
   
   # optional
   worker_count = 2
+  worker_preemptible = true
 }
 ```
 
