@@ -24,7 +24,7 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Container Linux / Flatcar Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
+| Azure         | Container Linux  | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
 | Bare-Metal    | Container Linux / Flatcar Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
