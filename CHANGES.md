@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update Grafana from v6.2.4 to v6.2.5
+
 ## v1.15.0
 
 * Kubernetes [v1.15.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1150)
