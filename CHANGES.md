@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.7.3 to [v3.7.4](https://docs.projectcalico.org/v3.7/release-notes/)
+
 #### Addons
 
 * Update Grafana from v6.2.4 to v6.2.5
