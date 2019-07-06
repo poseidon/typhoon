@@ -54,7 +54,7 @@ resource "google_compute_firewall" "allow-apiserver" {
 
   allow {
     protocol = "tcp"
-    ports    = [443]
+    ports    = [6443]
   }
 
   source_ranges = ["0.0.0.0/0"]

@@ -64,7 +64,7 @@ resource "google_compute_instance_group" "controllers" {
 
   named_port {
     name = "apiserver"
-    port = "443"
+    port = "6443"
   }
 
   # add instances in the zone into the instance group
@@ -87,7 +87,7 @@ resource "google_compute_health_check" "apiserver" {
   unhealthy_threshold = 3
 
   tcp_health_check {
-    port = "443"
+    port = "6443"
   }
 }
 
