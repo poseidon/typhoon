@@ -2,6 +2,10 @@ resource "google_compute_network" "network" {
   name                    = var.cluster_name
   description             = "Network for the ${var.cluster_name} cluster"
   auto_create_subnetworks = true
+
+  timeouts {
+    delete = "6m"
+  }
 }
 
 resource "google_compute_firewall" "allow-ssh" {

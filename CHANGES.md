@@ -10,6 +10,7 @@ Notable changes between versions.
 
 * Allow controller nodes to span more than 3 zones if available in a region ([#504](https://github.com/poseidon/typhoon/pull/504))
 * Eliminate extraneous controller instance groups in single-controller clusters ([#504](https://github.com/poseidon/typhoon/pull/504))
+* Raise network deletion timeout from 4m to 6m ([#505](https://github.com/poseidon/typhoon/pull/505))
 
 #### Addons
 
