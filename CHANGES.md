@@ -6,6 +6,11 @@ Notable changes between versions.
 
 * Update Calico from v3.7.3 to [v3.7.4](https://docs.projectcalico.org/v3.7/release-notes/)
 
+#### Google Cloud
+
+* Allow controller nodes to span more than 3 zones if available in a region ([#504](https://github.com/poseidon/typhoon/pull/504))
+* Eliminate extraneous controller instance groups in single-controller clusters ([#504](https://github.com/poseidon/typhoon/pull/504))
+
 #### Addons
 
 * Update Grafana from v6.2.4 to v6.2.5

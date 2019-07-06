@@ -20,9 +20,7 @@ data "google_compute_zones" "all" {
 }
 
 locals {
-  # TCP proxy load balancers require a fixed number of zonal backends. Spread
-  # controllers over up to 3 zones, since all GCP regions have at least 3.
-  zones = slice(data.google_compute_zones.all.names, 0, 3)
+  zones = data.google_compute_zones.all.names
 
   controllers_ipv4_public = google_compute_instance.controllers.*.network_interface.0.access_config.0.nat_ip
 }
