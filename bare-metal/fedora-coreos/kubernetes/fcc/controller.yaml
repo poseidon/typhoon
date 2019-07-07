@@ -1,0 +1,28 @@
+---
+variant: fcos
+version: 1.0.0
+storage:
+  files:
+    - path: /etc/kubernetes/kubelet.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
+          KUBELET_IMAGE_TAG=v1.15.0
+    - path: /etc/hostname
+      filesystem: root
+      mode: 0644
+      contents:
+        inline:
+          ${domain_name}
+    - path: /etc/sysctl.d/max-user-watches.conf
+      filesystem: root
+      contents:
+        inline: |
+          fs.inotify.max_user_watches=16184
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        - ${ssh_authorized_key}
