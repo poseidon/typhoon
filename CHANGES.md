@@ -17,6 +17,8 @@ Notable changes between versions.
 
 * Update Prometheus from v2.10.0 to v2.11.0-rc.0
 * Update Grafana from v6.2.4 to v6.2.5
+* Update nginx-ingress from v0.24.1 to v0.25.0
+  * Support `networking.k8s.io/v1beta1` apiVersion
 
 ## v1.15.0
 
