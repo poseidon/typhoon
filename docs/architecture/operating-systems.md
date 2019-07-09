@@ -15,7 +15,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 ## Host Properties
 
 | Property          | Container Linux / Flatcar Linux | Fedora Atomic |
-|-------------------|-----------------|---------------|---------------|
+|-------------------|---------------------------------|---------------|
 | host spec (bare-metal) | Container Linux Config | kickstart, cloud-init |
 | host spec (cloud)      | Container Linux Config | cloud-init |
 | container runtime | docker    | docker (CRIO planned) |
