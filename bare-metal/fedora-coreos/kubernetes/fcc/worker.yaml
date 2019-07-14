@@ -1,26 +1,116 @@
 ---
 variant: fcos
 version: 1.0.0
+systemd:
+  units:
+    - name: docker.service
+      enabled: true
+    - name: wait-for-dns.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Wait for DNS entries
+        Before=kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        ExecStart=/bin/sh -c 'while ! /usr/bin/grep '^[^#[:space:]]' /etc/resolv.conf > /dev/null; do sleep 1; done'
+        [Install]
+        RequiredBy=kubelet.service
+    - name: kubelet.service
+      contents: |
+        [Unit]
+        Description=Kubelet via Hyperkube (System Container)
+        Wants=rpc-statd.service
+        [Service]
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/bin/mkdir -p /var/lib/calico
+        ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
+        ExecStartPre=/bin/mkdir -p /opt/cni/bin
+        ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+        ExecStartPre=-/usr/bin/podman rm kubelet
+        ExecStart=/usr/bin/podman run --name kubelet \
+          --privileged \
+          --pid host \
+          --network host \
+          --volume /etc/kubernetes:/etc/kubernetes:ro,z \
+          --volume /usr/lib/os-release:/etc/os-release:ro \
+          --volume /etc/ssl/certs:/etc/ssl/certs:ro \
+          --volume /lib/modules:/lib/modules:ro \
+          --volume /run:/run \
+          --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+          --volume /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
+          --volume /etc/pki/tls/certs:/usr/share/ca-certificates:ro \
+          --volume /var/lib/calico:/var/lib/calico \
+          --volume /var/lib/docker:/var/lib/docker \
+          --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
+          --volume /var/log:/var/log \
+          --volume /var/run:/var/run \
+          --volume /var/run/lock:/var/run/lock:z \
+          --volume /opt/cni/bin:/opt/cni/bin:z \
+          --volume /etc/iscsi:/etc/iscsi \
+          --volume /sbin/iscsiadm:/sbin/iscsiadm \
+          k8s.gcr.io/hyperkube:v1.15.0 /hyperkube kubelet \
+          --anonymous-auth=false \
+          --authentication-token-webhook \
+          --authorization-mode=Webhook \
+          --cgroup-driver=systemd \
+          --cgroups-per-qos=true \
+          --enforce-node-allocatable=pods \
+          --client-ca-file=/etc/kubernetes/ca.crt \
+          --cluster_dns=${cluster_dns_service_ip} \
+          --cluster_domain=${cluster_domain_suffix} \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
+          --exit-on-lock-contention \
+          --hostname-override=${domain_name} \
+          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --lock-file=/var/run/lock/kubelet.lock \
+          --network-plugin=cni \
+          --node-labels=node-role.kubernetes.io/node \
+          --pod-manifest-path=/etc/kubernetes/manifests \
+          --read-only-port=0 \
+          --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+        ExecStop=-/usr/bin/podman stop kubelet
+        Delegate=yes
+        Restart=always
+        RestartSec=10
+        [Install]
+        WantedBy=multi-user.target
+    - name: kubelet.path
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
 storage:
+  directories:
+    - path: /etc/kubernetes
+    - path: /opt/bootkube
   files:
-    - path: /etc/kubernetes/kubelet.env
-      filesystem: root
-      mode: 0644
-      contents:
-        inline: |
-          KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
-          KUBELET_IMAGE_TAG=v1.15.0
     - path: /etc/hostname
-      filesystem: root
       mode: 0644
       contents:
         inline:
           ${domain_name}
+    - path: /etc/sysctl.d/reverse-path-filter.conf
+      contents:
+        inline: |
+          net.ipv4.conf.all.rp_filter=1
     - path: /etc/sysctl.d/max-user-watches.conf
-      filesystem: root
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
+    - path: /etc/systemd/system.conf.d/accounting.conf
+      contents:
+        inline: |
+          [Manager]
+          DefaultCPUAccounting=yes
+          DefaultMemoryAccounting=yes
+          DefaultBlockIOAccounting=yes
 passwd:
   users:
     - name: core

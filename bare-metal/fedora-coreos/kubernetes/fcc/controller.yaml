@@ -20,19 +20,151 @@ systemd:
         RestartSec=10s
         TimeoutStartSec=0
         LimitNOFILE=40000
-
-        ExecStartPre=/bin/chcon -t bin_t /opt/bin/etcd-wrapper
+        ExecStartPre=/bin/mkdir -p /var/lib/etcd
         ExecStartPre=-/usr/bin/podman rm etcd
-        ExecStart=/opt/bin/etcd-wrapper
+        #--volume $${NOTIFY_SOCKET}:/run/systemd/notify \
+        ExecStart=/usr/bin/podman run --name etcd \
+          --env-file /etc/etcd/etcd.env \
+          --network host \
+          --volume /var/lib/etcd:/var/lib/etcd:rw,Z \
+          --volume /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
+          quay.io/coreos/etcd:v3.3.13
         ExecStop=/usr/bin/podman stop etcd
         [Install]
         WantedBy=multi-user.target
+    - name: docker.service
+      enabled: true
+    - name: wait-for-dns.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Wait for DNS entries
+        Before=kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        ExecStart=/bin/sh -c 'while ! /usr/bin/grep '^[^#[:space:]]' /etc/resolv.conf > /dev/null; do sleep 1; done'
+        [Install]
+        RequiredBy=kubelet.service
+        RequiredBy=etcd-member.service
+    - name: kubelet.service
+      contents: |
+        [Unit]
+        Description=Kubelet via Hyperkube (System Container)
+        Wants=rpc-statd.service
+        [Service]
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/bin/mkdir -p /var/lib/calico
+        ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
+        ExecStartPre=/bin/mkdir -p /opt/cni/bin
+        ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+        ExecStartPre=-/usr/bin/podman rm kubelet
+        ExecStart=/usr/bin/podman run --name kubelet \
+          --privileged \
+          --pid host \
+          --network host \
+          --volume /etc/kubernetes:/etc/kubernetes:ro,z \
+          --volume /usr/lib/os-release:/etc/os-release:ro \
+          --volume /etc/ssl/certs:/etc/ssl/certs:ro \
+          --volume /lib/modules:/lib/modules:ro \
+          --volume /run:/run \
+          --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+          --volume /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
+          --volume /etc/pki/tls/certs:/usr/share/ca-certificates:ro \
+          --volume /var/lib/calico:/var/lib/calico \
+          --volume /var/lib/docker:/var/lib/docker \
+          --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
+          --volume /var/log:/var/log \
+          --volume /var/run:/var/run \
+          --volume /var/run/lock:/var/run/lock:z \
+          --volume /opt/cni/bin:/opt/cni/bin:z \
+          --volume /etc/iscsi:/etc/iscsi \
+          --volume /sbin/iscsiadm:/sbin/iscsiadm \
+          k8s.gcr.io/hyperkube:v1.15.0 /hyperkube kubelet \
+          --anonymous-auth=false \
+          --authentication-token-webhook \
+          --authorization-mode=Webhook \
+          --cgroup-driver=systemd \
+          --cgroups-per-qos=true \
+          --enforce-node-allocatable=pods \
+          --client-ca-file=/etc/kubernetes/ca.crt \
+          --cluster_dns=${cluster_dns_service_ip} \
+          --cluster_domain=${cluster_domain_suffix} \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
+          --exit-on-lock-contention \
+          --hostname-override=${domain_name} \
+          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --lock-file=/var/run/lock/kubelet.lock \
+          --network-plugin=cni \
+          --node-labels=node-role.kubernetes.io/master \
+          --node-labels=node-role.kubernetes.io/controller="true" \
+          --pod-manifest-path=/etc/kubernetes/manifests \
+          --read-only-port=0 \
+          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+          --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+        ExecStop=-/usr/bin/podman stop kubelet
+        Delegate=yes
+        Restart=always
+        RestartSec=10
+        [Install]
+        WantedBy=multi-user.target
+    - name: kubelet.path
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
+    - name: bootkube.service
+      contents: |
+        [Unit]
+        Description=Bootstrap a Kubernetes control plane
+        ConditionPathExists=!/opt/bootkube/init_bootkube.done
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        WorkingDirectory=/opt/bootkube
+        ExecStart=/usr/bin/bash -c 'set -x && \
+          [ -n "$(ls /opt/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootkube/assets/manifests-*/* /opt/bootkube/assets/manifests && rm -rf /opt/bootkube/assets/manifests-* && exec podman run --name bootkube --privileged \
+            --network host \
+            --volume /opt/bootkube/assets:/assets \
+            --volume /etc/kubernetes:/etc/kubernetes \
+            quay.io/coreos/bootkube:v0.14.0 \
+            /bootkube start --asset-dir=/assets'
+        ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
 storage:
+  directories:
+    - path: /etc/kubernetes
+    - path: /opt/bootkube
   files:
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline:
+          ${domain_name}
+    - path: /etc/sysctl.d/reverse-path-filter.conf
+      contents:
+        inline: |
+          net.ipv4.conf.all.rp_filter=1
+    - path: /etc/sysctl.d/max-user-watches.conf
+      contents:
+        inline: |
+          fs.inotify.max_user_watches=16184
+    - path: /etc/systemd/system.conf.d/accounting.conf
+      contents:
+        inline: |
+          [Manager]
+          DefaultCPUAccounting=yes
+          DefaultMemoryAccounting=yes
+          DefaultBlockIOAccounting=yes
     - path: /etc/etcd/etcd.env
       mode: 0644
       contents:
         inline: |
+          # TODO: Use a systemd dropin once podman v1.4.5 is avail.
           NOTIFY_SOCKET=/run/systemd/notify
           ETCD_NAME=${etcd_name}
           ETCD_DATA_DIR=/var/lib/etcd
@@ -51,35 +183,6 @@ storage:
           ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
           ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
           ETCD_PEER_CLIENT_CERT_AUTH=true
-    - path: /opt/bin/etcd-wrapper
-      mode: 0544
-      contents:
-        inline: |
-          #!/usr/bin/bash -e
-          #--volume $${NOTIFY_SOCKET}:/run/systemd/notify \
-          set -x
-          mkdir -p /var/lib/etcd
-          exec podman run --name etcd \
-            --env-file /etc/etcd/etcd.env \
-            --network host \
-            --volume /var/lib/etcd:/var/lib/etcd:rw,Z \
-            --volume /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
-            quay.io/coreos/etcd:v3.3.13
-    - path: /etc/kubernetes/kubelet.env
-      mode: 0644
-      contents:
-        inline: |
-          KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
-          KUBELET_IMAGE_TAG=v1.15.0
-    - path: /etc/hostname
-      mode: 0644
-      contents:
-        inline:
-          ${domain_name}
-    - path: /etc/sysctl.d/max-user-watches.conf
-      contents:
-        inline: |
-          fs.inotify.max_user_watches=16184
 passwd:
   users:
     - name: core

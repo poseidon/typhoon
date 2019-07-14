@@ -71,3 +71,65 @@ resource "null_resource" "copy-controller-secrets" {
   }
 }
 
+# Secure copy kubeconfig to all workers. Activates kubelet.service
+resource "null_resource" "copy-worker-secrets" {
+  count = length(var.worker_names)
+
+  # Without depends_on, remote-exec could start and wait for machines before
+  # matchbox groups are written, causing a deadlock.
+  depends_on = [
+    matchbox_group.controller,
+    matchbox_group.worker,
+  ]
+
+  connection {
+    type    = "ssh"
+    host    = var.worker_domains[count.index]
+    user    = "core"
+    timeout = "60m"
+  }
+
+  provisioner "file" {
+    content     = module.bootkube.kubeconfig-kubelet
+    destination = "$HOME/kubeconfig"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+    ]
+  }
+}
+
+# Secure copy bootkube assets to ONE controller and start bootkube to perform
+# one-time self-hosted cluster bootstrapping.
+resource "null_resource" "bootkube-start" {
+  # Without depends_on, this remote-exec may start before the kubeconfig copy.
+  # Terraform only does one task at a time, so it would try to bootstrap
+  # while no Kubelets are running.
+  depends_on = [
+    null_resource.copy-controller-secrets,
+    null_resource.copy-worker-secrets,
+  ]
+
+  connection {
+    type    = "ssh"
+    host    = var.controller_domains[0]
+    user    = "core"
+    timeout = "15m"
+  }
+
+  provisioner "file" {
+    source      = var.asset_dir
+    destination = "$HOME/assets"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv $HOME/assets /opt/bootkube",
+      "sudo systemctl start bootkube",
+    ]
+  }
+}
+
+
