@@ -7,6 +7,8 @@ Notable changes between versions.
 * Upgrade Calico from v3.7.3 to [v3.8.0](https://docs.projectcalico.org/v3.8/release-notes/)
   * Enable CNI `bandwidth` plugin for [traffic shaping](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/#support-traffic-shaping)
 * Run `kube-apiserver` with lower privilege user (nobody) ([#506](https://github.com/poseidon/typhoon/pull/506))
+* Relax `terraform-provider-ct` version constraint (v0.3.2+)
+  * Allow provider versions below v1.0.0 (e.g. upgrading to v0.4)
 
 #### Google Cloud
 
