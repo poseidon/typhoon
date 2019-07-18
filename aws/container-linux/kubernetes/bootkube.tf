@@ -13,5 +13,6 @@ module "bootkube" {
   cluster_domain_suffix = var.cluster_domain_suffix
   enable_reporting      = var.enable_reporting
   enable_aggregation    = var.enable_aggregation
+  cloud_provider        = var.cloud_provider
 }
 

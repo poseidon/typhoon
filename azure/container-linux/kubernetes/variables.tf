@@ -135,3 +135,8 @@ variable "enable_aggregation" {
   default = "false"
 }
 
+variable "cloud_provider" {
+  description = "The provider for cloud services (empty string for no provider)"
+  type        = string
+  default     = "azure"
+}
