@@ -26,12 +26,12 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 ## Kubernetes Properties
 
-| Property          | Container Linux | Fedora Atomic |
+| Property          | Container Linux | Fedora CoreOS |
 |-------------------|-----------------|---------------|
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
 | control plane     | self-hosted   | self-hosted   |
-| kubelet image     | upstream hyperkube | upstream hyperkube via [system container](https://github.com/poseidon/system-containers) |
+| kubelet image     | upstream hyperkube | upstream hyperkube |
 | control plane images | upstream hyperkube | upstream hyperkube |
 | on-host etcd      | rkt-fly   | podman |
 | on-host kubelet   | rkt-fly   | podman |

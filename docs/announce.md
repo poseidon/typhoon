@@ -1,5 +1,15 @@
 # Announce <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo-small.png">
 
+## Jul 18, 2019
+
+Introducing a preview of Typhoon Kubernetes clusters with Fedora CoreOS!
+
+Fedora recently [announced](https://lists.fedoraproject.org/archives/list/coreos@lists.fedoraproject.org/thread/3HTW5SLUY6X2Y5SFXJSE4BWEDNJ2J5SL/) the first preview release of Fedora CoreOS, aiming to blend the best of CoreOS and Fedora for containerized workloads. To spur testing, Typhoon is sharing preview modules for Kubernetes v1.15 on [AWS](https://typhoon.psdn.io/fedora-coreos/aws/) and [bare-metal](https://typhoon.psdn.io/fedora-coreos/bare-metal/) using the new Fedora CoreOS preview. What better way to test drive than by running Kubernetes?
+
+While Typhoon uses Container Linux (or Flatcar Linux) for stable modules, the project hasn't been a stranger to Fedora ideas, once developing a [Fedora Atomic](https://typhoon.psdn.io/announce/#april-26-2018) variant in 2018. That makes the Fedora CoreOS fushion both exciting and familiar. Typhoon with Fedora CoreOS uses Ignition v3 for provisioning, uses rpm-ostree for layering and updates, tries swapping system containers for podman, and brings SELinux enforcement ([table](https://typhoon.psdn.io/architecture/operating-systems/)). This is an early preview (don't go to prod), but do try it out and help identify and solve issues (getting started links above).
+
+About: For newcomers, Typhoon is a minimal and free (cost and freedom) Kubernetes distribution providing upstream Kubernetes, declarative configuration via Terraform, and support for AWS, Azure, Google Cloud, DigitalOcean, and bare-metal. It is run by former CoreOS engineer [@dghubble](https://twitter.com/dghubble) to power his clusters with freedom [motivations](https://typhoon.psdn.io/#motivation).
+
 ## March 27, 2019
 
 Last April, Typhoon [introduced](#april-26-2018) alpha support for creating Kubernetes clusters with Fedora Atomic on AWS, Google Cloud, DigitalOcean, and bare-metal. Fedora Atomic shared many of Container Linux's aims for a container-optimized operating system, introduced novel ideas, and provided technical diversification for an uncertain future. However, Project Atomic efforts were merged into Fedora CoreOS and future Fedora Atomic releases are [not expected](http://www.projectatomic.io/blog/2018/06/welcome-to-fedora-coreos/). *Typhoon modules for Fedora Atomic will not be updated much beyond Kubernetes v1.13*. They may later be removed.
