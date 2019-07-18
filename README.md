@@ -29,6 +29,13 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
 
+A preview of Typhoon for [Fedora CoreOS](https://getfedora.org/coreos/) is available for testing.
+
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](aws/fedora-coreos/kubernetes) | preview |
+| Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](bare-metal/fedora-coreos/kubernetes) | preview |
+
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)

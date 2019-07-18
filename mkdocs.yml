@@ -59,6 +59,9 @@ nav:
     - 'Bare-Metal': 'cl/bare-metal.md'
     - 'Digital Ocean': 'cl/digital-ocean.md'
     - 'Google Cloud': 'cl/google-cloud.md'
+  - 'Fedora CoreOS': 
+    - 'AWS': 'fedora-coreos/aws.md'
+    - 'Bare-Metal': 'fedora-coreos/bare-metal.md'
   - 'Topics':
     - 'Maintenance': 'topics/maintenance.md'
     - 'Hardware': 'topics/hardware.md'
