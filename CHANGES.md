@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.15.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1151)
 * Upgrade Calico from v3.7.3 to [v3.8.0](https://docs.projectcalico.org/v3.8/release-notes/)
   * Enable CNI `bandwidth` plugin for [traffic shaping](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/#support-traffic-shaping)
 * Run `kube-apiserver` with lower privilege user (nobody) ([#506](https://github.com/poseidon/typhoon/pull/506))
