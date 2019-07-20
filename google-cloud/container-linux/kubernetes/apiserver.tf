@@ -57,7 +57,7 @@ resource "google_compute_backend_service" "apiserver" {
 
 # Instance group of heterogeneous (unmanged) controller instances
 resource "google_compute_instance_group" "controllers" {
-  count = length(local.zones)
+  count = min(var.controller_count, length(local.zones))
 
   name = format("%s-controllers-%s", var.cluster_name, element(local.zones, count.index))
   zone = element(local.zones, count.index)
