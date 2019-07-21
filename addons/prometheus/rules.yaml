@@ -163,32 +163,32 @@ data:
           "name": "k8s.rules",
           "rules": [
             {
-              "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container_name!=\"\"}[5m])) by (namespace)\n",
+              "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])) by (namespace)\n",
               "record": "namespace:container_cpu_usage_seconds_total:sum_rate"
             },
             {
-              "expr": "sum by (namespace, pod_name, container_name) (\n  rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container_name!=\"\"}[5m])\n)\n",
-              "record": "namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate"
+              "expr": "sum by (namespace, pod, container) (\n  rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])\n)\n",
+              "record": "namespace_pod_container:container_cpu_usage_seconds_total:sum_rate"
             },
             {
-              "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", image!=\"\", container_name!=\"\"}) by (namespace)\n",
+              "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}) by (namespace)\n",
               "record": "namespace:container_memory_usage_bytes:sum"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n   sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container_name!=\"\"}[5m])) by (namespace, pod_name)\n * on (namespace, pod_name) group_left(label_name)\n   label_replace(kube_pod_labels{job=\"kube-state-metrics\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\")\n)\n",
-              "record": "namespace_name:container_cpu_usage_seconds_total:sum_rate"
+              "expr": "sum by (namespace, label_name) (\n    sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "record": "namespace:container_cpu_usage_seconds_total:sum_rate"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n  sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\",image!=\"\", container_name!=\"\"}) by (pod_name, namespace)\n* on (namespace, pod_name) group_left(label_name)\n  label_replace(kube_pod_labels{job=\"kube-state-metrics\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\")\n)\n",
-              "record": "namespace_name:container_memory_usage_bytes:sum"
+              "expr": "sum by (namespace, label_name) (\n    sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\",image!=\"\", container!=\"POD\"}) by (pod, namespace)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "record": "namespace:container_memory_usage_bytes:sum"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n  sum(kube_pod_container_resource_requests_memory_bytes{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n* on (namespace, pod) group_left(label_name)\n  label_replace(kube_pod_labels{job=\"kube-state-metrics\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\")\n)\n",
-              "record": "namespace_name:kube_pod_container_resource_requests_memory_bytes:sum"
+              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_memory_bytes{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "record": "namespace:kube_pod_container_resource_requests_memory_bytes:sum"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n  sum(kube_pod_container_resource_requests_cpu_cores{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n* on (namespace, pod) group_left(label_name)\n  label_replace(kube_pod_labels{job=\"kube-state-metrics\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\")\n)\n",
-              "record": "namespace_name:kube_pod_container_resource_requests_cpu_cores:sum"
+              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_cpu_cores{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "record": "namespace:kube_pod_container_resource_requests_cpu_cores:sum"
             },
             {
               "expr": "sum(\n  label_replace(\n    label_replace(\n      kube_pod_owner{job=\"kube-state-metrics\", owner_kind=\"ReplicaSet\"},\n      \"replicaset\", \"$1\", \"owner_name\", \"(.*)\"\n    ) * on(replicaset, namespace) group_left(owner_name) kube_replicaset_owner{job=\"kube-state-metrics\"},\n    \"workload\", \"$1\", \"owner_name\", \"(.*)\"\n  )\n) by (namespace, workload, pod)\n",
@@ -217,67 +217,67 @@ data:
           "name": "kube-scheduler.rules",
           "rules": [
             {
-              "expr": "histogram_quantile(0.99, sum(rate(scheduler_e2e_scheduling_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.99, sum(rate(scheduler_e2e_scheduling_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.99"
               },
-              "record": "cluster_quantile:scheduler_e2e_scheduling_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_e2e_scheduling_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.99, sum(rate(scheduler_scheduling_algorithm_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.99, sum(rate(scheduler_scheduling_algorithm_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.99"
               },
-              "record": "cluster_quantile:scheduler_scheduling_algorithm_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_scheduling_algorithm_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.99, sum(rate(scheduler_binding_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.99, sum(rate(scheduler_binding_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.99"
               },
-              "record": "cluster_quantile:scheduler_binding_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.9, sum(rate(scheduler_e2e_scheduling_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.9, sum(rate(scheduler_e2e_scheduling_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.9"
               },
-              "record": "cluster_quantile:scheduler_e2e_scheduling_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_e2e_scheduling_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.9, sum(rate(scheduler_scheduling_algorithm_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.9, sum(rate(scheduler_scheduling_algorithm_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.9"
               },
-              "record": "cluster_quantile:scheduler_scheduling_algorithm_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_scheduling_algorithm_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.9, sum(rate(scheduler_binding_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.9, sum(rate(scheduler_binding_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.9"
               },
-              "record": "cluster_quantile:scheduler_binding_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.5, sum(rate(scheduler_e2e_scheduling_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.5, sum(rate(scheduler_e2e_scheduling_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.5"
               },
-              "record": "cluster_quantile:scheduler_e2e_scheduling_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_e2e_scheduling_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.5, sum(rate(scheduler_scheduling_algorithm_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.5, sum(rate(scheduler_scheduling_algorithm_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.5"
               },
-              "record": "cluster_quantile:scheduler_scheduling_algorithm_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_scheduling_algorithm_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.5, sum(rate(scheduler_binding_latency_microseconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.5, sum(rate(scheduler_binding_duration_seconds_bucket{job=\"kube-scheduler\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.5"
               },
-              "record": "cluster_quantile:scheduler_binding_latency:histogram_quantile"
+              "record": "cluster_quantile:scheduler_binding_duration_seconds:histogram_quantile"
             }
           ]
         },
@@ -285,25 +285,25 @@ data:
           "name": "kube-apiserver.rules",
           "rules": [
             {
-              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_latencies_bucket{job=\"apiserver\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.99"
               },
-              "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_latencies_bucket{job=\"apiserver\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.9"
               },
-              "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_latencies_bucket{job=\"apiserver\"}[5m])) without(instance, pod)) / 1e+06\n",
+              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.5"
               },
-              "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
             }
           ]
         },
@@ -403,11 +403,11 @@ data:
               "record": "node:node_disk_saturation:avg_irate"
             },
             {
-              "expr": "max by (namespace, pod, device) ((node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"}\n- node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n/ node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
+              "expr": "max by (instance, namespace, pod, device) ((node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"}\n- node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n/ node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
               "record": "node:node_filesystem_usage:"
             },
             {
-              "expr": "max by (namespace, pod, device) (node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"} / node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
+              "expr": "max by (instance, namespace, pod, device) (node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"} / node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
               "record": "node:node_filesystem_avail:"
             },
             {
@@ -510,7 +510,7 @@ data:
                 "message": "Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than an hour.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodnotready"
               },
-              "expr": "sum by (namespace, pod) (kube_pod_status_phase{job=\"kube-state-metrics\", phase=~\"Pending|Unknown\"}) > 0\n",
+              "expr": "sum by (namespace, pod) (kube_pod_status_phase{job=\"kube-state-metrics\", phase=~\"Failed|Pending|Unknown\"}) > 0\n",
               "for": "1h",
               "labels": {
                 "severity": "critical"
@@ -659,7 +659,7 @@ data:
                 "message": "Cluster has overcommitted CPU resource requests for Pods and cannot tolerate node failure.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuovercommit"
               },
-              "expr": "sum(namespace_name:kube_pod_container_resource_requests_cpu_cores:sum)\n  /\nsum(node:node_num_cpu:sum)\n  >\n(count(node:node_num_cpu:sum)-1) / count(node:node_num_cpu:sum)\n",
+              "expr": "sum(namespace:kube_pod_container_resource_requests_cpu_cores:sum)\n  /\nsum(kube_node_status_allocatable_cpu_cores)\n  >\n(count(kube_node_status_allocatable_cpu_cores)-1) / count(kube_node_status_allocatable_cpu_cores)\n",
               "for": "5m",
               "labels": {
                 "severity": "warning"
@@ -671,7 +671,7 @@ data:
                 "message": "Cluster has overcommitted memory resource requests for Pods and cannot tolerate node failure.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememovercommit"
               },
-              "expr": "sum(namespace_name:kube_pod_container_resource_requests_memory_bytes:sum)\n  /\nsum(node_memory_MemTotal_bytes)\n  >\n(count(node:node_num_cpu:sum)-1)\n  /\ncount(node:node_num_cpu:sum)\n",
+              "expr": "sum(namespace:kube_pod_container_resource_requests_memory_bytes:sum)\n  /\nsum(kube_node_status_allocatable_memory_bytes)\n  >\n(count(kube_node_status_allocatable_memory_bytes)-1)\n  /\ncount(kube_node_status_allocatable_memory_bytes)\n",
               "for": "5m",
               "labels": {
                 "severity": "warning"
@@ -683,7 +683,7 @@ data:
                 "message": "Cluster has overcommitted CPU resource requests for Namespaces.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecpuovercommit"
               },
-              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"cpu\"})\n  /\nsum(node:node_num_cpu:sum)\n  > 1.5\n",
+              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"cpu\"})\n  /\nsum(kube_node_status_allocatable_cpu_cores)\n  > 1.5\n",
               "for": "5m",
               "labels": {
                 "severity": "warning"
@@ -695,7 +695,7 @@ data:
                 "message": "Cluster has overcommitted memory resource requests for Namespaces.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememovercommit"
               },
-              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"memory\"})\n  /\nsum(node_memory_MemTotal_bytes{job=\"node-exporter\"})\n  > 1.5\n",
+              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"memory\"})\n  /\nsum(kube_node_status_allocatable_memory_bytes{job=\"node-exporter\"})\n  > 1.5\n",
               "for": "5m",
               "labels": {
                 "severity": "warning"
@@ -716,10 +716,10 @@ data:
             {
               "alert": "CPUThrottlingHigh",
               "annotations": {
-                "message": "{{ printf \"%0.0f\" $value }}% throttling of CPU in namespace {{ $labels.namespace }} for container {{ $labels.container_name }} in pod {{ $labels.pod_name }}.",
+                "message": "{{ printf \"%0.0f\" $value }}% throttling of CPU in namespace {{ $labels.namespace }} for container {{ $labels.container }} in pod {{ $labels.pod }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-cputhrottlinghigh"
               },
-              "expr": "100 * sum(increase(container_cpu_cfs_throttled_periods_total{container_name!=\"\", }[5m])) by (container_name, pod_name, namespace)\n  /\nsum(increase(container_cpu_cfs_periods_total{}[5m])) by (container_name, pod_name, namespace)\n  > 100 \n",
+              "expr": "100 * sum(increase(container_cpu_cfs_throttled_periods_total{container!=\"\", }[5m])) by (container, pod, namespace)\n  /\nsum(increase(container_cpu_cfs_periods_total{}[5m])) by (container, pod, namespace)\n  > 100 \n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -837,7 +837,7 @@ data:
                 "message": "The API server has a 99th percentile latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh"
               },
-              "expr": "cluster_quantile:apiserver_request_latencies:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 1\n",
+              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 1\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -849,7 +849,7 @@ data:
                 "message": "The API server has a 99th percentile latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh"
               },
-              "expr": "cluster_quantile:apiserver_request_latencies:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 4\n",
+              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 4\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -861,7 +861,7 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) * 100 > 3\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) * 100 > 3\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -873,7 +873,7 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) * 100 > 1\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) * 100 > 1\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -885,7 +885,7 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 10\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 10\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -897,7 +897,7 @@ data:
                 "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_count{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_count{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 5\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 5\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -1047,131 +1047,6 @@ data:
           ]
         },
         {
-          "name": "prometheus.rules",
-          "rules": [
-            {
-              "alert": "PrometheusConfigReloadFailed",
-              "annotations": {
-                "description": "Reloading Prometheus' configuration has failed for {{$labels.namespace}}/{{$labels.pod}}",
-                "summary": "Reloading Prometheus' configuration failed"
-              },
-              "expr": "prometheus_config_last_reload_successful{job=\"prometheus\"} == 0\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusNotificationQueueRunningFull",
-              "annotations": {
-                "description": "Prometheus' alert notification queue is running full for {{$labels.namespace}}/{{ $labels.pod}}",
-                "summary": "Prometheus' alert notification queue is running full"
-              },
-              "expr": "predict_linear(prometheus_notifications_queue_length{job=\"prometheus\"}[5m], 60 * 30) > prometheus_notifications_queue_capacity{job=\"prometheus\"}\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusErrorSendingAlerts",
-              "annotations": {
-                "description": "Errors while sending alerts from Prometheus {{$labels.namespace}}/{{ $labels.pod}} to Alertmanager {{$labels.Alertmanager}}",
-                "summary": "Errors while sending alert from Prometheus"
-              },
-              "expr": "rate(prometheus_notifications_errors_total{job=\"prometheus\"}[5m]) / rate(prometheus_notifications_sent_total{job=\"prometheus\"}[5m]) > 0.01\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusErrorSendingAlerts",
-              "annotations": {
-                "description": "Errors while sending alerts from Prometheus {{$labels.namespace}}/{{ $labels.pod}} to Alertmanager {{$labels.Alertmanager}}",
-                "summary": "Errors while sending alerts from Prometheus"
-              },
-              "expr": "rate(prometheus_notifications_errors_total{job=\"prometheus\"}[5m]) / rate(prometheus_notifications_sent_total{job=\"prometheus\"}[5m]) > 0.03\n",
-              "for": "10m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "PrometheusNotConnectedToAlertmanagers",
-              "annotations": {
-                "description": "Prometheus {{ $labels.namespace }}/{{ $labels.pod}} is not connected to any Alertmanagers",
-                "summary": "Prometheus is not connected to any Alertmanagers"
-              },
-              "expr": "prometheus_notifications_alertmanagers_discovered{job=\"prometheus\"} < 1\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusTSDBReloadsFailing",
-              "annotations": {
-                "description": "{{$labels.job}} at {{$labels.instance}} had {{$value | humanize}} reload failures over the last four hours.",
-                "summary": "Prometheus has issues reloading data blocks from disk"
-              },
-              "expr": "increase(prometheus_tsdb_reloads_failures_total{job=\"prometheus\"}[2h]) > 0\n",
-              "for": "12h",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusTSDBCompactionsFailing",
-              "annotations": {
-                "description": "{{$labels.job}} at {{$labels.instance}} had {{$value | humanize}} compaction failures over the last four hours.",
-                "summary": "Prometheus has issues compacting sample blocks"
-              },
-              "expr": "increase(prometheus_tsdb_compactions_failed_total{job=\"prometheus\"}[2h]) > 0\n",
-              "for": "12h",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusTSDBWALCorruptions",
-              "annotations": {
-                "description": "{{$labels.job}} at {{$labels.instance}} has a corrupted write-ahead log (WAL).",
-                "summary": "Prometheus write-ahead log is corrupted"
-              },
-              "expr": "prometheus_tsdb_wal_corruptions_total{job=\"prometheus\"} > 0\n",
-              "for": "4h",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusNotIngestingSamples",
-              "annotations": {
-                "description": "Prometheus {{ $labels.namespace }}/{{ $labels.pod}} isn't ingesting samples.",
-                "summary": "Prometheus isn't ingesting samples"
-              },
-              "expr": "rate(prometheus_tsdb_head_samples_appended_total{job=\"prometheus\"}[5m]) <= 0\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "PrometheusTargetScrapesDuplicate",
-              "annotations": {
-                "description": "{{$labels.namespace}}/{{$labels.pod}} has many samples rejected due to duplicate timestamps but different values",
-                "summary": "Prometheus has many samples rejected"
-              },
-              "expr": "increase(prometheus_target_scrapes_sample_duplicate_timestamp_total{job=\"prometheus\"}[5m]) > 0\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            }
-          ]
-        },
-        {
           "name": "general.rules",
           "rules": [
             {
@@ -1181,6 +1056,196 @@ data:
               },
               "expr": "100 * (count(up == 0) BY (job) / count(up) BY (job)) > 10",
               "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  prom.yaml: |-
+    {
+      "groups": [
+        {
+          "name": "prometheus",
+          "rules": [
+            {
+              "alert": "PrometheusBadConfig",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has failed to reload its configuration.",
+                "summary": "Failed Prometheus configuration reload."
+              },
+              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\nmax_over_time(prometheus_config_last_reload_successful{job=\"prometheus\"}[5m]) == 0\n",
+              "for": "10m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "PrometheusNotificationQueueRunningFull",
+              "annotations": {
+                "description": "Alert notification queue of Prometheus {{$labels.instance}} is running full.",
+                "summary": "Prometheus alert notification queue predicted to run full in less than 30m."
+              },
+              "expr": "# Without min_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\n(\n  predict_linear(prometheus_notifications_queue_length{job=\"prometheus\"}[5m], 60 * 30)\n>\n  min_over_time(prometheus_notifications_queue_capacity{job=\"prometheus\"}[5m])\n)\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusErrorSendingAlertsToSomeAlertmanagers",
+              "annotations": {
+                "description": "{{ printf \"%.1f\" $value }}% errors while sending alerts from Prometheus {{$labels.instance}} to Alertmanager {{$labels.alertmanager}}.",
+                "summary": "Prometheus has encountered more than 1% errors sending alerts to a specific Alertmanager."
+              },
+              "expr": "(\n  rate(prometheus_notifications_errors_total{job=\"prometheus\"}[5m])\n/\n  rate(prometheus_notifications_sent_total{job=\"prometheus\"}[5m])\n)\n* 100\n> 1\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusErrorSendingAlertsToAnyAlertmanager",
+              "annotations": {
+                "description": "{{ printf \"%.1f\" $value }}% minimum errors while sending alerts from Prometheus {{$labels.instance}} to any Alertmanager.",
+                "summary": "Prometheus encounters more than 3% errors sending alerts to any Alertmanager."
+              },
+              "expr": "min without(alertmanager) (\n  rate(prometheus_notifications_errors_total{job=\"prometheus\"}[5m])\n/\n  rate(prometheus_notifications_sent_total{job=\"prometheus\"}[5m])\n)\n* 100\n> 3\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "PrometheusNotConnectedToAlertmanagers",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} is not connected to any Alertmanagers.",
+                "summary": "Prometheus is not connected to any Alertmanagers."
+              },
+              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\nmax_over_time(prometheus_notifications_alertmanagers_discovered{job=\"prometheus\"}[5m]) < 1\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusTSDBReloadsFailing",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has detected {{$value | humanize}} reload failures over the last 3h.",
+                "summary": "Prometheus has issues reloading blocks from disk."
+              },
+              "expr": "increase(prometheus_tsdb_reloads_failures_total{job=\"prometheus\"}[3h]) > 0\n",
+              "for": "4h",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusTSDBCompactionsFailing",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has detected {{$value | humanize}} compaction failures over the last 3h.",
+                "summary": "Prometheus has issues compacting blocks."
+              },
+              "expr": "increase(prometheus_tsdb_compactions_failed_total{job=\"prometheus\"}[3h]) > 0\n",
+              "for": "4h",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusTSDBWALCorruptions",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has detected {{$value | humanize}} corruptions of the write-ahead log (WAL) over the last 3h.",
+                "summary": "Prometheus is detecting WAL corruptions."
+              },
+              "expr": "increase(tsdb_wal_corruptions_total{job=\"prometheus\"}[3h]) > 0\n",
+              "for": "4h",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusNotIngestingSamples",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} is not ingesting samples.",
+                "summary": "Prometheus is not ingesting samples."
+              },
+              "expr": "rate(prometheus_tsdb_head_samples_appended_total{job=\"prometheus\"}[5m]) <= 0\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusDuplicateTimestamps",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} is dropping {{$value | humanize}} samples/s with different values but duplicated timestamp.",
+                "summary": "Prometheus is dropping samples with duplicate timestamps."
+              },
+              "expr": "rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{job=\"prometheus\"}[5m]) > 0\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusOutOfOrderTimestamps",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} is dropping {{$value | humanize}} samples/s with timestamps arriving out of order.",
+                "summary": "Prometheus drops samples with out-of-order timestamps."
+              },
+              "expr": "rate(prometheus_target_scrapes_sample_out_of_order_total{job=\"prometheus\"}[5m]) > 0\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusRemoteStorageFailures",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} failed to send {{ printf \"%.1f\" $value }}% of the samples to queue {{$labels.queue}}.",
+                "summary": "Prometheus fails to send samples to remote storage."
+              },
+              "expr": "(\n  rate(prometheus_remote_storage_failed_samples_total{job=\"prometheus\"}[5m])\n/\n  (\n    rate(prometheus_remote_storage_failed_samples_total{job=\"prometheus\"}[5m])\n  +\n    rate(prometheus_remote_storage_succeeded_samples_total{job=\"prometheus\"}[5m])\n  )\n)\n* 100\n> 1\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "PrometheusRemoteWriteBehind",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} remote write is {{ printf \"%.1f\" $value }}s behind for queue {{$labels.queue}}.",
+                "summary": "Prometheus remote write is behind."
+              },
+              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\n(\n  max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{job=\"prometheus\"}[5m])\n- on(job, instance) group_right\n  max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{job=\"prometheus\"}[5m])\n)\n> 120\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "PrometheusRuleFailures",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has failed to evaluate {{ printf \"%.0f\" $value }} rules in the last 5m.",
+                "summary": "Prometheus is failing rule evaluations."
+              },
+              "expr": "increase(prometheus_rule_evaluation_failures_total{job=\"prometheus\"}[5m]) > 0\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "PrometheusMissingRuleEvaluations",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} has missed {{ printf \"%.0f\" $value }} rule group evaluations in the last 5m.",
+                "summary": "Prometheus is missing rule evaluations due to slow rule group evaluation."
+              },
+              "expr": "increase(prometheus_rule_group_iterations_missed_total{job=\"prometheus\"}[5m]) > 0\n",
+              "for": "15m",
               "labels": {
                 "severity": "warning"
               }

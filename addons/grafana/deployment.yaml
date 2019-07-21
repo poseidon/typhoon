@@ -56,8 +56,12 @@ spec:
               mountPath: /etc/grafana/provisioning/dashboards
             - name: dashboards-etcd
               mountPath: /etc/grafana/dashboards/etcd
+            - name: dashboards-prom
+              mountPath: /etc/grafana/dashboards/prom
             - name: dashboards-k8s
               mountPath: /etc/grafana/dashboards/k8s
+            - name: dashboards-k8s-nodes
+              mountPath: /etc/grafana/dashboards/k8s-nodes
             - name: dashboards-k8s-resources
               mountPath: /etc/grafana/dashboards/k8s-resources
       volumes:
@@ -73,9 +77,15 @@ spec:
         - name: dashboards-etcd
           configMap:
             name: grafana-dashboards-etcd
+        - name: dashboards-prom
+          configMap:
+            name: grafana-dashboards-prom
         - name: dashboards-k8s
           configMap:
             name: grafana-dashboards-k8s
+        - name: dashboards-k8s-nodes
+          configMap:
+            name: grafana-dashboards-k8s-nodes
         - name: dashboards-k8s-resources
           configMap:
             name: grafana-dashboards-k8s-resources
