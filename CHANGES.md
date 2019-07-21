@@ -11,6 +11,11 @@ Notable changes between versions.
 * Relax `terraform-provider-ct` version constraint (v0.3.2+)
   * Allow provider versions below v1.0.0 (e.g. upgrading to v0.4)
 
+#### Azure
+
+* Fix to add all controller nodes to the apiserver load balancer backend address pool ([#518](https://github.com/poseidon/typhoon/pull/518))
+  * kube-apiserver availability relied on the 0th controller
+
 #### Google Cloud
 
 * Allow controller nodes to span more than 3 zones if available in a region ([#504](https://github.com/poseidon/typhoon/pull/504))

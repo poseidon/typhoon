@@ -114,7 +114,9 @@ resource "azurerm_network_interface" "controllers" {
 
 # Add controller NICs to the controller backend address pool
 resource "azurerm_network_interface_backend_address_pool_association" "controllers" {
-  network_interface_id    = azurerm_network_interface.controllers[0].id
+  count = var.controller_count
+
+  network_interface_id    = azurerm_network_interface.controllers[count.index].id
   ip_configuration_name   = "ip0"
   backend_address_pool_id = azurerm_lb_backend_address_pool.controller.id
 }
