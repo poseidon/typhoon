@@ -133,7 +133,7 @@ tar xzf terraform-provider-ct-v0.4.0-linux-amd64.tar.gz
 mv terraform-provider-ct-v0.4.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.4.0
 ```
 
-Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
+Read [concepts](/docs/architecture/concepts/concepts.md) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
 
 ```
 cd infra/clusters
@@ -313,7 +313,7 @@ kube-system   pod-checkpointer-wf65d-node1.example.com   1/1       Running   0  
 
 ## Going Further
 
-Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
+Learn about [maintenance](/docs/topics/maintenance/) and [addons](/docs/addons/overview/).
 
 ## Variables
 
