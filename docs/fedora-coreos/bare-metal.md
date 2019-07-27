@@ -106,7 +106,7 @@ Read about the [many ways](https://coreos.com/matchbox/docs/latest/network-setup
     TFTP chainloading to modern boot firmware, like iPXE, avoids issues with old NICs and allows faster transfer protocols like HTTP to be used.
 
 !!! warning
-    Compile iPXE from [source](https://github.com/ipxe/ipxe) with support for [HTTPS downloads](https://ipxe.org/crypto). iPXE's pre-built firmware binaries do not enable this. If you cannot enable HTTPS downloads, set `download_protocol = "http"` (discouraged).
+    Compile iPXE from [source](https://github.com/ipxe/ipxe) with support for [HTTPS downloads](https://ipxe.org/crypto). iPXE's pre-built firmware binaries do not enable this. Fedora does not provide images over HTTP.
 
 ## Terraform Setup
 
