@@ -101,7 +101,7 @@ resource "google_dns_record_set" "some-application" {
 
 ## Digital Ocean
 
-On Digital Ocean, DNS A and AAAA records (e.g. FQDN `nemo-workers.example.com`) resolve to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
+On DigitalOcean, DNS A and AAAA records (e.g. FQDN `nemo-workers.example.com`) resolve to each worker[^1] running an Ingress controller DaemonSet on host ports 80 and 443. Firewall rules allow IPv4 and IPv6 traffic to ports 80 and 443.
 
 Create the Ingress controller daemonset, service, RBAC roles, RBAC bindings, and namespace.
 
@@ -127,7 +127,7 @@ resource "google_dns_record_set" "some-application" {
 !!! note
     Hosting IPv6 apps is possible, but requires editing the nginx-ingress addon to use `hostNetwork: true`.
 
-[^1]: Digital Ocean does offer load balancers. We've opted not to use them to keep the Digital Ocean setup simple and cheap for developers.
+[^1]: DigitalOcean does offer load balancers. We've opted not to use them to keep the DigitalOcean cluster cheap for developers.
 
 ## Google Cloud
 
