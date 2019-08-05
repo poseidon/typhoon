@@ -81,7 +81,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          k8s.gcr.io/hyperkube:v1.15.1 /hyperkube kubelet \
+          k8s.gcr.io/hyperkube:v1.15.2 /hyperkube kubelet \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
