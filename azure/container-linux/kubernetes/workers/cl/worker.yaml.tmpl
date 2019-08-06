@@ -79,7 +79,30 @@ systemd:
         ExecStop=/etc/kubernetes/delete-node
         [Install]
         WantedBy=multi-user.target
+%{ for i in range(length(data_disks)) ~}
+    - name: ${join("-", compact(split("/", data_disks[i].mount_path)))}.mount
+      enable: true
+      contents: |
+        [Unit]
+        Before=local-fs.target
+        [Mount]
+        What=/dev/disk/azure/scsi1/lun${i}
+        Where=${data_disks[i].mount_path}
+        Type=ext4
+        [Install]
+        WantedBy=local-fs.target
+%{ endfor ~}
+
 storage:
+%{ if length(data_disks) != 0 ~}
+  filesystems:
+%{for i in range(length(data_disks)) ~}
+    - name: datadisk${i}
+      mount:
+        device: /dev/disk/azure/scsi1/lun${i}
+        format: ext4
+%{ endfor ~}
+%{ endif ~}
   files:
     - path: /etc/kubernetes/kubeconfig
       filesystem: root

@@ -91,3 +91,19 @@ variable "cluster_domain_suffix" {
   default = "cluster.local"
 }
 
+variable "data_disks" {
+  type        = list(object({
+    disk_size      = number
+    disk_type      = string
+    mount_path     = string
+  }))
+  default     = []
+  description = <<EOD
+A list of maps describing data disks to add to the worker VMs. Disk size in GB. E.g.:
+[{
+  disk_size  = 50
+  disk_type  = "StandardSSD_LRS"
+  mount_path = "/media/foo"
+}]
+EOD
+}

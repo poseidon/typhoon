@@ -34,6 +34,17 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
     managed_disk_type = "Standard_LRS"
   }
 
+  # storage for data
+  dynamic "storage_profile_data_disk" {
+    for_each            = var.data_disks
+    content {
+      lun               = storage_profile_data_disk.key
+      create_option     = "Empty"
+      managed_disk_type = storage_profile_data_disk.value.disk_type
+      disk_size_gb      = storage_profile_data_disk.value.disk_size
+    }
+  }
+
   os_profile {
     computer_name_prefix = "${var.name}-worker-"
     admin_username       = "core"
@@ -97,20 +108,13 @@ resource "azurerm_monitor_autoscale_setting" "workers" {
 
 # Worker Ignition configs
 data "ct_config" "worker-ignition" {
-  content      = data.template_file.worker-config.rendered
-  pretty_print = false
-  snippets     = var.clc_snippets
-}
-
-# Worker Container Linux configs
-data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml.tmpl")
-
-  vars = {
+  content      = "${templatefile("${path.module}/cl/worker.yaml.tmpl", {
     kubeconfig             = indent(10, var.kubeconfig)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
-  }
+    data_disks             = var.data_disks
+  })}"
+  pretty_print = false
+  snippets     = var.clc_snippets
 }
-

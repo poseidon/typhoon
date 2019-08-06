@@ -20,5 +20,5 @@ module "workers" {
   service_cidr          = var.service_cidr
   cluster_domain_suffix = var.cluster_domain_suffix
   clc_snippets          = var.worker_clc_snippets
+  data_disks            = var.worker_data_disks
 }
-

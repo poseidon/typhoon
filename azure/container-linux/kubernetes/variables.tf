@@ -58,6 +58,23 @@ variable "disk_size" {
   description = "Size of the disk in GB"
 }
 
+variable "worker_data_disks" {
+  type        = list(object({
+    disk_size      = number
+    disk_type      = string
+    mount_path     = string
+  }))
+  default     = []
+  description = <<EOD
+A list of maps describing data disks to add to the worker VMs. Disk size in GB. E.g.:
+[{
+  disk_size  = 50
+  disk_type  = "StandardSSD_LRS"
+  mount_path = "/media/foo"
+}]
+EOD
+}
+
 variable "worker_priority" {
   type        = string
   default     = "Regular"
