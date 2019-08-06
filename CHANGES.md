@@ -6,6 +6,11 @@ Notable changes between versions.
 
 * Kubernetes [v1.15.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1152)
 * Update Calico from v3.8.0 to [v3.8.1](https://docs.projectcalico.org/v3.8/release-notes/)
+* Publish new load balancing, TCP/UDP, and firewall [docs](https://typhoon.psdn.io/architecture/aws/) ([#523](https://github.com/poseidon/typhoon/pull/523))
+
+#### Addons
+
+* Add new Grafana dashboards for CoreDNS and Nginx Ingress Controller ([#525](https://github.com/poseidon/typhoon/pull/525))
 
 ## v1.15.1
 
