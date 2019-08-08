@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.12.2
+Terraform v0.12.6
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,7 +49,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version                 = "2.15.0"
+  version                 = "2.23.0"
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
 }
@@ -69,7 +69,7 @@ Additional configuration options are described in the `aws` provider [docs](http
 Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
 
 ```tf
-module "aws-tempest" {
+module "tempest" {
   source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.15.2"
 
   # AWS

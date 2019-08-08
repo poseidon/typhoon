@@ -21,7 +21,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.12.2
+Terraform v0.12.6
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.30.1"
+  version = "1.32.1"
 }
 
 provider "ct" {
@@ -65,7 +65,7 @@ Additional configuration options are described in the `azurerm` provider [docs](
 Define a Kubernetes cluster using the module `azure/container-linux/kubernetes`.
 
 ```tf
-module "azure-ramius" {
+module "ramius" {
   source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes?ref=v1.15.2"
 
   # Azure
