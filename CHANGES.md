@@ -7,6 +7,7 @@ Notable changes between versions.
 #### Addons
 
 * Update kube-state-metrics from v1.7.1 to v1.7.2
+* Update Grafana from v6.2.5 to v6.3.2
 
 ## v1.15.2
 
