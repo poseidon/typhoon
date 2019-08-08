@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+#### AWS
+
+* Enable root block device encryption by default ([#527](https://github.com/poseidon/typhoon/pull/527))
+  * Require `terraform-provider-aws` v2.23+ (**action required**)
+
 #### Addons
 
 * Update kube-state-metrics from v1.7.1 to v1.7.2

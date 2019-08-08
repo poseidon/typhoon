@@ -31,6 +31,7 @@ resource "aws_instance" "controllers" {
     volume_type = var.disk_type
     volume_size = var.disk_size
     iops        = var.disk_iops
+    encrypted   = true
   }
 
   # network
