@@ -9,6 +9,13 @@ output "ingress_static_ipv4" {
   description = "IPv4 address of the load balancer for distributing traffic to Ingress controllers"
 }
 
+# Outputs for controllers
+
+output "controller_public_ips" {
+  description = "IPv4 addresses of the controller VMs (e.g. for SSH)"
+  value       = azurerm_public_ip.controllers.*.ip_address
+}
+
 # Outputs for worker pools
 
 output "region" {
@@ -54,3 +61,7 @@ output "backend_address_pool_id" {
   value       = azurerm_lb_backend_address_pool.worker.id
 }
 
+output "backend_probe_id" {
+  description = "ID of the worker backend health probe"
+  value       = azurerm_lb_probe.ingress.id
+}
