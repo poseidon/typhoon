@@ -18,6 +18,10 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
     capacity = var.worker_count
   }
 
+  identity {
+    type = var.identity
+  }
+
   # boot
   storage_profile_image_reference {
     publisher = "CoreOS"

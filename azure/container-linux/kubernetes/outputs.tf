@@ -19,6 +19,10 @@ output "resource_group_name" {
   value = azurerm_resource_group.cluster.name
 }
 
+output "resource_group_id" {
+  value = azurerm_resource_group.cluster.id
+}
+
 output "subnet_id" {
   value = azurerm_subnet.worker.id
 }
@@ -29,6 +33,11 @@ output "security_group_id" {
 
 output "kubeconfig" {
   value = module.bootstrap.kubeconfig-kubelet
+}
+
+output "worker_principal_id" {
+  description = "The identity principal for the worker pool VMs"
+  value       = module.workers.principal_id
 }
 
 # Outputs for custom firewalling

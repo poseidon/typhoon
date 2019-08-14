@@ -46,6 +46,12 @@ variable "worker_type" {
   default     = "Standard_DS1_v2"
 }
 
+variable "worker_identity" {
+  description = "The type of Identity management to specify for the worker VMs. Options are None (default) or SystemAssigned"
+  type = string
+  default = "None"
+}
+
 variable "os_image" {
   type        = string
   default     = "coreos-stable"
