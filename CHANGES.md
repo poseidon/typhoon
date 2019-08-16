@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.8.1 to [v3.8.2](https://docs.projectcalico.org/v3.8/release-notes/)
+
 #### AWS
 
 * Enable root block device encryption by default ([#527](https://github.com/poseidon/typhoon/pull/527))
