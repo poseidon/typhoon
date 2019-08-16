@@ -13,7 +13,7 @@ Notable changes between versions.
 
 * Update Prometheus from v2.11.0 to [v2.11.2](https://github.com/prometheus/prometheus/releases/tag/v2.11.2)
   * Update kube-state-metrics from v1.7.1 to v1.7.2
-* Update Grafana from v6.2.5 to v6.3.2
+* Update Grafana from v6.2.5 to v6.3.3
 * Update nginx-ingress from v0.25.0 to [v0.25.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.25.1)
   * Fix Nginx security advisories
 
