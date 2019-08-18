@@ -1052,7 +1052,8 @@ data:
           "30d"
         ]
       },
-      "timezone": "browser",
+      "timezone": "",
       "title": "Nginx Ingress Controller",
+      "uid": "f4af03eca476c08ecf2b5cf15fd60168",
       "version": 0
     }

@@ -1029,7 +1029,8 @@ data:
           "30d"
         ]
       },
-      "timezone": "browser",
+      "timezone": "",
       "title": "CoreDNS",
+      "uid": "2f3f749259235f58698ea949170d3bd5",
       "version": 0
     }
