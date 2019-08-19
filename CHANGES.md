@@ -7,7 +7,7 @@ Notable changes between versions.
 ## v1.15.3
 
 * Kubernetes [v1.15.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1153)
-* Update etcd from v3.3.13 to [v3.3.14](https://github.com/etcd-io/etcd/releases/tag/v3.3.14)
+* Update etcd from v3.3.13 to [v3.3.15](https://github.com/etcd-io/etcd/releases/tag/v3.3.15)
 * Update Calico from v3.8.1 to [v3.8.2](https://docs.projectcalico.org/v3.8/release-notes/)
 
 #### AWS
