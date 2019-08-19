@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update Calico from v3.8.1 to [v3.8.2](https://docs.projectcalico.org/v3.8/release-notes/)
+* Update etcd from v3.3.13 to [v3.3.14](https://github.com/etcd-io/etcd/releases/tag/v3.3.14)
 
 #### AWS
 
