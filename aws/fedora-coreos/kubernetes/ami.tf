@@ -16,6 +16,6 @@ data "aws_ami" "fedora-coreos" {
   // pin on known ok versions as preview matures
   filter {
     name   = "name"
-    values = ["fedora-coreos-30.20190725.0-hvm"]
+    values = ["fedora-coreos-30.20190801.0-hvm"]
   }
 }
