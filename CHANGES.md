@@ -4,8 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Calico from v3.8.1 to [v3.8.2](https://docs.projectcalico.org/v3.8/release-notes/)
+## v1.15.3
+
+* Kubernetes [v1.15.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1153)
 * Update etcd from v3.3.13 to [v3.3.14](https://github.com/etcd-io/etcd/releases/tag/v3.3.14)
+* Update Calico from v3.8.1 to [v3.8.2](https://docs.projectcalico.org/v3.8/release-notes/)
 
 #### AWS
 
@@ -17,7 +20,7 @@ Notable changes between versions.
 * Update Prometheus from v2.11.0 to [v2.12.0](https://github.com/prometheus/prometheus/releases/tag/v2.12.0)
   * Update kube-state-metrics from v1.7.1 to v1.7.2
 * Update Grafana from v6.2.5 to v6.3.3
-  * Use stable IDs for etcd, CoreDNS, and Nginx Ingress dashboards
+  * Use stable IDs for etcd, CoreDNS, and Nginx Ingress dashboards ([#530](https://github.com/poseidon/typhoon/pull/530))
 * Update nginx-ingress from v0.25.0 to [v0.25.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.25.1)
   * Fix Nginx security advisories
 

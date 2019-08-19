@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora CoreOS is an early preview! Fedora CoreOS itself is a preview! Expect bugs and design shifts. Please help both projects solve problems. Report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues). Report Typhoon issues to Typhoon.
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.15.2 cluster on bare-metal with Fedora CoreOS.
+In this tutorial, we'll network boot and provision a Kubernetes v1.15.3 cluster on bare-metal with Fedora CoreOS.
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora CoreOS to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -284,9 +284,9 @@ bootkube[5]: Tearing down temporary bootstrap control plane...
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
 NAME                STATUS  ROLES              AGE  VERSION
-node1.example.com   Ready   controller,master  10m  v1.15.2
-node2.example.com   Ready   node               10m  v1.15.2
-node3.example.com   Ready   node               10m  v1.15.2
+node1.example.com   Ready   controller,master  10m  v1.15.3
+node2.example.com   Ready   node               10m  v1.15.3
+node3.example.com   Ready   node               10m  v1.15.3
 ```
 
 List the pods.
