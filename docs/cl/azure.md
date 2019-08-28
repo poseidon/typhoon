@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.32.1"
+  version = "1.33.0"
 }
 
 provider "ct" {
