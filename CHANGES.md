@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update CoreDNS from v1.5.0 to v1.6.2 ([#535](https://github.com/poseidon/typhoon/pull/535))
 
+#### Addons
+
+* Update Grafana from v6.3.3 to v6.3.4
+
 ## v1.15.3
 
 * Kubernetes [v1.15.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#v1153)
