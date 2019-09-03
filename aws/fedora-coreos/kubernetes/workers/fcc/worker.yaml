@@ -78,7 +78,6 @@ systemd:
 storage:
   directories:
     - path: /etc/kubernetes
-    - path: /opt/bootkube
   files:
     - path: /etc/kubernetes/kubeconfig
       mode: 0644

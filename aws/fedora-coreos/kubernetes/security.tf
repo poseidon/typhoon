@@ -44,6 +44,28 @@ resource "aws_security_group_rule" "controller-etcd-metrics" {
   source_security_group_id = aws_security_group.worker.id
 }
 
+# Allow Prometheus to scrape kube-scheduler
+resource "aws_security_group_rule" "controller-scheduler-metrics" {
+  security_group_id = aws_security_group.controller.id
+
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 10251
+  to_port                  = 10251
+  source_security_group_id = aws_security_group.worker.id
+}
+
+# Allow Prometheus to scrape kube-controller-manager
+resource "aws_security_group_rule" "controller-manager-metrics" {
+  security_group_id = aws_security_group.controller.id
+
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 10252
+  to_port                  = 10252
+  source_security_group_id = aws_security_group.worker.id
+}
+
 resource "aws_security_group_rule" "controller-vxlan" {
   count = var.networking == "flannel" ? 1 : 0
 

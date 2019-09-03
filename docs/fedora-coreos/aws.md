@@ -7,7 +7,7 @@ In this tutorial, we'll create a Kubernetes v1.15.3 cluster on AWS with Fedora C
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
-Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `coredns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controllers hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -94,7 +94,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 
 ## ssh-agent
 
-Initial bootstrapping requires `bootkube.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
+Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
 ssh-add ~/.ssh/id_rsa
@@ -121,9 +121,9 @@ Apply the changes to create the cluster.
 ```sh
 $ terraform apply
 ...
-module.aws-tempest.null_resource.bootkube-start: Still creating... (4m50s elapsed)
-module.aws-tempest.null_resource.bootkube-start: Still creating... (5m0s elapsed)
-module.aws-tempest.null_resource.bootkube-start: Creation complete after 11m8s (ID: 3961816482286168143)
+module.aws-tempest.null_resource.bootstrap: Still creating... (4m50s elapsed)
+module.aws-tempest.null_resource.bootstrap: Still creating... (5m0s elapsed)
+module.aws-tempest.null_resource.bootstrap: Creation complete after 5m8s (ID: 3961816482286168143)
 
 Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
 ```
@@ -147,22 +147,18 @@ List the pods.
 
 ```
 $ kubectl get pods --all-namespaces
-NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE              
-kube-system   calico-node-1m5bf                         2/2    Running   0         34m              
-kube-system   calico-node-7jmr1                         2/2    Running   0         34m              
-kube-system   calico-node-bknc8                         2/2    Running   0         34m              
-kube-system   coredns-1187388186-wx1lg                  1/1    Running   0         34m              
-kube-system   coredns-1187388186-qjnvp                  1/1    Running   0         34m
-kube-system   kube-apiserver-4mjbk                      1/1    Running   0         34m              
-kube-system   kube-controller-manager-3597210155-j2jbt  1/1    Running   1         34m              
-kube-system   kube-controller-manager-3597210155-j7g7x  1/1    Running   0         34m              
-kube-system   kube-proxy-14wxv                          1/1    Running   0         34m              
-kube-system   kube-proxy-9vxh2                          1/1    Running   0         34m              
-kube-system   kube-proxy-sbbsh                          1/1    Running   0         34m              
-kube-system   kube-scheduler-3359497473-5plhf           1/1    Running   0         34m              
-kube-system   kube-scheduler-3359497473-r7zg7           1/1    Running   1         34m              
-kube-system   pod-checkpointer-4kxtl                    1/1    Running   0         34m              
-kube-system   pod-checkpointer-4kxtl-ip-10-0-3-155      1/1    Running   0         33m
+NAMESPACE     NAME                                   READY  STATUS    RESTARTS  AGE
+kube-system   calico-node-1m5bf                      2/2    Running   0         34m
+kube-system   calico-node-7jmr1                      2/2    Running   0         34m
+kube-system   calico-node-bknc8                      2/2    Running   0         34m
+kube-system   coredns-1187388186-wx1lg               1/1    Running   0         34m
+kube-system   coredns-1187388186-qjnvp               1/1    Running   0         34m
+kube-system   kube-apiserver-4mjbk                   1/1    Running   0         34m
+kube-system   kube-controller-manager-ip-10-0-3-155  1/1    Running   0         34m
+kube-system   kube-proxy-14wxv                       1/1    Running   0         34m
+kube-system   kube-proxy-9vxh2                       1/1    Running   0         34m
+kube-system   kube-proxy-sbbsh                       1/1    Running   0         34m
+kube-system   kube-scheduler-ip-10-0-3-155           1/1    Running   1         34m
 ```
 
 ## Going Further
