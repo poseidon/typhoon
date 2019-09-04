@@ -7,7 +7,7 @@ In this tutorial, we'll create a Kubernetes v1.15.3 cluster on AWS with Fedora C
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
-Controllers hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -153,7 +153,7 @@ kube-system   calico-node-7jmr1                      2/2    Running   0         
 kube-system   calico-node-bknc8                      2/2    Running   0         34m
 kube-system   coredns-1187388186-wx1lg               1/1    Running   0         34m
 kube-system   coredns-1187388186-qjnvp               1/1    Running   0         34m
-kube-system   kube-apiserver-4mjbk                   1/1    Running   0         34m
+kube-system   kube-apiserver-ip-10-0-3-155           1/1    Running   0         34m
 kube-system   kube-controller-manager-ip-10-0-3-155  1/1    Running   0         34m
 kube-system   kube-proxy-14wxv                       1/1    Running   0         34m
 kube-system   kube-proxy-9vxh2                       1/1    Running   0         34m

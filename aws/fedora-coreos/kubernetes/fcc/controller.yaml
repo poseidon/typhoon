@@ -110,7 +110,7 @@ systemd:
     - name: bootstrap.service
       contents: |
         [Unit]
-        Description=Bootstrap Kubernetes control plane
+        Description=Kubernetes control plane
         ConditionPathExists=!/opt/bootstrap/bootstrap.done
         [Service]
         Type=oneshot

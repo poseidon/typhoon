@@ -118,33 +118,48 @@ systemd:
         PathExists=/etc/kubernetes/kubeconfig
         [Install]
         WantedBy=multi-user.target
-    - name: bootkube.service
+    - name: bootstrap.service
       contents: |
         [Unit]
-        Description=Bootstrap a Kubernetes control plane
-        ConditionPathExists=!/opt/bootkube/init_bootkube.done
+        Description=Kubernetes control plane
+        ConditionPathExists=!/opt/bootstrap/bootstrap.done
         [Service]
         Type=oneshot
         RemainAfterExit=true
-        WorkingDirectory=/opt/bootkube
-        ExecStart=/usr/bin/bash -c 'set -x && \
-          [ -n "$(ls /opt/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootkube/assets/manifests-*/* /opt/bootkube/assets/manifests && rm -rf /opt/bootkube/assets/manifests-* && exec podman run --name bootkube --privileged \
+        WorkingDirectory=/opt/bootstrap
+        ExecStartPre=-/usr/bin/bash -c 'set -x && [ -n "$(ls /opt/bootstrap/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootstrap/assets/manifests-*/* /opt/bootstrap/assets/manifests && rm -rf /opt/bootstrap/assets/manifests-*'
+        ExecStart=/usr/bin/podman run --name bootstrap \
             --network host \
-            --volume /opt/bootkube/assets:/assets \
-            --volume /etc/kubernetes:/etc/kubernetes \
-            quay.io/coreos/bootkube:v0.14.0 \
-            /bootkube start --asset-dir=/assets'
-        ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
+            --volume /opt/bootstrap/assets:/assets:ro,Z \
+            --volume /opt/bootstrap/apply:/apply:ro,Z \
+            k8s.gcr.io/hyperkube:v1.15.3 \
+            /apply
+        ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
+        ExecStartPost=-/usr/bin/podman stop bootstrap
 storage:
   directories:
     - path: /etc/kubernetes
-    - path: /opt/bootkube
+    - path: /opt/bootstrap
   files:
     - path: /etc/hostname
       mode: 0644
       contents:
         inline:
           ${domain_name}
+    - path: /opt/bootstrap/apply
+      mode: 0544
+      contents:
+        inline: |
+          #!/bin/bash -e
+          export KUBECONFIG=/assets/auth/kubeconfig
+          until kubectl version; do
+            echo "Waiting for static pod control plane"
+            sleep 5
+          done
+          until kubectl apply -f /assets/manifests -R; do
+             echo "Retry applying manifests"
+             sleep 5
+          done
     - path: /etc/sysctl.d/reverse-path-filter.conf
       contents:
         inline: |
