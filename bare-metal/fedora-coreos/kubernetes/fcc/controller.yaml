@@ -86,8 +86,8 @@ systemd:
           --authentication-token-webhook \
           --authorization-mode=Webhook \
           --cgroup-driver=systemd \
-          --cgroups-per-qos=false \
-          --enforce-node-allocatable="" \
+          --cgroups-per-qos=true \
+          --enforce-node-allocatable=pods \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
