@@ -111,17 +111,30 @@ systemd:
         RestartSec=10
         [Install]
         WantedBy=multi-user.target
-    - name: bootkube.service
+    - name: bootstrap.service
       contents: |
         [Unit]
-        Description=Bootstrap a Kubernetes control plane with a temp api-server
-        ConditionPathExists=!/opt/bootkube/init_bootkube.done
+        Description=Kubernetes control plane
+        ConditionPathExists=!/opt/bootstrap/bootstrap.done
         [Service]
         Type=oneshot
         RemainAfterExit=true
-        WorkingDirectory=/opt/bootkube
-        ExecStart=/opt/bootkube/bootkube-start
-        ExecStartPost=/bin/touch /opt/bootkube/init_bootkube.done
+        WorkingDirectory=/opt/bootstrap
+        ExecStartPre=-/usr/bin/bash -c 'set -x && [ -n "$(ls /opt/bootstrap/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootstrap/assets/manifests-*/* /opt/bootstrap/assets/manifests && rm -rf /opt/bootstrap/assets/manifests-*'
+        ExecStart=/usr/bin/rkt run \
+            --trust-keys-from-https \
+            --volume assets,kind=host,source=/opt/bootstrap/assets \
+            --mount volume=assets,target=/assets \
+            --volume script,kind=host,source=/opt/bootstrap/apply \
+            --mount volume=script,target=/apply \
+            --insecure-options=image \
+            docker://k8s.gcr.io/hyperkube:v1.15.3 \
+            --net=host \
+            --dns=host \
+            --exec=/apply
+        ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
+        [Install]
+        WantedBy=multi-user.target
 storage:
   files:
     - path: /etc/kubernetes/kubelet.env
@@ -137,36 +150,26 @@ storage:
       contents:
         inline:
           ${domain_name}
+    - path: /opt/bootstrap/apply
+      filesystem: root
+      mode: 0544
+      contents:
+        inline: |
+          #!/bin/bash -e
+          export KUBECONFIG=/assets/auth/kubeconfig
+          until kubectl version; do
+            echo "Waiting for static pod control plane"
+            sleep 5
+          done
+          until kubectl apply -f /assets/manifests -R; do
+             echo "Retry applying manifests"
+             sleep 5
+          done
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
-    - path: /opt/bootkube/bootkube-start
-      filesystem: root
-      mode: 0544
-      user:
-        id: 500
-      group:
-        id: 500
-      contents:
-        inline: |
-          #!/bin/bash
-          # Wrapper for bootkube start
-          set -e
-          # Move experimental manifests
-          [ -n "$(ls /opt/bootkube/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootkube/assets/manifests-*/* /opt/bootkube/assets/manifests && rm -rf /opt/bootkube/assets/manifests-*
-          exec /usr/bin/rkt run \
-            --trust-keys-from-https \
-            --volume assets,kind=host,source=/opt/bootkube/assets \
-            --mount volume=assets,target=/assets \
-            --volume bootstrap,kind=host,source=/etc/kubernetes \
-            --mount volume=bootstrap,target=/etc/kubernetes \
-            $${RKT_OPTS} \
-            quay.io/coreos/bootkube:v0.14.0 \
-            --net=host \
-            --dns=host \
-            --exec=/bootkube -- start --asset-dir=/assets "$@"
 passwd:
   users:
     - name: core

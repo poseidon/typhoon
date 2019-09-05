@@ -4,7 +4,7 @@ In this tutorial, we'll network boot and provision a Kubernetes v1.15.3 cluster 
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
-Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `coredns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns` while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -199,7 +199,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 
 ## ssh-agent
 
-Initial bootstrapping requires `bootkube.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
+Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
 ssh-add ~/.ssh/id_rsa
@@ -221,14 +221,12 @@ $ terraform plan
 Plan: 55 to add, 0 to change, 0 to destroy.
 ```
 
-Apply the changes. Terraform will generate bootkube assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
+Apply the changes. Terraform will generate bootstrap assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
 
 ```sh
 $ terraform apply
-module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Still creating... (10s elapsed)
-module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Still creating... (10s elapsed)
+module.bare-metal-mercury.null_resource.copy-controller-secrets.0: Still creating... (10s elapsed)
+module.bare-metal-mercury.null_resource.copy-worker-secrets.0: Still creating... (10s elapsed)
 ...
 ```
 
@@ -250,14 +248,14 @@ Machines will network boot, install Container Linux to disk, reboot into the dis
 
 ### Bootstrap
 
-Wait for the `bootkube-start` step to finish bootstrapping the Kubernetes control plane. This may take 5-15 minutes depending on your network.
+Wait for the `bootstrap` step to finish bootstrapping the Kubernetes control plane. This may take 5-15 minutes depending on your network.
 
 ```
-module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m10s elapsed)
-module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m20s elapsed)
-module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m30s elapsed)
-module.bare-metal-mercury.null_resource.bootkube-start: Still creating... (6m40s elapsed)
-module.bare-metal-mercury.null_resource.bootkube-start: Creation complete (ID: 5441741360626669024)
+module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m10s elapsed)
+module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m20s elapsed)
+module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m30s elapsed)
+module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m40s elapsed)
+module.bare-metal-mercury.null_resource.bootstrap: Creation complete (ID: 5441741360626669024)
 
 Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 ```
@@ -275,13 +273,12 @@ To watch the bootstrap process in detail, SSH to the first controller and journa
 
 ```
 $ ssh core@node1.example.com
-$ journalctl -f -u bootkube
-bootkube[5]:         Pod Status:        pod-checkpointer        Running
-bootkube[5]:         Pod Status:          kube-apiserver        Running
-bootkube[5]:         Pod Status:          kube-scheduler        Running
-bootkube[5]:         Pod Status: kube-controller-manager        Running
-bootkube[5]: All self-hosted control plane components successfully started
-bootkube[5]: Tearing down temporary bootstrap control plane...
+$ journalctl -f -u bootstrap
+podman[1750]: The connection to the server cluster.example.com:6443 was refused - did you specify the right host or port?
+podman[1750]: Waiting for static pod control plane
+...
+podman[1750]: serviceaccount/calico-node unchanged
+systemd[1]: Started Kubernetes control plane.
 ```
 
 ## Verify
@@ -307,16 +304,12 @@ kube-system   calico-node-gnjrm                          2/2       Running   0  
 kube-system   calico-node-llbgt                          2/2       Running   0          11m
 kube-system   coredns-1187388186-dj3pd                   1/1       Running   0          11m
 kube-system   coredns-1187388186-mx9rt                   1/1       Running   0          11m
-kube-system   kube-apiserver-7336w                       1/1       Running   0          11m
-kube-system   kube-controller-manager-3271970485-b9chx   1/1       Running   0          11m
-kube-system   kube-controller-manager-3271970485-v30js   1/1       Running   1          11m
+kube-system   kube-apiserver-node1.example.com           1/1       Running   0          11m
+kube-system   kube-controller-node1.example.com          1/1       Running   1          11m
 kube-system   kube-proxy-50sd4                           1/1       Running   0          11m
 kube-system   kube-proxy-bczhp                           1/1       Running   0          11m
 kube-system   kube-proxy-mp2fw                           1/1       Running   0          11m
-kube-system   kube-scheduler-3895335239-fd3l7            1/1       Running   1          11m
-kube-system   kube-scheduler-3895335239-hfjv0            1/1       Running   0          11m
-kube-system   pod-checkpointer-wf65d                     1/1       Running   0          11m
-kube-system   pod-checkpointer-wf65d-node1.example.com   1/1       Running   0          11m
+kube-system   kube-scheduler-node1.example.com           1/1       Running   0          11m
 ```
 
 ## Going Further
