@@ -33,6 +33,28 @@ resource "aws_security_group_rule" "controller-etcd" {
   self      = true
 }
 
+# Allow Prometheus to scrape kube-scheduler
+resource "aws_security_group_rule" "controller-scheduler-metrics" {
+  security_group_id = aws_security_group.controller.id
+
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 10251
+  to_port                  = 10251
+  source_security_group_id = aws_security_group.worker.id
+}
+
+# Allow Prometheus to scrape kube-controller-manager
+resource "aws_security_group_rule" "controller-manager-metrics" {
+  security_group_id = aws_security_group.controller.id
+
+  type                     = "ingress"
+  protocol                 = "tcp"
+  from_port                = 10252
+  to_port                  = 10252
+  source_security_group_id = aws_security_group.worker.id
+}
+
 # Allow Prometheus to scrape etcd metrics
 resource "aws_security_group_rule" "controller-etcd-metrics" {
   security_group_id = aws_security_group.controller.id
