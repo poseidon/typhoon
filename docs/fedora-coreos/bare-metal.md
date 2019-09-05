@@ -169,8 +169,8 @@ module "bare-metal-mercury" {
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
   os_stream               = "testing"
-  os_version              = "30.20190716.1"
-  cached_install          = false
+  os_version              = "30.20190801.0"
+  cached_install          = "true"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
