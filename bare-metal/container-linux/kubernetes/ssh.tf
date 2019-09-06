@@ -99,7 +99,7 @@ resource "null_resource" "copy-worker-secrets" {
 
   connection {
     type    = "ssh"
-    host    = element(var.worker_domains, count.index)
+    host    = var.worker_domains[count.index]
     user    = "core"
     timeout = "60m"
   }

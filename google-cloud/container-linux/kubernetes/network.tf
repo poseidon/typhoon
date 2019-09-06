@@ -48,6 +48,20 @@ resource "google_compute_firewall" "internal-etcd-metrics" {
   target_tags = ["${var.cluster_name}-controller"]
 }
 
+# Allow Prometheus to scrape kube-scheduler and kube-controller-manager metrics
+resource "google_compute_firewall" "internal-kube-metrics" {
+  name    = "${var.cluster_name}-internal-kube-metrics"
+  network = google_compute_network.network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = [10251, 10252]
+  }
+
+  source_tags = ["${var.cluster_name}-worker"]
+  target_tags = ["${var.cluster_name}-controller"]
+}
+
 resource "google_compute_firewall" "allow-apiserver" {
   name    = "${var.cluster_name}-allow-apiserver"
   network = google_compute_network.network.name

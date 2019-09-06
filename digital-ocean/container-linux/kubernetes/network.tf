@@ -53,23 +53,32 @@ resource "digitalocean_firewall" "controllers" {
 
   tags = ["${var.cluster_name}-controller"]
 
-  # etcd, kube-apiserver, kubelet
+  # etcd
   inbound_rule {
     protocol    = "tcp"
     port_range  = "2379-2380"
     source_tags = [digitalocean_tag.controllers.name]
   }
 
+  # etcd metrics
   inbound_rule {
     protocol    = "tcp"
     port_range  = "2381"
     source_tags = [digitalocean_tag.workers.name]
   }
 
+  # kube-apiserver
   inbound_rule {
     protocol         = "tcp"
     port_range       = "6443"
     source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  
+  # kube-scheduler metrics, kube-controller-manager metrics
+  inbound_rule {
+    protocol    = "tcp"
+    port_range  = "10251-10252"
+    source_tags = [digitalocean_tag.workers.name]
   }
 }
 

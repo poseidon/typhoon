@@ -95,16 +95,12 @@ kube-system   calico-node-d1l5b                         2/2    Running   0      
 kube-system   calico-node-sp9ps                         2/2    Running   0         6m
 kube-system   coredns-1187388186-dkh3o                  1/1    Running   0         6m
 kube-system   coredns-1187388186-zj5dl                  1/1    Running   0         6m
-kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
-kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
-kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1         6m
+kube-system   kube-apiserver-controller-0               1/1    Running   0         6m
+kube-system   kube-controller-manager-controller-0      1/1    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m
-kube-system   kube-scheduler-3895335239-5x87r           1/1    Running   0         6m
-kube-system   kube-scheduler-3895335239-bzrrt           1/1    Running   1         6m
-kube-system   pod-checkpointer-l6lrt                    1/1    Running   0         6m
-kube-system   pod-checkpointer-l6lrt-controller-0       1/1    Running   0         6m
+kube-system   kube-scheduler-controller-0               1/1    Running   0         6m
 ```
 
 ## Help

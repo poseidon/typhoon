@@ -53,6 +53,22 @@ resource "azurerm_network_security_rule" "controller-etcd-metrics" {
   destination_address_prefix  = azurerm_subnet.controller.address_prefix
 }
 
+# Allow Prometheus to scrape kube-scheduler and kube-controller-manager metrics
+resource "azurerm_network_security_rule" "controller-kube-metrics" {
+  resource_group_name = azurerm_resource_group.cluster.name
+
+  name                        = "allow-kube-metrics"
+  network_security_group_name = azurerm_network_security_group.controller.name
+  priority                    = "2011"
+  access                      = "Allow"
+  direction                   = "Inbound"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "10251-10252"
+  source_address_prefix       = azurerm_subnet.worker.address_prefix
+  destination_address_prefix  = azurerm_subnet.controller.address_prefix
+}
+
 resource "azurerm_network_security_rule" "controller-apiserver" {
   resource_group_name = azurerm_resource_group.cluster.name
 

@@ -7,7 +7,7 @@ In this tutorial, we'll create a Kubernetes v1.15.3 cluster on Azure with Contai
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a resource group, virtual network, subnets, security groups, controller availability set, worker scale set, load balancer, and TLS assets.
 
-Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `coredns` on controllers and schedules `kube-proxy` and `flannel` on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -88,7 +88,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 
 ## ssh-agent
 
-Initial bootstrapping requires `bootkube.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
+Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
 ssh-add ~/.ssh/id_rsa
@@ -115,9 +115,9 @@ Apply the changes to create the cluster.
 ```sh
 $ terraform apply
 ...
-module.azure-ramius.null_resource.bootkube-start: Still creating... (6m50s elapsed)
-module.azure-ramius.null_resource.bootkube-start: Still creating... (7m0s elapsed)
-module.azure-ramius.null_resource.bootkube-start: Creation complete after 7m8s (ID: 3961816482286168143)
+module.azure-ramius.null_resource.bootstrap: Still creating... (6m50s elapsed)
+module.azure-ramius.null_resource.bootstrap: Still creating... (7m0s elapsed)
+module.azure-ramius.null_resource.bootstrap: Creation complete after 7m8s (ID: 3961816482286168143)
 
 Apply complete! Resources: 86 added, 0 changed, 0 destroyed.
 ```
@@ -144,19 +144,15 @@ $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                        READY  STATUS    RESTARTS  AGE
 kube-system   coredns-7c6fbb4f4b-b6qzx                    1/1    Running   0         26m
 kube-system   coredns-7c6fbb4f4b-j2k3d                    1/1    Running   0         26m
-kube-system   flannel-bwf24                               2/2    Running   2         26m
+kube-system   flannel-bwf24                               2/2    Running   0         26m
 kube-system   flannel-ks5qb                               2/2    Running   0         26m
 kube-system   flannel-tq2wg                               2/2    Running   0         26m
-kube-system   kube-apiserver-hxgsx                        1/1    Running   3         26m
-kube-system   kube-controller-manager-5ff9cd7bb6-b942n    1/1    Running   0         26m
-kube-system   kube-controller-manager-5ff9cd7bb6-bbr6w    1/1    Running   0         26m
+kube-system   kube-apiserver-ramius-controller-0          1/1    Running   0         26m
+kube-system   kube-controller-manager-ramius-controller-0 1/1    Running   0         26m
 kube-system   kube-proxy-j4vpq                            1/1    Running   0         26m
 kube-system   kube-proxy-jxr5d                            1/1    Running   0         26m
 kube-system   kube-proxy-lbdw5                            1/1    Running   0         26m
-kube-system   kube-scheduler-5f76d69686-s4fbx             1/1    Running   0         26m
-kube-system   kube-scheduler-5f76d69686-vgdgn             1/1    Running   0         26m
-kube-system   pod-checkpointer-cnqdg                      1/1    Running   0         26m
-kube-system   pod-checkpointer-cnqdg-ramius-controller-0  1/1    Running   0         25m
+kube-system   kube-scheduler-ramius-controller-0          1/1    Running   0         26m
 ```
 
 ## Going Further

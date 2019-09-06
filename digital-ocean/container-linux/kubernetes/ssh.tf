@@ -1,14 +1,15 @@
-# Secure copy etcd TLS assets and kubeconfig to controllers. Activates kubelet.service
+# Secure copy assets to controllers. Activates kubelet.service
 resource "null_resource" "copy-controller-secrets" {
   count = var.controller_count
 
   depends_on = [
+    module.bootkube,
     digitalocean_firewall.rules
   ]
 
   connection {
     type    = "ssh"
-    host    = element(digitalocean_droplet.controllers.*.ipv4_address, count.index)
+    host    = digitalocean_droplet.controllers.*.ipv4_address[count.index]
     user    = "core"
     timeout = "15m"
   }
@@ -52,6 +53,11 @@ resource "null_resource" "copy-controller-secrets" {
     content     = module.bootkube.etcd_peer_key
     destination = "$HOME/etcd-peer.key"
   }
+  
+  provisioner "file" {
+    source      = var.asset_dir
+    destination = "$HOME/assets"
+  }
 
   provisioner "remote-exec" {
     inline = [
@@ -66,6 +72,11 @@ resource "null_resource" "copy-controller-secrets" {
       "sudo chown -R etcd:etcd /etc/ssl/etcd",
       "sudo chmod -R 500 /etc/ssl/etcd",
       "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+      "sudo mv $HOME/assets /opt/bootstrap/assets",
+      "sudo mkdir -p /etc/kubernetes/bootstrap-secrets",
+      "sudo cp -r /opt/bootstrap/assets/tls/* /etc/kubernetes/bootstrap-secrets/",
+      "sudo cp /opt/bootstrap/assets/auth/kubeconfig /etc/kubernetes/bootstrap-secrets/",
+      "sudo cp -r /opt/bootstrap/assets/static-manifests/* /etc/kubernetes/manifests/",
     ]
   }
 }
@@ -76,7 +87,7 @@ resource "null_resource" "copy-worker-secrets" {
 
   connection {
     type    = "ssh"
-    host    = element(digitalocean_droplet.workers.*.ipv4_address, count.index)
+    host    = digitalocean_droplet.workers.*.ipv4_address[count.index]
     user    = "core"
     timeout = "15m"
   }
@@ -93,11 +104,9 @@ resource "null_resource" "copy-worker-secrets" {
   }
 }
 
-# Secure copy bootkube assets to ONE controller and start bootkube to perform
-# one-time self-hosted cluster bootstrapping.
-resource "null_resource" "bootkube-start" {
+# Connect to a controller to perform one-time cluster bootstrap.
+resource "null_resource" "bootstrap" {
   depends_on = [
-    module.bootkube,
     null_resource.copy-controller-secrets,
     null_resource.copy-worker-secrets,
   ]
@@ -109,15 +118,9 @@ resource "null_resource" "bootkube-start" {
     timeout = "15m"
   }
 
-  provisioner "file" {
-    source      = var.asset_dir
-    destination = "$HOME/assets"
-  }
-
   provisioner "remote-exec" {
     inline = [
-      "sudo mv $HOME/assets /opt/bootkube",
-      "sudo systemctl start bootkube",
+      "sudo systemctl start bootstrap",
     ]
   }
 }

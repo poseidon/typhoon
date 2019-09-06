@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.15.3 cluster on Google Compute En
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
-Controllers are provisioned to run an `etcd-member` peer and a `kubelet` service. Workers run just a `kubelet` service. A one-time [bootkube](https://github.com/kubernetes-incubator/bootkube) bootstrap schedules the `apiserver`, `scheduler`, `controller-manager`, and `coredns` on controllers and schedules `kube-proxy` and `calico` (or `flannel`) on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and `calico` (or `flannel`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -92,7 +92,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 
 ## ssh-agent
 
-Initial bootstrapping requires `bootkube.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
+Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
 ssh-add ~/.ssh/id_rsa
@@ -118,12 +118,11 @@ Apply the changes to create the cluster.
 
 ```sh
 $ terraform apply
-module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (10s elapsed)
+module.google-cloud-yavin.null_resource.bootstrap: Still creating... (10s elapsed)
 ...
-
-module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (5m30s elapsed)
-module.google-cloud-yavin.null_resource.bootkube-start: Still creating... (5m40s elapsed)
-module.google-cloud-yavin.null_resource.bootkube-start: Creation complete (ID: 5768638456220583358)
+module.google-cloud-yavin.null_resource.bootstrap: Still creating... (5m30s elapsed)
+module.google-cloud-yavin.null_resource.bootstrap: Still creating... (5m40s elapsed)
+module.google-cloud-yavin.null_resource.bootstrap: Creation complete (ID: 5768638456220583358)
 
 Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
 ```
@@ -153,15 +152,12 @@ kube-system   calico-node-d1l5b                         2/2    Running   0      
 kube-system   calico-node-sp9ps                         2/2    Running   0         6m
 kube-system   coredns-1187388186-dkh3o                  1/1    Running   0         6m
 kube-system   coredns-1187388186-zj5dl                  1/1    Running   0         6m
-kube-system   kube-apiserver-zppls                      1/1    Running   0         6m
-kube-system   kube-controller-manager-3271970485-gh9kt  1/1    Running   0         6m
-kube-system   kube-controller-manager-3271970485-h90v8  1/1    Running   1         6m
+kube-system   kube-apiserver-controller-0               1/1    Running   0         6m
+kube-system   kube-controller-manager-controller-0      1/1    Running   0         6m
 kube-system   kube-proxy-117v6                          1/1    Running   0         6m
 kube-system   kube-proxy-9886n                          1/1    Running   0         6m
 kube-system   kube-proxy-njn47                          1/1    Running   0         6m
-kube-system   kube-scheduler-3895335239-5x87r           1/1    Running   0         6m
-kube-system   kube-scheduler-3895335239-bzrrt           1/1    Running   1         6m
-kube-system   pod-checkpointer-l6lrt                    1/1    Running   0         6m
+kube-system   kube-scheduler-controller-0               1/1    Running   0         6m
 ```
 
 ## Going Further
