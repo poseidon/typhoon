@@ -110,7 +110,7 @@ Apply complete! Resources: 0 added, 0 changed, 55 destroyed.
 
 #### In-place Edits
 
-Typhoon uses a self-hosted Kubernetes control plane which allows certain manifest upgrades to be performed in-place. Components like `apiserver`, `controller-manager`, `scheduler`, `flannel`/`calico`, `coredns`, and `kube-proxy` are run on Kubernetes itself and can be edited via `kubectl`. If you're interested, see the bootkube [upgrade docs](https://github.com/kubernetes-incubator/bootkube/blob/master/Documentation/upgrading.md).
+Typhoon uses a static pod Kubernetes control plane which allows certain manifest upgrades to be performed in-place. Components like `kube-apiserver`, `kube-controller-manager`, and `kube-scheduler` are run as static pods. Components `flannel`/`calico`, `coredns`, and `kube-proxy` are scheduled on Kubernetes and can be edited via `kubectl`.
 
 In certain scenarios, in-place edits can be useful for quickly rolling out security patches (e.g. bumping `coredns`) or prioritizing speed over the safety of a proper cluster re-provision and transition.
 

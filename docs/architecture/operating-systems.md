@@ -30,7 +30,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 |-------------------|-----------------|---------------|
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
-| control plane     | self-hosted   | self-hosted   |
+| control plane     | static pods   | static pods   |
 | kubelet image     | upstream hyperkube | upstream hyperkube |
 | control plane images | upstream hyperkube | upstream hyperkube |
 | on-host etcd      | rkt-fly   | podman |

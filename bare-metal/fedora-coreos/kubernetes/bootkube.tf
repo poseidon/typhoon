@@ -1,4 +1,4 @@
-# Self-hosted Kubernetes assets (kubeconfig, manifests)
+# Kubernetes assets (kubeconfig, manifests)
 module "bootkube" {
   source = "git::https://github.com/poseidon/terraform-render-bootkube.git?ref=6e59af71138bc5f784453873074de16e7ee150eb"
 
