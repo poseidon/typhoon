@@ -9,7 +9,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Update Grafana from v6.3.3 to v6.3.4
+* Update Grafana from v6.3.3 to v6.3.5
 
 ## v1.15.3
 
