@@ -36,13 +36,13 @@ variable "worker_count" {
 
 variable "controller_type" {
   type        = string
-  default     = "Standard_DS1_v2"
+  default     = "Standard_B2s"
   description = "Machine type for controllers (see `az vm list-skus --location centralus`)"
 }
 
 variable "worker_type" {
   type        = string
-  default     = "Standard_F1"
+  default     = "Standard_DS1_v2"
   description = "Machine type for workers (see `az vm list-skus --location centralus`)"
 }
 

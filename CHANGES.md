@@ -8,6 +8,13 @@ Notable changes between versions.
 * Update etcd from v3.3.15 to [v3.4.0](https://github.com/etcd-io/etcd/releases/tag/v3.4.0)
 * Recommend updating `terraform-provider-ct` plugin from v0.3.2 to [v0.4.0](https://github.com/poseidon/terraform-provider-ct/releases/tag/v0.4.0)
 
+#### Azure
+
+* Change default `controller_type` to `Standard_B2s` ([#539](https://github.com/poseidon/typhoon/pull/539))
+  * `B2s` is cheaper by $17/month and provides 2 vCPU, 4GB RAM
+* Change default `worker_type` to `Standard_DS1_v2` ([#539](https://github.com/poseidon/typhoon/pull/539))
+  * `F1` is previous generation. `DS1_v2` is newer, similar cost, and supports Low Priority mode
+
 #### Addons
 
 * Update Grafana from v6.3.3 to v6.3.5
