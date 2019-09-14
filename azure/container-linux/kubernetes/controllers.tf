@@ -155,7 +155,7 @@ data "template_file" "controller-configs" {
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
     etcd_initial_cluster   = join(",", data.template_file.etcds.*.rendered)
-    kubeconfig             = indent(10, module.bootkube.kubeconfig-kubelet)
+    kubeconfig             = indent(10, module.bootstrap.kubeconfig-kubelet)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix

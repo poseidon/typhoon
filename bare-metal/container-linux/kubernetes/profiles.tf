@@ -160,7 +160,7 @@ data "template_file" "controller-configs" {
     etcd_name              = element(var.controller_names, count.index)
     etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))
     cgroup_driver = var.os_channel == "flatcar-edge" ? "systemd" : "cgroupfs"
-    cluster_dns_service_ip = module.bootkube.cluster_dns_service_ip
+    cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
   }
@@ -188,7 +188,7 @@ data "template_file" "worker-configs" {
   vars = {
     domain_name            = element(var.worker_domains, count.index)
     cgroup_driver = var.os_channel == "flatcar-edge" ? "systemd" : "cgroupfs"
-    cluster_dns_service_ip = module.bootkube.cluster_dns_service_ip
+    cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
   }

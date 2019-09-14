@@ -147,5 +147,5 @@ module "digital-ocean-nemo" {
 }
 ```
 
-To customize lower-level Kubernetes control plane bootstrapping, see the [poseidon/terraform-render-bootkube](https://github.com/poseidon/terraform-render-bootkube) Terraform module.
+To customize low-level Kubernetes control plane bootstrapping, see the [poseidon/terraform-render-bootstrap](https://github.com/poseidon/terraform-render-bootstrap) Terraform module.
 

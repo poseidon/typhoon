@@ -1,5 +1,5 @@
 output "kubeconfig-admin" {
-  value = module.bootkube.kubeconfig-admin
+  value = module.bootstrap.kubeconfig-admin
 }
 
 # Outputs for Kubernetes Ingress
@@ -28,7 +28,7 @@ output "security_group_id" {
 }
 
 output "kubeconfig" {
-  value = module.bootkube.kubeconfig-kubelet
+  value = module.bootstrap.kubeconfig-kubelet
 }
 
 # Outputs for custom firewalling

@@ -8,7 +8,7 @@ resource "null_resource" "copy-controller-secrets" {
     matchbox_group.install,
     matchbox_group.controller,
     matchbox_group.worker,
-    module.bootkube,
+    module.bootstrap,
   ]
 
   connection {
@@ -19,42 +19,42 @@ resource "null_resource" "copy-controller-secrets" {
   }
 
   provisioner "file" {
-    content     = module.bootkube.kubeconfig-kubelet
+    content     = module.bootstrap.kubeconfig-kubelet
     destination = "$HOME/kubeconfig"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_ca_cert
+    content     = module.bootstrap.etcd_ca_cert
     destination = "$HOME/etcd-client-ca.crt"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_client_cert
+    content     = module.bootstrap.etcd_client_cert
     destination = "$HOME/etcd-client.crt"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_client_key
+    content     = module.bootstrap.etcd_client_key
     destination = "$HOME/etcd-client.key"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_server_cert
+    content     = module.bootstrap.etcd_server_cert
     destination = "$HOME/etcd-server.crt"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_server_key
+    content     = module.bootstrap.etcd_server_key
     destination = "$HOME/etcd-server.key"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_peer_cert
+    content     = module.bootstrap.etcd_peer_cert
     destination = "$HOME/etcd-peer.crt"
   }
 
   provisioner "file" {
-    content     = module.bootkube.etcd_peer_key
+    content     = module.bootstrap.etcd_peer_key
     destination = "$HOME/etcd-peer.key"
   }
   
@@ -105,7 +105,7 @@ resource "null_resource" "copy-worker-secrets" {
   }
 
   provisioner "file" {
-    content     = module.bootkube.kubeconfig-kubelet
+    content     = module.bootstrap.kubeconfig-kubelet
     destination = "$HOME/kubeconfig"
   }
 
