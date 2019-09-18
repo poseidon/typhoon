@@ -73,7 +73,7 @@ systemd:
           --kubeconfig=/etc/kubernetes/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
-          --node-labels=node-role.kubernetes.io/node \
+          --node-labels=node.kubernetes.io/node \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
@@ -91,7 +91,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
-          KUBELET_IMAGE_TAG=v1.15.3
+          KUBELET_IMAGE_TAG=v1.16.0
     - path: /etc/hostname
       filesystem: root
       mode: 0644

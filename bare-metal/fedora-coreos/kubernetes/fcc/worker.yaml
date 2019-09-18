@@ -51,7 +51,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          k8s.gcr.io/hyperkube:v1.15.3 /hyperkube kubelet \
+          k8s.gcr.io/hyperkube:v1.16.0 /hyperkube kubelet \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -67,7 +67,7 @@ systemd:
           --kubeconfig=/etc/kubernetes/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
-          --node-labels=node-role.kubernetes.io/node \
+          --node-labels=node.kubernetes.io/node \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins

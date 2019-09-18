@@ -81,7 +81,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          k8s.gcr.io/hyperkube:v1.15.3 /hyperkube kubelet \
+          k8s.gcr.io/hyperkube:v1.16.0 /hyperkube kubelet \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -97,8 +97,8 @@ systemd:
           --kubeconfig=/etc/kubernetes/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
-          --node-labels=node-role.kubernetes.io/master \
-          --node-labels=node-role.kubernetes.io/controller="true" \
+          --node-labels=node.kubernetes.io/master \
+          --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
           --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
@@ -132,7 +132,7 @@ systemd:
             --network host \
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
-            k8s.gcr.io/hyperkube:v1.15.3 \
+            k8s.gcr.io/hyperkube:v1.16.0 \
             /apply
         ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
         ExecStartPost=-/usr/bin/podman stop bootstrap
