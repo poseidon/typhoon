@@ -72,9 +72,10 @@ resource "null_resource" "copy-controller-secrets" {
       "sudo cp /etc/ssl/etcd/etcd-client-ca.crt /etc/ssl/etcd/etcd/peer-ca.crt",
       "sudo mv etcd-peer.crt /etc/ssl/etcd/etcd/peer.crt",
       "sudo mv etcd-peer.key /etc/ssl/etcd/etcd/peer.key",
-      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
       "sudo mv $HOME/assets /opt/bootstrap/assets",
+      "sudo mkdir -p /etc/kubernetes/manifests"
       "sudo mkdir -p /etc/kubernetes/bootstrap-secrets",
+      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
       "sudo cp -r /opt/bootstrap/assets/tls/* /etc/kubernetes/bootstrap-secrets/",
       "sudo cp /opt/bootstrap/assets/auth/kubeconfig /etc/kubernetes/bootstrap-secrets/",
       "sudo cp -r /opt/bootstrap/assets/static-manifests/* /etc/kubernetes/manifests/"
