@@ -64,11 +64,9 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --hosts-entry=host \
           --insecure-options=image"
-        ExecStartPre=/bin/mkdir -p /opt/cni/bin
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/checkpoint-secrets
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/inactive-manifests
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /var/lib/cni
         ExecStartPre=/bin/mkdir -p /var/lib/calico
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
