@@ -4,6 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
+#### Bare-Metal
+
+* Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
+
+#### DigitalOcean
+
+* Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
+
 ## v1.16.0
 
 * Kubernetes [v1.16.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1160) ([#543](https://github.com/poseidon/typhoon/pull/543))

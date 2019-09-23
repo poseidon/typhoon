@@ -73,7 +73,7 @@ resource "null_resource" "copy-controller-secrets" {
       "sudo mv etcd-peer.crt /etc/ssl/etcd/etcd/peer.crt",
       "sudo mv etcd-peer.key /etc/ssl/etcd/etcd/peer.key",
       "sudo mv $HOME/assets /opt/bootstrap/assets",
-      "sudo mkdir -p /etc/kubernetes/manifests"
+      "sudo mkdir -p /etc/kubernetes/manifests",
       "sudo mkdir -p /etc/kubernetes/bootstrap-secrets",
       "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
       "sudo cp -r /opt/bootstrap/assets/tls/* /etc/kubernetes/bootstrap-secrets/",
