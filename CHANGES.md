@@ -8,7 +8,8 @@ Notable changes between versions.
 
 * Kubernetes [v1.16.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1160) ([#543](https://github.com/poseidon/typhoon/pull/543))
   * Read about several Kubernetes API [deprecations](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#deprecations-and-removals)!
-  * Rename `node-role.kubernetes.io` labels for `master` and `node` roles (no longer shown in `kubectl get nodes`)
+  * Remove legacy node role labels (no longer shown in `kubectl get nodes`)
+  * Rename node labels to `node.kubernetes.io/master` and `node.kubernetes.io/node` (migratory)
 * Migrate control plane from self-hosted to static pods ([#536](https://github.com/poseidon/typhoon/pull/536))
   * Run `kube-apiserver`, `kube-scheduler`, and `kube-controller-manager` as static pods on each controller
   * `kubectl` edits to `kube-apiserver`, `kube-scheduler`, and `kube-controller-manager` are no longer possible (change)

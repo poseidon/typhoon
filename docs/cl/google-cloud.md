@@ -136,10 +136,10 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
-NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.16.0
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.16.0
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.16.0
+NAME                                       ROLES    STATUS  AGE  VERSION
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.16.0
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.16.0
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.16.0
 ```
 
 List the pods.

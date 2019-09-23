@@ -137,10 +137,10 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/tempest/auth/kubeconfig
 $ kubectl get nodes
-NAME           STATUS  ROLES              AGE  VERSION
-ip-10-0-3-155  Ready   controller,master  10m  v1.16.0
-ip-10-0-26-65  Ready   node               10m  v1.16.0
-ip-10-0-41-21  Ready   node               10m  v1.16.0
+NAME           STATUS  ROLES    AGE  VERSION
+ip-10-0-3-155  Ready   <none>   10m  v1.16.0
+ip-10-0-26-65  Ready   <none>   10m  v1.16.0
+ip-10-0-41-21  Ready   <none>   10m  v1.16.0
 ```
 
 List the pods.

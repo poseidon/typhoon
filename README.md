@@ -1,4 +1,4 @@
-# Typhoon [![IRC](https://img.shields.io/badge/freenode-%23typhoon-0099ef.svg)]() <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo.png">
+# Typhoon <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo.png">
 
 Typhoon is a minimal and free Kubernetes distribution.
 
@@ -81,10 +81,10 @@ In 4-8 minutes (varies by platform), the cluster will be ready. This Google Clou
 ```sh
 $ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
 $ kubectl get nodes
-NAME                                       ROLES              STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  controller,master  Ready   6m   v1.16.0
-yavin-worker-jrbf.c.example-com.internal   node               Ready   5m   v1.16.0
-yavin-worker-mzdm.c.example-com.internal   node               Ready   5m   v1.16.0
+NAME                                       ROLES    STATUS  AGE  VERSION
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.16.0
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.16.0
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.16.0
 ```
 
 List the pods.

@@ -282,10 +282,10 @@ systemd[1]: Started Kubernetes control plane.
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
 $ kubectl get nodes
-NAME                STATUS  ROLES              AGE  VERSION
-node1.example.com   Ready   controller,master  10m  v1.16.0
-node2.example.com   Ready   node               10m  v1.16.0
-node3.example.com   Ready   node               10m  v1.16.0
+NAME                STATUS  ROLES   AGE  VERSION
+node1.example.com   Ready   <none>  10m  v1.16.0
+node2.example.com   Ready   <none>  10m  v1.16.0
+node3.example.com   Ready   <none>  10m  v1.16.0
 ```
 
 List the pods.

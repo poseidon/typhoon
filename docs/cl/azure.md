@@ -131,10 +131,10 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 ```
 $ export KUBECONFIG=/home/user/.secrets/clusters/ramius/auth/kubeconfig
 $ kubectl get nodes
-NAME                  STATUS  ROLES              AGE  VERSION
-ramius-controller-0   Ready   controller,master  24m  v1.16.0
-ramius-worker-000001  Ready   node               25m  v1.16.0
-ramius-worker-000002  Ready   node               24m  v1.16.0
+NAME                  STATUS  ROLES   AGE  VERSION
+ramius-controller-0   Ready   <none>  24m  v1.16.0
+ramius-worker-000001  Ready   <none>  25m  v1.16.0
+ramius-worker-000002  Ready   <none>  24m  v1.16.0
 ```
 
 List the pods.
