@@ -52,7 +52,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version                 = "2.25.0"
+  version                 = "2.29.0"
   region                  = "us-east-1"   # MUST be us-east-1 right now!
   shared_credentials_file = "/home/user/.config/aws/credentials"
 }
