@@ -82,6 +82,7 @@ data "template_file" "worker-config" {
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
+    node_labels            = join(",", var.node_labels)
   }
 }
 
