@@ -26,6 +26,9 @@ Notable changes between versions.
 
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
+#### Addons
+
+* Update Grafana from v6.3.5 to [v6.3.6](https://github.com/grafana/grafana/releases/tag/v6.3.6)
 
 ## v1.16.0
 
