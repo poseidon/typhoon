@@ -106,7 +106,7 @@ variable "cluster_domain_suffix" {
 }
 
 variable "node_labels" {
-  description = "List of additional labels to add to worker nodes"
-  type = list
+  type = list(string)
+  description = "List of initial node labels"
   default = []
 }

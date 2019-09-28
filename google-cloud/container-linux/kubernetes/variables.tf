@@ -130,8 +130,8 @@ variable "enable_aggregation" {
 }
 
 variable "worker_node_labels" {
-  description = "List of additional labels to add to worker nodes"
-  type = list
+  type = list(string)
+  description = "List of initial worker node labels"
   default = []
 }
 

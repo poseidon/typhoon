@@ -209,6 +209,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
 | disk_iops | IOPS of the EBS volume | "0" (i.e. auto) | "400" |
 | worker_target_groups | Target group ARNs to which worker instances should be added | [] | ["${aws_lb_target_group.app.id}"] |
+| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 | worker_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |

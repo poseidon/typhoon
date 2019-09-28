@@ -4,6 +4,18 @@ Notable changes between versions.
 
 ## Latest
 
+#### AWS
+
+* Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
+
+#### Azure
+
+* Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
+
+#### Google Cloud
+
+* Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
+
 #### Bare-Metal
 
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))

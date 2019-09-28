@@ -52,6 +52,12 @@ variable "preemptible" {
   description = "If enabled, Compute Engine will terminate instances randomly within 24 hours"
 }
 
+variable "clc_snippets" {
+  type = list(string)
+  description = "Container Linux Config snippets"
+  default = []
+}
+
 # configuration
 
 variable "kubeconfig" {
@@ -82,14 +88,8 @@ variable "cluster_domain_suffix" {
 }
 
 variable "node_labels" {
-  description = "List of additional labels to add to worker nodes"
-  type = list
-  default = []
-}
-
-variable "clc_snippets" {
   type = list(string)
-  description = "Container Linux Config snippets"
+  description = "List of initial node labels"
   default = []
 }
 

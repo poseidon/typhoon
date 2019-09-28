@@ -65,8 +65,10 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | spot_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
+| clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |
+| node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/) or per-region and per-type [spot prices](https://aws.amazon.com/ec2/spot/pricing/).
 
@@ -133,6 +135,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
+| node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) and their [specs](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general). Use `az vm list-skus` to get the identifier.
 
@@ -206,8 +209,10 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
+| clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |
+| node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 
