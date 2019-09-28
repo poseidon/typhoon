@@ -135,3 +135,9 @@ variable "enable_aggregation" {
   default = "false"
 }
 
+variable "worker_node_labels" {
+  description = "List of additional labels to add to worker nodes"
+  type = list
+  default = []
+}
+

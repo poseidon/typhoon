@@ -81,6 +81,12 @@ variable "cluster_domain_suffix" {
   default = "cluster.local"
 }
 
+variable "node_labels" {
+  description = "List of additional labels to add to worker nodes"
+  type = list
+  default = []
+}
+
 variable "clc_snippets" {
   type = list(string)
   description = "Container Linux Config snippets"
