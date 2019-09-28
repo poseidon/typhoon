@@ -4,15 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.3.15 to [v3.4.1](https://github.com/etcd-io/etcd/releases/tag/v3.4.1)
+
 #### AWS
 
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Azure
-
-* Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
-
-#### Google Cloud
 
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
@@ -23,6 +21,11 @@ Notable changes between versions.
 #### DigitalOcean
 
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
+
+#### Google Cloud
+
+* Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
+
 
 ## v1.16.0
 
