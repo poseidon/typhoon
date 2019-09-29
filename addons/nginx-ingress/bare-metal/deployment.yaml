@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.1
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.26.1
           args:
             - /nginx-ingress-controller
             - --ingress-class=public
@@ -62,6 +62,11 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             timeoutSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /wait-shutdown
           securityContext:
             capabilities:
               add:
@@ -70,5 +75,5 @@ spec:
               - ALL
             runAsUser: 33 # www-data
       restartPolicy: Always
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 300
 
