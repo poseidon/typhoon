@@ -46,7 +46,7 @@ resource "aws_autoscaling_group" "workers" {
 resource "aws_launch_configuration" "worker" {
   image_id          = data.aws_ami.fedora-coreos.image_id
   instance_type     = var.instance_type
-  spot_price        = var.spot_price
+  spot_price        = var.spot_price > 0 ? var.spot_price : null
   enable_monitoring = false
 
   user_data = data.ct_config.worker-ignition.rendered

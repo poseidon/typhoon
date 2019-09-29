@@ -8,6 +8,7 @@ Notable changes between versions.
 
 #### AWS
 
+* Add Terraform v0.12 variables types ([#553](https://github.com/poseidon/typhoon/pull/553))
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Azure

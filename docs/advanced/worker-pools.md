@@ -63,8 +63,10 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | worker_count | Number of instances | 1 | 3 |
 | instance_type | EC2 instance type | "t3.small" | "t3.medium" |
 | os_image | AMI channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
-| disk_size | Size of the disk in GB | 40 | 100 |
-| spot_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
+| disk_size | Size of the EBS volume in GB | 40 | 100 |
+| disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
+| disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
+| spot_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
 | clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |

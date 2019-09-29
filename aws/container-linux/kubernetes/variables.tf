@@ -18,57 +18,57 @@ variable "dns_zone_id" {
 # instances
 
 variable "controller_count" {
-  type        = string
-  default     = "1"
+  type        = number
   description = "Number of controllers (i.e. masters)"
+  default     = 1
 }
 
 variable "worker_count" {
-  type        = string
-  default     = "1"
+  type        = number
   description = "Number of workers"
+  default     = 1
 }
 
 variable "controller_type" {
   type        = string
-  default     = "t3.small"
   description = "EC2 instance type for controllers"
+  default     = "t3.small"
 }
 
 variable "worker_type" {
   type        = string
-  default     = "t3.small"
   description = "EC2 instance type for workers"
+  default     = "t3.small"
 }
 
 variable "os_image" {
   type        = string
-  default     = "coreos-stable"
   description = "AMI channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
+  default     = "coreos-stable"
 }
 
 variable "disk_size" {
-  type        = string
-  default     = "40"
+  type        = number
   description = "Size of the EBS volume in GB"
+  default     = 40
 }
 
 variable "disk_type" {
   type        = string
-  default     = "gp2"
   description = "Type of the EBS volume (e.g. standard, gp2, io1)"
+  default     = "gp2"
 }
 
 variable "disk_iops" {
-  type        = string
-  default     = "0"
+  type        = number
   description = "IOPS of the EBS volume (e.g. 100)"
+  default     = 0
 }
 
 variable "worker_price" {
-  type        = string
-  default     = ""
-  description = "Spot price in USD for autoscaling group spot instances. Leave as default empty string for autoscaling group to use on-demand instances. Note, switching in-place from spot to on-demand is not possible: https://github.com/terraform-providers/terraform-provider-aws/issues/4320"
+  type        = number
+  description = "Spot price in USD for worker instances or 0 to use on-demand instances"
+  default     = 0
 }
 
 variable "worker_target_groups" {
@@ -97,66 +97,66 @@ variable "ssh_authorized_key" {
 }
 
 variable "asset_dir" {
-  description = "Path to a directory where generated assets should be placed (contains secrets)"
   type        = string
+  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
 }
 
 variable "networking" {
-  description = "Choice of networking provider (calico or flannel)"
   type        = string
+  description = "Choice of networking provider (calico or flannel)"
   default     = "calico"
 }
 
 variable "network_mtu" {
+  type        = number
   description = "CNI interface MTU (applies to calico only). Use 8981 if using instances types with Jumbo frames."
-  type        = string
-  default     = "1480"
+  default     = 1480
 }
 
 variable "host_cidr" {
-  description = "CIDR IPv4 range to assign to EC2 nodes"
   type        = string
+  description = "CIDR IPv4 range to assign to EC2 nodes"
   default     = "10.0.0.0/16"
 }
 
 variable "pod_cidr" {
-  description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = string
+  description = "CIDR IPv4 range to assign Kubernetes pods"
   default     = "10.2.0.0/16"
 }
 
 variable "service_cidr" {
+  type = string
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
-
-
-  type = string
   default = "10.3.0.0/16"
 }
 
-variable "cluster_domain_suffix" {
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  type = string
-  default = "cluster.local"
-}
-
 variable "enable_reporting" {
-  type = string
+  type = bool
   description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default = "false"
+  default = false
 }
 
 variable "enable_aggregation" {
+  type = bool
   description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
-  type = string
-  default = "false"
+  default = false
 }
 
 variable "worker_node_labels" {
   type = list(string)
   description = "List of initial worker node labels"
   default = []
+}
+
+# unofficial, undocumented, unsupported
+
+variable "cluster_domain_suffix" {
+  type = string
+  description = "Queries for domains with the suffix will be answered by CoreDNS. Default is cluster.local (e.g. foo.default.svc.cluster.local)"
+  default = "cluster.local"
 }
 

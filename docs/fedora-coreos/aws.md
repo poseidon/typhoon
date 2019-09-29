@@ -191,7 +191,7 @@ resource "aws_route53_zone" "zone-for-clusters" {
 }
 ```
 
-Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`.
+Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 
 !!! tip ""
     If you have an existing domain name with a zone file elsewhere, just delegate a subdomain that can be managed on Route53 (e.g. aws.mydomain.com) and [update nameservers](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html).
@@ -205,12 +205,11 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | controller_type | EC2 instance type for controllers | "t3.small" | See below |
 | worker_type | EC2 instance type for workers | "t3.small" | See below |
 | os_image | AMI channel for Fedora CoreOS | not yet used | ? |
-| disk_size | Size of the EBS volume in GB | "40" | "100" |
+| disk_size | Size of the EBS volume in GB | 40 | 100 |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
-| disk_iops | IOPS of the EBS volume | "0" (i.e. auto) | "400" |
-| worker_target_groups | Target group ARNs to which worker instances should be added | [] | ["${aws_lb_target_group.app.id}"] |
-| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
-| worker_price | Spot price in USD for workers. Leave as default empty string for regular on-demand instances | "" | "0.10" |
+| disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
+| worker_target_groups | Target group ARNs to which worker instances should be added | [] | [aws_lb_target_group.app.id] |
+| worker_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
 | controller_snippets | Controller Fedora CoreOS Config snippets | [] | UNSUPPORTED |
 | worker_clc_snippets | Worker Fedora CoreOS Config snippets | [] | UNSUPPORTED |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
@@ -218,7 +217,7 @@ Reference the DNS zone id with `"${aws_route53_zone.zone-for-clusters.zone_id}"`
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
+| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/).
 
