@@ -26,6 +26,7 @@ Notable changes between versions.
 
 #### Google Cloud
 
+* Add Terraform v0.12 variables types ([#556](https://github.com/poseidon/typhoon/pull/556))
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Addons

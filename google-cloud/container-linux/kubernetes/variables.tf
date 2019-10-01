@@ -23,45 +23,45 @@ variable "dns_zone_name" {
 # instances
 
 variable "controller_count" {
-  type        = string
-  default     = "1"
+  type        = number
   description = "Number of controllers (i.e. masters)"
+  default     = 1
 }
 
 variable "worker_count" {
-  type        = string
-  default     = "1"
+  type        = number
   description = "Number of workers"
+  default     = 1
 }
 
 variable "controller_type" {
   type        = string
-  default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
+  default     = "n1-standard-1"
 }
 
 variable "worker_type" {
   type        = string
-  default     = "n1-standard-1"
   description = "Machine type for controllers (see `gcloud compute machine-types list`)"
+  default     = "n1-standard-1"
 }
 
 variable "os_image" {
   type        = string
-  default     = "coreos-stable"
   description = "Container Linux image for compute instances (e.g. coreos-stable)"
+  default     = "coreos-stable"
 }
 
 variable "disk_size" {
-  type        = string
-  default     = "40"
+  type        = number
   description = "Size of the disk in GB"
+  default     = 40
 }
 
 variable "worker_preemptible" {
-  type        = string
-  default     = "false"
+  type        = bool
   description = "If enabled, Compute Engine will terminate workers randomly within 24 hours"
+  default     = false
 }
 
 variable "controller_clc_snippets" {
@@ -84,54 +84,55 @@ variable "ssh_authorized_key" {
 }
 
 variable "asset_dir" {
-  description = "Path to a directory where generated assets should be placed (contains secrets)"
   type        = string
+  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
 }
 
 variable "networking" {
-  description = "Choice of networking provider (flannel or calico)"
   type        = string
+  description = "Choice of networking provider (flannel or calico)"
   default     = "calico"
 }
 
 variable "pod_cidr" {
-  description = "CIDR IPv4 range to assign Kubernetes pods"
   type        = string
+  description = "CIDR IPv4 range to assign Kubernetes pods"
   default     = "10.2.0.0/16"
 }
 
 variable "service_cidr" {
+  type = string
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
-
-
-  type = string
   default = "10.3.0.0/16"
 }
 
-variable "cluster_domain_suffix" {
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  type = string
-  default = "cluster.local"
-}
 
 variable "enable_reporting" {
-  type = string
+  type = bool
   description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default = "false"
+  default = false
 }
 
 variable "enable_aggregation" {
+  type = bool
   description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
-  type = string
-  default = "false"
+  default = false
 }
 
 variable "worker_node_labels" {
   type = list(string)
   description = "List of initial worker node labels"
   default = []
+}
+
+# unofficial, undocumented, unsupported
+
+variable "cluster_domain_suffix" {
+  type = string
+  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  default = "cluster.local"
 }
 

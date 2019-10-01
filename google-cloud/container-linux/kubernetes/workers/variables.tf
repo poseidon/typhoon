@@ -23,33 +23,33 @@ variable "network" {
 # instances
 
 variable "worker_count" {
-  type        = string
-  default     = "1"
+  type        = number
   description = "Number of worker compute instances the instance group should manage"
+  default     = 1
 }
 
 variable "machine_type" {
   type        = string
-  default     = "n1-standard-1"
   description = "Machine type for compute instances (e.g. gcloud compute machine-types list)"
+  default     = "n1-standard-1"
 }
 
 variable "os_image" {
   type        = string
-  default     = "coreos-stable"
   description = "Container Linux image for compute instanges (e.g. gcloud compute images list)"
+  default     = "coreos-stable"
 }
 
 variable "disk_size" {
-  type        = string
-  default     = "40"
+  type        = number
   description = "Size of the disk in GB"
+  default     = 40
 }
 
 variable "preemptible" {
-  type        = string
-  default     = "false"
+  type        = bool
   description = "If enabled, Compute Engine will terminate instances randomly within 24 hours"
+  default     = false
 }
 
 variable "clc_snippets" {
@@ -71,20 +71,12 @@ variable "ssh_authorized_key" {
 }
 
 variable "service_cidr" {
+  type = string
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
-
-
-  type = string
   default = "10.3.0.0/16"
-}
-
-variable "cluster_domain_suffix" {
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  type = string
-  default = "cluster.local"
 }
 
 variable "node_labels" {
@@ -94,6 +86,12 @@ variable "node_labels" {
 }
 
 # unofficial, undocumented, unsupported, temporary
+
+variable "cluster_domain_suffix" {
+  type = string
+  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
+  default = "cluster.local"
+}
 
 variable "accelerator_type" {
   type = string

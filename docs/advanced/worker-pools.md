@@ -69,7 +69,6 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | spot_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
 | clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/) or per-region and per-type [spot prices](https://aws.amazon.com/ec2/spot/pricing/).
@@ -136,7 +135,6 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
 | clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) and their [specs](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general). Use `az vm list-skus` to get the identifier.
@@ -194,9 +192,9 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | name | Unique name (distinct from cluster name) | "yavin-16x" |
+| cluster_name | Must be set to `cluster_name` of cluster | "yavin" |
 | region | Region for the worker pool instances. May differ from the cluster's region | "europe-west2" |
 | network | Must be set to `network_name` output by cluster | module.cluster.network_name |
-| cluster_name | Must be set to `cluster_name` of cluster | "yavin" |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
@@ -213,7 +211,6 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
 | clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | Must match `cluster_domain_suffix` of cluster | "cluster.local" | "k8s.example.com" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).

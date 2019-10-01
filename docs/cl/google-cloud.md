@@ -52,7 +52,7 @@ provider "google" {
   version     = "2.15.0"
   project     = "project-id"
   region      = "us-central1"
-  credentials = "${file("~/.config/google-cloud/terraform.json")}"
+  credentials = file("~/.config/google-cloud/terraform.json")
 }
 
 provider "ct" {
@@ -180,7 +180,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
-| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
+| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/yavin" |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.
 
@@ -211,14 +211,13 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-stable-1632-3-0-v20180215" |
 | disk_size | Size of the disk in GB | 40 | 100 |
-| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
+| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 
