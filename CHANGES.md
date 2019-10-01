@@ -14,6 +14,8 @@ Notable changes between versions.
 
 #### Azure
 
+* Add Terraform v0.12 variables types ([#557](https://github.com/poseidon/typhoon/pull/557))
+* Change `workers` module default `vm_type` to `Standard_DS1_v2` (followup to [#539](https://github.com/poseidon/typhoon/pull/539))
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Bare-Metal
@@ -31,7 +33,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Update nginx-ingress from v0.25.1 to [v0.26.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.26.0) ([#555](https://github.com/poseidon/typhoon/pull/555))
+* Update nginx-ingress from v0.25.1 to [v0.26.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.26.1) ([#555](https://github.com/poseidon/typhoon/pull/555))
   * Add lifecycle hook to allow draining for up to 5 minutes
 * Update Grafana from v6.3.5 to [v6.3.6](https://github.com/grafana/grafana/releases/tag/v6.3.6)
 

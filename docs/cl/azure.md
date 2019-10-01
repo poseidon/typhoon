@@ -175,7 +175,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/c
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
-| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/ramius" |
+| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/ramius" |
 
 !!! tip
     Regions are shown in [docs](https://azure.microsoft.com/en-us/global-infrastructure/regions/) or with `az account list-locations --output table`.
@@ -195,14 +195,14 @@ resource "azurerm_resource_group" "global" {
 
 # DNS zone for clusters
 resource "azurerm_dns_zone" "clusters" {
-  resource_group_name = "${azurerm_resource_group.global.name}"
+  resource_group_name = azurerm_resource_group.global.name
 
   name      = "azure.example.com"
   zone_type = "Public"
 }
 ```
 
-Reference the DNS zone with `"${azurerm_dns_zone.clusters.name}"` and its resource group with `"${azurerm_resource_group.global.name}"`.
+Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource group with `"azurerm_resource_group.global.name`.
 
 !!! tip ""
     If you have an existing domain name with a zone file elsewhere, just delegate a subdomain that can be managed on Azure DNS (e.g. azure.mydomain.com) and [update nameservers](https://docs.microsoft.com/en-us/azure/dns/dns-delegate-domain-azure-dns).
@@ -213,10 +213,10 @@ Reference the DNS zone with `"${azurerm_dns_zone.clusters.name}"` and its resour
 |:-----|:------------|:--------|:--------|
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
-| controller_type | Machine type for controllers | "Standard_DS1_v2" | See below |
-| worker_type | Machine type for workers | "Standard_F1" | See below |
-| os_image | Channel for a Container Linux derivative | coreos-stable | coreos-stable, coreos-beta, coreos-alpha |
-| disk_size | Size of the disk in GB | "40" | "100" |
+| controller_type | Machine type for controllers | "Standard_B2s" | See below |
+| worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
+| os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
+| disk_size | Size of the disk in GB | 40 | 100 |
 | worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 | worker_priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
