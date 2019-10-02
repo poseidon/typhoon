@@ -33,6 +33,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update kube-state-metrics from v1.7.2 to v1.8.0
 * Update nginx-ingress from v0.25.1 to [v0.26.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.26.1) ([#555](https://github.com/poseidon/typhoon/pull/555))
   * Add lifecycle hook to allow draining for up to 5 minutes
 * Update Grafana from v6.3.5 to [v6.3.6](https://github.com/grafana/grafana/releases/tag/v6.3.6)
