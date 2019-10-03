@@ -25,6 +25,7 @@ Notable changes between versions.
 
 #### DigitalOcean
 
+* Add Terraform v0.12 variables types ([#560](https://github.com/poseidon/typhoon/pull/560))
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
 
 #### Google Cloud
