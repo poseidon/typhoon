@@ -144,9 +144,9 @@ Configure the Matchbox provider to use your Matchbox API endpoint and client cer
 provider "matchbox" {
   version     = "0.3.0"
   endpoint    = "matchbox.example.com:8081"
-  client_cert = "${file("~/.config/matchbox/client.crt")}"
-  client_key  = "${file("~/.config/matchbox/client.key")}"
-  ca          = "${file("~/.config/matchbox/ca.crt")}"
+  client_cert = file("~/.config/matchbox/client.crt")
+  client_key  = file("~/.config/matchbox/client.key")
+  ca          = file("~/.config/matchbox/ca.crt")
 }
 
 provider "ct" {
@@ -327,13 +327,13 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
-| cluster_name | Unique cluster name | mercury |
-| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:port |
+| cluster_name | Unique cluster name | "mercury" |
+| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
 | os_channel | Channel for a Container Linux derivative | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge |
-| os_version | Version for a Container Linux derivative to PXE and install | 1632.3.0 |
+| os_version | Version for a Container Linux derivative to PXE and install | "1632.3.0" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
-| asset_dir | Path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
+| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
 | controller_names | Ordered list of controller short names | ["node1"] |
 | controller_macs | Ordered list of controller identifying MAC addresses | ["52:54:00:a1:9c:ae"] |
 | controller_domains | Ordered list of controller FQDNs | ["node1.example.com"] |
@@ -351,9 +351,8 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | clc_snippets | Map from machine names to lists of Container Linux Config snippets | {} | [example](/advanced/customization/#usage) |
-| network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | first-found | can-reach=10.0.0.1 |
+| network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | "first-found" | "can-reach=10.0.0.1" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
-| kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
+| kernel_args | Additional kernel args to provide at PXE boot | [] | ["kvm-intel.nested=1"] |
 

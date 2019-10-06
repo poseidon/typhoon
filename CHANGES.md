@@ -7,30 +7,31 @@ Notable changes between versions.
 * Kubernetes [v1.16.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1161)
 * Update etcd from v3.3.15 to [v3.4.1](https://github.com/etcd-io/etcd/releases/tag/v3.4.1)
 * Update Calico from v3.8.2 to [v3.9.1](https://docs.projectcalico.org/v3.9/release-notes/)
+* Add Terraform v0.12 variables types ([#553](https://github.com/poseidon/typhoon/pull/553), [#557](https://github.com/poseidon/typhoon/pull/557), [#560](https://github.com/poseidon/typhoon/pull/560), [#556](https://github.com/poseidon/typhoon/pull/556), [#562](https://github.com/poseidon/typhoon/pull/562))
+  * Deprecate `cluster_domain_suffix` variable
 
 #### AWS
 
-* Add Terraform v0.12 variables types ([#553](https://github.com/poseidon/typhoon/pull/553))
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Azure
 
-* Add Terraform v0.12 variables types ([#557](https://github.com/poseidon/typhoon/pull/557))
-* Change `workers` module default `vm_type` to `Standard_DS1_v2` (followup to [#539](https://github.com/poseidon/typhoon/pull/539))
+* Promote `networking` provider Calico VXLAN out of experimental (set `networking = "calico"`)
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
+* Change `workers` module default `vm_type` to `Standard_DS1_v2` (followup to [#539](https://github.com/poseidon/typhoon/pull/539))
 
 #### Bare-Metal
 
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
+* Remove deprecated `container_linux_oem` variable ([#562](https://github.com/poseidon/typhoon/pull/562))
 
 #### DigitalOcean
 
-* Add Terraform v0.12 variables types ([#560](https://github.com/poseidon/typhoon/pull/560))
+* Promote `networking` provider Calico VXLAN out of experimental (set `networking = "calico"`)
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
 
 #### Google Cloud
 
-* Add Terraform v0.12 variables types ([#556](https://github.com/poseidon/typhoon/pull/556))
 * Add `node_labels` variable to internal `workers` module ([#550](https://github.com/poseidon/typhoon/pull/550))
 
 #### Addons

@@ -21,9 +21,9 @@ locals {
     "coreos.inst.install_dev=${var.install_disk}"
   ]
 
-  kernel = var.cached_install == "true" ? local.cached_kernel : local.remote_kernel
-  initrd = var.cached_install == "true" ? local.cached_initrd : local.remote_initrd
-  args   = var.cached_install == "true" ? local.cached_args : local.remote_args
+  kernel = var.cached_install ? local.cached_kernel : local.remote_kernel
+  initrd = var.cached_install ? local.cached_initrd : local.remote_initrd
+  args   = var.cached_install ? local.cached_args : local.remote_args
 }
 
 

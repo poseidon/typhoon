@@ -35,7 +35,6 @@ storage:
             -d ${install_disk} \
             -C ${os_channel} \
             -V ${os_version} \
-            -o "${container_linux_oem}" \
             ${baseurl_flag} \
             -i ignition.json
           udevadm settle

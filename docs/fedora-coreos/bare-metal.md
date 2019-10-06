@@ -147,9 +147,9 @@ Configure the Matchbox provider to use your Matchbox API endpoint and client cer
 provider "matchbox" {
   version     = "0.3.0"
   endpoint    = "matchbox.example.com:8081"
-  client_cert = "${file("~/.config/matchbox/client.crt")}"
-  client_key  = "${file("~/.config/matchbox/client.key")}"
-  ca          = "${file("~/.config/matchbox/ca.crt")}"
+  client_cert = file("~/.config/matchbox/client.crt")
+  client_key  = file("~/.config/matchbox/client.key")
+  ca          = file("~/.config/matchbox/ca.crt")
 }
 
 provider "ct" {
@@ -163,14 +163,14 @@ Define a Kubernetes cluster using the module `bare-metal/fedora-coreos/kubernete
 
 ```tf
 module "bare-metal-mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes?ref=DEVELOPMENT_SHA"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes?ref=v1.16.1"
   
   # bare-metal
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
   os_stream               = "testing"
   os_version              = "30.20190801.0"
-  cached_install          = "true"
+  cached_install          = true
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -318,10 +318,10 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 
 | Name | Description | Example |
 |:-----|:------------|:--------|
-| cluster_name | Unique cluster name | mercury |
-| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | http://matchbox.example.com:port |
-| os_stream | Fedora CoreOS release stream | testing |
-| os_version | Fedora CoreOS version to PXE and install | 30.20190716.1 |
+| cluster_name | Unique cluster name | "mercury" |
+| matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
+| os_stream | Fedora CoreOS release stream | "testing" |
+| os_version | Fedora CoreOS version to PXE and install | "30.20190716.1" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
 | asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
@@ -341,9 +341,8 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
 | snippets | Map from machine names to lists of Fedora CoreOS Config snippets | {} | UNSUPPORTED |
-| network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | first-found | can-reach=10.0.0.1 |
+| network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | "first-found" | "can-reach=10.0.0.1" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
-| kernel_args | Additional kernel args to provide at PXE boot | [] | "kvm-intel.nested=1" |
+| kernel_args | Additional kernel args to provide at PXE boot | [] | ["kvm-intel.nested=1"] |
 
