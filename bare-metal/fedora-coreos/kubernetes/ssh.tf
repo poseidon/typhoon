@@ -1,6 +1,6 @@
 # Secure copy assets to controllers. Activates kubelet.service
 resource "null_resource" "copy-controller-secrets" {
-  count = length(var.controller_names)
+  count = length(var.controllers)
 
   # Without depends_on, remote-exec could start and wait for machines before
   # matchbox groups are written, causing a deadlock.
@@ -12,7 +12,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   connection {
     type    = "ssh"
-    host    = var.controller_domains[count.index]
+    host    = var.controllers.*.domain[count.index]
     user    = "core"
     timeout = "60m"
   }
@@ -85,7 +85,7 @@ resource "null_resource" "copy-controller-secrets" {
 
 # Secure copy kubeconfig to all workers. Activates kubelet.service
 resource "null_resource" "copy-worker-secrets" {
-  count = length(var.worker_names)
+  count = length(var.workers)
 
   # Without depends_on, remote-exec could start and wait for machines before
   # matchbox groups are written, causing a deadlock.
@@ -96,7 +96,7 @@ resource "null_resource" "copy-worker-secrets" {
 
   connection {
     type    = "ssh"
-    host    = var.worker_domains[count.index]
+    host    = var.workers.*.domain[count.index]
     user    = "core"
     timeout = "60m"
   }
@@ -125,7 +125,7 @@ resource "null_resource" "bootstrap" {
 
   connection {
     type    = "ssh"
-    host    = var.controller_domains[0]
+    host    = var.controllers[0].domain
     user    = "core"
     timeout = "15m"
   }

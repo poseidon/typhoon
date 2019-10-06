@@ -29,8 +29,8 @@ locals {
 
 // Fedora CoreOS controller profile
 resource "matchbox_profile" "controllers" {
-  count = length(var.controller_names)
-  name  = format("%s-controller-%s", var.cluster_name, var.controller_names[count.index])
+  count = length(var.controllers)
+  name  = format("%s-controller-%s", var.cluster_name, var.controllers.*.name[count.index])
 
   kernel = local.kernel
   initrd = [
@@ -42,20 +42,20 @@ resource "matchbox_profile" "controllers" {
 }
 
 data "ct_config" "controller-ignitions" {
-  count = length(var.controller_names)
+  count = length(var.controllers)
 
   content = data.template_file.controller-configs.*.rendered[count.index]
   strict  = true
 }
 
 data "template_file" "controller-configs" {
-  count = length(var.controller_names)
+  count = length(var.controllers)
 
   template = file("${path.module}/fcc/controller.yaml")
   vars = {
-    domain_name            = var.controller_domains[count.index]
-    etcd_name              = var.controller_names[count.index]
-    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))
+    domain_name            = var.controllers.*.domain[count.index]
+    etcd_name              = var.controllers.*.name[count.index]
+    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
@@ -64,8 +64,8 @@ data "template_file" "controller-configs" {
 
 // Fedora CoreOS worker profile
 resource "matchbox_profile" "workers" {
-  count = length(var.worker_names)
-  name  = format("%s-worker-%s", var.cluster_name, var.worker_names[count.index])
+  count = length(var.workers)
+  name  = format("%s-worker-%s", var.cluster_name, var.workers.*.name[count.index])
 
   kernel = local.kernel
   initrd = [
@@ -77,18 +77,18 @@ resource "matchbox_profile" "workers" {
 }
 
 data "ct_config" "worker-ignitions" {
-  count = length(var.worker_names)
+  count = length(var.workers)
 
   content = data.template_file.worker-configs.*.rendered[count.index]
   strict  = true
 }
 
 data "template_file" "worker-configs" {
-  count = length(var.worker_names)
+  count = length(var.workers)
 
   template = file("${path.module}/fcc/worker.yaml")
   vars = {
-    domain_name            = var.worker_domains[count.index]
+    domain_name            = var.workers.*.domain[count.index]
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key

@@ -174,20 +174,22 @@ module "bare-metal-mercury" {
   asset_dir          = "/home/user/.secrets/clusters/mercury"
 
   # machines
-  controller_names   = ["node1"]
-  controller_macs    = ["52:54:00:a1:9c:ae"]
-  controller_domains = ["node1.example.com"]
-  worker_names = [
-    "node2",
-    "node3",
-  ]
-  worker_macs = [
-    "52:54:00:b2:2f:86",
-    "52:54:00:c3:61:77",
-  ]
-  worker_domains = [
-    "node2.example.com",
-    "node3.example.com",
+  controllers = [{
+    name   = "node1"
+    mac    = "52:54:00:a1:9c:ae"
+    domain = "node1.example.com"
+  }]
+  workers = [
+    {
+      name   = "node2",
+      mac    = "52:54:00:b2:2f:86"
+      domain = "node2.example.com"
+    },
+    {
+      name   = "node3",
+      mac    = "52:54:00:c3:61:77"
+      domain = "node3.example.com"
+    }
   ]
 
   # set to http only if you cannot chainload to iPXE firmware with https support
@@ -334,12 +336,8 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
 | asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
-| controller_names | Ordered list of controller short names | ["node1"] |
-| controller_macs | Ordered list of controller identifying MAC addresses | ["52:54:00:a1:9c:ae"] |
-| controller_domains | Ordered list of controller FQDNs | ["node1.example.com"] |
-| worker_names | Ordered list of worker short names | ["node2", "node3"] |
-| worker_macs | Ordered list of worker identifying MAC addresses | ["52:54:00:b2:2f:86", "52:54:00:c3:61:77"] |
-| worker_domains | Ordered list of worker FQDNs | ["node2.example.com", "node3.example.com"] |
+| controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |
+| workers | List of worker machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node2", mac="52:54:00:b2:2f:86", domain="node2.example.com"}, {name="node3", mac="52:54:00:c3:61:77", domain="node3.example.com"}]` |
 
 ### Optional
 

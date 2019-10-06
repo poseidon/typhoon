@@ -22,36 +22,32 @@ variable "os_version" {
 }
 
 # machines
-# Terraform's crude "type system" does not properly support lists of maps so we do this.
 
-variable "controller_names" {
-  type        = list(string)
-  description = "Ordered list of controller names (e.g. [node1])"
+variable "controllers" {
+  type = list(object({
+    name = string
+    mac = string
+    domain = string
+  }))
+  description = <<EOD
+List of controller machine details (unique name, identifying MAC address, FQDN)
+[{ name = "node1", mac = "52:54:00:a1:9c:ae", domain = "node1.example.com"}]
+EOD
 }
 
-variable "controller_macs" {
-  type        = list(string)
-  description = "Ordered list of controller identifying MAC addresses (e.g. [52:54:00:a1:9c:ae])"
-}
-
-variable "controller_domains" {
-  type        = list(string)
-  description = "Ordered list of controller FQDNs (e.g. [node1.example.com])"
-}
-
-variable "worker_names" {
-  type        = list(string)
-  description = "Ordered list of worker names (e.g. [node2, node3])"
-}
-
-variable "worker_macs" {
-  type        = list(string)
-  description = "Ordered list of worker identifying MAC addresses (e.g. [52:54:00:b2:2f:86, 52:54:00:c3:61:77])"
-}
-
-variable "worker_domains" {
-  type        = list(string)
-  description = "Ordered list of worker FQDNs (e.g. [node2.example.com, node3.example.com])"
+variable "workers" {
+  type = list(object({
+    name = string
+    mac = string
+    domain = string
+  }))
+  description = <<EOD
+List of worker machine details (unique name, identifying MAC address, FQDN)
+[
+  { name = "node2", mac = "52:54:00:b2:2f:86", domain = "node2.example.com"},
+  { name = "node3", mac = "52:54:00:c3:61:77", domain = "node3.example.com"}
+]
+EOD
 }
 
 variable "snippets" {

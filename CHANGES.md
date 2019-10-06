@@ -2,6 +2,19 @@
 
 Notable changes between versions.
 
+## Latest
+
+#### Bare-Metal
+
+* Add `controllers` and `workers` as typed lists of machine detail objects ([#566](https://github.com/poseidon/typhoon/pull/566))
+  * Define clusters' machines cleanly and with Terraform v0.12 type constraints (**action required**, see PR example)
+  * Remove `controller_names` list variable
+  * Remove `controller_macs` list variable
+  * Remove `controller_domains` list variable
+  * Remove `worker_names` list variable
+  * Remove `worker_macs` list variable
+  * Remove `worker_domains` list variable
+
 ## v1.16.1
 
 * Kubernetes [v1.16.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1161)

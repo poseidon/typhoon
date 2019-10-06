@@ -1,15 +1,14 @@
 locals {
   # coreos-stable -> coreos flavor, stable channel
   # flatcar-stable -> flatcar flavor, stable channel
-  flavor = element(split("-", var.os_channel), 0)
-
-  channel = element(split("-", var.os_channel), 1)
+  flavor = split("-", var.os_channel)[0]
+  channel = split("-", var.os_channel)[1]
 }
 
 // Container Linux Install profile (from release.core-os.net)
 resource "matchbox_profile" "container-linux-install" {
-  count = length(var.controller_names) + length(var.worker_names)
-  name  = format("%s-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))
+  count = length(var.controllers) + length(var.workers)
+  name  = format("%s-container-linux-install-%s", var.cluster_name, concat(var.controllers.*.name, var.workers.*.name)[count.index])
 
   kernel = "${var.download_protocol}://${local.channel}.release.core-os.net/amd64-usr/${var.os_version}/coreos_production_pxe.vmlinuz"
 
@@ -26,11 +25,11 @@ resource "matchbox_profile" "container-linux-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = element(data.template_file.container-linux-install-configs.*.rendered, count.index)
+  container_linux_config = data.template_file.container-linux-install-configs.*.rendered[count.index]
 }
 
 data "template_file" "container-linux-install-configs" {
-  count = length(var.controller_names) + length(var.worker_names)
+  count = length(var.controllers) + length(var.workers)
 
   template = file("${path.module}/cl/install.yaml.tmpl")
 
@@ -49,8 +48,8 @@ data "template_file" "container-linux-install-configs" {
 // Container Linux Install profile (from matchbox /assets cache)
 // Note: Admin must have downloaded os_version into matchbox assets/coreos.
 resource "matchbox_profile" "cached-container-linux-install" {
-  count = length(var.controller_names) + length(var.worker_names)
-  name  = format("%s-cached-container-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))
+  count = length(var.controllers) + length(var.workers)
+  name  = format("%s-cached-container-linux-install-%s", var.cluster_name, concat(var.controllers.*.name, var.workers.*.name)[count.index])
 
   kernel = "/assets/coreos/${var.os_version}/coreos_production_pxe.vmlinuz"
 
@@ -67,11 +66,11 @@ resource "matchbox_profile" "cached-container-linux-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = element(data.template_file.cached-container-linux-install-configs.*.rendered, count.index)
+  container_linux_config = data.template_file.cached-container-linux-install-configs.*.rendered[count.index]
 }
 
 data "template_file" "cached-container-linux-install-configs" {
-  count = length(var.controller_names) + length(var.worker_names)
+  count = length(var.controllers) + length(var.workers)
 
   template = file("${path.module}/cl/install.yaml.tmpl")
 
@@ -89,8 +88,8 @@ data "template_file" "cached-container-linux-install-configs" {
 
 // Flatcar Linux install profile (from release.flatcar-linux.net)
 resource "matchbox_profile" "flatcar-install" {
-  count = length(var.controller_names) + length(var.worker_names)
-  name  = format("%s-flatcar-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))
+  count = length(var.controllers) + length(var.workers)
+  name  = format("%s-flatcar-install-%s", var.cluster_name, concat(var.controllers.*.name, var.workers.*.name)[count.index])
 
   kernel = "${var.download_protocol}://${local.channel}.release.flatcar-linux.net/amd64-usr/${var.os_version}/flatcar_production_pxe.vmlinuz"
 
@@ -107,14 +106,14 @@ resource "matchbox_profile" "flatcar-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = element(data.template_file.container-linux-install-configs.*.rendered, count.index)
+  container_linux_config = data.template_file.container-linux-install-configs.*.rendered[count.index]
 }
 
 // Flatcar Linux Install profile (from matchbox /assets cache)
 // Note: Admin must have downloaded os_version into matchbox assets/flatcar.
 resource "matchbox_profile" "cached-flatcar-linux-install" {
-  count = length(var.controller_names) + length(var.worker_names)
-  name  = format("%s-cached-flatcar-linux-install-%s", var.cluster_name, element(concat(var.controller_names, var.worker_names), count.index))
+  count = length(var.controllers) + length(var.workers)
+  name  = format("%s-cached-flatcar-linux-install-%s", var.cluster_name, concat(var.controllers.*.name, var.workers.*.name)[count.index])
 
   kernel = "/assets/flatcar/${var.os_version}/flatcar_production_pxe.vmlinuz"
 
@@ -131,32 +130,32 @@ resource "matchbox_profile" "cached-flatcar-linux-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = element(data.template_file.cached-container-linux-install-configs.*.rendered, count.index)
+  container_linux_config = data.template_file.cached-container-linux-install-configs.*.rendered[count.index]
 }
 
 // Kubernetes Controller profiles
 resource "matchbox_profile" "controllers" {
-  count        = length(var.controller_names)
-  name         = format("%s-controller-%s", var.cluster_name, element(var.controller_names, count.index))
-  raw_ignition = element(data.ct_config.controller-ignitions.*.rendered, count.index)
+  count        = length(var.controllers)
+  name         = format("%s-controller-%s", var.cluster_name, var.controllers.*.name[count.index])
+  raw_ignition = data.ct_config.controller-ignitions.*.rendered[count.index]
 }
 
 data "ct_config" "controller-ignitions" {
-  count        = length(var.controller_names)
-  content      = element(data.template_file.controller-configs.*.rendered, count.index)
+  count        = length(var.controllers)
+  content      = data.template_file.controller-configs.*.rendered[count.index]
   pretty_print = false
-  snippets     = local.clc_map[element(var.controller_names, count.index)]
+  snippets     = local.clc_map[var.controllers.*.name[count.index]]
 }
 
 data "template_file" "controller-configs" {
-  count = length(var.controller_names)
+  count = length(var.controllers)
 
   template = file("${path.module}/cl/controller.yaml.tmpl")
 
   vars = {
-    domain_name            = element(var.controller_domains, count.index)
-    etcd_name              = element(var.controller_names, count.index)
-    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controller_names, var.controller_domains))
+    domain_name            = var.controllers.*.domain[count.index]
+    etcd_name              = var.controllers.*.name[count.index]
+    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
     cgroup_driver = var.os_channel == "flatcar-edge" ? "systemd" : "cgroupfs"
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
@@ -166,25 +165,25 @@ data "template_file" "controller-configs" {
 
 // Kubernetes Worker profiles
 resource "matchbox_profile" "workers" {
-  count        = length(var.worker_names)
-  name         = format("%s-worker-%s", var.cluster_name, element(var.worker_names, count.index))
-  raw_ignition = element(data.ct_config.worker-ignitions.*.rendered, count.index)
+  count        = length(var.workers)
+  name         = format("%s-worker-%s", var.cluster_name, var.workers.*.name[count.index])
+  raw_ignition = data.ct_config.worker-ignitions.*.rendered[count.index]
 }
 
 data "ct_config" "worker-ignitions" {
-  count        = length(var.worker_names)
-  content      = element(data.template_file.worker-configs.*.rendered, count.index)
+  count        = length(var.workers)
+  content      = data.template_file.worker-configs.*.rendered[count.index]
   pretty_print = false
-  snippets     = local.clc_map[element(var.worker_names, count.index)]
+  snippets     = local.clc_map[var.workers.*.name[count.index]]
 }
 
 data "template_file" "worker-configs" {
-  count = length(var.worker_names)
+  count = length(var.workers)
 
   template = file("${path.module}/cl/worker.yaml.tmpl")
 
   vars = {
-    domain_name            = element(var.worker_domains, count.index)
+    domain_name            = var.workers.*.domain[count.index]
     cgroup_driver = var.os_channel == "flatcar-edge" ? "systemd" : "cgroupfs"
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
@@ -198,7 +197,7 @@ locals {
   # Default Container Linux config snippets map every node names to list("\n") so
   # all lookups succeed
   clc_defaults = zipmap(
-    concat(var.controller_names, var.worker_names),
+    concat(var.controllers.*.name, var.workers.*.name),
     chunklist(data.template_file.clc-default-snippets.*.rendered, 1),
   )
 
@@ -208,7 +207,7 @@ locals {
 
 // Horrible hack to generate a Terraform list of node count length
 data "template_file" "clc-default-snippets" {
-  count    = length(var.controller_names) + length(var.worker_names)
+  count    = length(var.controllers) + length(var.workers)
   template = "\n"
 }
 
