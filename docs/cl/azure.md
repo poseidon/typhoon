@@ -21,7 +21,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your sys
 
 ```sh
 $ terraform version
-Terraform v0.12.7
+Terraform v0.12.9
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.34.0"
+  version = "1.35.0"
 }
 
 provider "ct" {
@@ -217,7 +217,6 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
 | os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
-| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 | worker_priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
@@ -225,7 +224,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| cluster_domain_suffix | FQDN suffix for Kubernetes services answered by coredns. | "cluster.local" | "k8s.example.com" |
+| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 
 Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) and their [specs](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general). Use `az vm list-skus` to get the identifier.
 
@@ -233,7 +232,7 @@ Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricin
     Unlike AWS and GCP, Azure requires its *virtual* networks to have non-overlapping IPv4 CIDRs (yeah, go figure). Instead of each cluster just using `10.0.0.0/16` for instances, each Azure cluster's `host_cidr` must be non-overlapping (e.g. 10.0.0.0/20 for the 1st cluster, 10.0.16.0/20 for the 2nd cluster, etc).
 
 !!! warning
-    Do not choose a `controller_type` smaller than `Standard_DS1_v2`. Smaller instances are not sufficient for running a controller.
+    Do not choose a `controller_type` smaller than `Standard_B2s`. Smaller instances are not sufficient for running a controller.
 
 #### Low Priority
 
