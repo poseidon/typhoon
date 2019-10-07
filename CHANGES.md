@@ -38,8 +38,8 @@ Notable changes between versions.
 
 #### Addons
 
-* Fix Prometheus etcd target discovery and scraping ([#561](https://github.com/poseidon/typhoon/pull/561))
-  * Fix node label matcher for etcd target discovery (regressed in v1.16.0)
+* Update Prometheus from v2.12.0 to [v2.13.0](https://github.com/prometheus/prometheus/releases/tag/v2.13.0)
+  * Fix Prometheus etcd target discovery and scraping ([#561](https://github.com/poseidon/typhoon/pull/561), regressed with Kubernetes v1.16.0)
 * Update kube-state-metrics from v1.7.2 to v1.8.0
 * Update nginx-ingress from v0.25.1 to [v0.26.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.26.1) ([#555](https://github.com/poseidon/typhoon/pull/555))
   * Add lifecycle hook to allow draining for up to 5 minutes
