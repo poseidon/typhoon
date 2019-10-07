@@ -169,7 +169,7 @@ module "bare-metal-mercury" {
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
   os_stream               = "testing"
-  os_version              = "30.20190801.0"
+  os_version              = "30.20191002.0"
   cached_install          = true
 
   # configuration

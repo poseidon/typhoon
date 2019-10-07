@@ -24,6 +24,7 @@ Notable changes between versions.
 
 * Fix Terraform missing comma error ([#549](https://github.com/poseidon/typhoon/pull/549))
 * Remove deprecated `container_linux_oem` variable ([#562](https://github.com/poseidon/typhoon/pull/562))
+* Use new kernel, initrd, and raw paths for Fedora CoreOS ([#563](https://github.com/poseidon/typhoon/pull/563))
 
 #### DigitalOcean
 
