@@ -19,6 +19,10 @@ output "resource_group_name" {
   value = azurerm_resource_group.cluster.name
 }
 
+output "resource_group_id" {
+  value = azurerm_resource_group.cluster.id
+}
+
 output "subnet_id" {
   value = azurerm_subnet.worker.id
 }
@@ -53,4 +57,3 @@ output "backend_address_pool_id" {
   description = "ID of the worker backend address pool"
   value       = azurerm_lb_backend_address_pool.worker.id
 }
-
