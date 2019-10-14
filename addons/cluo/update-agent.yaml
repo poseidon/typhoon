@@ -10,11 +10,11 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      app: container-linux-update-agent
+      name: container-linux-update-agent
   template:
     metadata:
       labels:
-        app: container-linux-update-agent
+        name: container-linux-update-agent
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:

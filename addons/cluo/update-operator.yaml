@@ -7,11 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: container-linux-update-operator
+      name: container-linux-update-operator
   template:
     metadata:
       labels:
-        app: container-linux-update-operator
+        name: container-linux-update-operator
       annotations:
         seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
