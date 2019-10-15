@@ -28,7 +28,7 @@ systemd:
           --network host \
           --volume /var/lib/etcd:/var/lib/etcd:rw,Z \
           --volume /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
-          quay.io/coreos/etcd:v3.4.1
+          quay.io/coreos/etcd:v3.4.2
         ExecStop=/usr/bin/podman stop etcd
         [Install]
         WantedBy=multi-user.target

@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.4.1 to v3.4.2
+
 #### Bare-Metal
 
 * Add `controllers` and `workers` as typed lists of machine detail objects ([#566](https://github.com/poseidon/typhoon/pull/566))
@@ -18,7 +20,7 @@ Notable changes between versions.
 ## v1.16.1
 
 * Kubernetes [v1.16.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1161)
-* Update etcd from v3.3.15 to [v3.4.1](https://github.com/etcd-io/etcd/releases/tag/v3.4.1)
+* Update etcd from v3.4.0 to [v3.4.1](https://github.com/etcd-io/etcd/releases/tag/v3.4.1)
 * Update Calico from v3.8.2 to [v3.9.1](https://docs.projectcalico.org/v3.9/release-notes/)
 * Add Terraform v0.12 variables types ([#553](https://github.com/poseidon/typhoon/pull/553), [#557](https://github.com/poseidon/typhoon/pull/557), [#560](https://github.com/poseidon/typhoon/pull/560), [#556](https://github.com/poseidon/typhoon/pull/556), [#562](https://github.com/poseidon/typhoon/pull/562))
   * Deprecate `cluster_domain_suffix` variable
