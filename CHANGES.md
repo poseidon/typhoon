@@ -4,10 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
-
 * Kubernetes [v1.16.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1162)
 * Update etcd from v3.4.1 to v3.4.2 ([#570](https://github.com/poseidon/typhoon/pull/570))
 * Update Calico from v3.9.1 to [v3.9.2](https://docs.projectcalico.org/v3.9/release-notes/)
+  * Default to using Calico and supporting NetworkPolicy on all platforms
+
+#### Azure
+
+* Change default networking provider from "flannel" to "calico" ([#573](https://github.com/poseidon/typhoon/pull/573))
 
 #### Bare-Metal
 
@@ -20,10 +24,13 @@ Notable changes between versions.
   * Remove `worker_macs` list variable
   * Remove `worker_domains` list variable
 
+#### DigitalOcean
+
+* Change default networking provider from "flannel" to "calico" ([#573](https://github.com/poseidon/typhoon/pull/573))
+
 #### Addons
 
 * Update Grafana from v6.4.1 to [v6.4.2](https://github.com/grafana/grafana/releases/tag/v6.4.2)
-
 
 ## v1.16.1
 

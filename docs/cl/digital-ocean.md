@@ -141,9 +141,9 @@ List the pods.
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   coredns-1187388186-ld1j7                   1/1       Running   0          11m
 kube-system   coredns-1187388186-rdhf7                   1/1       Running   0          11m
-kube-system   flannel-1cq1v                              2/2       Running   0          11m
-kube-system   flannel-hq9t0                              2/2       Running   0          11m
-kube-system   flannel-v0g9w                              2/2       Running   0          11m
+kube-system   calico-node-1m5bf                          2/2       Running   0          11m              
+kube-system   calico-node-7jmr1                          2/2       Running   0          11m              
+kube-system   calico-node-bknc8                          2/2       Running   0          11m              
 kube-system   kube-apiserver-ip-10.132.115.81            1/1       Running   0          11m
 kube-system   kube-controller-manager-ip-10.132.115.81   1/1       Running   0          11m
 kube-system   kube-proxy-6kxjf                           1/1       Running   0          11m
@@ -219,7 +219,7 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |
-| networking | Choice of networking provider | "flannel" | "flannel" or "calico" |
+| networking | Choice of networking provider | "calico" | "flannel" or "calico" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 

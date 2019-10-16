@@ -12,7 +12,7 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 * Workloads run on worker nodes only, unless they tolerate the master taint
 * Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [NetworkPolicy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/networkpolicy) support [^1]
 
-[^1]: Requires `networking = "calico"`. Calico is the default on AWS, bare-metal, and Google Cloud. Azure and Digital Ocean are limited to `networking = "flannel"`.
+[^1]: Requires `networking = "calico"`. Calico is the default on all platforms (AWS, Azure, bare-metal, DigitalOcean, and Google Cloud).
 
 **Hosts**
 

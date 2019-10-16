@@ -144,9 +144,9 @@ $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                        READY  STATUS    RESTARTS  AGE
 kube-system   coredns-7c6fbb4f4b-b6qzx                    1/1    Running   0         26m
 kube-system   coredns-7c6fbb4f4b-j2k3d                    1/1    Running   0         26m
-kube-system   flannel-bwf24                               2/2    Running   0         26m
-kube-system   flannel-ks5qb                               2/2    Running   0         26m
-kube-system   flannel-tq2wg                               2/2    Running   0         26m
+kube-system   calico-node-1m5bf                           2/2    Running   0         26m              
+kube-system   calico-node-7jmr1                           2/2    Running   0         26m              
+kube-system   calico-node-bknc8                           2/2    Running   0         26m              
 kube-system   kube-apiserver-ramius-controller-0          1/1    Running   0         26m
 kube-system   kube-controller-manager-ramius-controller-0 1/1    Running   0         26m
 kube-system   kube-proxy-j4vpq                            1/1    Running   0         26m
@@ -220,7 +220,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
-| networking | Choice of networking provider | "flannel" | "flannel" or "calico" |
+| networking | Choice of networking provider | "calico" | "flannel" or "calico" |
 | host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
