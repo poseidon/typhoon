@@ -20,6 +20,11 @@ Notable changes between versions.
   * Remove `worker_macs` list variable
   * Remove `worker_domains` list variable
 
+#### Addons
+
+* Update Grafana from v6.4.1 to [v6.4.2](https://github.com/grafana/grafana/releases/tag/v6.4.2)
+
+
 ## v1.16.1
 
 * Kubernetes [v1.16.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1161)
