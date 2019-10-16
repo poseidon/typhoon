@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Switch `kube-proxy` from iptables to ipvs mode ([#574](https://github.com/poseidon/typhoon/pull/574))
+
 #### Addons
 
 * Update Prometheus from v2.13.0 to v2.13.1
