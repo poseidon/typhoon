@@ -123,7 +123,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://k8s.gcr.io/hyperkube:v1.16.1 \
+            docker://k8s.gcr.io/hyperkube:v1.16.2 \
             --net=host \
             --dns=host \
             --exec=/apply
@@ -138,7 +138,7 @@ storage:
       contents:
         inline: |
           KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
-          KUBELET_IMAGE_TAG=v1.16.1
+          KUBELET_IMAGE_TAG=v1.16.2
     - path: /opt/bootstrap/apply
       filesystem: root
       mode: 0544
