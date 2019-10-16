@@ -17,12 +17,8 @@ Notable changes between versions.
 
 * Add `controllers` and `workers` as typed lists of machine detail objects ([#566](https://github.com/poseidon/typhoon/pull/566))
   * Define clusters' machines cleanly and with Terraform v0.12 type constraints (**action required**, see PR example)
-  * Remove `controller_names` list variable
-  * Remove `controller_macs` list variable
-  * Remove `controller_domains` list variable
-  * Remove `worker_names` list variable
-  * Remove `worker_macs` list variable
-  * Remove `worker_domains` list variable
+  * Remove `controller_names`, `controller_macs`, and `controller_domains` variables
+  * Remove `worker_names`, `worker_macs`, and `worker_domains` variables
 
 #### DigitalOcean
 
@@ -31,6 +27,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Grafana from v6.4.1 to [v6.4.2](https://github.com/grafana/grafana/releases/tag/v6.4.2)
+* Change CLUO label from "app" to "name"
 
 ## v1.16.1
 
