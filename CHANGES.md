@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update Grafana from v6.4.2 to v6.4.3
+
+## v1.16.2
+
 * Kubernetes [v1.16.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1162)
 * Update etcd from v3.4.1 to v3.4.2 ([#570](https://github.com/poseidon/typhoon/pull/570))
 * Update Calico from v3.9.1 to [v3.9.2](https://docs.projectcalico.org/v3.9/release-notes/)
