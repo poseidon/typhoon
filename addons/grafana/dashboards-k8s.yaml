@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards-k8s
-  namespace: monitoring
 data:
   apiserver.json: |-
     {
@@ -3052,7 +3048,7 @@ data:
                   "refId": "C"
                 },
                 {
-                  "expr": "sum by(container) (container_memory_cache{job=\"kubernetes-cadvisor\", namespace=\"$namespace\", pod=~\"$pod\", container=~\"$container\", container!=\"POD\"})",
+                  "expr": "sum by(container) (container_memory_cache{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\", container=~\"$container\", container!=\"POD\"})",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "Cache: {{ container }}",
@@ -5471,7 +5467,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\"}, namespace)",
+            "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -5497,7 +5493,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", namespace=\"$namespace\"}, statefulset)",
+            "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, statefulset)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -5545,3 +5541,7 @@ data:
       "uid": "a31c1f46e6f727cb37c0d731a7245005",
       "version": 0
     }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-k8s
+  namespace: monitoring

@@ -7,6 +7,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from v2.13.0 to v2.13.1
+  * Refresh rules, alerts, and dashboards from upstreams
 * Update Grafana from v6.4.2 to v6.4.3
 
 ## v1.16.2

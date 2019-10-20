@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus-rules
-  namespace: monitoring
 data:
   etcd.yaml: |-
     {
@@ -10,6 +6,17 @@ data:
         {
           "name": "etcd",
           "rules": [
+            {
+              "alert": "etcdMembersDown",
+              "annotations": {
+                "message": "etcd cluster \"{{ $labels.job }}\": members are down ({{ $value }})."
+              },
+              "expr": "max by (job) (\n  sum by (job) (up{job=~\".*etcd.*\"} == bool 0)\nor\n  count by (job,endpoint) (\n    sum by (job,endpoint,To) (rate(etcd_network_peer_sent_failures_total{job=~\".*etcd.*\"}[3m])) > 0.01\n  )\n)\n> 0\n",
+              "for": "3m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
             {
               "alert": "etcdInsufficientMembers",
               "annotations": {
@@ -135,27 +142,6 @@ data:
         }
       ]
     }
-  extra.yaml: |-
-    {
-      "groups": [
-        {
-          "name": "extra.rules",
-          "rules": [
-            {
-              "alert": "InactiveRAIDDisk",
-              "annotations": {
-                "message": "{{ $value }} RAID disk(s) on node {{ $labels.instance }} are inactive."
-              },
-              "expr": "node_md_disks - node_md_disks_active > 0",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            }
-          ]
-        }
-      ]
-    }
   kube.yaml: |-
     {
       "groups": [
@@ -167,19 +153,11 @@ data:
               "record": "namespace:container_cpu_usage_seconds_total:sum_rate"
             },
             {
-              "expr": "sum by (namespace, pod, container) (\n  rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])\n)\n",
-              "record": "namespace_pod_container:container_cpu_usage_seconds_total:sum_rate"
+              "expr": "sum by (namespace, pod, container) (\n  rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])\n) * on (namespace, pod) group_left(node) max by(namespace, pod, node) (kube_pod_info)\n",
+              "record": "node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate"
             },
             {
               "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}) by (namespace)\n",
-              "record": "namespace:container_memory_usage_bytes:sum"
-            },
-            {
-              "expr": "sum by (namespace, label_name) (\n    sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
-              "record": "namespace:container_cpu_usage_seconds_total:sum_rate"
-            },
-            {
-              "expr": "sum by (namespace, label_name) (\n    sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\",image!=\"\", container!=\"POD\"}) by (pod, namespace)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
               "record": "namespace:container_memory_usage_bytes:sum"
             },
             {
@@ -323,116 +301,8 @@ data:
               "record": "node:node_num_cpu:sum"
             },
             {
-              "expr": "1 - avg(rate(node_cpu_seconds_total{job=\"node-exporter\",mode=\"idle\"}[1m]))\n",
-              "record": ":node_cpu_utilisation:avg1m"
-            },
-            {
-              "expr": "1 - avg by (node) (\n  rate(node_cpu_seconds_total{job=\"node-exporter\",mode=\"idle\"}[1m])\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:)\n",
-              "record": "node:node_cpu_utilisation:avg1m"
-            },
-            {
-              "expr": "node:node_cpu_utilisation:avg1m\n  *\nnode:node_num_cpu:sum\n  /\nscalar(sum(node:node_num_cpu:sum))\n",
-              "record": "node:cluster_cpu_utilisation:ratio"
-            },
-            {
-              "expr": "sum(node_load1{job=\"node-exporter\"})\n/\nsum(node:node_num_cpu:sum)\n",
-              "record": ":node_cpu_saturation_load1:"
-            },
-            {
-              "expr": "sum by (node) (\n  node_load1{job=\"node-exporter\"}\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n/\nnode:node_num_cpu:sum\n",
-              "record": "node:node_cpu_saturation_load1:"
-            },
-            {
-              "expr": "1 -\nsum(node_memory_MemFree_bytes{job=\"node-exporter\"} + node_memory_Cached_bytes{job=\"node-exporter\"} + node_memory_Buffers_bytes{job=\"node-exporter\"})\n/\nsum(node_memory_MemTotal_bytes{job=\"node-exporter\"})\n",
-              "record": ":node_memory_utilisation:"
-            },
-            {
               "expr": "sum(node_memory_MemFree_bytes{job=\"node-exporter\"} + node_memory_Cached_bytes{job=\"node-exporter\"} + node_memory_Buffers_bytes{job=\"node-exporter\"})\n",
               "record": ":node_memory_MemFreeCachedBuffers_bytes:sum"
-            },
-            {
-              "expr": "sum(node_memory_MemTotal_bytes{job=\"node-exporter\"})\n",
-              "record": ":node_memory_MemTotal_bytes:sum"
-            },
-            {
-              "expr": "sum by (node) (\n  (node_memory_MemFree_bytes{job=\"node-exporter\"} + node_memory_Cached_bytes{job=\"node-exporter\"} + node_memory_Buffers_bytes{job=\"node-exporter\"})\n  * on (namespace, pod) group_left(node)\n    node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_memory_bytes_available:sum"
-            },
-            {
-              "expr": "sum by (node) (\n  node_memory_MemTotal_bytes{job=\"node-exporter\"}\n  * on (namespace, pod) group_left(node)\n    node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_memory_bytes_total:sum"
-            },
-            {
-              "expr": "(node:node_memory_bytes_total:sum - node:node_memory_bytes_available:sum)\n/\nnode:node_memory_bytes_total:sum\n",
-              "record": "node:node_memory_utilisation:ratio"
-            },
-            {
-              "expr": "(node:node_memory_bytes_total:sum - node:node_memory_bytes_available:sum)\n/\nscalar(sum(node:node_memory_bytes_total:sum))\n",
-              "record": "node:cluster_memory_utilisation:ratio"
-            },
-            {
-              "expr": "1e3 * sum(\n  (rate(node_vmstat_pgpgin{job=\"node-exporter\"}[1m])\n + rate(node_vmstat_pgpgout{job=\"node-exporter\"}[1m]))\n)\n",
-              "record": ":node_memory_swap_io_bytes:sum_rate"
-            },
-            {
-              "expr": "1 -\nsum by (node) (\n  (node_memory_MemFree_bytes{job=\"node-exporter\"} + node_memory_Cached_bytes{job=\"node-exporter\"} + node_memory_Buffers_bytes{job=\"node-exporter\"})\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n/\nsum by (node) (\n  node_memory_MemTotal_bytes{job=\"node-exporter\"}\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_memory_utilisation:"
-            },
-            {
-              "expr": "1 - (node:node_memory_bytes_available:sum / node:node_memory_bytes_total:sum)\n",
-              "record": "node:node_memory_utilisation_2:"
-            },
-            {
-              "expr": "1e3 * sum by (node) (\n  (rate(node_vmstat_pgpgin{job=\"node-exporter\"}[1m])\n + rate(node_vmstat_pgpgout{job=\"node-exporter\"}[1m]))\n * on (namespace, pod) group_left(node)\n   node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_memory_swap_io_bytes:sum_rate"
-            },
-            {
-              "expr": "avg(irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m]))\n",
-              "record": ":node_disk_utilisation:avg_irate"
-            },
-            {
-              "expr": "avg by (node) (\n  irate(node_disk_io_time_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m])\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_disk_utilisation:avg_irate"
-            },
-            {
-              "expr": "avg(irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m]))\n",
-              "record": ":node_disk_saturation:avg_irate"
-            },
-            {
-              "expr": "avg by (node) (\n  irate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\",device=~\"nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+\"}[1m])\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_disk_saturation:avg_irate"
-            },
-            {
-              "expr": "max by (instance, namespace, pod, device) ((node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"}\n- node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n/ node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
-              "record": "node:node_filesystem_usage:"
-            },
-            {
-              "expr": "max by (instance, namespace, pod, device) (node_filesystem_avail_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"} / node_filesystem_size_bytes{fstype=~\"ext[234]|btrfs|xfs|zfs\"})\n",
-              "record": "node:node_filesystem_avail:"
-            },
-            {
-              "expr": "sum(irate(node_network_receive_bytes_total{job=\"node-exporter\",device!~\"veth.+\"}[1m])) +\nsum(irate(node_network_transmit_bytes_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]))\n",
-              "record": ":node_net_utilisation:sum_irate"
-            },
-            {
-              "expr": "sum by (node) (\n  (irate(node_network_receive_bytes_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]) +\n  irate(node_network_transmit_bytes_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]))\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_net_utilisation:sum_irate"
-            },
-            {
-              "expr": "sum(irate(node_network_receive_drop_total{job=\"node-exporter\",device!~\"veth.+\"}[1m])) +\nsum(irate(node_network_transmit_drop_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]))\n",
-              "record": ":node_net_saturation:sum_irate"
-            },
-            {
-              "expr": "sum by (node) (\n  (irate(node_network_receive_drop_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]) +\n  irate(node_network_transmit_drop_total{job=\"node-exporter\",device!~\"veth.+\"}[1m]))\n* on (namespace, pod) group_left(node)\n  node_namespace_pod:kube_pod_info:\n)\n",
-              "record": "node:node_net_saturation:sum_irate"
-            },
-            {
-              "expr": "max(\n  max(\n    kube_pod_info{job=\"kube-state-metrics\", host_ip!=\"\"}\n  ) by (node, host_ip)\n  * on (host_ip) group_right (node)\n  label_replace(\n    (max(node_filesystem_files{job=\"node-exporter\", mountpoint=\"/\"}) by (instance)), \"host_ip\", \"$1\", \"instance\", \"(.*):.*\"\n  )\n) by (node)\n",
-              "record": "node:node_inodes_total:"
-            },
-            {
-              "expr": "max(\n  max(\n    kube_pod_info{job=\"kube-state-metrics\", host_ip!=\"\"}\n  ) by (node, host_ip)\n  * on (host_ip) group_right (node)\n  label_replace(\n    (max(node_filesystem_files_free{job=\"node-exporter\", mountpoint=\"/\"}) by (instance)), \"host_ip\", \"$1\", \"instance\", \"(.*):.*\"\n  )\n) by (node)\n",
-              "record": "node:node_inodes_free:"
             }
           ]
         },
@@ -499,7 +369,7 @@ data:
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodcrashlooping"
               },
               "expr": "rate(kube_pod_container_status_restarts_total{job=\"kube-state-metrics\"}[15m]) * 60 * 5 > 0\n",
-              "for": "1h",
+              "for": "15m",
               "labels": {
                 "severity": "critical"
               }
@@ -507,11 +377,11 @@ data:
             {
               "alert": "KubePodNotReady",
               "annotations": {
-                "message": "Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than an hour.",
+                "message": "Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than 15 minutes.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepodnotready"
               },
-              "expr": "sum by (namespace, pod) (kube_pod_status_phase{job=\"kube-state-metrics\", phase=~\"Failed|Pending|Unknown\"}) > 0\n",
-              "for": "1h",
+              "expr": "sum by (namespace, pod) (kube_pod_status_phase{job=\"kube-state-metrics\", phase=~\"Failed|Pending|Unknown\"} * on(namespace, pod) group_left(owner_kind) kube_pod_owner{owner_kind!=\"Job\"}) > 0\n",
+              "for": "15m",
               "labels": {
                 "severity": "critical"
               }
@@ -531,11 +401,11 @@ data:
             {
               "alert": "KubeDeploymentReplicasMismatch",
               "annotations": {
-                "message": "Deployment {{ $labels.namespace }}/{{ $labels.deployment }} has not matched the expected number of replicas for longer than an hour.",
+                "message": "Deployment {{ $labels.namespace }}/{{ $labels.deployment }} has not matched the expected number of replicas for longer than 15 minutes.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubedeploymentreplicasmismatch"
               },
               "expr": "kube_deployment_spec_replicas{job=\"kube-state-metrics\"}\n  !=\nkube_deployment_status_replicas_available{job=\"kube-state-metrics\"}\n",
-              "for": "1h",
+              "for": "15m",
               "labels": {
                 "severity": "critical"
               }
@@ -579,10 +449,10 @@ data:
             {
               "alert": "KubeDaemonSetRolloutStuck",
               "annotations": {
-                "message": "Only {{ $value }}% of the desired Pods of DaemonSet {{ $labels.namespace }}/{{ $labels.daemonset }} are scheduled and ready.",
+                "message": "Only {{ $value | humanizePercentage }} of the desired Pods of DaemonSet {{ $labels.namespace }}/{{ $labels.daemonset }} are scheduled and ready.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubedaemonsetrolloutstuck"
               },
-              "expr": "kube_daemonset_status_number_ready{job=\"kube-state-metrics\"}\n  /\nkube_daemonset_status_desired_number_scheduled{job=\"kube-state-metrics\"} * 100 < 100\n",
+              "expr": "kube_daemonset_status_number_ready{job=\"kube-state-metrics\"}\n  /\nkube_daemonset_status_desired_number_scheduled{job=\"kube-state-metrics\"} < 1.00\n",
               "for": "15m",
               "labels": {
                 "severity": "critical"
@@ -642,8 +512,32 @@ data:
                 "message": "Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubejobfailed"
               },
-              "expr": "kube_job_status_failed{job=\"kube-state-metrics\"}  > 0\n",
-              "for": "1h",
+              "expr": "kube_job_failed{job=\"kube-state-metrics\"}  > 0\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeHpaReplicasMismatch",
+              "annotations": {
+                "message": "HPA {{ $labels.namespace }}/{{ $labels.hpa }} has not matched the desired number of replicas for longer than 15 minutes.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpareplicasmismatch"
+              },
+              "expr": "(kube_hpa_status_desired_replicas{job=\"kube-state-metrics\"}\n  !=\nkube_hpa_status_current_replicas{job=\"kube-state-metrics\"})\n  and\nchanges(kube_hpa_status_current_replicas[15m]) == 0\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeHpaMaxedOut",
+              "annotations": {
+                "message": "HPA {{ $labels.namespace }}/{{ $labels.hpa }} has been running at max replicas for longer than 15 minutes.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpamaxedout"
+              },
+              "expr": "kube_hpa_status_current_replicas{job=\"kube-state-metrics\"}\n  ==\nkube_hpa_spec_max_replicas{job=\"kube-state-metrics\"}\n",
+              "for": "15m",
               "labels": {
                 "severity": "warning"
               }
@@ -704,10 +598,10 @@ data:
             {
               "alert": "KubeQuotaExceeded",
               "annotations": {
-                "message": "Namespace {{ $labels.namespace }} is using {{ printf \"%0.0f\" $value }}% of its {{ $labels.resource }} quota.",
+                "message": "Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage }} of its {{ $labels.resource }} quota.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubequotaexceeded"
               },
-              "expr": "100 * kube_resourcequota{job=\"kube-state-metrics\", type=\"used\"}\n  / ignoring(instance, job, type)\n(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\"} > 0)\n  > 90\n",
+              "expr": "kube_resourcequota{job=\"kube-state-metrics\", type=\"used\"}\n  / ignoring(instance, job, type)\n(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\"} > 0)\n  > 0.90\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -716,10 +610,10 @@ data:
             {
               "alert": "CPUThrottlingHigh",
               "annotations": {
-                "message": "{{ printf \"%0.0f\" $value }}% throttling of CPU in namespace {{ $labels.namespace }} for container {{ $labels.container }} in pod {{ $labels.pod }}.",
+                "message": "{{ $value | humanizePercentage }} throttling of CPU in namespace {{ $labels.namespace }} for container {{ $labels.container }} in pod {{ $labels.pod }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-cputhrottlinghigh"
               },
-              "expr": "100 * sum(increase(container_cpu_cfs_throttled_periods_total{container!=\"\", }[5m])) by (container, pod, namespace)\n  /\nsum(increase(container_cpu_cfs_periods_total{}[5m])) by (container, pod, namespace)\n  > 100 \n",
+              "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{container!=\"\", }[5m])) by (container, pod, namespace)\n  /\nsum(increase(container_cpu_cfs_periods_total{}[5m])) by (container, pod, namespace)\n  > ( 100 / 100 )\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -733,10 +627,10 @@ data:
             {
               "alert": "KubePersistentVolumeUsageCritical",
               "annotations": {
-                "message": "The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ printf \"%0.2f\" $value }}% free.",
+                "message": "The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumeusagecritical"
               },
-              "expr": "100 * kubelet_volume_stats_available_bytes{job=\"kubelet\"}\n  /\nkubelet_volume_stats_capacity_bytes{job=\"kubelet\"}\n  < 3\n",
+              "expr": "kubelet_volume_stats_available_bytes{job=\"kubelet\"}\n  /\nkubelet_volume_stats_capacity_bytes{job=\"kubelet\"}\n  < 0.03\n",
               "for": "1m",
               "labels": {
                 "severity": "critical"
@@ -745,10 +639,10 @@ data:
             {
               "alert": "KubePersistentVolumeFullInFourDays",
               "annotations": {
-                "message": "Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is expected to fill up within four days. Currently {{ printf \"%0.2f\" $value }}% is available.",
+                "message": "Based on recent sampling, the PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is expected to fill up within four days. Currently {{ $value | humanizePercentage }} is available.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubepersistentvolumefullinfourdays"
               },
-              "expr": "100 * (\n  kubelet_volume_stats_available_bytes{job=\"kubelet\"}\n    /\n  kubelet_volume_stats_capacity_bytes{job=\"kubelet\"}\n) < 15\nand\npredict_linear(kubelet_volume_stats_available_bytes{job=\"kubelet\"}[6h], 4 * 24 * 3600) < 0\n",
+              "expr": "(\n  kubelet_volume_stats_available_bytes{job=\"kubelet\"}\n    /\n  kubelet_volume_stats_capacity_bytes{job=\"kubelet\"}\n) < 0.15\nand\npredict_linear(kubelet_volume_stats_available_bytes{job=\"kubelet\"}[6h], 4 * 24 * 3600) < 0\n",
               "for": "5m",
               "labels": {
                 "severity": "critical"
@@ -774,11 +668,11 @@ data:
             {
               "alert": "KubeNodeNotReady",
               "annotations": {
-                "message": "{{ $labels.node }} has been unready for more than an hour.",
+                "message": "{{ $labels.node }} has been unready for more than 15 minutes.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodenotready"
               },
               "expr": "kube_node_status_condition{job=\"kube-state-metrics\",condition=\"Ready\",status=\"true\"} == 0\n",
-              "for": "1h",
+              "for": "15m",
               "labels": {
                 "severity": "warning"
               }
@@ -789,19 +683,7 @@ data:
                 "message": "There are {{ $value }} different semantic versions of Kubernetes components running.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeversionmismatch"
               },
-              "expr": "count(count by (gitVersion) (label_replace(kubernetes_build_info{job!=\"coredns\"},\"gitVersion\",\"$1\",\"gitVersion\",\"(v[0-9]*.[0-9]*.[0-9]*).*\"))) > 1\n",
-              "for": "1h",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "KubeClientErrors",
-              "annotations": {
-                "message": "Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance }}' is experiencing {{ printf \"%0.0f\" $value }}% errors.'",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclienterrors"
-              },
-              "expr": "(sum(rate(rest_client_requests_total{code=~\"5..\"}[5m])) by (instance, job)\n  /\nsum(rate(rest_client_requests_total[5m])) by (instance, job))\n* 100 > 1\n",
+              "expr": "count(count by (gitVersion) (label_replace(kubernetes_build_info{job!~\"kube-dns|coredns\"},\"gitVersion\",\"$1\",\"gitVersion\",\"(v[0-9]*.[0-9]*.[0-9]*).*\"))) > 1\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -810,10 +692,10 @@ data:
             {
               "alert": "KubeClientErrors",
               "annotations": {
-                "message": "Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance }}' is experiencing {{ printf \"%0.0f\" $value }} errors / second.",
+                "message": "Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance }}' is experiencing {{ $value | humanizePercentage }} errors.'",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclienterrors"
               },
-              "expr": "sum(rate(ksm_scrape_error_total{job=\"kube-state-metrics\"}[5m])) by (instance, job) > 0.1\n",
+              "expr": "(sum(rate(rest_client_requests_total{code=~\"5..\"}[5m])) by (instance, job)\n  /\nsum(rate(rest_client_requests_total[5m])) by (instance, job))\n> 0.01\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -822,10 +704,10 @@ data:
             {
               "alert": "KubeletTooManyPods",
               "annotations": {
-                "message": "Kubelet {{ $labels.instance }} is running {{ $value }} Pods, close to the limit of 110.",
+                "message": "Kubelet '{{ $labels.node }}' is running at {{ $value | humanizePercentage }} of its Pod capacity.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods"
               },
-              "expr": "kubelet_running_pod_count{job=\"kubelet\"} > 110 * 0.9\n",
+              "expr": "max(max(kubelet_running_pod_count{job=\"kubelet\"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job=\"kubelet\"}) by(node) / max(kube_node_status_capacity_pods{job=\"kube-state-metrics\"}) by(node) > 0.95\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -858,10 +740,10 @@ data:
             {
               "alert": "KubeAPIErrorsHigh",
               "annotations": {
-                "message": "API server is returning errors for {{ $value }}% of requests.",
+                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) * 100 > 3\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.03\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -870,10 +752,10 @@ data:
             {
               "alert": "KubeAPIErrorsHigh",
               "annotations": {
-                "message": "API server is returning errors for {{ $value }}% of requests.",
+                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) * 100 > 1\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.01\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -882,10 +764,10 @@ data:
             {
               "alert": "KubeAPIErrorsHigh",
               "annotations": {
-                "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
+                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 10\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.10\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -894,10 +776,10 @@ data:
             {
               "alert": "KubeAPIErrorsHigh",
               "annotations": {
-                "message": "API server is returning errors for {{ $value }}% of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
+                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) * 100 > 5\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.05\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -923,141 +805,6 @@ data:
               "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 86400\n",
               "labels": {
                 "severity": "critical"
-              }
-            }
-          ]
-        }
-      ]
-    }
-  kubeprom.yaml: |-
-    {
-      "groups": [
-        {
-          "name": "kube-prometheus-node-recording.rules",
-          "rules": [
-            {
-              "expr": "sum(rate(node_cpu_seconds_total{mode!=\"idle\",mode!=\"iowait\"}[3m])) BY (instance)",
-              "record": "instance:node_cpu:rate:sum"
-            },
-            {
-              "expr": "sum((node_filesystem_size_bytes{mountpoint=\"/\"} - node_filesystem_free_bytes{mountpoint=\"/\"})) BY (instance)",
-              "record": "instance:node_filesystem_usage:sum"
-            },
-            {
-              "expr": "sum(rate(node_network_receive_bytes_total[3m])) BY (instance)",
-              "record": "instance:node_network_receive_bytes:rate:sum"
-            },
-            {
-              "expr": "sum(rate(node_network_transmit_bytes_total[3m])) BY (instance)",
-              "record": "instance:node_network_transmit_bytes:rate:sum"
-            },
-            {
-              "expr": "sum(rate(node_cpu_seconds_total{mode!=\"idle\",mode!=\"iowait\"}[5m])) WITHOUT (cpu, mode) / ON(instance) GROUP_LEFT() count(sum(node_cpu_seconds_total) BY (instance, cpu)) BY (instance)",
-              "record": "instance:node_cpu:ratio"
-            },
-            {
-              "expr": "sum(rate(node_cpu_seconds_total{mode!=\"idle\",mode!=\"iowait\"}[5m]))",
-              "record": "cluster:node_cpu:sum_rate5m"
-            },
-            {
-              "expr": "cluster:node_cpu_seconds_total:rate5m / count(sum(node_cpu_seconds_total) BY (instance, cpu))",
-              "record": "cluster:node_cpu:ratio"
-            }
-          ]
-        },
-        {
-          "name": "kube-prometheus-node-alerting.rules",
-          "rules": [
-            {
-              "alert": "NodeDiskRunningFull",
-              "annotations": {
-                "message": "Device {{ $labels.device }} of node-exporter {{ $labels.namespace }}/{{ $labels.pod }} will be full within the next 24 hours."
-              },
-              "expr": "(node:node_filesystem_usage: > 0.85) and (predict_linear(node:node_filesystem_avail:[6h], 3600 * 24) < 0)\n",
-              "for": "30m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "NodeDiskRunningFull",
-              "annotations": {
-                "message": "Device {{ $labels.device }} of node-exporter {{ $labels.namespace }}/{{ $labels.pod }} will be full within the next 2 hours."
-              },
-              "expr": "(node:node_filesystem_usage: > 0.85) and (predict_linear(node:node_filesystem_avail:[30m], 3600 * 2) < 0)\n",
-              "for": "10m",
-              "labels": {
-                "severity": "critical"
-              }
-            }
-          ]
-        },
-        {
-          "name": "node-time",
-          "rules": [
-            {
-              "alert": "ClockSkewDetected",
-              "annotations": {
-                "message": "Clock skew detected on node-exporter {{ $labels.namespace }}/{{ $labels.pod }}. Ensure NTP is configured correctly on this host."
-              },
-              "expr": "abs(node_timex_offset_seconds{job=\"node-exporter\"}) > 0.03\n",
-              "for": "2m",
-              "labels": {
-                "severity": "warning"
-              }
-            }
-          ]
-        },
-        {
-          "name": "node-network",
-          "rules": [
-            {
-              "alert": "NetworkReceiveErrors",
-              "annotations": {
-                "message": "Network interface \"{{ $labels.device }}\" showing receive errors on node-exporter {{ $labels.namespace }}/{{ $labels.pod }}\""
-              },
-              "expr": "rate(node_network_receive_errs_total{job=\"node-exporter\",device!~\"veth.+|tunl.+\"}[2m]) > 0\n",
-              "for": "2m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "NetworkTransmitErrors",
-              "annotations": {
-                "message": "Network interface \"{{ $labels.device }}\" showing transmit errors on node-exporter {{ $labels.namespace }}/{{ $labels.pod }}\""
-              },
-              "expr": "rate(node_network_transmit_errs_total{job=\"node-exporter\",device!~\"veth.+|tunl.+\"}[2m]) > 0\n",
-              "for": "2m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "NodeNetworkInterfaceFlapping",
-              "annotations": {
-                "message": "Network interface \"{{ $labels.device }}\" changing it's up status often on node-exporter {{ $labels.namespace }}/{{ $labels.pod }}\""
-              },
-              "expr": "changes(node_network_up{job=\"node-exporter\",device!~\"veth.+|tunl.+\"}[2m]) > 2\n",
-              "for": "2m",
-              "labels": {
-                "severity": "warning"
-              }
-            }
-          ]
-        },
-        {
-          "name": "general.rules",
-          "rules": [
-            {
-              "alert": "TargetDown",
-              "annotations": {
-                "message": "{{ $value }}% of the {{ $labels.job }} targets are down."
-              },
-              "expr": "100 * (count(up == 0) BY (job) / count(up) BY (job)) > 10",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
               }
             }
           ]
@@ -1155,18 +902,6 @@ data:
               }
             },
             {
-              "alert": "PrometheusTSDBWALCorruptions",
-              "annotations": {
-                "description": "Prometheus {{$labels.instance}} has detected {{$value | humanize}} corruptions of the write-ahead log (WAL) over the last 3h.",
-                "summary": "Prometheus is detecting WAL corruptions."
-              },
-              "expr": "increase(tsdb_wal_corruptions_total{job=\"prometheus\"}[3h]) > 0\n",
-              "for": "4h",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
               "alert": "PrometheusNotIngestingSamples",
               "annotations": {
                 "description": "Prometheus {{$labels.instance}} is not ingesting samples.",
@@ -1181,7 +916,7 @@ data:
             {
               "alert": "PrometheusDuplicateTimestamps",
               "annotations": {
-                "description": "Prometheus {{$labels.instance}} is dropping {{$value | humanize}} samples/s with different values but duplicated timestamp.",
+                "description": "Prometheus {{$labels.instance}} is dropping {{ printf \"%.4g\" $value  }} samples/s with different values but duplicated timestamp.",
                 "summary": "Prometheus is dropping samples with duplicate timestamps."
               },
               "expr": "rate(prometheus_target_scrapes_sample_duplicate_timestamp_total{job=\"prometheus\"}[5m]) > 0\n",
@@ -1193,7 +928,7 @@ data:
             {
               "alert": "PrometheusOutOfOrderTimestamps",
               "annotations": {
-                "description": "Prometheus {{$labels.instance}} is dropping {{$value | humanize}} samples/s with timestamps arriving out of order.",
+                "description": "Prometheus {{$labels.instance}} is dropping {{ printf \"%.4g\" $value  }} samples/s with timestamps arriving out of order.",
                 "summary": "Prometheus drops samples with out-of-order timestamps."
               },
               "expr": "rate(prometheus_target_scrapes_sample_out_of_order_total{job=\"prometheus\"}[5m]) > 0\n",
@@ -1227,6 +962,18 @@ data:
               }
             },
             {
+              "alert": "PrometheusRemoteWriteDesiredShards",
+              "annotations": {
+                "description": "Prometheus {{$labels.instance}} remote write desired shards calculation wants to run {{ printf $value }} shards, which is more than the max of {{ printf `prometheus_remote_storage_shards_max{instance=\"%s\",job=\"prometheus\"}` $labels.instance | query | first | value }}.",
+                "summary": "Prometheus remote write desired shards calculation wants to run more than configured max shards."
+              },
+              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\n(\n  max_over_time(prometheus_remote_storage_shards_desired{job=\"prometheus\"}[5m])\n> on(job, instance) group_right\n  max_over_time(prometheus_remote_storage_shards_max{job=\"prometheus\"}[5m])\n)\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
               "alert": "PrometheusRuleFailures",
               "annotations": {
                 "description": "Prometheus {{$labels.instance}} has failed to evaluate {{ printf \"%.0f\" $value }} rules in the last 5m.",
@@ -1254,3 +1001,44 @@ data:
         }
       ]
     }
+  typhoon.yaml: |-
+    {
+      "groups": [
+        {
+          "name": "general.rules",
+          "rules": [
+            {
+              "alert": "TargetDown",
+              "annotations": {
+                "message": "{{ printf \"%.4g\" $value }}% of the {{ $labels.job }} targets are down."
+              },
+              "expr": "100 * (count(up == 0) BY (job, namespace, service) / count(up) BY (job, namespace, service)) > 10",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            }
+          ]
+        },
+        {
+          "name": "extra.rules",
+          "rules": [
+            {
+              "alert": "InactiveRAIDDisk",
+              "annotations": {
+                "message": "{{ $value }} RAID disk(s) on node {{ $labels.instance }} are inactive."
+              },
+              "expr": "node_md_disks - node_md_disks_active > 0",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            }
+          ]
+        }
+      ]
+    }
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: monitoring

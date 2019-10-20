@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards-coredns
-  namespace: monitoring
 data:
   coredns.json: |-
     {
@@ -1034,3 +1030,7 @@ data:
       "uid": "2f3f749259235f58698ea949170d3bd5",
       "version": 0
     }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-coredns
+  namespace: monitoring

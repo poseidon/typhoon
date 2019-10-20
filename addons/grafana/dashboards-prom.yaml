@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards-prom
-  namespace: monitoring
 data:
   prometheus-remote-write.json: |-
     {
@@ -2158,3 +2154,7 @@ data:
       "uid": "",
       "version": 0
     }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-prom
+  namespace: monitoring

@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards-nginx-ingress
-  namespace: monitoring
 data:
   nginx.json: |-
     {
@@ -1057,3 +1053,7 @@ data:
       "uid": "f4af03eca476c08ecf2b5cf15fd60168",
       "version": 0
     }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-nginx-ingress
+  namespace: monitoring

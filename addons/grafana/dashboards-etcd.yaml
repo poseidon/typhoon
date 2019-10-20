@@ -1,8 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards-etcd
-  namespace: monitoring
 data:
   etcd.json: |-
     {
@@ -1229,3 +1225,7 @@ data:
       "uid": "c2f4e12cdf69feb95caa41a5a1b423d9",
       "version": 215
     }
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards-etcd
+  namespace: monitoring
