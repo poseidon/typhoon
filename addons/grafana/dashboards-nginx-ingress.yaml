@@ -22,7 +22,7 @@ data:
       "links": [
 
       ],
-      "refresh": "",
+      "refresh": "10s",
       "rows": [
         {
           "collapse": false,
@@ -90,7 +90,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "round(sum(irate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",namespace=~\"$namespace\"}[2m])), 0.01)",
+                  "expr": "round(sum(irate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\", controller_namespace=~\"$namespace\"}[2m])), 0.01)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -172,7 +172,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(avg_over_time(nginx_ingress_controller_nginx_process_connections{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
+                  "expr": "sum(avg_over_time(nginx_ingress_controller_nginx_process_connections{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -254,7 +254,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",namespace=~\"$namespace\",status!~\"[4-5].*\"}[2m])) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",namespace=~\"$namespace\"}[2m]))",
+                  "expr": "sum(rate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",status!~\"[4-5].*\"}[2m])) / sum(rate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -331,7 +331,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "round(sum(irate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (ingress), 0.01)",
+                  "expr": "round(sum(irate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (ingress), 0.01)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{ingress}}",
@@ -422,7 +422,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",namespace=~\"$namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m])) by (ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (ingress)",
+                  "expr": "sum(rate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m])) by (ingress) / sum(rate(nginx_ingress_controller_requests{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (ingress)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{ingress}}",
@@ -526,21 +526,21 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "histogram_quantile(0.99, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
+                  "expr": "histogram_quantile(0.99, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{cluster=~\"$cluster\", ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{ingress}} 99%",
                   "refId": "A"
                 },
                 {
-                  "expr": "histogram_quantile(0.90, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
+                  "expr": "histogram_quantile(0.90, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{cluster=~\"$cluster\", ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{ingress}} 90%",
                   "refId": "B"
                 },
                 {
-                  "expr": "histogram_quantile(0.50, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
+                  "expr": "histogram_quantile(0.50, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{cluster=~\"$cluster\", ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m])) by (le, ingress))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{ingress}} 50%",
@@ -644,14 +644,14 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum (irate (nginx_ingress_controller_request_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
+                  "expr": "sum (irate (nginx_ingress_controller_request_size_sum{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "received",
                   "refId": "A"
                 },
                 {
-                  "expr": "sum (irate (nginx_ingress_controller_response_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
+                  "expr": "sum (irate (nginx_ingress_controller_response_size_sum{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "sent",
@@ -742,7 +742,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "avg(nginx_ingress_controller_nginx_process_resident_memory_bytes{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}) by (controller_pod)",
+                  "expr": "avg(nginx_ingress_controller_nginx_process_resident_memory_bytes{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}) by (controller_pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{controller_pod}}",
@@ -833,7 +833,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(nginx_ingress_controller_nginx_process_cpu_seconds_total{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m])) by (controller_pod)",
+                  "expr": "sum(rate(nginx_ingress_controller_nginx_process_cpu_seconds_total{cluster=~\"$cluster\", controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\"}[2m])) by (controller_pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{controller_pod}}",
@@ -919,6 +919,32 @@ data:
 
             },
             "datasource": "$datasource",
+            "hide": 2,
+            "includeAll": true,
+            "label": "cluster",
+            "multi": false,
+            "name": "cluster",
+            "options": [
+
+            ],
+            "query": "label_values(kube_pod_info, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [
+
+            ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "allValue": ".*",
+            "current": {
+
+            },
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": true,
             "label": null,
@@ -927,7 +953,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(nginx_ingress_controller_config_hash, controller_namespace)",
+            "query": "label_values(nginx_ingress_controller_config_hash{cluster=~\"$cluster\"}, controller_namespace)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -953,7 +979,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(nginx_ingress_controller_config_hash{namespace=~\"$namespace\"}, controller_class)",
+            "query": "label_values(nginx_ingress_controller_config_hash{cluster=~\"$cluster\", namespace=~\"$namespace\"}, controller_class)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -979,7 +1005,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(nginx_ingress_controller_config_hash{namespace=~\"$namespace\",controller_class=~\"$controller_class\"}, controller_pod)",
+            "query": "label_values(nginx_ingress_controller_config_hash{cluster=~\"$cluster\", namespace=~\"$namespace\", controller_class=~\"$controller_class\"}, controller_pod)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -1005,7 +1031,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(nginx_ingress_controller_requests{namespace=~\"$namespace\",controller_class=~\"$controller_class\",controller=~\"$controller\"}, ingress)",
+            "query": "label_values(nginx_ingress_controller_requests{cluster=~\"$cluster\", namespace=~\"$namespace\", controller_class=~\"$controller_class\", controller=~\"$controller\"}, ingress)",
             "refresh": 2,
             "regex": "",
             "sort": 0,

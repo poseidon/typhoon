@@ -22,7 +22,7 @@ data:
       "links": [
 
       ],
-      "refresh": "",
+      "refresh": "10s",
       "rows": [
         {
           "collapse": false,
@@ -974,15 +974,41 @@ data:
 
             },
             "datasource": "$datasource",
+            "hide": 2,
+            "includeAll": false,
+            "label": "cluster",
+            "multi": false,
+            "name": "cluster",
+            "options": [
+
+            ],
+            "query": "label_values(kube_pod_info, cluster)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [
+
+            ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "allValue": null,
+            "current": {
+
+            },
+            "datasource": "$datasource",
             "hide": 0,
             "includeAll": true,
-            "label": null,
+            "label": "pod",
             "multi": false,
             "name": "instance",
             "options": [
 
             ],
-            "query": "label_values(coredns_build_info{job=\"coredns\"}, instance)",
+            "query": "label_values(coredns_build_info{cluster=\"$cluster\", job=\"coredns\"}, instance)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
