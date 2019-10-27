@@ -6,6 +6,39 @@ Typhoon ensures certain networking hardware integrates well with bare-metal Kube
 
 Ubiquiti EdgeRouters and EdgeOS work well with bare-metal Kubernetes clusters. Familiarity with EdgeRouter setup and CLI usage is required.
 
+### DHCP
+
+Assign static IPs to clients with known MAC addresses. This is called a static mapping by EdgeOS. Configure the router with the commands based on region inventory.
+
+```
+configure
+show service dhcp-server shared-network
+set service dhcp-server shared-network-name LAN subnet SUBNET static-mapping NAME mac-address MACADDR
+set service dhcp-server shared-network-name LAN subnet SUBNET static-mapping NAME ip-address 10.0.0.20
+```
+
+### DNS
+
+Add DNS A records to static IPs as `dnsmasq` host-records.
+
+```
+configure
+set service dns forwarding options host-record=node.example.com,10.0.0.20
+```
+
+Forward `*.svc.cluster.local` queries to the CoreDNS Kubernetes service IP to allow clients to resolve Kubernetes services.
+
+```
+set service dns forwarding options server=/svc.cluster.local/10.3.0.10
+commit-confirm
+```
+
+Restart `dnsmasq`.
+
+```
+sudo /etc/init.d/dnsmasq restart
+```
+
 ### PXE
 
 Ubiquiti EdgeRouters can provide a PXE-enabled network boot environment for client machines.
@@ -65,55 +98,88 @@ set service dns forwarding options tftp-root=/config/tftpboot
 commit-confirm
 ```
 
-### DHCP
+### Routing
 
-Assign static IPs to clients with known MAC addresses. This is called a static mapping by EdgeOS. Configure the router with the commands based on region inventory.
+#### Static Routes
 
-```
-configure
-show service dhcp-server shared-network
-set service dhcp-server shared-network-name LAN subnet SUBNET static-mapping NAME mac-address MACADDR
-set service dhcp-server shared-network-name LAN subnet SUBNET static-mapping NAME ip-address 10.0.0.20
-```
-
-### DNS
-
-Assign DNS A records to nodes as options to `dnsmasq`.
-
-```
-configure
-set service dns forwarding options host-record=node.example.com,10.0.0.20
-```
-
-Restart `dnsmasq`.
-
-```
-sudo /etc/init.d/dnsmasq restart
-```
-
-Configure queries for `*.svc.cluster.local` to be forwarded to the Kubernetes `coredns` service IP to allow hosts to resolve cluster-local Kubernetes names.
-
-```
-configure
-show service dns forwarding
-set service dns forwarding options server=/svc.cluster.local/10.3.0.10
-commit-confirm
-```
-
-### Kubernetes Services
-
-Add static routes for the Kubernetes IPv4 service range to Kubernetes node(s) so hosts can route to Kubernetes services (default: 10.3.0.0/16).
+Add static route(s) to Kubernetes node(s) that can route to Kubernetes service IPs (default: 10.3.0.0/16). Kubernetes service IPs will become routeable on the LAN.
 
 ```
 configure
 show protocols static route
 set protocols static route 10.3.0.0/16 next-hop NODE_IP
-...
 commit-confirm
 ```
 
 !!! note
-    Adding multiple next-hop nodes provides equal-cost multi-path (ECMP) routing. EdgeOS v2.0+ is required. The kernel in prior versions used flow-hash to balanced packets, whereas with v2.0, round-robin sessions are used. 
+    Adding multiple next-hop nodes provides equal-cost multi-path (ECMP) routing. EdgeOS v2.0+ is required. The kernel in prior versions used flow-hash to balanced packets, whereas with v2.0, round-robin sessions are used.
+
+#### BGP
+
+EdgeRouter can exchange routes with other autonomous systems, including a cluster's Calico AS. Peers will exchange `podCIDR` routes to make individual pods routeable on the LAN.
+
+Define the EdgeRouter AS (if undefined).
+
+```
+configure
+show protocols bgp 1
+set protocols bgp 1 parameters router-id ROUTER_IP
+```
+
+Peer with node(s) in another AS (eg. Calico default 64512)
+
+```
+set protocols bgp 1 neighbor NODE1_IP remote-as 64512
+set protocols bgp 1 neighbor NODE2_IP remote-as 64512
+set protocols bgp 1 neighbor NODE3_IP remote-as 64512
+commit-confirm
+```
+
+Configure Calico node(s) as to peer with the EdgeRouter.
+
+```
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: NODE_NAME-to-edgerouter
+spec:
+  peerIP: ROUTER_IP
+  asNumber: 1
+  node: NODE_NAME
+```
+
+Or, if every node is to be peered (i.e. full mesh), define a global BGPPeer.
+
+```
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: global
+spec:
+  peerIP: ROUTER_IP
+  asNumber: 1
+```
+
+If Calico nodes should advertise Kubernetes Service IPs (i.e. ClusterIPs) as well, add a `BGPConfiguration`.
+
+```
+apiVersion: crd.projectcalico.org/v1
+kind: BGPConfiguration
+metadata:
+  name: default
+spec:
+  logSeverityScreen: Info
+  nodeToNodeMeshEnabled: true
+  serviceClusterIPs:
+    - cidr: 10.3.0.0/16
+```
+
+Show a summary of peers and exchanged routes.
+
+```
+show ip bgp summary
+show ip route bgp
+```
 
 ### Port Forwarding
 
@@ -150,35 +216,3 @@ set service gui https-port 4443
 commit-confirm
 ```
 
-### BGP
-
-Add the EdgeRouter as a global BGP peer for nodes in a Kubernetes cluster (requires Calico). Neighbors will exchange `podCIDR` routes and individual pods will become routable on the LAN.
-
-Configure node(s) as BGP neighbors.
-
-```
-show protocols bgp 1
-set protocols bgp 1 parameters router-id LAN_IP
-set protocols bgp 1 neighbor NODE1_IP remote-as 64512
-set protocols bgp 1 neighbor NODE2_IP remote-as 64512
-set protocols bgp 1 neighbor NODE3_IP remote-as 64512
-```
-
-View the neighbors and exchanged routes.
-
-```
-show ip bgp neighbors
-show ip route bgp
-```
-
-Be sure to register the peer by creating a Calico `BGPPeer` CRD with `kubectl apply`.
-
-```
-apiVersion: crd.projectcalico.org/v1
-kind: BGPPeer
-metadata:
-  name: NAME
-spec:
-  peerIP: LAN_IP
-  asNumber: 64512
-```
