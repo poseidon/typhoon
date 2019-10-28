@@ -1236,7 +1236,7 @@ data:
             "query": "label_values(apiserver_request_total{job=\"apiserver\"}, instance)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -2347,7 +2347,7 @@ data:
             "query": "label_values(process_cpu_seconds_total{job=\"kube-controller-manager\"}, instance)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -2846,7 +2846,7 @@ data:
             "query": "label_values(kubelet_volume_stats_capacity_bytes, cluster)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -2872,7 +2872,7 @@ data:
             "query": "label_values(kubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\"}, namespace)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -2898,7 +2898,7 @@ data:
             "query": "label_values(kubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\"}, persistentvolumeclaim)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -3478,7 +3478,7 @@ data:
             "query": "label_values(kube_pod_info, cluster)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -3504,7 +3504,7 @@ data:
             "query": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -3530,7 +3530,7 @@ data:
             "query": "label_values(kube_pod_info{cluster=\"$cluster\", namespace=~\"$namespace\"}, pod)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -3556,7 +3556,7 @@ data:
             "query": "label_values(kube_pod_container_info{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}, container)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -4592,7 +4592,7 @@ data:
             "query": "label_values(process_cpu_seconds_total{job=\"kube-scheduler\"}, instance)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -5444,7 +5444,7 @@ data:
             "query": "label_values(kube_statefulset_metadata_generation, cluster)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -5470,7 +5470,7 @@ data:
             "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 
@@ -5496,7 +5496,7 @@ data:
             "query": "label_values(kube_statefulset_metadata_generation{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, statefulset)",
             "refresh": 2,
             "regex": "",
-            "sort": 0,
+            "sort": 1,
             "tagValuesQuery": "",
             "tags": [
 

@@ -146,6 +146,32 @@ data:
     {
       "groups": [
         {
+          "name": "kube-apiserver.rules",
+          "rules": [
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
+              "labels": {
+                "quantile": "0.99"
+              },
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
+            },
+            {
+              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
+              "labels": {
+                "quantile": "0.9"
+              },
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
+            },
+            {
+              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
+              "labels": {
+                "quantile": "0.5"
+              },
+              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
+            }
+          ]
+        },
+        {
           "name": "k8s.rules",
           "rules": [
             {
@@ -157,15 +183,31 @@ data:
               "record": "node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate"
             },
             {
+              "expr": "container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", image!=\"\"}\n* on (namespace, pod) group_left(node) max by(namespace, pod, node) (kube_pod_info)\n",
+              "record": "node_namespace_pod_container:container_memory_working_set_bytes"
+            },
+            {
+              "expr": "container_memory_rss{job=\"kubernetes-cadvisor\", image!=\"\"}\n* on (namespace, pod) group_left(node) max by(namespace, pod, node) (kube_pod_info)\n",
+              "record": "node_namespace_pod_container:container_memory_rss"
+            },
+            {
+              "expr": "container_memory_cache{job=\"kubernetes-cadvisor\", image!=\"\"}\n* on (namespace, pod) group_left(node) max by(namespace, pod, node) (kube_pod_info)\n",
+              "record": "node_namespace_pod_container:container_memory_cache"
+            },
+            {
+              "expr": "container_memory_swap{job=\"kubernetes-cadvisor\", image!=\"\"}\n* on (namespace, pod) group_left(node) max by(namespace, pod, node) (kube_pod_info)\n",
+              "record": "node_namespace_pod_container:container_memory_swap"
+            },
+            {
               "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}) by (namespace)\n",
               "record": "namespace:container_memory_usage_bytes:sum"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_memory_bytes{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_memory_bytes{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"Pending|Running\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
               "record": "namespace:kube_pod_container_resource_requests_memory_bytes:sum"
             },
             {
-              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_cpu_cores{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running)$\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
+              "expr": "sum by (namespace, label_name) (\n    sum(kube_pod_container_resource_requests_cpu_cores{job=\"kube-state-metrics\"} * on (endpoint, instance, job, namespace, pod, service) group_left(phase) (kube_pod_status_phase{phase=~\"Pending|Running\"} == 1)) by (namespace, pod)\n  * on (namespace, pod)\n    group_left(label_name) kube_pod_labels{job=\"kube-state-metrics\"}\n)\n",
               "record": "namespace:kube_pod_container_resource_requests_cpu_cores:sum"
             },
             {
@@ -260,32 +302,6 @@ data:
           ]
         },
         {
-          "name": "kube-apiserver.rules",
-          "rules": [
-            {
-              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
-              "labels": {
-                "quantile": "0.99"
-              },
-              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
-            },
-            {
-              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
-              "labels": {
-                "quantile": "0.9"
-              },
-              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
-            },
-            {
-              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\"}[5m])) without(instance, pod))\n",
-              "labels": {
-                "quantile": "0.5"
-              },
-              "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
-            }
-          ]
-        },
-        {
           "name": "node.rules",
           "rules": [
             {
@@ -301,61 +317,8 @@ data:
               "record": "node:node_num_cpu:sum"
             },
             {
-              "expr": "sum(node_memory_MemFree_bytes{job=\"node-exporter\"} + node_memory_Cached_bytes{job=\"node-exporter\"} + node_memory_Buffers_bytes{job=\"node-exporter\"})\n",
-              "record": ":node_memory_MemFreeCachedBuffers_bytes:sum"
-            }
-          ]
-        },
-        {
-          "name": "kubernetes-absent",
-          "rules": [
-            {
-              "alert": "KubeAPIDown",
-              "annotations": {
-                "message": "KubeAPI has disappeared from Prometheus target discovery.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapidown"
-              },
-              "expr": "absent(up{job=\"apiserver\"} == 1)\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "KubeControllerManagerDown",
-              "annotations": {
-                "message": "KubeControllerManager has disappeared from Prometheus target discovery.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerdown"
-              },
-              "expr": "absent(up{job=\"kube-controller-manager\"} == 1)\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "KubeSchedulerDown",
-              "annotations": {
-                "message": "KubeScheduler has disappeared from Prometheus target discovery.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeschedulerdown"
-              },
-              "expr": "absent(up{job=\"kube-scheduler\"} == 1)\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "KubeletDown",
-              "annotations": {
-                "message": "Kubelet has disappeared from Prometheus target discovery.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown"
-              },
-              "expr": "absent(up{job=\"kubelet\"} == 1)\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
+              "expr": "sum(\n  node_memory_MemAvailable_bytes{job=\"node-exporter\"} or\n  (\n    node_memory_Buffers_bytes{job=\"node-exporter\"} +\n    node_memory_Cached_bytes{job=\"node-exporter\"} +\n    node_memory_MemFree_bytes{job=\"node-exporter\"} +\n    node_memory_Slab_bytes{job=\"node-exporter\"}\n  )\n)\n",
+              "record": ":node_memory_MemAvailable_bytes:sum"
             }
           ]
         },
@@ -456,6 +419,18 @@ data:
               "for": "15m",
               "labels": {
                 "severity": "critical"
+              }
+            },
+            {
+              "alert": "KubeContainerWaiting",
+              "annotations": {
+                "message": "Pod {{ $labels.namespace }}/{{ $labels.pod }} container {{ $labels.container}} has been in waiting state for longer than 1 hour.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontainerwaiting"
+              },
+              "expr": "sum by (namespace, pod, container) (kube_pod_container_status_waiting_reason{job=\"kube-state-metrics\"}) > 0\n",
+              "for": "1h",
+              "labels": {
+                "severity": "warning"
               }
             },
             {
@@ -666,18 +641,6 @@ data:
           "name": "kubernetes-system",
           "rules": [
             {
-              "alert": "KubeNodeNotReady",
-              "annotations": {
-                "message": "{{ $labels.node }} has been unready for more than 15 minutes.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodenotready"
-              },
-              "expr": "kube_node_status_condition{job=\"kube-state-metrics\",condition=\"Ready\",status=\"true\"} == 0\n",
-              "for": "15m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
               "alert": "KubeVersionMismatch",
               "annotations": {
                 "message": "There are {{ $value }} different semantic versions of Kubernetes components running.",
@@ -700,26 +663,19 @@ data:
               "labels": {
                 "severity": "warning"
               }
-            },
-            {
-              "alert": "KubeletTooManyPods",
-              "annotations": {
-                "message": "Kubelet '{{ $labels.node }}' is running at {{ $value | humanizePercentage }} of its Pod capacity.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods"
-              },
-              "expr": "max(max(kubelet_running_pod_count{job=\"kubelet\"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job=\"kubelet\"}) by(node) / max(kube_node_status_capacity_pods{job=\"kube-state-metrics\"}) by(node) > 0.95\n",
-              "for": "15m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
+            }
+          ]
+        },
+        {
+          "name": "kubernetes-system-apiserver",
+          "rules": [
             {
               "alert": "KubeAPILatencyHigh",
               "annotations": {
                 "message": "The API server has a 99th percentile latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh"
               },
-              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 1\n",
+              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"} > 1\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -731,7 +687,7 @@ data:
                 "message": "The API server has a 99th percentile latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapilatencyhigh"
               },
-              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"^(?:LIST|WATCH|WATCHLIST|PROXY|CONNECT)$\"} > 4\n",
+              "expr": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile{job=\"apiserver\",quantile=\"0.99\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"} > 4\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -743,7 +699,7 @@ data:
                 "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.03\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.03\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -755,7 +711,7 @@ data:
                 "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.01\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.01\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -767,7 +723,7 @@ data:
                 "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.10\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.10\n",
               "for": "10m",
               "labels": {
                 "severity": "critical"
@@ -779,7 +735,7 @@ data:
                 "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests for {{ $labels.verb }} {{ $labels.resource }} {{ $labels.subresource }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
               },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"^(?:5..)$\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.05\n",
+              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m])) by (resource,subresource,verb)\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) by (resource,subresource,verb) > 0.05\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -803,6 +759,104 @@ data:
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration"
               },
               "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 86400\n",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "KubeAPIDown",
+              "annotations": {
+                "message": "KubeAPI has disappeared from Prometheus target discovery.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapidown"
+              },
+              "expr": "absent(up{job=\"apiserver\"} == 1)\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            }
+          ]
+        },
+        {
+          "name": "kubernetes-system-kubelet",
+          "rules": [
+            {
+              "alert": "KubeNodeNotReady",
+              "annotations": {
+                "message": "{{ $labels.node }} has been unready for more than 15 minutes.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodenotready"
+              },
+              "expr": "kube_node_status_condition{job=\"kube-state-metrics\",condition=\"Ready\",status=\"true\"} == 0\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeNodeUnreachable",
+              "annotations": {
+                "message": "{{ $labels.node }} is unreachable and some workloads may be rescheduled.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubenodeunreachable"
+              },
+              "expr": "kube_node_spec_taint{job=\"kube-state-metrics\",key=\"node.kubernetes.io/unreachable\",effect=\"NoSchedule\"} == 1\n",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeletTooManyPods",
+              "annotations": {
+                "message": "Kubelet '{{ $labels.node }}' is running at {{ $value | humanizePercentage }} of its Pod capacity.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods"
+              },
+              "expr": "max(max(kubelet_running_pod_count{job=\"kubelet\"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job=\"kubelet\"}) by(node) / max(kube_node_status_capacity_pods{job=\"kube-state-metrics\"}) by(node) > 0.95\n",
+              "for": "15m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "KubeletDown",
+              "annotations": {
+                "message": "Kubelet has disappeared from Prometheus target discovery.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletdown"
+              },
+              "expr": "absent(up{job=\"kubelet\"} == 1)\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            }
+          ]
+        },
+        {
+          "name": "kubernetes-system-scheduler",
+          "rules": [
+            {
+              "alert": "KubeSchedulerDown",
+              "annotations": {
+                "message": "KubeScheduler has disappeared from Prometheus target discovery.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeschedulerdown"
+              },
+              "expr": "absent(up{job=\"kube-scheduler\"} == 1)\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            }
+          ]
+        },
+        {
+          "name": "kubernetes-system-controller-manager",
+          "rules": [
+            {
+              "alert": "KubeControllerManagerDown",
+              "annotations": {
+                "message": "KubeControllerManager has disappeared from Prometheus target discovery.",
+                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubecontrollermanagerdown"
+              },
+              "expr": "absent(up{job=\"kube-controller-manager\"} == 1)\n",
+              "for": "15m",
               "labels": {
                 "severity": "critical"
               }
