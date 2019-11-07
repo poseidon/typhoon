@@ -11,6 +11,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Update Prometheus from v2.13.1 to [v2.14.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.14.0-rc.0)
 * Update Prometheus from v2.13.0 to v2.13.1
   * Refresh rules, alerts, and dashboards from upstreams
 * Remove addon-resizer from kube-state-metrics ([#575](https://github.com/poseidon/typhoon/pull/575))
