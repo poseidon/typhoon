@@ -4,7 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
-* Upgrade Calico from v3.9.2 to [v3.10.0](https://docs.projectcalico.org/v3.10/release-notes/)
+* Upgrade Calico from v3.9.2 to [v3.10.1](https://docs.projectcalico.org/v3.10/release-notes/)
   * Allow advertising service ClusterIPs to peer routers via a [BGPConfiguration](https://docs.projectcalico.org/v3.10/networking/advertise-service-ips)
 * Switch `kube-proxy` from iptables to ipvs mode ([#574](https://github.com/poseidon/typhoon/pull/574))
 
