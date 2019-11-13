@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Require Terraform version v0.12.6+ (action required)
+  * Replace internal usage of `template_dir` with `templatefile` function
+
 ## v1.16.3
 
 * Kubernetes [v1.16.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1163)

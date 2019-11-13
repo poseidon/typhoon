@@ -1,7 +1,7 @@
 # Terraform version and plugin versions
 
 terraform {
-  required_version = "~> 0.12.0"
+  required_version = "~> 0.12.6"
   required_providers {
     google       = "~> 2.5"
     ct           = "~> 0.3"
