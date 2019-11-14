@@ -71,9 +71,9 @@ resource "aws_launch_configuration" "worker" {
 
 # Worker Ignition config
 data "ct_config" "worker-ignition" {
-  content      = data.template_file.worker-config.rendered
-  strict       = true
-  snippets     = var.snippets
+  content  = data.template_file.worker-config.rendered
+  strict   = true
+  snippets = var.snippets
 }
 
 # Worker Fedora CoreOS config

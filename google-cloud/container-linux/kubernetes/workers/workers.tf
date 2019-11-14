@@ -7,8 +7,8 @@ resource "google_compute_region_instance_group_manager" "workers" {
   base_instance_name = "${var.name}-worker"
   region             = var.region
   version {
-    name = "default"
-    instance_template  = google_compute_instance_template.worker.self_link
+    name              = "default"
+    instance_template = google_compute_instance_template.worker.self_link
   }
 
   target_size  = var.worker_count

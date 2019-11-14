@@ -53,9 +53,9 @@ variable "preemptible" {
 }
 
 variable "clc_snippets" {
-  type = list(string)
+  type        = list(string)
   description = "Container Linux Config snippets"
-  default = []
+  default     = []
 }
 
 # configuration
@@ -71,37 +71,37 @@ variable "ssh_authorized_key" {
 }
 
 variable "service_cidr" {
-  type = string
+  type        = string
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
-  default = "10.3.0.0/16"
+  default     = "10.3.0.0/16"
 }
 
 variable "node_labels" {
-  type = list(string)
+  type        = list(string)
   description = "List of initial node labels"
-  default = []
+  default     = []
 }
 
 # unofficial, undocumented, unsupported, temporary
 
 variable "cluster_domain_suffix" {
-  type = string
+  type        = string
   description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default = "cluster.local"
+  default     = "cluster.local"
 }
 
 variable "accelerator_type" {
-  type = string
-  default = ""
+  type        = string
+  default     = ""
   description = "Google Compute Engine accelerator type (e.g. nvidia-tesla-k80, see gcloud compute accelerator-types list)"
 }
 
 variable "accelerator_count" {
-  type = string
-  default = "0"
+  type        = string
+  default     = "0"
   description = "Number of compute engine accelerators"
 }
 

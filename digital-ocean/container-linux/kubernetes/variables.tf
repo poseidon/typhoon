@@ -84,31 +84,31 @@ variable "pod_cidr" {
 }
 
 variable "service_cidr" {
-  type = string
+  type        = string
   description = <<EOD
 CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
-  default = "10.3.0.0/16"
+  default     = "10.3.0.0/16"
 }
 
 variable "enable_reporting" {
-  type = bool
+  type        = bool
   description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default = false
+  default     = false
 }
 
 variable "enable_aggregation" {
-  type = bool
+  type        = bool
   description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
-  default = false
+  default     = false
 }
 
 # unofficial, undocumented, unsupported
 
 variable "cluster_domain_suffix" {
-  type = string
+  type        = string
   description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default = "cluster.local"
+  default     = "cluster.local"
 }
 

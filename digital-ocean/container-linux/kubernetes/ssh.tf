@@ -53,7 +53,7 @@ resource "null_resource" "copy-controller-secrets" {
     content     = module.bootstrap.etcd_peer_key
     destination = "$HOME/etcd-peer.key"
   }
-  
+
   provisioner "file" {
     source      = var.asset_dir
     destination = "$HOME/assets"

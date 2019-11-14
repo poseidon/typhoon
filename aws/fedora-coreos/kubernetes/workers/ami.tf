@@ -17,7 +17,7 @@ data "aws_ami" "fedora-coreos" {
     name   = "name"
     values = ["fedora-coreos-30.*.*-hvm"]
   }
- 
+
   # try to filter out dev images (AWS filters can't)
   name_regex = "^fedora-coreos-30.[0-9]*.[0-9]*-hvm*"
 }

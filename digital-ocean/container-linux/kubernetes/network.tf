@@ -73,7 +73,7 @@ resource "digitalocean_firewall" "controllers" {
     port_range       = "6443"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
-  
+
   # kube-scheduler metrics, kube-controller-manager metrics
   inbound_rule {
     protocol    = "tcp"

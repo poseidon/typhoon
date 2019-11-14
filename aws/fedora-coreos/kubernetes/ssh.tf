@@ -1,7 +1,7 @@
 # Secure copy assets to controllers.
 resource "null_resource" "copy-controller-secrets" {
   count = var.controller_count
-  
+
   depends_on = [
     module.bootstrap,
   ]
