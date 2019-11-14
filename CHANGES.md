@@ -17,6 +17,10 @@ Notable changes between versions.
   * Fixes warning that `instance_template` is deprecated
   * Require `terraform-provider-google` v2.19.0+ (action required)
 
+#### Addons
+
+* Add node alerts and Grafana dashboard from node-exporter ([#591](https://github.com/poseidon/typhoon/pull/591))
+
 ## v1.16.3
 
 * Kubernetes [v1.16.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1163)

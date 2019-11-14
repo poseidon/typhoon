@@ -56,6 +56,8 @@ spec:
               mountPath: /etc/grafana/provisioning/dashboards
             - name: dashboards-etcd
               mountPath: /etc/grafana/dashboards/etcd
+            - name: dashboards-node-exporter
+              mountPath: /etc/grafana/dashboards/node-exporter
             - name: dashboards-prom
               mountPath: /etc/grafana/dashboards/prom
             - name: dashboards-k8s
@@ -81,6 +83,9 @@ spec:
         - name: dashboards-etcd
           configMap:
             name: grafana-dashboards-etcd
+        - name: dashboards-node-exporter
+          configMap:
+            name: grafana-dashboards-node-exporter
         - name: dashboards-prom
           configMap:
             name: grafana-dashboards-prom
