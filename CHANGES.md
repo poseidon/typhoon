@@ -4,8 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
-* Require Terraform version v0.12.6+ (action required)
-  * Replace internal usage of `template_dir` with `templatefile` function
+* Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
+  * Add health `lameduck` option to wait before shutdown
+* Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
+  * Require Terraform version v0.12.6+ (action required)
 
 ## v1.16.3
 
