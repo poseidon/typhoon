@@ -5,8 +5,11 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
   # instance name prefix for instances in the group
   base_instance_name = "${var.name}-worker"
-  instance_template  = google_compute_instance_template.worker.self_link
   region             = var.region
+  version {
+    name = "default"
+    instance_template  = google_compute_instance_template.worker.self_link
+  }
 
   target_size  = var.worker_count
   target_pools = [google_compute_target_pool.workers.self_link]

@@ -11,6 +11,12 @@ Notable changes between versions.
 * Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
   * Require Terraform version v0.12.6+ (action required)
 
+#### Google
+
+* Use new `google_compute_region_instance_group_manager` version block format
+  * Fixes warning that `instance_template` is deprecated
+  * Require `terraform-provider-google` v2.19.0+ (action required)
+
 ## v1.16.3
 
 * Kubernetes [v1.16.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.16.md#v1163)
