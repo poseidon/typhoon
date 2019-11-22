@@ -141,6 +141,7 @@ storage:
         inline: |
           KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
           KUBELET_IMAGE_TAG=v1.17.0
+          KUBELET_IMAGE_ARGS="--exec=/usr/local/bin/kubelet"
     - path: /opt/bootstrap/layout
       filesystem: root
       mode: 0544

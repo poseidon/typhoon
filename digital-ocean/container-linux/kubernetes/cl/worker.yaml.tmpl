@@ -100,6 +100,7 @@ storage:
         inline: |
           KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
           KUBELET_IMAGE_TAG=v1.17.0
+          KUBELET_IMAGE_ARGS="--exec=/usr/local/bin/kubelet"
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
       contents:
@@ -120,4 +121,5 @@ storage:
             docker://k8s.gcr.io/hyperkube:v1.17.0 \
             --net=host \
             --dns=host \
-            --exec=/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
+            -- \
+            kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
