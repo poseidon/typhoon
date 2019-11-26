@@ -19,6 +19,7 @@ Notable changes between versions.
 
 #### Addons
 
+* Add pod networking details in dashboards ([#593](https://github.com/poseidon/typhoon/pull/593))
 * Add node alerts and Grafana dashboard from node-exporter ([#591](https://github.com/poseidon/typhoon/pull/591))
 
 ## v1.16.3
