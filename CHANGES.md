@@ -19,7 +19,7 @@ Notable changes between versions.
 
 #### Addons
 
-* Update Grafana from v6.4.4 to [v6.5.0](https://grafana.com/docs/guides/whats-new-in-v6-5/)
+* Update Grafana from v6.4.4 to [v6.5.1](https://grafana.com/docs/guides/whats-new-in-v6-5/)
 * Add pod networking details in dashboards ([#593](https://github.com/poseidon/typhoon/pull/593))
 * Add node alerts and Grafana dashboard from node-exporter ([#591](https://github.com/poseidon/typhoon/pull/591))
 
