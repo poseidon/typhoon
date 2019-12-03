@@ -12,19 +12,19 @@ output "workers_dns" {
 }
 
 output "controllers_ipv4" {
-  value = [digitalocean_droplet.controllers.*.ipv4_address]
+  value = digitalocean_droplet.controllers.*.ipv4_address
 }
 
 output "controllers_ipv6" {
-  value = [digitalocean_droplet.controllers.*.ipv6_address]
+  value = digitalocean_droplet.controllers.*.ipv6_address
 }
 
 output "workers_ipv4" {
-  value = [digitalocean_droplet.workers.*.ipv4_address]
+  value = digitalocean_droplet.workers.*.ipv4_address
 }
 
 output "workers_ipv6" {
-  value = [digitalocean_droplet.workers.*.ipv6_address]
+  value = digitalocean_droplet.workers.*.ipv6_address
 }
 
 # Outputs for custom firewalls
