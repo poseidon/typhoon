@@ -1,3 +1,12 @@
+locals {
+  # format assets for distribution
+  assets_bundle = [
+    # header with the unpack location
+    for key, value in module.bootstrap.assets_dist:
+    format("##### %s\n%s", key, value)
+  ]
+}
+
 # Secure copy assets to controllers. Activates kubelet.service
 resource "null_resource" "copy-controller-secrets" {
   count = length(var.controllers)
@@ -23,62 +32,14 @@ resource "null_resource" "copy-controller-secrets" {
   }
 
   provisioner "file" {
-    content     = module.bootstrap.etcd_ca_cert
-    destination = "$HOME/etcd-client-ca.crt"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_client_cert
-    destination = "$HOME/etcd-client.crt"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_client_key
-    destination = "$HOME/etcd-client.key"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_server_cert
-    destination = "$HOME/etcd-server.crt"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_server_key
-    destination = "$HOME/etcd-server.key"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_peer_cert
-    destination = "$HOME/etcd-peer.crt"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.etcd_peer_key
-    destination = "$HOME/etcd-peer.key"
-  }
-
-  provisioner "file" {
-    source      = var.asset_dir
+    content     = join("\n", local.assets_bundle)
     destination = "$HOME/assets"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mkdir -p /etc/ssl/etcd/etcd",
-      "sudo mv etcd-client* /etc/ssl/etcd/",
-      "sudo cp /etc/ssl/etcd/etcd-client-ca.crt /etc/ssl/etcd/etcd/server-ca.crt",
-      "sudo mv etcd-server.crt /etc/ssl/etcd/etcd/server.crt",
-      "sudo mv etcd-server.key /etc/ssl/etcd/etcd/server.key",
-      "sudo cp /etc/ssl/etcd/etcd-client-ca.crt /etc/ssl/etcd/etcd/peer-ca.crt",
-      "sudo mv etcd-peer.crt /etc/ssl/etcd/etcd/peer.crt",
-      "sudo mv etcd-peer.key /etc/ssl/etcd/etcd/peer.key",
-      "sudo mv $HOME/assets /opt/bootstrap/assets",
-      "sudo mkdir -p /etc/kubernetes/manifests",
-      "sudo mkdir -p /etc/kubernetes/bootstrap-secrets",
       "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
-      "sudo cp -r /opt/bootstrap/assets/tls/* /etc/kubernetes/bootstrap-secrets/",
-      "sudo cp /opt/bootstrap/assets/auth/kubeconfig /etc/kubernetes/bootstrap-secrets/",
-      "sudo cp -r /opt/bootstrap/assets/static-manifests/* /etc/kubernetes/manifests/"
+      "sudo /opt/bootstrap/layout",
     ]
   }
 }

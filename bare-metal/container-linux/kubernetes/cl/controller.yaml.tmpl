@@ -121,6 +121,8 @@ systemd:
         ExecStartPre=-/usr/bin/bash -c 'set -x && [ -n "$(ls /opt/bootstrap/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootstrap/assets/manifests-*/* /opt/bootstrap/assets/manifests && rm -rf /opt/bootstrap/assets/manifests-*'
         ExecStart=/usr/bin/rkt run \
             --trust-keys-from-https \
+            --volume config,kind=host,source=/etc/kubernetes/bootstrap-secrets \
+            --mount volume=config,target=/etc/kubernetes/secrets \
             --volume assets,kind=host,source=/opt/bootstrap/assets \
             --mount volume=assets,target=/assets \
             --volume script,kind=host,source=/opt/bootstrap/apply \
@@ -148,13 +150,35 @@ storage:
       contents:
         inline:
           ${domain_name}
+    - path: /opt/bootstrap/layout
+      filesystem: root
+      mode: 0544
+      contents:
+        inline: |
+          #!/bin/bash -e
+          mkdir -p -- auth tls/etcd tls/k8s static-manifests manifests/coredns manifests-networking
+          awk '/#####/ {filename=$2; next} {print > filename}' assets
+          mkdir -p /etc/ssl/etcd/etcd
+          mkdir -p /etc/kubernetes/bootstrap-secrets
+          mv tls/etcd/{peer*,server*} /etc/ssl/etcd/etcd/
+          mv tls/etcd/etcd-client* /etc/kubernetes/bootstrap-secrets/
+          chown -R etcd:etcd /etc/ssl/etcd
+          chmod -R 500 /etc/ssl/etcd
+          mv auth/kubeconfig /etc/kubernetes/bootstrap-secrets/
+          mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
+          sudo mkdir -p /etc/kubernetes/manifests
+          sudo mv static-manifests/* /etc/kubernetes/manifests/
+          sudo mkdir -p /opt/bootstrap/assets
+          sudo mv manifests /opt/bootstrap/assets/manifests
+          sudo mv manifests-networking /opt/bootstrap/assets/manifests-networking
+          rm -rf assets auth static-manifests tls
     - path: /opt/bootstrap/apply
       filesystem: root
       mode: 0544
       contents:
         inline: |
           #!/bin/bash -e
-          export KUBECONFIG=/assets/auth/kubeconfig
+          export KUBECONFIG=/etc/kubernetes/secrets/kubeconfig
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
