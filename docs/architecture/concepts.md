@@ -47,7 +47,7 @@ Terraform [modules](https://www.terraform.io/docs/modules/usage.html) allow a co
 Clusters are declared in Terraform by referencing the module.
 
 ```tf
-module "google-cloud-yavin" {
+module "yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
   cluster_name = "yavin"
   ...

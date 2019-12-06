@@ -76,7 +76,6 @@ module "ramius" {
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-  asset_dir          = "/home/user/.secrets/clusters/ramius"
 
   # optional
   worker_count    = 2
@@ -115,9 +114,9 @@ Apply the changes to create the cluster.
 ```sh
 $ terraform apply
 ...
-module.azure-ramius.null_resource.bootstrap: Still creating... (6m50s elapsed)
-module.azure-ramius.null_resource.bootstrap: Still creating... (7m0s elapsed)
-module.azure-ramius.null_resource.bootstrap: Creation complete after 7m8s (ID: 3961816482286168143)
+module.ramius.null_resource.bootstrap: Still creating... (6m50s elapsed)
+module.ramius.null_resource.bootstrap: Still creating... (7m0s elapsed)
+module.ramius.null_resource.bootstrap: Creation complete after 7m8s (ID: 3961816482286168143)
 
 Apply complete! Resources: 86 added, 0 changed, 0 destroyed.
 ```
@@ -126,10 +125,19 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ## Verify
 
-[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Use the generated `kubeconfig` credentials to access the Kubernetes cluster and list nodes.
+[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Obtain the generated cluster `kubeconfig` from module outputs (e.g. write to a local file).
 
 ```
-$ export KUBECONFIG=/home/user/.secrets/clusters/ramius/auth/kubeconfig
+resource "local_file" "kubeconfig-ramius" {
+  content  = module.ramius.kubeconfig-admin
+  filename = "/home/user/.kube/configs/ramius-config"
+}
+```
+
+List nodes in the cluster.
+
+```
+$ export KUBECONFIG=/home/user/.kube/configs/ramius-config
 $ kubectl get nodes
 NAME                  STATUS  ROLES   AGE  VERSION
 ramius-controller-0   Ready   <none>  24m  v1.16.3
@@ -175,7 +183,6 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/c
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
-| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/ramius" |
 
 !!! tip
     Regions are shown in [docs](https://azure.microsoft.com/en-us/global-infrastructure/regions/) or with `az account list-locations --output table`.
@@ -211,6 +218,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
+| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "" (disabled) | "/home/user/.secrets/clusters/ramius" |
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |

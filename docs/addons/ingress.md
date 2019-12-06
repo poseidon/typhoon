@@ -31,7 +31,7 @@ resource "google_dns_record_set" "some-application" {
   name    = "app.example.com."
   type    = "CNAME"
   ttl     = 300
-  rrdatas = ["${module.aws-tempest.ingress_dns_name}."]
+  rrdatas = ["${module.tempest.ingress_dns_name}."]
 }
 ```
 
@@ -64,7 +64,7 @@ resource "google_dns_record_set" "some-application" {
   name    = "app.example.com."
   type    = "A"
   ttl     = 300
-  rrdatas = [module.azure-ramius.ingress_static_ipv4]
+  rrdatas = [module.ramius.ingress_static_ipv4]
 }
 ```
 
@@ -120,7 +120,7 @@ resource "google_dns_record_set" "some-application" {
   name    = "app.example.com."
   type    = "CNAME"
   ttl     = 300
-  rrdatas = ["${module.digital-ocean-nemo.workers_dns}."]
+  rrdatas = ["${module.nemo.workers_dns}."]
 }
 ```
 
@@ -158,7 +158,7 @@ resource "google_dns_record_set" "app-record-a" {
   name    = "app.example.com."
   type    = "A"
   ttl     = 300
-  rrdatas = [module.google-cloud-yavin.ingress_static_ipv4]
+  rrdatas = [module.yavin.ingress_static_ipv4]
 }
 
 resource "google_dns_record_set" "app-record-aaaa" {
@@ -169,6 +169,6 @@ resource "google_dns_record_set" "app-record-aaaa" {
   name    = "app.example.com."
   type    = "AAAA"
   ttl     = 300
-  rrdatas = [module.google-cloud-yavin.ingress_static_ipv6]
+  rrdatas = [module.yavin.ingress_static_ipv6]
 }
 ```

@@ -72,7 +72,7 @@ Write Container Linux Configs *snippets* as files in the repository where you ke
 [AWS](/cl/aws/#cluster), [Azure](/cl/azure/#cluster), [DigitalOcean](/cl/digital-ocean/#cluster), and [Google Cloud](/cl/google-cloud/#cluster) clusters allow populating a list of `controller_clc_snippets` or `worker_clc_snippets`.
 
 ```
-module "digital-ocean-nemo" {
+module "nemo" {
   ...
 
   controller_count        = 1
@@ -92,7 +92,7 @@ module "digital-ocean-nemo" {
 [Bare-Metal](/cl/bare-metal/#cluster) clusters allow different Container Linux snippets to be used for each node (since hardware may be heterogeneous). Populate the optional `clc_snippets` map variable with any controller or worker name keys and lists of snippets.
 
 ```
-module "bare-metal-mercury" {
+module "mercury" {
   ...
   controller_names = ["node1"]
   worker_names = [
@@ -141,7 +141,7 @@ Container Linux Configs (and the CoreOS Ignition system) create immutable infras
 Typhoon chooses variables to expose with purpose. If you must customize clusters in ways that aren't supported by input variables, fork Typhoon and maintain a repository with customizations. Reference the repository by changing the username.
 
 ```
-module "digital-ocean-nemo" {
+module "nemo" {
   source = "git::https://github.com/USERNAME/typhoon//digital-ocean/container-linux/kubernetes?ref=myspecialcase"
   ...
 }

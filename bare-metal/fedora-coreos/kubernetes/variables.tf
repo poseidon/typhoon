@@ -71,6 +71,7 @@ variable "ssh_authorized_key" {
 variable "asset_dir" {
   type        = string
   description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
+  default     = ""
 }
 
 variable "networking" {

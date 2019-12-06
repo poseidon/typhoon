@@ -46,7 +46,7 @@ A preview of Typhoon for [Fedora CoreOS](https://getfedora.org/coreos/) is avail
 Define a Kubernetes cluster by using the Terraform module for your chosen platform and operating system. Here's a minimal example.
 
 ```tf
-module "google-cloud-yavin" {
+module "yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.16.3"
 
   # Google Cloud
@@ -57,10 +57,15 @@ module "google-cloud-yavin" {
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-  asset_dir          = "/home/user/.secrets/clusters/yavin"
   
   # optional
   worker_count = 2
+}
+
+# Obtain cluster kubeconfig
+resource "local_file" "kubeconfig-yavin" {
+  content  = module.yavin.kubeconfig-admin
+  filename = "/home/user/.kube/configs/yavin-config"
 }
 ```
 
@@ -77,7 +82,7 @@ Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
 In 4-8 minutes (varies by platform), the cluster will be ready. This Google Cloud example creates a `yavin.example.com` DNS record to resolve to a network load balancer across controller nodes.
 
 ```
-$ export KUBECONFIG=/home/user/.secrets/clusters/yavin/auth/kubeconfig
+$ export KUBECONFIG=/home/user/.kube/configs/yavin-config
 $ kubectl get nodes
 NAME                                       ROLES    STATUS  AGE  VERSION
 yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.16.3

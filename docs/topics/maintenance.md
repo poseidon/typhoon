@@ -12,12 +12,12 @@
 Typhoon provides tagged releases to allow clusters to be versioned using ordinary Terraform configs.
 
 ```
-module "google-cloud-yavin" {
+module "yavin" {
   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.8.6"
   ...
 }
 
-module "bare-metal-mercury" {
+module "mercury" {
   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.16.3"
   ...
 }
@@ -65,7 +65,7 @@ ipmitool -H node1.example.com -U USER -P PASS chassis bootdev pxe
 Delete or comment the Terraform config for the cluster.
 
 ```
-- module "bare-metal-mercury" {
+- module "mercury" {
 -   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes"
 -   ...
 -}
@@ -93,7 +93,7 @@ kubectl apply -f mercury -R
 Once you're confident in the new cluster, delete the Terraform config for the old cluster.
 
 ```
-- module "google-cloud-yavin" {
+- module "yavin" {
 -   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
 -   ...
 -}
@@ -261,7 +261,7 @@ terraform apply
 
 # add kubeconfig to new workers
 terraform state list | grep null_resource
-terraform taint -module digital-ocean-nemo null_resource.copy-worker-secrets.N
+terraform taint -module digital-ocean-nemo null_resource.copy-worker-secrets[N]
 terraform apply
 ```
 
@@ -307,7 +307,7 @@ sudo ln -sf ~/Downloads/terraform-0.12.0/terraform /usr/local/bin/terraform12
 For existing Typhoon v1.14.2 or v1.14.3 clusters, edit the Typhoon `ref` to first SHA that introduced Terraform v0.12 support (`3276bf587850218b8f967978a4bf2b05d5f440a2`). The aim is to minimize the diff and convert to using Terraform v0.12.x. For example:
 
 ```tf
- module "bare-metal-mercury" {
+ module "mercury" {
 -  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.14.3"
 +  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=3276bf587850218b8f967978a4bf2b05d5f440a2"
    ...
@@ -316,7 +316,7 @@ For existing Typhoon v1.14.2 or v1.14.3 clusters, edit the Typhoon `ref` to firs
 With Terraform v0.12, Typhoon clusters no longer require the `providers` block (unless you actually need to pass an [aliased provider](https://www.terraform.io/docs/configuration/providers.html#alias-multiple-provider-instances)). A regression in Terraform v0.11 made it neccessary to explicitly pass aliased providers in order for Typhoon to continue to enforce constraints (see [terraform#16824](https://github.com/hashicorp/terraform/issues/16824)). Terraform v0.12 resolves this issue.
 
 ```tf
- module "bare-metal-mercury" {
+ module "mercury" {
    source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=3276bf587850218b8f967978a4bf2b05d5f440a2"
 
 -  providers = {

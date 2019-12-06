@@ -162,7 +162,7 @@ provider "ct" {
 Define a Kubernetes cluster using the module `bare-metal/fedora-coreos/kubernetes`.
 
 ```tf
-module "bare-metal-mercury" {
+module "mercury" {
   source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes?ref=v1.16.3"
   
   # bare-metal
@@ -175,7 +175,6 @@ module "bare-metal-mercury" {
   # configuration
   k8s_domain_name    = "node1.example.com"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-  asset_dir          = "/home/user/.secrets/clusters/mercury"
 
   # machines
   controllers = [{
@@ -224,14 +223,14 @@ $ terraform plan
 Plan: 55 to add, 0 to change, 0 to destroy.
 ```
 
-Apply the changes. Terraform will generate bootstrap assets to `asset_dir` and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
+Apply the changes. Terraform will generate bootstrap assets and create Matchbox profiles (e.g. controller, worker) and matching rules via the Matchbox API.
 
 ```sh
 $ terraform apply
-module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Provisioning with 'file'...
-module.bare-metal-mercury.null_resource.copy-kubeconfig.0: Still creating... (10s elapsed)
-module.bare-metal-mercury.null_resource.copy-etcd-secrets.0: Still creating... (10s elapsed)
+module.mercury.null_resource.copy-kubeconfig.0: Provisioning with 'file'...
+module.mercury.null_resource.copy-etcd-secrets.0: Provisioning with 'file'...
+module.mercury.null_resource.copy-kubeconfig.0: Still creating... (10s elapsed)
+module.mercury.null_resource.copy-etcd-secrets.0: Still creating... (10s elapsed)
 ...
 ```
 
@@ -256,11 +255,11 @@ Machines will network boot, install Fedora CoreOS to disk, reboot into the disk 
 Wait for the `bootstrap` step to finish bootstrapping the Kubernetes control plane. This may take 5-15 minutes depending on your network.
 
 ```
-module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m10s elapsed)
-module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m20s elapsed)
-module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m30s elapsed)
-module.bare-metal-mercury.null_resource.bootstrap: Still creating... (6m40s elapsed)
-module.bare-metal-mercury.null_resource.bootstrap: Creation complete (ID: 5441741360626669024)
+module.mercury.null_resource.bootstrap: Still creating... (6m10s elapsed)
+module.mercury.null_resource.bootstrap: Still creating... (6m20s elapsed)
+module.mercury.null_resource.bootstrap: Still creating... (6m30s elapsed)
+module.mercury.null_resource.bootstrap: Still creating... (6m40s elapsed)
+module.mercury.null_resource.bootstrap: Creation complete (ID: 5441741360626669024)
 
 Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 ```
@@ -279,10 +278,19 @@ systemd[1]: Started Kubernetes control plane.
 
 ## Verify
 
-[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Use the generated `kubeconfig` credentials to access the Kubernetes cluster and list nodes.
+[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Obtain the generated cluster `kubeconfig` from module outputs (e.g. write to a local file).
 
 ```
-$ export KUBECONFIG=/home/user/.secrets/clusters/mercury/auth/kubeconfig
+resource "local_file" "kubeconfig-mercury" {
+  content  = module.mercury.kubeconfig-admin
+  filename = "/home/user/.kube/configs/mercury-config"
+}
+```
+
+List nodes in the cluster.
+
+```
+$ export KUBECONFIG=/home/user/.kube/configs/mercury-config
 $ kubectl get nodes
 NAME                STATUS  ROLES   AGE  VERSION
 node1.example.com   Ready   <none>  10m  v1.16.3
@@ -326,7 +334,6 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | os_version | Fedora CoreOS version to PXE and install | "30.20190716.1" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
-| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "/home/user/.secrets/clusters/mercury" |
 | controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |
 | workers | List of worker machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node2", mac="52:54:00:b2:2f:86", domain="node2.example.com"}, {name="node3", mac="52:54:00:c3:61:77", domain="node3.example.com"}]` |
 
@@ -334,6 +341,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
+| asset_dir | Absolute path to a directory where generated assets should be placed (contains secrets) | "" (disabled) | "/home/user/.secrets/clusters/mercury" |
 | cached_install | PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Fedora CoreOS images into the cache | false | true |
 | install_disk | Disk device where Fedora CoreOS should be installed | "sda" (not "/dev/sda" like Container Linux) | "sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |

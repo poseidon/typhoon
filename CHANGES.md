@@ -4,9 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+* Manage clusters without using a local `asset_dir` ([#595](https://github.com/poseidon/typhoon/pull/595))
+  * Change `asset_dir` to be optional. Default to "" to skip writing assets locally
+  * Keep cluster assets (TLS materials, kubeconfig) only in Terraform state, which supports different [remote backends](https://www.terraform.io/docs/backends/types/remote.html) and optional encryption at rest
+  * Allow `terraform apply` from stateless automation systems
+  * Improve asset unpacking on controllers to remove unused materials
+  * Obtain a kubeconfig from Terraform module outputs
 * Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
   * Add health `lameduck` option to wait before shutdown
-* Add CPU requests to control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
+* Add CPU requests for control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
   * May provide slight edge case benefits and aligns with upstream
 * Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
   * Require Terraform version v0.12.6+ (action required)

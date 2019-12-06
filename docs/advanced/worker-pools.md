@@ -17,13 +17,13 @@ module "tempest-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes/workers?ref=v1.14.3"
 
   # AWS
-  vpc_id          = module.aws-tempest.vpc_id
-  subnet_ids      = module.aws-tempest.subnet_ids
-  security_groups = module.aws-tempest.worker_security_groups
+  vpc_id          = module.tempest.vpc_id
+  subnet_ids      = module.tempest.subnet_ids
+  security_groups = module.tempest.worker_security_groups
   
   # configuration
   name               = "tempest-pool"
-  kubeconfig         = module.aws-tempest.kubeconfig
+  kubeconfig         = module.tempest.kubeconfig
   ssh_authorized_key = var.ssh_authorized_key
 
   # optional
@@ -82,15 +82,15 @@ module "ramius-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes/workers?ref=v1.16.3"
   
   # Azure
-  region                  = module.azure-ramius.region
-  resource_group_name     = module.azure-ramius.resource_group_name
-  subnet_id               = module.azure-ramius.subnet_id
-  security_group_id       = module.azure-ramius.security_group_id
-  backend_address_pool_id = module.azure-ramius.backend_address_pool_id
+  region                  = module.ramius.region
+  resource_group_name     = module.ramius.resource_group_name
+  subnet_id               = module.ramius.subnet_id
+  security_group_id       = module.ramius.security_group_id
+  backend_address_pool_id = module.ramius.backend_address_pool_id
 
   # configuration
   name               = "ramius-low-priority"
-  kubeconfig         = module.azure-ramius.kubeconfig
+  kubeconfig         = module.ramius.kubeconfig
   ssh_authorized_key = var.ssh_authorized_key
 
   # optional
@@ -149,12 +149,12 @@ module "yavin-worker-pool" {
 
   # Google Cloud
   region       = "europe-west2"
-  network      = module.google-cloud-yavin.network_name
+  network      = module.yavin.network_name
   cluster_name = "yavin"
 
   # configuration
   name               = "yavin-16x"
-  kubeconfig         = module.google-cloud-yavin.kubeconfig
+  kubeconfig         = module.yavin.kubeconfig
   ssh_authorized_key = var.ssh_authorized_key
   
   # optional
