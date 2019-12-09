@@ -65,6 +65,9 @@ data:
       - source_labels: [__name__]
         action: drop
         regex: apiserver_admission_step_admission_latencies_seconds_.*
+      - source_labels: [__name__, group]
+        regex: apiserver_request_duration_seconds_bucket;.+
+        action: drop
 
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
     # metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).
@@ -81,7 +84,7 @@ data:
 
       relabel_configs:
       - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
+        regex: __meta_kubernetes_node_name
 
     # Scrape config for Kubelet cAdvisor. Explore metrics from a node by
     # scraping kubelet (127.0.0.1:10250/metrics/cadvisor).
@@ -99,7 +102,7 @@ data:
 
       relabel_configs:
       - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
+        regex: __meta_kubernetes_node_name
       metric_relabel_configs:
       - source_labels: [__name__, image]
         action: drop
@@ -115,15 +118,15 @@ data:
       - role: node
       scheme: http
       relabel_configs:
-        - source_labels: [__meta_kubernetes_node_label_node_kubernetes_io_controller]
-          action: keep
-          regex: 'true'
-        - action: labelmap
-          regex: __meta_kubernetes_node_label_(.+)
-        - source_labels: [__meta_kubernetes_node_address_InternalIP]
-          action: replace
-          target_label: __address__
-          replacement: '${1}:2381'
+      - source_labels: [__meta_kubernetes_node_label_node_kubernetes_io_controller]
+        action: keep
+        regex: 'true'
+      - action: labelmap
+        regex: __meta_kubernetes_node_name
+      - source_labels: [__meta_kubernetes_node_address_InternalIP]
+        action: replace
+        target_label: __address__
+        replacement: '${1}:2381'
     
     # Scrape config for service endpoints.
     #
