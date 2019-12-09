@@ -10,12 +10,14 @@ Notable changes between versions.
   * Allow `terraform apply` from stateless automation systems
   * Improve asset unpacking on controllers to remove unused materials
   * Obtain a kubeconfig from Terraform module outputs
-* Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
-  * Add health `lameduck` option to wait before shutdown
-* Add CPU requests for control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
-  * May provide slight edge case benefits and aligns with upstream
 * Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
   * Require Terraform version v0.12.6+ (action required)
+* Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
+  * Add health `lameduck` option to wait before shutdown
+* Reduce pod eviction timeout for deleting pods on unready nodes from 5m to 1m ([#597](https://github.com/poseidon/typhoon/pull/597))
+  * Present since [v1.13.3](#v1133), but mistakenly removed in v1.16.0
+* Add CPU requests for control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
+  * May provide slight edge case benefits and aligns with upstream
 
 #### Google
 
