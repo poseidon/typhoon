@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1170)
 * Manage clusters without using a local `asset_dir` ([#595](https://github.com/poseidon/typhoon/pull/595))
   * Change `asset_dir` to be optional. Default to "" to skip writing assets locally
   * Keep cluster assets (TLS materials, kubeconfig) only in Terraform state, which supports different [remote backends](https://www.terraform.io/docs/backends/types/remote.html) and optional encryption at rest
