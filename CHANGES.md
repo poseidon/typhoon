@@ -6,15 +6,15 @@ Notable changes between versions.
 
 * Kubernetes [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1170)
 * Manage clusters without using a local `asset_dir` ([#595](https://github.com/poseidon/typhoon/pull/595))
-  * Change `asset_dir` to be optional. Default to "" to skip writing assets locally
-  * Keep cluster assets (TLS materials, kubeconfig) only in Terraform state, which supports different [remote backends](https://www.terraform.io/docs/backends/types/remote.html) and optional encryption at rest
-  * Allow `terraform apply` from stateless automation systems
-  * Improve asset unpacking on controllers to remove unused materials
-  * Obtain a kubeconfig from Terraform module outputs
+  * Change `asset_dir` to be optional. Remove the variable to skip writing assets locally (action recommended)
+  * Allows cluster assets to be kept in Terraform state (pluggable [remote backends](https://www.terraform.io/docs/backends/types/remote.html), encryption) and `terraform apply` from stateless automation systems
+  * Improve asset unpacking on controllers
+  * Obtain kubeconfig from Terraform module outputs
 * Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
   * Require Terraform version v0.12.6+ (action required)
 * Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
   * Add health `lameduck` option to wait before shutdown
+* Update Calico from v3.10.1 to v3.10.2
 * Reduce pod eviction timeout for deleting pods on unready nodes from 5m to 1m ([#597](https://github.com/poseidon/typhoon/pull/597))
   * Present since [v1.13.3](#v1133), but mistakenly removed in v1.16.0
 * Add CPU requests for control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
