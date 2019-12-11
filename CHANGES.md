@@ -4,17 +4,19 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.17.0
+
 * Kubernetes [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1170)
 * Manage clusters without using a local `asset_dir` ([#595](https://github.com/poseidon/typhoon/pull/595))
-  * Change `asset_dir` to be optional. Remove the variable to skip writing assets locally (action recommended)
-  * Allows cluster assets to be kept in Terraform state (pluggable [remote backends](https://www.terraform.io/docs/backends/types/remote.html), encryption) and `terraform apply` from stateless automation systems
+  * Change `asset_dir` to be optional. Remove the variable to skip writing assets locally (**action recommended**)
+  * Allow keeping cluster assets only in Terraform state ([pluggable](https://www.terraform.io/docs/backends/types/remote.html), encryption) and allow `terraform apply` from stateless automation systems
   * Improve asset unpacking on controllers
   * Obtain kubeconfig from Terraform module outputs
 * Replace usage of `template_dir` with `templatefile` function ([#587](https://github.com/poseidon/typhoon/pull/587))
-  * Require Terraform version v0.12.6+ (action required)
+  * Require Terraform version v0.12.6+ (**action required**)
 * Update CoreDNS from v1.6.2 to v1.6.5 ([#588](https://github.com/poseidon/typhoon/pull/588))
   * Add health `lameduck` option to wait before shutdown
-* Update Calico from v3.10.1 to v3.10.2
+* Update Calico from v3.10.1 to v3.10.2 ([#599](https://github.com/poseidon/typhoon/pull/599))
 * Reduce pod eviction timeout for deleting pods on unready nodes from 5m to 1m ([#597](https://github.com/poseidon/typhoon/pull/597))
   * Present since [v1.13.3](#v1133), but mistakenly removed in v1.16.0
 * Add CPU requests for control plane static pods ([#589](https://github.com/poseidon/typhoon/pull/589))
@@ -24,14 +26,14 @@ Notable changes between versions.
 
 * Use new `google_compute_region_instance_group_manager` version block format
   * Fixes warning that `instance_template` is deprecated
-  * Require `terraform-provider-google` v2.19.0+ (action required)
+  * Require `terraform-provider-google` v2.19.0+ (**action required**)
 
 #### Addons
 
 * Update Grafana from v6.4.4 to [v6.5.1](https://grafana.com/docs/guides/whats-new-in-v6-5/)
 * Add pod networking details in dashboards ([#593](https://github.com/poseidon/typhoon/pull/593))
 * Add node alerts and Grafana dashboard from node-exporter ([#591](https://github.com/poseidon/typhoon/pull/591))
-* Reduce Prometheus time series of high cardinality metrics ([#596](https://github.com/poseidon/typhoon/pull/596))
+* Reduce Prometheus high cardinality time series ([#596](https://github.com/poseidon/typhoon/pull/596))
 
 ## v1.16.3
 

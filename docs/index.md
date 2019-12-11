@@ -74,7 +74,7 @@ Initialize modules, plan the changes to be made, and apply the changes.
 ```sh
 $ terraform init
 $ terraform plan
-Plan: 64 to add, 0 to change, 0 to destroy.
+Plan: 62 to add, 0 to change, 0 to destroy.
 $ terraform apply
 Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
 ```

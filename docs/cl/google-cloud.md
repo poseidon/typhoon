@@ -10,15 +10,15 @@ Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` se
 
 * Google Cloud Account and Service Account
 * Google Cloud DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.6+ and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your system.
 
 ```sh
 $ terraform version
-Terraform v0.12.12
+Terraform v0.12.16
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,7 +49,7 @@ Configure the Google Cloud provider to use your service account key, project-id,
 
 ```tf
 provider "google" {
-  version     = "2.19.0"
+  version     = "2.20.0"
   project     = "project-id"
   region      = "us-central1"
   credentials = file("~/.config/google-cloud/terraform.json")
@@ -123,7 +123,7 @@ module.yavin.null_resource.bootstrap: Still creating... (5m30s elapsed)
 module.yavin.null_resource.bootstrap: Still creating... (5m40s elapsed)
 module.yavin.null_resource.bootstrap: Creation complete (ID: 5768638456220583358)
 
-Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 62 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes, the Kubernetes cluster will be ready.

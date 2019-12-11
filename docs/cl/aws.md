@@ -10,15 +10,15 @@ Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` se
 
 * AWS Account and IAM credentials
 * AWS Route53 DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.6+ and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your system.
 
 ```sh
 $ terraform version
-Terraform v0.12.12
+Terraform v0.12.16
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,7 +49,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version                 = "2.35.0"
+  version                 = "2.41.0"
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
 }
@@ -109,7 +109,7 @@ Plan the resources to be created.
 
 ```sh
 $ terraform plan
-Plan: 98 to add, 0 to change, 0 to destroy.
+Plan: 80 to add, 0 to change, 0 to destroy.
 ```
 
 Apply the changes to create the cluster.

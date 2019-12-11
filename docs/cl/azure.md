@@ -13,15 +13,15 @@ Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` se
 
 * Azure account
 * Azure DNS Zone (registered Domain Name or delegated subdomain)
-* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.6+ and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your system.
 
 ```sh
 $ terraform version
-Terraform v0.12.12
+Terraform v0.12.16
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.36.1"
+  version = "1.38.0"
 }
 
 provider "ct" {
@@ -118,7 +118,7 @@ module.ramius.null_resource.bootstrap: Still creating... (6m50s elapsed)
 module.ramius.null_resource.bootstrap: Still creating... (7m0s elapsed)
 module.ramius.null_resource.bootstrap: Creation complete after 7m8s (ID: 3961816482286168143)
 
-Apply complete! Resources: 86 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 69 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes, the Kubernetes cluster will be ready.

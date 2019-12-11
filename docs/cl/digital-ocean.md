@@ -10,15 +10,15 @@ Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` se
 
 * Digital Ocean Account and Token
 * Digital Ocean Domain (registered Domain Name or delegated subdomain)
-* Terraform v0.12.x and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
+* Terraform v0.12.6+ and [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) installed locally
 
 ## Terraform Setup
 
-Install [Terraform](https://www.terraform.io/downloads.html) v0.12.x on your system.
+Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your system.
 
 ```sh
 $ terraform version
-Terraform v0.12.12
+Terraform v0.12.16
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -116,7 +116,7 @@ module.nemo.null_resource.bootstrap: Provisioning with 'remote-exec'...
 module.nemo.null_resource.bootstrap: Still creating... (6m20s elapsed)
 module.nemo.null_resource.bootstrap: Creation complete (ID: 7599298447329218468)
 
-Apply complete! Resources: 54 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 42 added, 0 changed, 0 destroyed.
 ```
 
 In 3-6 minutes, the Kubernetes cluster will be ready.
