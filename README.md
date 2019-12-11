@@ -78,7 +78,7 @@ $ terraform init
 $ terraform plan
 Plan: 62 to add, 0 to change, 0 to destroy.
 $ terraform apply
-Apply complete! Resources: 64 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 62 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes (varies by platform), the cluster will be ready. This Google Cloud example creates a `yavin.example.com` DNS record to resolve to a network load balancer across controller nodes.
