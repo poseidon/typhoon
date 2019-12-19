@@ -27,6 +27,12 @@ output "workers_ipv6" {
   value = digitalocean_droplet.workers.*.ipv6_address
 }
 
+# Outputs for worker pools
+
+output "kubeconfig" {
+  value = module.bootstrap.kubeconfig-kubelet
+}
+
 # Outputs for custom firewalls
 
 output "controller_tag" {
