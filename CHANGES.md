@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update CoreDNS from v1.6.5 to [v1.6.6](https://coredns.io/2019/12/11/coredns-1.6.6-release/) ([#602](https://github.com/poseidon/typhoon/pull/602))
+
 #### Addons
 
 * Update kube-state-metrics from v1.8.0 to v1.9.0
