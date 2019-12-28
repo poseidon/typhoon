@@ -11,7 +11,7 @@ resource "digitalocean_record" "controllers" {
   ttl  = 300
 
   # IPv4 addresses of controllers
-  value = element(digitalocean_droplet.controllers.*.ipv4_address, count.index)
+  value = digitalocean_droplet.controllers.*.ipv4_address[count.index]
 }
 
 # Discrete DNS records for each controller's private IPv4 for etcd usage
@@ -27,7 +27,7 @@ resource "digitalocean_record" "etcds" {
   ttl  = 300
 
   # private IPv4 address for etcd
-  value = element(digitalocean_droplet.controllers.*.ipv4_address_private, count.index)
+  value = digitalocean_droplet.controllers.*.ipv4_address_private[count.index]
 }
 
 # Controller droplet instances
@@ -44,7 +44,7 @@ resource "digitalocean_droplet" "controllers" {
   ipv6               = true
   private_networking = true
 
-  user_data = element(data.ct_config.controller-ignitions.*.rendered, count.index)
+  user_data = data.ct_config.controller-ignitions.*.rendered[count.index]
   ssh_keys  = var.ssh_fingerprints
 
   tags = [
@@ -64,7 +64,7 @@ resource "digitalocean_tag" "controllers" {
 # Controller Ignition configs
 data "ct_config" "controller-ignitions" {
   count        = var.controller_count
-  content      = element(data.template_file.controller-configs.*.rendered, count.index)
+  content      = data.template_file.controller-configs.*.rendered[count.index]
   pretty_print = false
   snippets     = var.controller_clc_snippets
 }
@@ -73,7 +73,7 @@ data "ct_config" "controller-ignitions" {
 data "template_file" "controller-configs" {
   count = var.controller_count
 
-  template = file("${path.module}/cl/controller.yaml.tmpl")
+  template = file("${path.module}/cl/controller.yaml")
 
   vars = {
     # Cannot use cyclic dependencies on controllers or their DNS records

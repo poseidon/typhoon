@@ -1,7 +1,7 @@
 locals {
   # Channel for a Container Linux derivative
   # coreos-stable -> Container Linux Stable
-  channel = element(split("-", var.os_image), 1)
+  channel = split("-", var.os_image)[1]
 }
 
 # Workers scale set
@@ -104,7 +104,7 @@ data "ct_config" "worker-ignition" {
 
 # Worker Container Linux configs
 data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml.tmpl")
+  template = file("${path.module}/cl/worker.yaml")
 
   vars = {
     kubeconfig             = indent(10, var.kubeconfig)

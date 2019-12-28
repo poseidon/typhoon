@@ -78,7 +78,7 @@ data "ct_config" "worker-ignition" {
 
 # Worker Container Linux config
 data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml.tmpl")
+  template = file("${path.module}/cl/worker.yaml")
 
   vars = {
     kubeconfig             = indent(10, var.kubeconfig)

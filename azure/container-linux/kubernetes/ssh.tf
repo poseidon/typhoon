@@ -2,7 +2,7 @@ locals {
   # format assets for distribution
   assets_bundle = [
     # header with the unpack location
-    for key, value in module.bootstrap.assets_dist:
+    for key, value in module.bootstrap.assets_dist :
     format("##### %s\n%s", key, value)
   ]
 }
@@ -22,7 +22,7 @@ resource "null_resource" "copy-controller-secrets" {
     user    = "core"
     timeout = "15m"
   }
-  
+
   provisioner "file" {
     content     = join("\n", local.assets_bundle)
     destination = "$HOME/assets"
@@ -45,7 +45,7 @@ resource "null_resource" "bootstrap" {
 
   connection {
     type    = "ssh"
-    host    = element(azurerm_public_ip.controllers.*.ip_address, 0)
+    host    = azurerm_public_ip.controllers.*.ip_address[0]
     user    = "core"
     timeout = "15m"
   }

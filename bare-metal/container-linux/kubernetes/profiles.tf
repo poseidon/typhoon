@@ -31,7 +31,7 @@ resource "matchbox_profile" "container-linux-install" {
 data "template_file" "container-linux-install-configs" {
   count = length(var.controllers) + length(var.workers)
 
-  template = file("${path.module}/cl/install.yaml.tmpl")
+  template = file("${path.module}/cl/install.yaml")
 
   vars = {
     os_flavor          = local.flavor
@@ -72,7 +72,7 @@ resource "matchbox_profile" "cached-container-linux-install" {
 data "template_file" "cached-container-linux-install-configs" {
   count = length(var.controllers) + length(var.workers)
 
-  template = file("${path.module}/cl/install.yaml.tmpl")
+  template = file("${path.module}/cl/install.yaml")
 
   vars = {
     os_flavor          = local.flavor
@@ -150,7 +150,7 @@ data "ct_config" "controller-ignitions" {
 data "template_file" "controller-configs" {
   count = length(var.controllers)
 
-  template = file("${path.module}/cl/controller.yaml.tmpl")
+  template = file("${path.module}/cl/controller.yaml")
 
   vars = {
     domain_name            = var.controllers.*.domain[count.index]
@@ -180,7 +180,7 @@ data "ct_config" "worker-ignitions" {
 data "template_file" "worker-configs" {
   count = length(var.workers)
 
-  template = file("${path.module}/cl/worker.yaml.tmpl")
+  template = file("${path.module}/cl/worker.yaml")
 
   vars = {
     domain_name            = var.workers.*.domain[count.index]

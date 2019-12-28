@@ -11,7 +11,7 @@ resource "google_dns_record_set" "etcds" {
   ttl  = 300
 
   # private IPv4 address for etcd
-  rrdatas = [element(google_compute_instance.controllers.*.network_interface.0.network_ip, count.index)]
+  rrdatas = [google_compute_instance.controllers.*.network_interface.0.network_ip[count.index]]
 }
 
 # Zones in the region
@@ -29,12 +29,13 @@ locals {
 resource "google_compute_instance" "controllers" {
   count = var.controller_count
 
-  name         = "${var.cluster_name}-controller-${count.index}"
+  name = "${var.cluster_name}-controller-${count.index}"
+  # use a zone in the region and wrap around (e.g. controllers > zones)
   zone         = element(local.zones, count.index)
   machine_type = var.controller_type
 
   metadata = {
-    user-data = element(data.ct_config.controller-ignitions.*.rendered, count.index)
+    user-data = data.ct_config.controller-ignitions.*.rendered[count.index]
   }
 
   boot_disk {
@@ -64,11 +65,8 @@ resource "google_compute_instance" "controllers" {
 
 # Controller Ignition configs
 data "ct_config" "controller-ignitions" {
-  count = var.controller_count
-  content = element(
-    data.template_file.controller-configs.*.rendered,
-    count.index,
-  )
+  count        = var.controller_count
+  content      = data.template_file.controller-configs.*.rendered[count.index]
   pretty_print = false
   snippets     = var.controller_clc_snippets
 }
@@ -77,7 +75,7 @@ data "ct_config" "controller-ignitions" {
 data "template_file" "controller-configs" {
   count = var.controller_count
 
-  template = file("${path.module}/cl/controller.yaml.tmpl")
+  template = file("${path.module}/cl/controller.yaml")
 
   vars = {
     # Cannot use cyclic dependencies on controllers or their DNS records

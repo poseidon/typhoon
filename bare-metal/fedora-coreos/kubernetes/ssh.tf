@@ -2,7 +2,7 @@ locals {
   # format assets for distribution
   assets_bundle = [
     # header with the unpack location
-    for key, value in module.bootstrap.assets_dist:
+    for key, value in module.bootstrap.assets_dist :
     format("##### %s\n%s", key, value)
   ]
 }

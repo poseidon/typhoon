@@ -8,7 +8,7 @@ resource "digitalocean_record" "workers-record-a" {
   name  = "${var.cluster_name}-workers"
   type  = "A"
   ttl   = 300
-  value = element(digitalocean_droplet.workers.*.ipv4_address, count.index)
+  value = digitalocean_droplet.workers.*.ipv4_address[count.index]
 }
 
 resource "digitalocean_record" "workers-record-aaaa" {
@@ -20,7 +20,7 @@ resource "digitalocean_record" "workers-record-aaaa" {
   name  = "${var.cluster_name}-workers"
   type  = "AAAA"
   ttl   = 300
-  value = element(digitalocean_droplet.workers.*.ipv6_address, count.index)
+  value = digitalocean_droplet.workers.*.ipv6_address[count.index]
 }
 
 # Worker droplet instances
@@ -63,7 +63,7 @@ data "ct_config" "worker-ignition" {
 
 # Worker Container Linux config
 data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml.tmpl")
+  template = file("${path.module}/cl/worker.yaml")
 
   vars = {
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
