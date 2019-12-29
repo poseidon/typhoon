@@ -8,10 +8,13 @@ Notable changes between versions.
 * Update Calico from v3.10.2 to v3.11.1 ([#604](https://github.com/poseidon/typhoon/pull/604))
 * Inline Kubelet service on Container Linux nodes ([#606](https://github.com/poseidon/typhoon/pull/606))
 * Disable unused Kubelet `127.0.0.1:10248` healthz listener ([#607](https://github.com/poseidon/typhoon/pull/607))
+* Enable kube-proxy metrics and allow Prometheus scrapes
+  * Allow TCP/10249 traffic with worker node sources
 
 #### Addons
 
 * Update Prometheus from v2.14.0 to [v2.15.1](https://github.com/prometheus/prometheus/releases/tag/v2.15.1)
+  * Add discovery for kube-proxy service endpoints
 * Update kube-state-metrics from v1.8.0 to v1.9.0
 * Update Grafana from v6.5.1 to v6.5.2
 

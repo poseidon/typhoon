@@ -1,3 +1,4 @@
+# Allow Prometheus to scrape service endpoints
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,7 +8,6 @@ metadata:
     prometheus.io/scrape: 'true'
 spec:
   type: ClusterIP
-  # service is created to allow prometheus to scrape endpoints
   clusterIP: None
   selector:
     k8s-app: kube-controller-manager

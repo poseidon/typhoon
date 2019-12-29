@@ -53,13 +53,29 @@ resource "azurerm_network_security_rule" "controller-etcd-metrics" {
   destination_address_prefix  = azurerm_subnet.controller.address_prefix
 }
 
+# Allow Prometheus to scrape kube-proxy metrics
+resource "azurerm_network_security_rule" "controller-kube-proxy" {
+  resource_group_name = azurerm_resource_group.cluster.name
+
+  name                        = "allow-kube-proxy-metrics"
+  network_security_group_name = azurerm_network_security_group.controller.name
+  priority                    = "2011"
+  access                      = "Allow"
+  direction                   = "Inbound"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "10249"
+  source_address_prefix       = azurerm_subnet.worker.address_prefix
+  destination_address_prefix  = azurerm_subnet.controller.address_prefix
+}
+
 # Allow Prometheus to scrape kube-scheduler and kube-controller-manager metrics
 resource "azurerm_network_security_rule" "controller-kube-metrics" {
   resource_group_name = azurerm_resource_group.cluster.name
 
   name                        = "allow-kube-metrics"
   network_security_group_name = azurerm_network_security_group.controller.name
-  priority                    = "2011"
+  priority                    = "2012"
   access                      = "Allow"
   direction                   = "Inbound"
   protocol                    = "Tcp"
@@ -247,6 +263,22 @@ resource "azurerm_network_security_rule" "worker-node-exporter" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "9100"
+  source_address_prefix       = azurerm_subnet.worker.address_prefix
+  destination_address_prefix  = azurerm_subnet.worker.address_prefix
+}
+
+# Allow Prometheus to scrape kube-proxy
+resource "azurerm_network_security_rule" "worker-kube-proxy" {
+  resource_group_name = azurerm_resource_group.cluster.name
+
+  name                        = "allow-kube-proxy"
+  network_security_group_name = azurerm_network_security_group.worker.name
+  priority                    = "2024"
+  access                      = "Allow"
+  direction                   = "Inbound"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "10249"
   source_address_prefix       = azurerm_subnet.worker.address_prefix
   destination_address_prefix  = azurerm_subnet.worker.address_prefix
 }

@@ -126,6 +126,20 @@ resource "google_compute_firewall" "internal-node-exporter" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
+# Allow Prometheus to scrape kube-proxy metrics
+resource "google_compute_firewall" "internal-kube-proxy" {
+  name    = "${var.cluster_name}-internal-kube-proxy"
+  network = google_compute_network.network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = [10249]
+  }
+
+  source_tags = ["${var.cluster_name}-worker"]
+  target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+}
+
 # Allow apiserver to access kubelets for exec, log, port-forward
 resource "google_compute_firewall" "internal-kubelet" {
   name    = "${var.cluster_name}-internal-kubelet"

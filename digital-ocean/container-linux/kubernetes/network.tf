@@ -16,9 +16,17 @@ resource "digitalocean_firewall" "rules" {
     source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
   }
 
+  # Allow Prometheus to scrape node-exporter
   inbound_rule {
     protocol    = "tcp"
     port_range  = "9100"
+    source_tags = [digitalocean_tag.workers.name]
+  }
+
+  # Allow Prometheus to scrape kube-proxy
+  inbound_rule {
+    protocol    = "tcp"
+    port_range  = "10249"
     source_tags = [digitalocean_tag.workers.name]
   }
 
