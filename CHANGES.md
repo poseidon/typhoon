@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Update CoreDNS from v1.6.5 to [v1.6.6](https://coredns.io/2019/12/11/coredns-1.6.6-release/) ([#602](https://github.com/poseidon/typhoon/pull/602))
 * Update Calico from v3.10.2 to v3.11.1 ([#604](https://github.com/poseidon/typhoon/pull/604))
+* Inline Kubelet service on Container Linux nodes ([#606](https://github.com/poseidon/typhoon/pull/606))
 
 #### Addons
 

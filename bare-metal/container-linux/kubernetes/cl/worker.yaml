@@ -33,33 +33,51 @@ systemd:
         Description=Kubelet via Hyperkube
         Wants=rpc-statd.service
         [Service]
-        EnvironmentFile=/etc/kubernetes/kubelet.env
-        Environment="RKT_RUN_ARGS=--uuid-file-save=/var/cache/kubelet-pod.uuid \
-          --volume=resolv,kind=host,source=/etc/resolv.conf \
-          --mount volume=resolv,target=/etc/resolv.conf \
-          --volume var-lib-cni,kind=host,source=/var/lib/cni \
-          --mount volume=var-lib-cni,target=/var/lib/cni \
-          --volume var-lib-calico,kind=host,source=/var/lib/calico \
-          --mount volume=var-lib-calico,target=/var/lib/calico \
-          --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
-          --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          --volume var-log,kind=host,source=/var/log \
-          --mount volume=var-log,target=/var/log \
-          --volume iscsiconf,kind=host,source=/etc/iscsi/ \
-          --mount volume=iscsiconf,target=/etc/iscsi/ \
-          --volume iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
-          --mount volume=iscsiadm,target=/sbin/iscsiadm \
-          --insecure-options=image"
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
-        ExecStartPre=/bin/mkdir -p /var/lib/cni
         ExecStartPre=/bin/mkdir -p /var/lib/calico
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
         ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
         ExecStartPre=-/usr/bin/rkt rm --uuid-file=/var/cache/kubelet-pod.uuid
-        ExecStart=/usr/lib/coreos/kubelet-wrapper \
+        ExecStart=/usr/bin/rkt run \
+          --uuid-file-save=/var/cache/kubelet-pod.uuid \
+          --stage1-from-dir=stage1-fly.aci \
+          --hosts-entry host \
+          --insecure-options=image \
+          --volume etc-kubernetes,kind=host,source=/etc/kubernetes,readOnly=true \
+          --mount volume=etc-kubernetes,target=/etc/kubernetes \
+          --volume etc-machine-id,kind=host,source=/etc/machine-id,readOnly=true \
+          --mount volume=etc-machine-id,target=/etc/machine-id \
+          --volume etc-os-release,kind=host,source=/usr/lib/os-release,readOnly=true \
+          --mount volume=etc-os-release,target=/etc/os-release \
+          --volume=etc-resolv,kind=host,source=/etc/resolv.conf,readOnly=true \
+          --mount volume=etc-resolv,target=/etc/resolv.conf \
+          --volume etc-ssl-certs,kind=host,source=/etc/ssl/certs,readOnly=true \
+          --mount volume=etc-ssl-certs,target=/etc/ssl/certs \
+          --volume lib-modules,kind=host,source=/lib/modules,readOnly=true \
+          --mount volume=lib-modules,target=/lib/modules \
+          --volume run,kind=host,source=/run \
+          --mount volume=run,target=/run \
+          --volume usr-share-certs,kind=host,source=/usr/share/ca-certificates,readOnly=true \
+          --mount volume=usr-share-certs,target=/usr/share/ca-certificates \
+          --volume var-lib-calico,kind=host,source=/var/lib/calico \
+          --mount volume=var-lib-calico,target=/var/lib/calico \
+          --volume var-lib-docker,kind=host,source=/var/lib/docker \
+          --mount volume=var-lib-docker,target=/var/lib/docker \
+          --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet,recursive=true \
+          --mount volume=var-lib-kubelet,target=/var/lib/kubelet \
+          --volume var-log,kind=host,source=/var/log \
+          --mount volume=var-log,target=/var/log \
+          --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
+          --mount volume=opt-cni-bin,target=/opt/cni/bin \
+          --volume etc-iscsi,kind=host,source=/etc/iscsi \
+          --mount volume=etc-iscsi,target=/etc/iscsi \
+          --volume usr-sbin-iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
+          --mount volume=usr-sbin-iscsiadm,target=/sbin/iscsiadm \
+          docker://k8s.gcr.io/hyperkube:v1.17.0 \
+          --exec=/usr/local/bin/kubelet -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -85,14 +103,6 @@ systemd:
 
 storage:
   files:
-    - path: /etc/kubernetes/kubelet.env
-      filesystem: root
-      mode: 0644
-      contents:
-        inline: |
-          KUBELET_IMAGE_URL=docker://k8s.gcr.io/hyperkube
-          KUBELET_IMAGE_TAG=v1.17.0
-          KUBELET_IMAGE_ARGS="--exec=/usr/local/bin/kubelet"
     - path: /etc/hostname
       filesystem: root
       mode: 0644
