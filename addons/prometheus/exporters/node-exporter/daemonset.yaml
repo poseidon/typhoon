@@ -57,7 +57,9 @@ spec:
             mountPath: /host/root
             readOnly: true
       tolerations:
-        - effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+        - key: node.kubernetes.io/not-ready
           operator: Exists
       volumes:
         - name: proc

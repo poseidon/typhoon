@@ -16,6 +16,7 @@ Notable changes between versions.
 * Update Prometheus from v2.14.0 to [v2.15.1](https://github.com/prometheus/prometheus/releases/tag/v2.15.1)
   * Add discovery for kube-proxy service endpoints
 * Update kube-state-metrics from v1.8.0 to v1.9.0
+* Reduce node-exporter DaemonSet tolerations ([#614](https://github.com/poseidon/typhoon/pull/614))
 * Update Grafana from v6.5.1 to v6.5.2
 
 ## v1.17.0
