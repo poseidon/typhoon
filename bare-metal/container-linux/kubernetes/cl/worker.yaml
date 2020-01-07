@@ -103,6 +103,9 @@ systemd:
         WantedBy=multi-user.target
 
 storage:
+  directories:
+    - path: /etc/kubernetes
+      filesystem: root
   files:
     - path: /etc/hostname
       filesystem: root

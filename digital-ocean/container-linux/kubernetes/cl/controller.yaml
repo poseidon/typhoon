@@ -152,6 +152,9 @@ systemd:
         [Install]
         WantedBy=multi-user.target
 storage:
+  directories:
+    - path: /etc/kubernetes
+      filesystem: root
   files:
     - path: /opt/bootstrap/layout
       filesystem: root
