@@ -11,6 +11,11 @@ Notable changes between versions.
 * Enable kube-proxy metrics and allow Prometheus scrapes
   * Allow TCP/10249 traffic with worker node sources
 
+#### Google
+
+* Allow `terraform-provider-google` v3.0+ ([#617](https://github.com/poseidon/typhoon/pull/617))
+  * Only enforce `v2.19+` to ease migration, as no v3.x features are used
+
 #### Addons
 
 * Update Prometheus from v2.14.0 to [v2.15.2](https://github.com/prometheus/prometheus/releases/tag/v2.15.2)
