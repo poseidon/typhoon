@@ -76,7 +76,6 @@ systemd:
           --volume /var/lib/docker:/var/lib/docker \
           --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
           --volume /var/log:/var/log \
-          --volume /var/run:/var/run \
           --volume /var/run/lock:/var/run/lock:z \
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
