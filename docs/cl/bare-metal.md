@@ -264,9 +264,9 @@ Apply complete! Resources: 55 added, 0 changed, 0 destroyed.
 To watch the install to disk (until machines reboot from disk), SSH to port 2222.
 
 ```
-# before v1.17.0
+# before v1.10.1
 $ ssh debug@node1.example.com
-# after v1.17.0
+# after v1.10.1
 $ ssh -p 2222 core@node1.example.com
 ```
 
