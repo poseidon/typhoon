@@ -1,6 +1,6 @@
 locals {
-  remote_kernel = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-installer-kernel-x86_64"
-  remote_initrd = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-installer-initramfs.x86_64.img"
+  remote_kernel = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-kernel-x86_64"
+  remote_initrd = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-initramfs.x86_64.img"
   remote_args = [
     "ip=dhcp",
     "rd.neednet=1",
@@ -10,8 +10,8 @@ locals {
     "coreos.inst.install_dev=${var.install_disk}"
   ]
 
-  cached_kernel = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-installer-kernel-x86_64"
-  cached_initrd = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-installer-initramfs.x86_64.img"
+  cached_kernel = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-kernel-x86_64"
+  cached_initrd = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-initramfs.x86_64.img"
   cached_args = [
     "ip=dhcp",
     "rd.neednet=1",
