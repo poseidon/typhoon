@@ -395,7 +395,7 @@ Verify no changes are proposed and commit changes to version control. You've mig
 
 Alternately, continue maintaining existing clusters using Terraform v0.11.x and existing Terraform configuration directory(ies). Create new Terraform directory(ies) and move resources there to be managed with Terraform v0.12. This approach allows resources to be migrated incrementally and ensures existing resources can always be managed (e.g. emergency patches).
 
-Create a new Terraform [config directory](/architecture/concepts#organize) for *new* resources.
+Create a new Terraform [config directory](/architecture/concepts/#organize) for *new* resources.
 
 ```shell
 mkdir infra2
@@ -404,7 +404,7 @@ tree .
 └── infraB  <- new Terraform v0.12.x configs
 ```
 
-Define Typhoon clusters in the new config directory using Terraform v0.12 syntax. Follow the Typhoon v1.17.1+ docs (e.g. use `terraform12` in the `infraB` dir). See [AWS](/cl/aws), [Azure](/cl/azure), [Bare-Metal](/cl/bare-metal), [Digital Ocean](/cl/digital-ocean), or [Google-Cloud](/cl/google-cloud)) to create new clusters. Follow the usual [upgrade](/topics/maintenance/#upgrades) process to apply workloads and shift traffic. Later, switch back to the old config directory and deprovision clusters with Terraform v0.11.
+Define Typhoon clusters in the new config directory using Terraform v0.12 syntax. Follow the Typhoon v1.15.0+ docs (e.g. use `terraform12` in the `infraB` dir). See [AWS](/cl/aws), [Azure](/cl/azure), [Bare-Metal](/cl/bare-metal), [Digital Ocean](/cl/digital-ocean), or [Google-Cloud](/cl/google-cloud)) to create new clusters. Follow the usual [upgrade](/topics/maintenance/#upgrades) process to apply workloads and shift traffic. Later, switch back to the old config directory and deprovision clusters with Terraform v0.11.
 
 ```shell
 terraform12 init
