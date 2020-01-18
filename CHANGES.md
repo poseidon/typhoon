@@ -23,7 +23,7 @@ Notable changes between versions.
   * Add discovery for kube-proxy service endpoints
 * Update kube-state-metrics from v1.8.0 to v1.9.1
 * Reduce node-exporter DaemonSet tolerations ([#614](https://github.com/poseidon/typhoon/pull/614))
-* Update Grafana from v6.5.1 to v6.5.2
+* Update Grafana from v6.5.1 to v6.5.3
 
 ## v1.17.0
 
