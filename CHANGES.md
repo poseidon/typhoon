@@ -4,8 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.17.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1171)
 * Update CoreDNS from v1.6.5 to [v1.6.6](https://coredns.io/2019/12/11/coredns-1.6.6-release/) ([#602](https://github.com/poseidon/typhoon/pull/602))
-* Update Calico from v3.10.2 to v3.11.1 ([#604](https://github.com/poseidon/typhoon/pull/604))
+* Update Calico from v3.10.2 to v3.11.2 ([#604](https://github.com/poseidon/typhoon/pull/604))
 * Inline Kubelet service on Container Linux nodes ([#606](https://github.com/poseidon/typhoon/pull/606))
 * Disable unused Kubelet `127.0.0.1:10248` healthz listener ([#607](https://github.com/poseidon/typhoon/pull/607))
 * Enable kube-proxy metrics and allow Prometheus scrapes
