@@ -10,6 +10,11 @@ Notable changes between versions.
   * Use Fedora CoreOS production [download](https://getfedora.org/coreos/download/) streams
   * Use live PXE kernel and initramfs images
 
+#### Addons
+
+* Update nginx-ingress from v0.26.1 to [v0.27.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.27.1) ()
+  * Change runAsUser from 33 to 101 for alpine-based image
+
 ## v1.17.1
 
 * Kubernetes [v1.17.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1171)
