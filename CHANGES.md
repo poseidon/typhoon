@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.17.2
+
+* Kubernetes [v1.17.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1172)
+
 #### Bare-Metal
 
 * Update Fedora CoreOS images location

@@ -49,7 +49,7 @@ systemd:
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
           --volume /opt/cni/bin:/opt/cni/bin:z \
-          k8s.gcr.io/hyperkube:v1.17.1 kubelet \
+          k8s.gcr.io/hyperkube:v1.17.2 kubelet \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
