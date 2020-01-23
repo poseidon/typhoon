@@ -1,6 +1,6 @@
 # Announce <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo-small.png">
 
-## Jan 23rd, 2020
+## Jan 23, 2020
 
 Typhoon for Fedora CoreOS promoted to alpha!
 
