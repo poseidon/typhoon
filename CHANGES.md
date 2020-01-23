@@ -16,8 +16,9 @@ Notable changes between versions.
 
 #### Addons
 
-* Update nginx-ingress from v0.26.1 to [v0.27.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.27.1) ()
+* Update nginx-ingress from v0.26.1 to [v0.27.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.27.1) ([#625](https://github.com/poseidon/typhoon/pull/625))
   * Change runAsUser from 33 to 101 for alpine-based image
+* Update kube-state-metrics from v1.9.2 to v1.9.3
 
 ## v1.17.1
 
