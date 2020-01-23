@@ -29,12 +29,12 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 | Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
 | Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | stable |
 
-A preview of Typhoon for [Fedora CoreOS](https://getfedora.org/coreos/) is available for testing.
+Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/) in alpha.
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](fedora-coreos/aws.md) | preview |
-| Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](fedora-coreos/bare-metal.md) | preview |
+| AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](fedora-coreos/aws.md) | alpha |
+| Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](fedora-coreos/bare-metal.md) | alpha |
 
 ## Documentation
 
@@ -57,7 +57,7 @@ module "yavin" {
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-  
+
   # optional
   worker_count = 2
 }

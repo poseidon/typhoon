@@ -1,5 +1,15 @@
 # Announce <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo-small.png">
 
+## Jan 23rd, 2020
+
+Typhoon for Fedora CoreOS promoted to alpha!
+
+Last summer, Typhoon released the first preview of Kubernetes on Fedora CoreOS for bare-metal and AWS, developing many ideas and patterns from Typhoon for Container Linux and Fedora Atomic. Since then, Typhoon for Fedora CoreOS has evolved and gained features alongside Typhoon, while Fedora CoreOS itself has evolved and improved too.
+
+Fedora recently [announced](https://fedoramagazine.org/fedora-coreos-out-of-preview/) that Fedora CoreOS is available for general use. To align with that change and to better indicate the maturing status, Typhoon for Fedora CoreOS has been promoted to alpha. Many thanks to folks who have worked to make this possbile!
+
+About: For newcomers, Typhoon is a minimal and free (cost and freedom) Kubernetes distribution providing upstream Kubernetes, declarative configuration via Terraform, and support for AWS, Azure, Google Cloud, DigitalOcean, and bare-metal. It is run by former CoreOS engineer [@dghubble](https://twitter.com/dghubble) to power his clusters, with freedom [motivations](https://typhoon.psdn.io/#motivation).
+
 ## Jul 18, 2019
 
 Introducing a preview of Typhoon Kubernetes clusters with Fedora CoreOS!
@@ -7,8 +17,6 @@ Introducing a preview of Typhoon Kubernetes clusters with Fedora CoreOS!
 Fedora recently [announced](https://lists.fedoraproject.org/archives/list/coreos@lists.fedoraproject.org/thread/3HTW5SLUY6X2Y5SFXJSE4BWEDNJ2J5SL/) the first preview release of Fedora CoreOS, aiming to blend the best of CoreOS and Fedora for containerized workloads. To spur testing, Typhoon is sharing preview modules for Kubernetes v1.15 on [AWS](https://typhoon.psdn.io/fedora-coreos/aws/) and [bare-metal](https://typhoon.psdn.io/fedora-coreos/bare-metal/) using the new Fedora CoreOS preview. What better way to test drive than by running Kubernetes?
 
 While Typhoon uses Container Linux (or Flatcar Linux) for stable modules, the project hasn't been a stranger to Fedora ideas, once developing a [Fedora Atomic](https://typhoon.psdn.io/announce/#april-26-2018) variant in 2018. That makes the Fedora CoreOS fushion both exciting and familiar. Typhoon with Fedora CoreOS uses Ignition v3 for provisioning, uses rpm-ostree for layering and updates, tries swapping system containers for podman, and brings SELinux enforcement ([table](https://typhoon.psdn.io/architecture/operating-systems/)). This is an early preview (don't go to prod), but do try it out and help identify and solve issues (getting started links above).
-
-About: For newcomers, Typhoon is a minimal and free (cost and freedom) Kubernetes distribution providing upstream Kubernetes, declarative configuration via Terraform, and support for AWS, Azure, Google Cloud, DigitalOcean, and bare-metal. It is run by former CoreOS engineer [@dghubble](https://twitter.com/dghubble) to power his clusters with freedom [motivations](https://typhoon.psdn.io/#motivation).
 
 ## March 27, 2019
 
@@ -46,7 +54,7 @@ Typhoon for Fedora Atomic reflects many of the same principles that created Typh
 
 Meanwhile, Fedora Atomic adds some promising new low-level technologies:
 
-* [ostree](https://github.com/ostreedev/ostree) & [rpm-ostree](https://github.com/projectatomic/rpm-ostree) - a hybrid, layered, image and package system that lets you perform atomic updates and rollbacks, layer on packages, "rebase" your system, or manage a remote tree repo. See Dusty Mabe's great [intro](https://dustymabe.com/2017/09/01/atomic-host-101-lab-part-3-rebase-upgrade-rollback/). 
+* [ostree](https://github.com/ostreedev/ostree) & [rpm-ostree](https://github.com/projectatomic/rpm-ostree) - a hybrid, layered, image and package system that lets you perform atomic updates and rollbacks, layer on packages, "rebase" your system, or manage a remote tree repo. See Dusty Mabe's great [intro](https://dustymabe.com/2017/09/01/atomic-host-101-lab-part-3-rebase-upgrade-rollback/).
 
 * [system containers](http://www.projectatomic.io/blog/2016/09/intro-to-system-containers/) - OCI container images that embed systemd and runc metadata for starting low-level host services before container runtimes are ready. Typhoon uses system containers under runc for `etcd`, `kubelet`, and `bootkube` on Fedora Atomic (instead of rkt-fly).
 

@@ -8,8 +8,13 @@ Notable changes between versions.
 
 * Kubernetes [v1.17.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.17.md#v1172)
 
+#### AWS
+
+* Promote Fedora CoreOS from preview to alpha
+
 #### Bare-Metal
 
+* Promote Fedora CoreOS from preview to alpha
 * Update Fedora CoreOS images location
   * Use Fedora CoreOS production [download](https://getfedora.org/coreos/download/) streams
   * Use live PXE kernel and initramfs images
