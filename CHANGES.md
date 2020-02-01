@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Google Cloud
+
+* Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
+
 #### Addons
 
 * Update nginx-ingress from v0.27.1 to v0.28.0

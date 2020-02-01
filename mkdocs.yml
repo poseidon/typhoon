@@ -1,5 +1,5 @@
 site_name: 'Typhoon'
-site_description: 'A minimal and free Kubernetes distribution' 
+site_description: 'A minimal and free Kubernetes distribution'
 site_author: 'Dalton Hubble'
 repo_name: 'poseidon/typhoon'
 repo_url: 'https://github.com/poseidon/typhoon'
@@ -53,15 +53,16 @@ nav:
     - 'Bare-Metal': 'architecture/bare-metal.md'
     - 'DigitalOcean': 'architecture/digitalocean.md'
     - 'Google Cloud': 'architecture/google-cloud.md'
-  - 'Container Linux': 
+  - 'Container Linux':
     - 'AWS': 'cl/aws.md'
     - 'Azure': 'cl/azure.md'
     - 'Bare-Metal': 'cl/bare-metal.md'
     - 'Digital Ocean': 'cl/digital-ocean.md'
     - 'Google Cloud': 'cl/google-cloud.md'
-  - 'Fedora CoreOS': 
+  - 'Fedora CoreOS':
     - 'AWS': 'fedora-coreos/aws.md'
     - 'Bare-Metal': 'fedora-coreos/bare-metal.md'
+    - 'Google Cloud': 'fedora-coreos/google-cloud.md'
   - 'Topics':
     - 'Maintenance': 'topics/maintenance.md'
     - 'Hardware': 'topics/hardware.md'
