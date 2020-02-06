@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.11.2 to v3.12.0
+
 #### Google Cloud
 
 * Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))

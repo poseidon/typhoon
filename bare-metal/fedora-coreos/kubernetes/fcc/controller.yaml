@@ -182,10 +182,6 @@ storage:
              echo "Retry applying manifests"
              sleep 5
           done
-    - path: /etc/sysctl.d/reverse-path-filter.conf
-      contents:
-        inline: |
-          net.ipv4.conf.all.rp_filter=1
     - path: /etc/sysctl.d/max-user-watches.conf
       contents:
         inline: |
