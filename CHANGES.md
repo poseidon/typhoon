@@ -14,8 +14,7 @@ Notable changes between versions.
 
 * Update nginx-ingress from v0.27.1 to v0.28.0
 * Update kube-state-metrics from v1.9.3 to v1.9.4
-* Update Grafana from v6.5.3 to v6.6.0
-
+* Update Grafana from v6.5.3 to v6.6.1
 
 ## v1.17.2
 
