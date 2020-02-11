@@ -81,13 +81,38 @@ module "yavin" {
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
-  
+
   # optional
   worker_count = 2
 }
 ```
 
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+
+### Flatcar Linux Images
+
+!!! success
+    Skip this section when using CoreOS Container Linux (default). CoreOS Container Linux publishes official images to Google Cloud.
+
+!!! danger
+    Typhoon for Flatcar Linux on Google Cloud is alpha.
+
+Flatcar Linux publishes images for Google Cloud, but does not yet upload them. Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into your project.
+
+[Download](https://www.flatcar-linux.org/releases/) the Flatcar Linux GCE gzipped tarball and upload it to a Google Cloud storage bucket.
+
+```
+gsutil list
+gsutil cp flatcar_production_gce.tar.gz gs://BUCKET
+```
+
+Create a Compute Engine image from the file.
+
+```
+gcloud compute images create flatcar-linux-2303-4-0 --source-uri gs://BUCKET_NAME/flatcar_production_gce.tar.gz
+```
+
+Set the [os_image](#variables) to the image name (e.g. `flatcar-linux-2303-4-0`)
 
 ## ssh-agent
 
@@ -217,7 +242,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
-| os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-stable-1632-3-0-v20180215" |
+| os_image | Container Linux image for compute instances | "coreos-stable" | "flatcar-linux-2303-4-0" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |

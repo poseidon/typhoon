@@ -72,14 +72,14 @@ Additional configuration options are described in the `google` provider [docs](h
 
 Fedora CoreOS publishes images for Google Cloud, but does not yet upload them. Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into your project.
 
-[Download](https://getfedora.org/coreos/download/) the Fedora CoreOS GCP gzipped tarball. Then upload the file to a GCS storage bucket.
+[Download](https://getfedora.org/coreos/download/) a Fedora CoreOS GCP gzipped tarball and upload it to a Google Cloud storage bucket.
 
 ```
 gsutil list
-gsutil cp fedora-coreos-31.20200113.3.1-gcp.x86_64.tar.gz gs://BUCKET_NAME
+gsutil cp fedora-coreos-31.20200113.3.1-gcp.x86_64.tar.gz gs://BUCKET
 ```
 
-Create a Google Compute Engine image from the bucket file.
+Create a Compute Engine image from the file.
 
 ```
 gcloud compute images create fedora-coreos-31-20200113-3-1 --source-uri gs://BUCKET/fedora-coreos-31.20200113.3.1-gcp.x86_64.tar.gz
@@ -98,7 +98,8 @@ module "yavin" {
   region        = "us-central1"
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
-  # temporary
+
+  # custom image name from above
   os_image = "fedora-coreos-31-20200113-3-1"
 
   # configuration

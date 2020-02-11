@@ -9,6 +9,7 @@ Notable changes between versions.
 #### Google Cloud
 
 * Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
+* Add support for Flatcar Container Linux ([#639](https://github.com/poseidon/typhoon/pull/639))
 
 #### Addons
 
