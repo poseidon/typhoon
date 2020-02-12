@@ -6,6 +6,8 @@ Notable changes between versions.
 
 * Kubernetes [v1.17.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v1173)
 * Update Calico from v3.11.2 to v3.12.0
+* Allow Fedora CoreOS clusters to pass CNCF conformance suite
+  * Set Docker log driver to `json-file` as a workaround
 
 #### Bare-Metal
 
@@ -13,8 +15,8 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
-* Add support for Flatcar Container Linux ([#639](https://github.com/poseidon/typhoon/pull/639))
+* Add initial Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
+* Add initial support for Flatcar Container Linux ([#639](https://github.com/poseidon/typhoon/pull/639))
 
 #### Addons
 
