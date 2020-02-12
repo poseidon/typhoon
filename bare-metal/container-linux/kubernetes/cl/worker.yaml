@@ -62,7 +62,7 @@ systemd:
           --mount volume=run,target=/run \
           --volume usr-share-certs,kind=host,source=/usr/share/ca-certificates,readOnly=true \
           --mount volume=usr-share-certs,target=/usr/share/ca-certificates \
-          --volume var-lib-calico,kind=host,source=/var/lib/calico \
+          --volume var-lib-calico,kind=host,source=/var/lib/calico,readOnly=true \
           --mount volume=var-lib-calico,target=/var/lib/calico \
           --volume var-lib-docker,kind=host,source=/var/lib/docker \
           --mount volume=var-lib-docker,target=/var/lib/docker \
