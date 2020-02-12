@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update Calico from v3.11.2 to v3.12.0
 
+#### Bare-Metal
+
+* Add Fedora CoreOS kernel arguments initrd and console ([#640](https://github.com/poseidon/typhoon/pull/640))
+
 #### Google Cloud
 
 * Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
