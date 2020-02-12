@@ -18,7 +18,7 @@ module "yavin" {
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.17.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.17.3"
   ...
 }
 ```
@@ -279,15 +279,15 @@ Typhoon modules have been adapted for Terraform v0.12. Provider plugins requirem
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.17.2 - ?       | v0.12.x             |
-| v1.10.3 - v1.17.2 | v0.11.x             |
+| v1.17.3 - ?       | v0.12.x             |
+| v1.10.3 - v1.17.3 | v0.11.x             |
 | v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
 | v1.7.3 - v1.9.1   | v0.10.x             |
 | v1.6.4 - v1.7.2   | v0.9.x              |
 
 ### New users
 
-New users can start with Terraform v0.12.x and follow the docs for Typhoon v1.17.2+ without issue.
+New users can start with Terraform v0.12.x and follow the docs for Typhoon v1.17.3+ without issue.
 
 ### Existing users
 

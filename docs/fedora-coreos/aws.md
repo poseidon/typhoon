@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora CoreOS is an alpha. Please report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues) and Typhoon issues to Typhoon.
 
-In this tutorial, we'll create a Kubernetes v1.17.2 cluster on AWS with Fedora CoreOS.
+In this tutorial, we'll create a Kubernetes v1.17.3 cluster on AWS with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -73,7 +73,7 @@ Define a Kubernetes cluster using the module `aws/fedora-coreos/kubernetes`.
 
 ```tf
 module "tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.17.2"
+  source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.17.3"
 
   # AWS
   cluster_name = "tempest"
@@ -146,9 +146,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/tempest-config
 $ kubectl get nodes
 NAME           STATUS  ROLES    AGE  VERSION
-ip-10-0-3-155  Ready   <none>   10m  v1.17.2
-ip-10-0-26-65  Ready   <none>   10m  v1.17.2
-ip-10-0-41-21  Ready   <none>   10m  v1.17.2
+ip-10-0-3-155  Ready   <none>   10m  v1.17.3
+ip-10-0-26-65  Ready   <none>   10m  v1.17.3
+ip-10-0-41-21  Ready   <none>   10m  v1.17.3
 ```
 
 List the pods.

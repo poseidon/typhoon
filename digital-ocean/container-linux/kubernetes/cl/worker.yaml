@@ -74,7 +74,7 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          docker://k8s.gcr.io/hyperkube:v1.17.2 \
+          docker://k8s.gcr.io/hyperkube:v1.17.3 \
           --exec=/usr/local/bin/kubelet -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
@@ -132,7 +132,7 @@ storage:
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
             --insecure-options=image \
-            docker://k8s.gcr.io/hyperkube:v1.17.2 \
+            docker://k8s.gcr.io/hyperkube:v1.17.3 \
             --net=host \
             --dns=host \
             -- \

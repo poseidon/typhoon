@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora CoreOS is an alpha. Please report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues) and Typhoon issues to Typhoon.
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.17.2 cluster on bare-metal with Fedora CoreOS.
+In this tutorial, we'll network boot and provision a Kubernetes v1.17.3 cluster on bare-metal with Fedora CoreOS.
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Fedora CoreOS to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -163,7 +163,7 @@ Define a Kubernetes cluster using the module `bare-metal/fedora-coreos/kubernete
 
 ```tf
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes?ref=v1.17.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes?ref=v1.17.3"
 
   # bare-metal
   cluster_name            = "mercury"
@@ -292,9 +292,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/mercury-config
 $ kubectl get nodes
 NAME                STATUS  ROLES   AGE  VERSION
-node1.example.com   Ready   <none>  10m  v1.17.2
-node2.example.com   Ready   <none>  10m  v1.17.2
-node3.example.com   Ready   <none>  10m  v1.17.2
+node1.example.com   Ready   <none>  10m  v1.17.3
+node2.example.com   Ready   <none>  10m  v1.17.3
+node3.example.com   Ready   <none>  10m  v1.17.3
 ```
 
 List the pods.

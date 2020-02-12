@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Fedora CoreOS is an alpha. Please report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues) and Typhoon issues to Typhoon.
 
-In this tutorial, we'll create a Kubernetes v1.17.2 cluster on Google Compute Engine with Fedora CoreOS.
+In this tutorial, we'll create a Kubernetes v1.17.3 cluster on Google Compute Engine with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
@@ -168,9 +168,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/yavin-config
 $ kubectl get nodes
 NAME                                       ROLES    STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.17.2
-yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.17.2
-yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.17.2
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.17.3
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.17.3
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.17.3
 ```
 
 List the pods.
