@@ -12,7 +12,8 @@ resource "digitalocean_record" "workers-record-a" {
 }
 
 resource "digitalocean_record" "workers-record-aaaa" {
-  count = var.worker_count
+  # only official DigitalOcean images support IPv6
+  count = local.is_official_image ? var.worker_count : 0
 
   # DNS zone where record should be created
   domain = var.dns_zone
@@ -34,7 +35,8 @@ resource "digitalocean_droplet" "workers" {
   size  = var.worker_type
 
   # network
-  ipv6               = true
+  # only official DigitalOcean images support IPv6
+  ipv6               = local.is_official_image
   private_networking = true
 
   user_data = data.ct_config.worker-ignition.rendered

@@ -1,3 +1,8 @@
+locals {
+  official_images = ["coreos-stable", "coreos-beta", "coreos-alpha"]
+  is_official_image = contains(local.official_images, var.image)
+}
+
 # Controller Instance DNS records
 resource "digitalocean_record" "controllers" {
   count = var.controller_count
@@ -41,7 +46,8 @@ resource "digitalocean_droplet" "controllers" {
   size  = var.controller_type
 
   # network
-  ipv6               = true
+  # only official DigitalOcean images support IPv6
+  ipv6               = local.is_official_image
   private_networking = true
 
   user_data = data.ct_config.controller-ignitions.*.rendered[count.index]

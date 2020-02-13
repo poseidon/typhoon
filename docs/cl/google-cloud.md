@@ -89,15 +89,12 @@ module "yavin" {
 
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
 
-### Flatcar Linux Images
+### Flatcar Linux Only
 
-!!! success
-    Skip this section when using CoreOS Container Linux (default). CoreOS Container Linux publishes official images to Google Cloud.
-
-!!! danger
+!!! warning
     Typhoon for Flatcar Linux on Google Cloud is alpha.
 
-Flatcar Linux publishes images for Google Cloud, but does not yet upload them. Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into your project.
+Flatcar Linux publishes Google Cloud images, but does not upload them. Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into a project.
 
 [Download](https://www.flatcar-linux.org/releases/) the Flatcar Linux GCE gzipped tarball and upload it to a Google Cloud storage bucket.
 

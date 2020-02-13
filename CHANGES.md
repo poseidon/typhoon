@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### DigitalOcean
+
+* Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
+
 ## v1.17.3
 
 * Kubernetes [v1.17.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v1173)
@@ -23,8 +27,8 @@ Notable changes between versions.
 
 #### Google Cloud
 
-* Add initial Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
-* Add initial support for Flatcar Container Linux ([#639](https://github.com/poseidon/typhoon/pull/639))
+* Add Terraform module for Fedora CoreOS ([#632](https://github.com/poseidon/typhoon/pull/632))
+* Add support for Flatcar Container Linux ([#639](https://github.com/poseidon/typhoon/pull/639))
 
 #### Addons
 
