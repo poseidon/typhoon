@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.17.3 cluster on bare-metal with Container Linux.
+In this tutorial, we'll network boot and provision a Kubernetes v1.17.3 cluster on bare-metal with CoreOS Container Linux or Flatcar Linux.
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -27,7 +27,7 @@ Configure each machine to boot from the disk through IPMI or the BIOS menu.
 ```
 ipmitool -H node1 -U USER -P PASS chassis bootdev disk options=persistent
 ```
- 
+
 During provisioning, you'll explicitly set the boot device to `pxe` for the next boot only. Machines will install (overwrite) the operating system to disk on PXE boot and reboot into the disk install.
 
 !!! tip ""
@@ -111,7 +111,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.12.16
+Terraform v0.12.20
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -161,7 +161,7 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 ```tf
 module "mercury" {
   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.17.3"
-  
+
   # bare-metal
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
@@ -355,7 +355,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | cached_install | PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Container Linux or Flatcar images into the cache | false | true |
 | install_disk | Disk device where Container Linux should be installed | "/dev/sda" | "/dev/sdb" |
 | networking | Choice of networking provider | "calico" | "calico" or "flannel" |
-| network_mtu | CNI interface MTU (calico-only) | 1480 | - | 
+| network_mtu | CNI interface MTU (calico-only) | 1480 | - |
 | clc_snippets | Map from machine names to lists of Container Linux Config snippets | {} | [example](/advanced/customization/#usage) |
 | network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | "first-found" | "can-reach=10.0.0.1" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

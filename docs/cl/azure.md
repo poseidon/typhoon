@@ -3,7 +3,7 @@
 !!! danger
     Typhoon for Azure is alpha. For production, use AWS, Google Cloud, or bare-metal. As Azure matures, check [errata](https://github.com/poseidon/typhoon/wiki/Errata) for known shortcomings.
 
-In this tutorial, we'll create a Kubernetes v1.17.3 cluster on Azure with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.17.3 cluster on Azure with CoreOS Container Linux or Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a resource group, virtual network, subnets, security groups, controller availability set, worker scale set, load balancer, and TLS assets.
 
@@ -21,7 +21,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.12.16
+Terraform v0.12.20
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.38.0"
+  version = "1.43.0"
 }
 
 provider "ct" {
@@ -152,9 +152,9 @@ $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                        READY  STATUS    RESTARTS  AGE
 kube-system   coredns-7c6fbb4f4b-b6qzx                    1/1    Running   0         26m
 kube-system   coredns-7c6fbb4f4b-j2k3d                    1/1    Running   0         26m
-kube-system   calico-node-1m5bf                           2/2    Running   0         26m              
-kube-system   calico-node-7jmr1                           2/2    Running   0         26m              
-kube-system   calico-node-bknc8                           2/2    Running   0         26m              
+kube-system   calico-node-1m5bf                           2/2    Running   0         26m
+kube-system   calico-node-7jmr1                           2/2    Running   0         26m
+kube-system   calico-node-bknc8                           2/2    Running   0         26m
 kube-system   kube-apiserver-ramius-controller-0          1/1    Running   0         26m
 kube-system   kube-controller-manager-ramius-controller-0 1/1    Running   0         26m
 kube-system   kube-proxy-j4vpq                            1/1    Running   0         26m

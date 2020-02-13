@@ -111,7 +111,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.12.16
+Terraform v0.12.20
 ```
 
 Add the [terraform-provider-matchbox](https://github.com/poseidon/terraform-provider-matchbox) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.

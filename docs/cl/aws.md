@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.17.3 cluster on AWS with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.17.3 cluster on AWS with CoreOS Container Linux or Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.12.16
+Terraform v0.12.20
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -49,7 +49,7 @@ Configure the AWS provider to use your access key credentials in a `providers.tf
 
 ```tf
 provider "aws" {
-  version                 = "2.41.0"
+  version                 = "2.48.0"
   region                  = "eu-central-1"
   shared_credentials_file = "/home/user/.config/aws/credentials"
 }
@@ -152,18 +152,18 @@ List the pods.
 
 ```
 $ kubectl get pods --all-namespaces
-NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE              
-kube-system   calico-node-1m5bf                         2/2    Running   0         34m              
-kube-system   calico-node-7jmr1                         2/2    Running   0         34m              
-kube-system   calico-node-bknc8                         2/2    Running   0         34m              
-kube-system   coredns-1187388186-wx1lg                  1/1    Running   0         34m              
+NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
+kube-system   calico-node-1m5bf                         2/2    Running   0         34m
+kube-system   calico-node-7jmr1                         2/2    Running   0         34m
+kube-system   calico-node-bknc8                         2/2    Running   0         34m
+kube-system   coredns-1187388186-wx1lg                  1/1    Running   0         34m
 kube-system   coredns-1187388186-qjnvp                  1/1    Running   0         34m
-kube-system   kube-apiserver-ip-10-0-3-155              1/1    Running   0         34m              
-kube-system   kube-controller-manager-ip-10-0-3-155     1/1    Running   0         34m              
-kube-system   kube-proxy-14wxv                          1/1    Running   0         34m              
-kube-system   kube-proxy-9vxh2                          1/1    Running   0         34m              
-kube-system   kube-proxy-sbbsh                          1/1    Running   0         34m              
-kube-system   kube-scheduler-ip-10-0-3-155              1/1    Running   1         34m              
+kube-system   kube-apiserver-ip-10-0-3-155              1/1    Running   0         34m
+kube-system   kube-controller-manager-ip-10-0-3-155     1/1    Running   0         34m
+kube-system   kube-proxy-14wxv                          1/1    Running   0         34m
+kube-system   kube-proxy-9vxh2                          1/1    Running   0         34m
+kube-system   kube-proxy-sbbsh                          1/1    Running   0         34m
+kube-system   kube-scheduler-ip-10-0-3-155              1/1    Running   1         34m
 ```
 
 ## Going Further

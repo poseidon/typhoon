@@ -1,6 +1,6 @@
 # Digital Ocean
 
-In this tutorial, we'll create a Kubernetes v1.17.3 cluster on DigitalOcean with Container Linux.
+In this tutorial, we'll create a Kubernetes v1.17.3 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets.
 
@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.12.6+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.12.16
+Terraform v0.12.20
 ```
 
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
@@ -50,7 +50,7 @@ Configure the DigitalOcean provider to use your token in a `providers.tf` file.
 
 ```tf
 provider "digitalocean" {
-  version = "1.11.0"
+  version = "1.14.0"
   token = "${chomp(file("~/.config/digital-ocean/token"))}"
 }
 
@@ -74,7 +74,7 @@ module "nemo" {
 
   # configuration
   ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
-  
+
   # optional
   worker_count = 2
 }
@@ -149,9 +149,9 @@ List the pods.
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   coredns-1187388186-ld1j7                   1/1       Running   0          11m
 kube-system   coredns-1187388186-rdhf7                   1/1       Running   0          11m
-kube-system   calico-node-1m5bf                          2/2       Running   0          11m              
-kube-system   calico-node-7jmr1                          2/2       Running   0          11m              
-kube-system   calico-node-bknc8                          2/2       Running   0          11m              
+kube-system   calico-node-1m5bf                          2/2       Running   0          11m
+kube-system   calico-node-7jmr1                          2/2       Running   0          11m
+kube-system   calico-node-bknc8                          2/2       Running   0          11m
 kube-system   kube-apiserver-ip-10.132.115.81            1/1       Running   0          11m
 kube-system   kube-controller-manager-ip-10.132.115.81   1/1       Running   0          11m
 kube-system   kube-proxy-6kxjf                           1/1       Running   0          11m
