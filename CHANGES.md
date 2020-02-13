@@ -9,8 +9,13 @@ Notable changes between versions.
 * Allow Fedora CoreOS clusters to pass CNCF conformance suite
   * Set Docker log driver to `json-file` as a workaround
 
+#### AWS
+
+* Promote Fedora CoreOS to beta
+
 #### Bare-Metal
 
+* Promote Fedora CoreOS to beta
 * Add Fedora CoreOS kernel arguments initrd and console ([#640](https://github.com/poseidon/typhoon/pull/640))
 
 #### Google Cloud

@@ -1,8 +1,5 @@
 # AWS
 
-!!! danger
-    Typhoon for Fedora CoreOS is an alpha. Please report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues) and Typhoon issues to Typhoon.
-
 In this tutorial, we'll create a Kubernetes v1.17.3 cluster on AWS with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
