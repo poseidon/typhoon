@@ -8,6 +8,10 @@ Notable changes between versions.
 
 * Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
 
+#### Addons
+
+* Update Prometheus from v2.15.2 to [v2.16.0](https://github.com/prometheus/prometheus/releases/tag/v2.16.0)
+
 ## v1.17.3
 
 * Kubernetes [v1.17.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v1173)
