@@ -4,18 +4,21 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.17.3
+
 * Kubernetes [v1.17.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v1173)
 * Update Calico from v3.11.2 to v3.12.0
 * Allow Fedora CoreOS clusters to pass CNCF conformance suite
   * Set Docker log driver to `json-file` as a workaround
+* Try Fedora CoreOS or Flatcar Linux alongside CoreOS [Container Linux](https://coreos.com/os/eol/) clusters (recommended)
 
 #### AWS
 
-* Promote Fedora CoreOS to beta
+* Promote Fedora CoreOS to beta ([#645](https://github.com/poseidon/typhoon/pull/645))
 
 #### Bare-Metal
 
-* Promote Fedora CoreOS to beta
+* Promote Fedora CoreOS to beta ([#645](https://github.com/poseidon/typhoon/pull/645))
 * Add Fedora CoreOS kernel arguments initrd and console ([#640](https://github.com/poseidon/typhoon/pull/640))
 
 #### Google Cloud
