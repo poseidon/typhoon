@@ -72,7 +72,7 @@ systemd:
           --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
           --volume /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
           --volume /etc/pki/tls/certs:/usr/share/ca-certificates:ro \
-          --volume /var/lib/calico:/var/lib/calico \
+          --volume /var/lib/calico:/var/lib/calico:ro \
           --volume /var/lib/docker:/var/lib/docker \
           --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
           --volume /var/log:/var/log \
