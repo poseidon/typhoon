@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update CoreDNS from v1.6.6 to v1.6.7 ([#648](https://github.com/poseidon/typhoon/pull/648))
+
 #### DigitalOcean
 
 * Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
