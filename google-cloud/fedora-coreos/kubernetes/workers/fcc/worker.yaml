@@ -66,9 +66,9 @@ systemd:
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
           --node-labels=node.kubernetes.io/node \
-          %{ for label in split(",", node_labels) }
+          %{~ for label in split(",", node_labels) ~}
           --node-labels=${label} \
-          %{ endfor ~}
+          %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins

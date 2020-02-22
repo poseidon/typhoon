@@ -6,6 +6,14 @@ Notable changes between versions.
 
 * Update CoreDNS from v1.6.6 to v1.6.7 ([#648](https://github.com/poseidon/typhoon/pull/648))
 
+#### AWS
+
+* Fix `worker_node_labels` for setting initial worker node labels on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
+
+#### Google Cloud
+
+* Fix `worker_node_labels` for setting initial worker node labels on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
+
 #### DigitalOcean
 
 * Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
