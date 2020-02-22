@@ -21,6 +21,7 @@ Notable changes between versions.
 #### Addons
 
 * Update Prometheus from v2.15.2 to [v2.16.0](https://github.com/prometheus/prometheus/releases/tag/v2.16.0)
+  * Update kube-state-metrics from v1.9.4 to v1.9.5
 * Update Grafana from v6.6.1 to v6.6.2
 
 ## v1.17.3
