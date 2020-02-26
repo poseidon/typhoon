@@ -9,6 +9,7 @@ Notable changes between versions.
 #### AWS
 
 * Fix `worker_node_labels` for setting initial worker node labels on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
+* Allow VPC route table extension via reference ([#654](https://github.com/poseidon/typhoon/pull/654))
 
 #### Google Cloud
 

@@ -79,6 +79,23 @@ resource "aws_security_group_rule" "some-app" {
 }
 ```
 
+## Routes
+
+Add a custom [route](https://www.terraform.io/docs/providers/aws/r/route.html) to the VPC route table.
+
+```tf
+data "aws_route_table" "default" {
+  vpc_id = module.temptest.vpc_id
+  subnet_id = module.tempest.subnet_ids[0]
+}
+
+resource "aws_route" "peering" {
+  route_table_id = data.aws_route_table.default.id
+  destination_cidr_block = "192.168.4.0/24"
+  ...
+}
+```
+
 ## IPv6
 
 AWS Network Load Balancers do not support `dualstack`.
