@@ -78,6 +78,18 @@ systemd:
         RestartSec=10
         [Install]
         WantedBy=multi-user.target
+    - name: delete-node.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Delete Kubernetes node on shutdown
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        ExecStart=/bin/true
+        ExecStop=/bin/bash -c '/usr/bin/podman run --volume /etc/kubernetes:/etc/kubernetes:ro,z k8s.gcr.io/hyperkube:v1.17.3 kubectl --kubeconfig=/etc/kubernetes/kubeconfig delete node $HOSTNAME'
+        [Install]
+        WantedBy=multi-user.target
 storage:
   directories:
     - path: /etc/kubernetes
