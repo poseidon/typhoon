@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.4.3 to [v3.4.4](https://github.com/etcd-io/etcd/releases/tag/v3.4.4)
+  * On Container Linux, fetch using the docker transport format ([#659](https://github.com/poseidon/typhoon/pull/659))
 * Update CoreDNS from v1.6.6 to v1.6.7 ([#648](https://github.com/poseidon/typhoon/pull/648))
 
 #### AWS

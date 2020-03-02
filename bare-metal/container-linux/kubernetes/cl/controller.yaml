@@ -8,6 +8,8 @@ systemd:
           contents: |
             [Service]
             Environment="ETCD_IMAGE_TAG=v3.4.4"
+            Environment="ETCD_IMAGE_URL=docker://quay.io/coreos/etcd"
+            Environment="RKT_RUN_ARGS=--insecure-options=image"
             Environment="ETCD_NAME=${etcd_name}"
             Environment="ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379"
             Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380"
