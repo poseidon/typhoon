@@ -24,11 +24,21 @@ resource "azurerm_subnet" "controller" {
   address_prefix       = cidrsubnet(var.host_cidr, 1, 0)
 }
 
+resource "azurerm_subnet_network_security_group_association" "controller" {
+  subnet_id                 = azurerm_subnet.controller.id
+  network_security_group_id = azurerm_network_security_group.controller.id
+}
+
 resource "azurerm_subnet" "worker" {
   resource_group_name = azurerm_resource_group.cluster.name
 
   name                 = "worker"
   virtual_network_name = azurerm_virtual_network.network.name
   address_prefix       = cidrsubnet(var.host_cidr, 1, 1)
+}
+
+resource "azurerm_subnet_network_security_group_association" "worker" {
+  subnet_id                 = azurerm_subnet.worker.id
+  network_security_group_id = azurerm_network_security_group.worker.id
 }
 

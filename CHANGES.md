@@ -14,6 +14,14 @@ Notable changes between versions.
 * Fix `worker_node_labels` on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
 * Fix automatic worker node delete on shutdown on Fedora CoreOS ([#657](https://github.com/poseidon/typhoon/pull/657))
 
+#### Azure
+
+* Upgrade to `terraform-provider-azurerm` [v2.0+](https://www.terraform.io/docs/providers/azurerm/guides/2.0-upgrade-guide.html) (action required)
+  * Switch to Azure's new Linux VM and Linux VM Scale Set resources
+  * If set, change `worker_priority` from `Low` to `Spot` (action required)
+  * Set controller's Azure disk caching to None
+  * Associate subnets (in addition to NICs) with security groups (aesthetic)
+
 #### Google Cloud
 
 * Fix `worker_node_labels` on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))

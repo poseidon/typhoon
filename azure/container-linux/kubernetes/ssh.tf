@@ -13,7 +13,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   depends_on = [
     module.bootstrap,
-    azurerm_virtual_machine.controllers
+    azurerm_linux_virtual_machine.controllers
   ]
 
   connection {

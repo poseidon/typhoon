@@ -5,53 +5,40 @@ locals {
 }
 
 # Workers scale set
-resource "azurerm_virtual_machine_scale_set" "workers" {
+resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   resource_group_name = var.resource_group_name
 
-  name                   = "${var.name}-workers"
+  name                   = "${var.name}-worker"
   location               = var.region
+  sku = var.vm_type
+  instances = var.worker_count
+  # instance name prefix for instances in the set
+  computer_name_prefix = "${var.name}-worker"
   single_placement_group = false
+  custom_data          = base64encode(data.ct_config.worker-ignition.rendered)
 
-  sku {
-    name     = var.vm_type
-    tier     = "standard"
-    capacity = var.worker_count
+  # storage
+  os_disk {
+    storage_account_type = "Standard_LRS"
+    caching           = "ReadWrite"
   }
 
-  # boot
-  storage_profile_image_reference {
+  source_image_reference {
     publisher = "CoreOS"
     offer     = "CoreOS"
     sku       = local.channel
     version   = "latest"
   }
 
-  # storage
-  storage_profile_os_disk {
-    create_option     = "FromImage"
-    caching           = "ReadWrite"
-    os_type           = "linux"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  os_profile {
-    computer_name_prefix = "${var.name}-worker-"
-    admin_username       = "core"
-    custom_data          = data.ct_config.worker-ignition.rendered
-  }
-
-  # Azure mandates setting an ssh_key, even though Ignition custom_data handles it too
-  os_profile_linux_config {
-    disable_password_authentication = true
-
-    ssh_keys {
-      path     = "/home/core/.ssh/authorized_keys"
-      key_data = var.ssh_authorized_key
-    }
+  # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
+  admin_username = "core"
+  admin_ssh_key {
+    username = "core"
+    public_key = var.ssh_authorized_key
   }
 
   # network
-  network_profile {
+  network_interface {
     name                      = "nic0"
     primary                   = true
     network_security_group_id = var.security_group_id
@@ -67,10 +54,10 @@ resource "azurerm_virtual_machine_scale_set" "workers" {
   }
 
   # lifecycle
-  upgrade_policy_mode = "Manual"
-  # eviction policy may only be set when priority is Low
+  upgrade_mode = "Manual"
+  # eviction policy may only be set when priority is Spot
   priority        = var.priority
-  eviction_policy = var.priority == "Low" ? "Delete" : null
+  eviction_policy = var.priority == "Spot" ? "Delete" : null
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.
@@ -82,7 +69,7 @@ resource "azurerm_monitor_autoscale_setting" "workers" {
 
   # autoscale
   enabled            = true
-  target_resource_id = azurerm_virtual_machine_scale_set.workers.id
+  target_resource_id = azurerm_linux_virtual_machine_scale_set.workers.id
 
   profile {
     name = "default"

@@ -22,4 +22,3 @@ module "workers" {
   clc_snippets          = var.worker_clc_snippets
   node_labels           = var.worker_node_labels
 }
-

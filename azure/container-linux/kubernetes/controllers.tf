@@ -32,90 +32,50 @@ resource "azurerm_availability_set" "controllers" {
 }
 
 # Controller instances
-resource "azurerm_virtual_machine" "controllers" {
+resource "azurerm_linux_virtual_machine" "controllers" {
   count               = var.controller_count
   resource_group_name = azurerm_resource_group.cluster.name
 
   name                = "${var.cluster_name}-controller-${count.index}"
   location            = var.region
   availability_set_id = azurerm_availability_set.controllers.id
-  vm_size             = var.controller_type
 
-  # boot
-  storage_image_reference {
+  size        = var.controller_type
+  custom_data = base64encode(data.ct_config.controller-ignitions.*.rendered[count.index])
+
+  # storage
+  os_disk {
+    name                 = "${var.cluster_name}-controller-${count.index}"
+    caching              = "None"
+    disk_size_gb         = var.disk_size
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
     publisher = "CoreOS"
     offer     = "CoreOS"
     sku       = local.channel
     version   = "latest"
   }
 
-  # storage
-  storage_os_disk {
-    name              = "${var.cluster_name}-controller-${count.index}"
-    create_option     = "FromImage"
-    caching           = "ReadWrite"
-    disk_size_gb      = var.disk_size
-    os_type           = "Linux"
-    managed_disk_type = "Premium_LRS"
-  }
-
   # network
-  network_interface_ids = [azurerm_network_interface.controllers.*.id[count.index]]
+  network_interface_ids = [
+    azurerm_network_interface.controllers.*.id[count.index]
+  ]
 
-  os_profile {
-    computer_name  = "${var.cluster_name}-controller-${count.index}"
-    admin_username = "core"
-    custom_data    = data.ct_config.controller-ignitions.*.rendered[count.index]
+  # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
+  admin_username = "core"
+  admin_ssh_key {
+    username   = "core"
+    public_key = var.ssh_authorized_key
   }
-
-  # Azure mandates setting an ssh_key, even though Ignition custom_data handles it too
-  os_profile_linux_config {
-    disable_password_authentication = true
-
-    ssh_keys {
-      path     = "/home/core/.ssh/authorized_keys"
-      key_data = var.ssh_authorized_key
-    }
-  }
-
-  # lifecycle
-  delete_os_disk_on_termination    = true
-  delete_data_disks_on_termination = true
 
   lifecycle {
     ignore_changes = [
-      storage_os_disk,
-      os_profile,
+      os_disk,
+      custom_data,
     ]
   }
-}
-
-# Controller NICs with public and private IPv4
-resource "azurerm_network_interface" "controllers" {
-  count               = var.controller_count
-  resource_group_name = azurerm_resource_group.cluster.name
-
-  name                      = "${var.cluster_name}-controller-${count.index}"
-  location                  = azurerm_resource_group.cluster.location
-  network_security_group_id = azurerm_network_security_group.controller.id
-
-  ip_configuration {
-    name                          = "ip0"
-    subnet_id                     = azurerm_subnet.controller.id
-    private_ip_address_allocation = "dynamic"
-
-    # public IPv4
-    public_ip_address_id = azurerm_public_ip.controllers.*.id[count.index]
-  }
-}
-
-# Add controller NICs to the controller backend address pool
-resource "azurerm_network_interface_backend_address_pool_association" "controllers" {
-  count = var.controller_count
-
-  network_interface_id    = azurerm_network_interface.controllers[count.index].id
-  ip_configuration_name   = "ip0"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.controller.id
 }
 
 # Controller public IPv4 addresses
@@ -127,6 +87,40 @@ resource "azurerm_public_ip" "controllers" {
   location          = azurerm_resource_group.cluster.location
   sku               = "Standard"
   allocation_method = "Static"
+}
+
+# Controller NICs with public and private IPv4
+resource "azurerm_network_interface" "controllers" {
+  count               = var.controller_count
+  resource_group_name = azurerm_resource_group.cluster.name
+
+  name     = "${var.cluster_name}-controller-${count.index}"
+  location = azurerm_resource_group.cluster.location
+
+  ip_configuration {
+    name                          = "ip0"
+    subnet_id                     = azurerm_subnet.controller.id
+    private_ip_address_allocation = "Dynamic"
+    # instance public IPv4
+    public_ip_address_id = azurerm_public_ip.controllers.*.id[count.index]
+  }
+}
+
+# Associate controller network interface with controller security group
+resource "azurerm_network_interface_security_group_association" "controllers" {
+  count = var.controller_count
+
+  network_interface_id      = azurerm_network_interface.controllers[count.index].id
+  network_security_group_id = azurerm_network_security_group.controller.id
+}
+
+# Associate controller network interface with controller backend address pool
+resource "azurerm_network_interface_backend_address_pool_association" "controllers" {
+  count = var.controller_count
+
+  network_interface_id    = azurerm_network_interface.controllers[count.index].id
+  ip_configuration_name   = "ip0"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.controller.id
 }
 
 # Controller Ignition configs

@@ -50,7 +50,7 @@ Configure the Azure provider in a `providers.tf` file.
 
 ```tf
 provider "azurerm" {
-  version = "1.43.0"
+  version = "2.0.0"
 }
 
 provider "ct" {
@@ -225,7 +225,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
 | os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
-| worker_priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Low |
+| worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | networking | Choice of networking provider | "calico" | "flannel" or "calico" |
@@ -242,6 +242,6 @@ Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricin
 !!! warning
     Do not choose a `controller_type` smaller than `Standard_B2s`. Smaller instances are not sufficient for running a controller.
 
-#### Low Priority
+#### Spot Priority
 
-Add `worker_priority=Low` to use [Low Priority](https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-use-low-priority) workers that run on Azure's surplus capacity at lower cost, but with the tradeoff that they can be deallocated at random. Low priority VMs are Azure's analog to AWS spot instances or GCP premptible instances.
+Add `worker_priority=Spot` to use [Spot Priority](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/spot-vms) workers that run on Azure's surplus capacity at lower cost, but with the tradeoff that they can be deallocated at random. Spot priority VMs are Azure's analog to AWS spot instances or GCP premptible instances.
