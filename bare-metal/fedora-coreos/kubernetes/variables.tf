@@ -56,6 +56,18 @@ variable "snippets" {
   default     = {}
 }
 
+variable "worker_node_labels" {
+  type = map(list(string))
+  description = "Map from worker names to lists of initial node labels"
+  default = {}
+}
+
+variable "worker_node_taints" {
+  type = map(list(string))
+  description = "Map from worker names to lists of initial node taints"
+  default = {}
+}
+
 # configuration
 
 variable "k8s_domain_name" {

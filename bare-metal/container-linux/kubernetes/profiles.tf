@@ -188,6 +188,8 @@ data "template_file" "worker-configs" {
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
+    node_labels            = join(",", lookup(var.worker_node_labels, var.workers.*.name[count.index], []))
+    node_taints            = join(",", lookup(var.worker_node_taints, var.workers.*.name[count.index], []))
   }
 }
 

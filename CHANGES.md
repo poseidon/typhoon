@@ -17,10 +17,15 @@ Notable changes between versions.
 #### Azure
 
 * Upgrade to `terraform-provider-azurerm` [v2.0+](https://www.terraform.io/docs/providers/azurerm/guides/2.0-upgrade-guide.html) (action required)
+  * Change `worker_priority` from `Low` to `Spot` if used (action required)
   * Switch to Azure's new Linux VM and Linux VM Scale Set resources
-  * If set, change `worker_priority` from `Low` to `Spot` (action required)
   * Set controller's Azure disk caching to None
   * Associate subnets (in addition to NICs) with security groups (aesthetic)
+
+#### Bare-Metal
+
+* Add `worker_node_labels` map variable for per-worker node labels ([#663](https://github.com/poseidon/typhoon/pull/663))
+* Add `worker_node_taints` map variable for per-worker node taints ([#663](https://github.com/poseidon/typhoon/pull/663))
 
 #### Google Cloud
 

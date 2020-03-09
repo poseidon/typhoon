@@ -347,4 +347,6 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | kernel_args | Additional kernel args to provide at PXE boot | [] | ["kvm-intel.nested=1"] |
+| worker_node_labels | Map from worker name to list of initial node labels | {} | {"node2" = ["role=special"]} |
+| worker_node_taints | Map from worker name to list of initial node taints | {} | {"node2" = ["role=special:NoSchedule"]} |
 
