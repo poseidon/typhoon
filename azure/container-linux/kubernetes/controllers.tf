@@ -15,8 +15,10 @@ resource "azurerm_dns_a_record" "etcds" {
 }
 
 locals {
-  # Channel for a Container Linux derivative
+  # Container Linux derivative
   # coreos-stable -> Container Linux Stable
+  # flatcar-stable -> Flatcar Linux Stable
+  flavor  = split("-", var.os_image)[0]
   channel = split("-", var.os_image)[1]
 }
 
@@ -52,10 +54,21 @@ resource "azurerm_linux_virtual_machine" "controllers" {
   }
 
   source_image_reference {
-    publisher = "CoreOS"
-    offer     = "CoreOS"
+    publisher = local.flavor == "flatcar" ? "Kinvolk" : "CoreOS"
+    offer     = local.flavor == "flatcar" ? "flatcar-container-linux" : "CoreOS"
     sku       = local.channel
     version   = "latest"
+  }
+
+  # Gross hack just for Flatcar Linux
+  dynamic "plan" {
+    for_each = local.flavor == "flatcar" ? [1] : []
+
+    content {
+      name = local.channel
+      publisher = "kinvolk"
+      product = "flatcar-container-linux"
+    }
   }
 
   # network

@@ -21,6 +21,8 @@ Notable changes between versions.
   * Switch to Azure's new Linux VM and Linux VM Scale Set resources
   * Set controller's Azure disk caching to None
   * Associate subnets (in addition to NICs) with security groups (aesthetic)
+* Add support for Flatcar Container Linux ([#664](https://github.com/poseidon/typhoon/pull/664))
+  * Requires accepting Flatcar Linux Azure Marketplace terms
 
 #### Bare-Metal
 

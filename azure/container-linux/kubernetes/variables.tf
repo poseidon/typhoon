@@ -49,7 +49,7 @@ variable "worker_type" {
 variable "os_image" {
   type        = string
   default     = "coreos-stable"
-  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha)"
+  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta)"
 }
 
 variable "disk_size" {

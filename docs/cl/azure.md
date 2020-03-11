@@ -85,6 +85,15 @@ module "ramius" {
 
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
 
+### Flatcar Linux Only
+
+Flatcar Linux publishes images to the Azure Marketplace and requires accepting their legal terms.
+
+```
+az vm image terms show --publish kinvolk --offer flatcar-container-linux --plan stable
+az vm image terms accept --publish kinvolk --offer flatcar-container-linux --plan stable
+```
+
 ## ssh-agent
 
 Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
@@ -223,7 +232,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
-| os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
+| os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
