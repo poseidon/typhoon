@@ -80,7 +80,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          k8s.gcr.io/hyperkube:v1.17.3 kubelet \
+          k8s.gcr.io/hyperkube:v1.17.4 kubelet \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -134,7 +134,7 @@ systemd:
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
             --entrypoint=/apply \
-            k8s.gcr.io/hyperkube:v1.17.3
+            k8s.gcr.io/hyperkube:v1.17.4
         ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
         ExecStartPost=-/usr/bin/podman stop bootstrap
 storage:

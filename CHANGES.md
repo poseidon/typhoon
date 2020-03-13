@@ -30,14 +30,14 @@ Notable changes between versions.
 * Add `worker_node_labels` map variable for per-worker node labels ([#663](https://github.com/poseidon/typhoon/pull/663))
 * Add `worker_node_taints` map variable for per-worker node taints ([#663](https://github.com/poseidon/typhoon/pull/663))
 
+#### DigitalOcean
+
+* Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
+
 #### Google Cloud
 
 * Fix `worker_node_labels` on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
 * Fix automatic worker node delete on shutdown on Fedora CoreOS ([#657](https://github.com/poseidon/typhoon/pull/657))
-
-#### DigitalOcean
-
-* Add support for Flatcar Container Linux ([#644](https://github.com/poseidon/typhoon/pull/644))
 
 #### Addons
 
