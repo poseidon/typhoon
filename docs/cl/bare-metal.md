@@ -326,9 +326,6 @@ kube-system   kube-scheduler-node1.example.com           1/1       Running   0  
 
 Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
-!!! note
-    On Container Linux clusters, install the `CLUO` addon to coordinate reboots and drains when nodes auto-update. Otherwise, updates may not be applied until the next reboot.
-
 ## Variables
 
 Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/container-linux/kubernetes/variables.tf) source.

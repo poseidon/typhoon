@@ -49,6 +49,8 @@ Notable changes between versions.
   * Update node-exporter from v0.18.1 to [v1.0.0-rc.0](https://github.com/prometheus/node_exporter/releases/tag/v1.0.0-rc.0)
 * Update Grafana from v6.6.1 to v6.6.2
   * Refresh Grafana dashboards
+* Remove Container Linux Update Operator (CLUO) addon
+  * CLUO doesn't support Kubernetes v1.16+, hasn't been in active use, and won't be relevant beyond Container Linux
 
 ## v1.17.3
 
