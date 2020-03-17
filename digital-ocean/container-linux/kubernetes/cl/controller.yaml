@@ -101,8 +101,7 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          docker://k8s.gcr.io/hyperkube:v1.17.4 \
-          --exec=/usr/local/bin/kubelet -- \
+          docker://quay.io/poseidon/kubelet:v1.17.4 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -146,7 +145,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://k8s.gcr.io/hyperkube:v1.17.4 \
+            docker://quay.io/poseidon/kubelet:v1.17.4 \
             --net=host \
             --dns=host \
             --exec=/apply

@@ -40,9 +40,14 @@ Typhoon limits exposure to many security threats, but it is not a silver bullet.
 * Do not give untrusted users a shell behind your firewall
 * Define network policies for your namespaces
 
-## OpenPGP Signing
+## Container Images
 
-Typhoon uses upstream container images and binaries. We do not distribute artifacts of our own. If you find artifacts claiming to be from Typhoon, please send a note.
+Typhoon uses upstream container images (where possible) and upstream binaries.
+
+!!! note
+    Kubernetes releases `kubelet` as a binary for distros to package, either as a DEB/RPM on traditional distros or as a container image for container-optimized operating systems.
+
+Typhoon [packages](https://github.com/poseidon/kubelet) the upstream Kubelet and its dependencies as a [container image](https://quay.io/repository/poseidon/kubelet) for use in Typhoon. The upstream Kubelet binary is checksummed and packaged directly. Quay automated builds provide verifiability and confidence in image contents.
 
 ## Disclosures
 

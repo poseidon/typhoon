@@ -31,8 +31,8 @@ Together, they diversify Typhoon to support a range of container technologies.
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
 | control plane     | static pods   | static pods   |
-| kubelet image     | upstream hyperkube | upstream hyperkube |
-| control plane images | upstream hyperkube | upstream hyperkube |
+| kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
+| control plane images | upstream images | upstream images |
 | on-host etcd      | rkt-fly   | podman |
 | on-host kubelet   | rkt-fly   | podman |
 | CNI plugins       | calico or flannel | calico or flannel |

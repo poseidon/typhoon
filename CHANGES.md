@@ -5,6 +5,15 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.4.4 to [v3.4.5](https://github.com/etcd-io/etcd/releases/tag/v3.4.5)
+* Switch from upstream hyperkube image to individual images ([#669](https://github.com/poseidon/typhoon/pull/669))
+  * Use upstream `k8s.gcr.io` `kube-apiserver`, `kube-controller-manager`, `kube-scheduler`, and `kube-proxy` container images
+  * Use [poseidon/kubelet](https://github.com/poseidon/kubelet) to package the upstream Kubelet binary (checksummed) and
+  its dependencies as an automated build container image [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet)
+  * Update base images for control plane and Kubelet images used by Typhoon from upstream's debian 9 (stretch) to debian 10
+  (buster) base
+  * Update Typhoon container image security policy to list `quay.io/poseidon/kubelet`as an official distributed artifact
+  * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container
+  image and provide the Kubelet as a binary for distros to package
 
 #### Addons
 

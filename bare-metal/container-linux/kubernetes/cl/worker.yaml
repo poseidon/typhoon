@@ -76,8 +76,7 @@ systemd:
           --mount volume=etc-iscsi,target=/etc/iscsi \
           --volume usr-sbin-iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
           --mount volume=usr-sbin-iscsiadm,target=/sbin/iscsiadm \
-          docker://k8s.gcr.io/hyperkube:v1.17.4 \
-          --exec=/usr/local/bin/kubelet -- \
+          docker://quay.io/poseidon/kubelet:v1.17.4 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
