@@ -11,6 +11,7 @@ Notable changes between versions.
 
 #### AWS
 
+* Promote Fedora CoreOS to stable ([#668](https://github.com/poseidon/typhoon/pull/668))
 * Allow VPC route table extension via reference ([#654](https://github.com/poseidon/typhoon/pull/654))
 * Fix `worker_node_labels` on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
 * Fix automatic worker node delete on shutdown on Fedora CoreOS ([#657](https://github.com/poseidon/typhoon/pull/657))
@@ -36,6 +37,7 @@ Notable changes between versions.
 
 #### Google Cloud
 
+* Promote Fedora CoreOS to beta ([#668](https://github.com/poseidon/typhoon/pull/668))
 * Fix `worker_node_labels` on Fedora CoreOS ([#651](https://github.com/poseidon/typhoon/pull/651))
 * Fix automatic worker node delete on shutdown on Fedora CoreOS ([#657](https://github.com/poseidon/typhoon/pull/657))
 
@@ -49,8 +51,9 @@ Notable changes between versions.
   * Update node-exporter from v0.18.1 to [v1.0.0-rc.0](https://github.com/prometheus/node_exporter/releases/tag/v1.0.0-rc.0)
 * Update Grafana from v6.6.1 to v6.6.2
   * Refresh Grafana dashboards
-* Remove Container Linux Update Operator (CLUO) addon
-  * CLUO doesn't support Kubernetes v1.16+, hasn't been in active use, and won't be relevant beyond Container Linux
+* Remove Container Linux Update Operator (CLUO) addon example ([#667](https://github.com/poseidon/typhoon/pull/667))
+  * CLUO hasn't been in active use in our clusters and won't be relevant
+  beyond Container Linux. Requires patches for use on Kubernetes v1.16+
 
 ## v1.17.3
 

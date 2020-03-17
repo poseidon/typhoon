@@ -33,9 +33,9 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](fedora-coreos/aws.md) | beta |
+| AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](fedora-coreos/aws.md) | stable |
 | Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](fedora-coreos/bare-metal.md) | beta |
-| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | alpha |
+| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | beta |
 
 Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org/releases/).
 
