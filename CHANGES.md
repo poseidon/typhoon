@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Update etcd from v3.4.4 to [v3.4.5](https://github.com/etcd-io/etcd/releases/tag/v3.4.5)
 
+#### Addons
+
+* Update Prometheus from v2.16.0 to [v2.17.0-rc.3](https://github.com/prometheus/prometheus/releases/tag/v2.17.0-rc.3)
+
 ## v1.17.4
 
 * Update etcd from v3.4.3 to [v3.4.4](https://github.com/etcd-io/etcd/releases/tag/v3.4.4)
