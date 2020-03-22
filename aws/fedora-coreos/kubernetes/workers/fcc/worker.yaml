@@ -49,7 +49,7 @@ systemd:
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
           --volume /opt/cni/bin:/opt/cni/bin:z \
-          quay.io/poseidon/kubelet:v1.17.4 \
+          quay.io/poseidon/kubelet:v1.18.0 \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -87,7 +87,7 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         ExecStart=/bin/true
-        ExecStop=/bin/bash -c '/usr/bin/podman run --volume /etc/kubernetes:/etc/kubernetes:ro,z --entrypoint /usr/local/bin/kubectl quay.io/poseidon/kubelet:v1.17.4 --kubeconfig=/etc/kubernetes/kubeconfig delete node $HOSTNAME'
+        ExecStop=/bin/bash -c '/usr/bin/podman run --volume /etc/kubernetes:/etc/kubernetes:ro,z --entrypoint /usr/local/bin/kubectl quay.io/poseidon/kubelet:v1.18.0 --kubeconfig=/etc/kubernetes/kubeconfig delete node $HOSTNAME'
         [Install]
         WantedBy=multi-user.target
 storage:

@@ -76,7 +76,7 @@ systemd:
           --mount volume=etc-iscsi,target=/etc/iscsi \
           --volume usr-sbin-iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
           --mount volume=usr-sbin-iscsiadm,target=/sbin/iscsiadm \
-          docker://quay.io/poseidon/kubelet:v1.17.4 -- \
+          docker://quay.io/poseidon/kubelet:v1.18.0 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \

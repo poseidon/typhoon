@@ -50,7 +50,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          quay.io/poseidon/kubelet:v1.17.4 \
+          quay.io/poseidon/kubelet:v1.18.0 \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \

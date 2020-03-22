@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.18.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1180)
 * Update etcd from v3.4.4 to [v3.4.5](https://github.com/etcd-io/etcd/releases/tag/v3.4.5)
 * Switch from upstream hyperkube image to individual images ([#669](https://github.com/poseidon/typhoon/pull/669))
   * Use upstream `k8s.gcr.io` `kube-apiserver`, `kube-controller-manager`, `kube-scheduler`, and `kube-proxy` container images
@@ -27,6 +28,7 @@ Notable changes between versions.
 
 ## v1.17.4
 
+* Kubernetes [v1.17.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v1174)
 * Update etcd from v3.4.3 to [v3.4.4](https://github.com/etcd-io/etcd/releases/tag/v3.4.4)
   * On Container Linux, fetch using the docker transport format ([#659](https://github.com/poseidon/typhoon/pull/659))
 * Update CoreDNS from v1.6.6 to v1.6.7 ([#648](https://github.com/poseidon/typhoon/pull/648))

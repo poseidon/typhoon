@@ -80,7 +80,7 @@ systemd:
           --volume /opt/cni/bin:/opt/cni/bin:z \
           --volume /etc/iscsi:/etc/iscsi \
           --volume /sbin/iscsiadm:/sbin/iscsiadm \
-          quay.io/poseidon/kubelet:v1.17.4 \
+          quay.io/poseidon/kubelet:v1.18.0 \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -127,14 +127,13 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
-        ExecStartPre=-/usr/bin/bash -c 'set -x && [ -n "$(ls /opt/bootstrap/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootstrap/assets/manifests-*/* /opt/bootstrap/assets/manifests && rm -rf /opt/bootstrap/assets/manifests-*'
         ExecStart=/usr/bin/podman run --name bootstrap \
             --network host \
             --volume /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro,Z \
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
             --entrypoint=/apply \
-            quay.io/poseidon/kubelet:v1.17.4
+            quay.io/poseidon/kubelet:v1.18.0
         ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
         ExecStartPost=-/usr/bin/podman stop bootstrap
 storage:
@@ -166,7 +165,9 @@ storage:
           sudo mv static-manifests/* /etc/kubernetes/manifests/
           sudo mkdir -p /opt/bootstrap/assets
           sudo mv manifests /opt/bootstrap/assets/manifests
-          sudo mv manifests-networking /opt/bootstrap/assets/manifests-networking
+          sudo mkdir -p /opt/bootstrap/assets/manifests/crds
+          sudo mv manifests-networking/crd*.yaml /opt/bootstrap/assets/manifests/crds
+          sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls
     - path: /opt/bootstrap/apply
       mode: 0544
@@ -177,6 +178,10 @@ storage:
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
+          done
+          until kubectl apply -f /assets/manifests/crds -R; do
+             echo "Retry Custom Resource Definition manifests"
+             sleep 5
           done
           until kubectl apply -f /assets/manifests -R; do
              echo "Retry applying manifests"

@@ -101,7 +101,7 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          docker://quay.io/poseidon/kubelet:v1.17.4 -- \
+          docker://quay.io/poseidon/kubelet:v1.18.0 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -135,7 +135,6 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
-        ExecStartPre=-/usr/bin/bash -c 'set -x && [ -n "$(ls /opt/bootstrap/assets/manifests-*/* 2>/dev/null)" ] && mv /opt/bootstrap/assets/manifests-*/* /opt/bootstrap/assets/manifests && rm -rf /opt/bootstrap/assets/manifests-*'
         ExecStart=/usr/bin/rkt run \
             --trust-keys-from-https \
             --volume config,kind=host,source=/etc/kubernetes/bootstrap-secrets \
@@ -145,7 +144,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.17.4 \
+            docker://quay.io/poseidon/kubelet:v1.18.0 \
             --net=host \
             --dns=host \
             --exec=/apply
@@ -177,7 +176,9 @@ storage:
           sudo mv static-manifests/* /etc/kubernetes/manifests/
           sudo mkdir -p /opt/bootstrap/assets
           sudo mv manifests /opt/bootstrap/assets/manifests
-          sudo mv manifests-networking /opt/bootstrap/assets/manifests-networking
+          sudo mkdir -p /opt/bootstrap/assets/manifests/crds
+          sudo mv manifests-networking/crd*.yaml /opt/bootstrap/assets/manifests/crds
+          sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls
     - path: /opt/bootstrap/apply
       filesystem: root
@@ -189,6 +190,10 @@ storage:
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
+          done
+          until kubectl apply -f /assets/manifests/crds -R; do
+             echo "Retry Custom Resource Definition manifests"
+             sleep 5
           done
           until kubectl apply -f /assets/manifests -R; do
              echo "Retry applying manifests"
