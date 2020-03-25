@@ -5,7 +5,7 @@
 ### Environment
 
 * Platform: aws, azure, bare-metal, google-cloud, digital-ocean
-* OS: container-linux, flatcar-linux
+* OS: fedora-coreos, flatcar-linux
 * Release: Typhoon version or Git SHA (reporting latest is **not** helpful)
 * Terraform: `terraform version` (reporting latest is **not** helpful)
 * Plugins: Provider plugin versions (reporting latest is **not** helpful)

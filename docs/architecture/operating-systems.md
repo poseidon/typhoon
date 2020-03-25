@@ -1,6 +1,6 @@
 # Operating Systems
 
-Typhoon supports [Container Linux](https://coreos.com/why/), [Flatcar Linux](https://www.flatcar-linux.org/) and [Fedora CoreOS](https://getfedora.org/coreos/) (preview). These operating systems were chosen because they offer:
+Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/), [Flatcar Linux](https://www.flatcar-linux.org/) and Container Linux (EOL in May 2020). These operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades
@@ -9,16 +9,18 @@ Typhoon supports [Container Linux](https://coreos.com/why/), [Flatcar Linux](htt
 
 Together, they diversify Typhoon to support a range of container technologies.
 
-* Container Linux: Gentoo core, rkt-fly, docker
 * Fedora CoreOS: rpm-ostree, podman, moby
+* Flatcar Linux: Gentoo core, rkt-fly, docker
 
 ## Host Properties
 
-| Property          | Container Linux / Flatcar Linux | Fedora CoreOS |
+| Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|---------------------------------|---------------|
+| Kernel            | ~4.19.x | ~5.5.x |
+| systemd           | 241 | 243 |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
-| Container Engine  | docker    | docker |
-| storage driver    | overlay2  | overlay2 |
+| Container Engine  | docker 18.06.3-ce  | docker 18.09.8 |
+| storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
 | logging driver    | json-file | journald |
 | cgroup driver     | cgroupfs (except Flatcar edge) | systemd  |
 | Networking        | systemd-networkd | NetworkManager |
@@ -26,7 +28,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 ## Kubernetes Properties
 
-| Property          | Container Linux | Fedora CoreOS |
+| Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|-----------------|---------------|
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |

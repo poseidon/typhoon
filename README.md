@@ -51,7 +51,8 @@ Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org
 
 * [Docs](https://typhoon.psdn.io)
 * Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
-* Tutorials for [AWS](docs/cl/aws.md), [Azure](docs/cl/azure.md), [Bare-Metal](docs/cl/bare-metal.md), [Digital Ocean](docs/cl/digital-ocean.md), and [Google-Cloud](docs/cl/google-cloud.md)
+* Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
+* Flatcar Linux tutorials for [AWS](docs/cl/aws.md), [Azure](docs/cl/azure.md), [Bare-Metal](docs/cl/bare-metal.md), [DigitalOcean](docs/cl/digital-ocean.md), and [Google Cloud](docs/cl/google-cloud.md)
 
 ## Usage
 
