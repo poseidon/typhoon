@@ -14,6 +14,7 @@ Notable changes between versions.
   * Update Typhoon container image security policy to list `quay.io/poseidon/kubelet`as an official distributed artifact
   * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container
   image and provide the Kubelet as a binary for distros to package
+* Deprecate `asset_dir` variable and remove docs ([#678](https://github.com/poseidon/typhoon/pull/678))
 
 #### DigitalOcean
 
