@@ -15,6 +15,10 @@ Notable changes between versions.
   * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container
   image and provide the Kubelet as a binary for distros to package
 
+#### DigitalOcean
+
+* Rename `image` variable to `os_image` for consistency ([#677](https://github.com/poseidon/typhoon/pull/677)) (action required)
+
 #### Addons
 
 * Update Prometheus from v2.16.0 to [v2.17.0](https://github.com/prometheus/prometheus/releases/tag/v2.17.0)

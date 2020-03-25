@@ -41,7 +41,7 @@ variable "worker_type" {
   default     = "s-1vcpu-2gb"
 }
 
-variable "image" {
+variable "os_image" {
   type        = string
   description = "Container Linux image for instances (e.g. coreos-stable)"
   default     = "coreos-stable"

@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "workers" {
   name   = "${var.cluster_name}-worker-${count.index}"
   region = var.region
 
-  image = var.image
+  image = var.os_image
   size  = var.worker_type
 
   # network

@@ -1,6 +1,6 @@
 locals {
   official_images = ["coreos-stable", "coreos-beta", "coreos-alpha"]
-  is_official_image = contains(local.official_images, var.image)
+  is_official_image = contains(local.official_images, var.os_image)
 }
 
 # Controller Instance DNS records
@@ -42,7 +42,7 @@ resource "digitalocean_droplet" "controllers" {
   name   = "${var.cluster_name}-controller-${count.index}"
   region = var.region
 
-  image = var.image
+  image = var.os_image
   size  = var.controller_type
 
   # network

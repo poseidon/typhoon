@@ -71,7 +71,7 @@ module "nemo" {
   cluster_name = "nemo"
   region       = "nyc3"
   dns_zone     = "digital-ocean.example.com"
-  image        = "coreos-stable"
+  os_image     = "coreos-stable"
 
   # configuration
   ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
@@ -95,7 +95,7 @@ Flatcar Linux publishes DigitalOcean images, but does not upload them. DigitalOc
 ```tf
 module "nemo" {
   ...
-  image = data.digitalocean_image.flatcar-stable.id
+  os_image = data.digitalocean_image.flatcar-stable.id
 }
 
 data "digitalocean_image" "flatcar-stable" {
@@ -103,7 +103,7 @@ data "digitalocean_image" "flatcar-stable" {
 }
 ```
 
-Set the [image](#variables) to the custom image id.
+Set the [os_image](#variables) to the custom image id.
 
 ## ssh-agent
 
@@ -244,7 +244,7 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Droplet type for controllers | "s-2vcpu-2gb" | s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb, ... |
 | worker_type | Droplet type for workers | "s-1vcpu-2gb" | s-1vcpu-2gb, s-2vcpu-2gb, ... |
-| image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, "custom-image-id" |
+| os_image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, "custom-image-id" |
 | controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "flannel" or "calico" |
