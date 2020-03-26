@@ -127,7 +127,7 @@ storage:
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.17.4 \
+            docker://quay.io/poseidon/kubelet:v1.18.0 \
             --net=host \
             --dns=host \
             -- \
