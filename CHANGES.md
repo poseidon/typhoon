@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.18.0
+
 * Kubernetes [v1.18.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1180)
 * Update etcd from v3.4.4 to [v3.4.5](https://github.com/etcd-io/etcd/releases/tag/v3.4.5)
 * Switch from upstream hyperkube image to individual images ([#669](https://github.com/poseidon/typhoon/pull/669))
@@ -15,6 +17,7 @@ Notable changes between versions.
   * Update Typhoon container image security policy to list `quay.io/poseidon/kubelet`as an official distributed artifact
   * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container
   image and provide the Kubelet as a binary for distros to package
+* Set Fedora CoreOS log driver back to the default `journald` ([#681](https://github.com/poseidon/typhoon/pull/681))
 * Deprecate `asset_dir` variable and remove docs ([#678](https://github.com/poseidon/typhoon/pull/678))
 
 #### DigitalOcean

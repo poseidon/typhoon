@@ -198,19 +198,6 @@ storage:
           DefaultCPUAccounting=yes
           DefaultMemoryAccounting=yes
           DefaultBlockIOAccounting=yes
-    - path: /etc/sysconfig/docker
-      mode: 0644
-      overwrite: true
-      contents:
-        inline: |
-          # Modify these options if you want to change the way the docker daemon runs
-          OPTIONS="--selinux-enabled \
-            --log-driver=json-file \
-            --live-restore \
-            --default-ulimit nofile=1024:1024 \
-            --init-path /usr/libexec/docker/docker-init \
-            --userland-proxy-path /usr/libexec/docker/docker-proxy \
-          "
     - path: /etc/etcd/etcd.env
       mode: 0644
       contents:
