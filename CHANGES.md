@@ -9,16 +9,18 @@ Notable changes between versions.
 * Kubernetes [v1.18.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1180)
 * Update etcd from v3.4.4 to [v3.4.5](https://github.com/etcd-io/etcd/releases/tag/v3.4.5)
 * Switch from upstream hyperkube image to individual images ([#669](https://github.com/poseidon/typhoon/pull/669))
-  * Use upstream `k8s.gcr.io` `kube-apiserver`, `kube-controller-manager`, `kube-scheduler`, and `kube-proxy` container images
-  * Use [poseidon/kubelet](https://github.com/poseidon/kubelet) to package the upstream Kubelet binary (checksummed) and
-  its dependencies as an automated build container image [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet)
-  * Update base images for control plane and Kubelet images used by Typhoon from upstream's debian 9 (stretch) to debian 10
-  (buster) base
-  * Update Typhoon container image security policy to list `quay.io/poseidon/kubelet`as an official distributed artifact
-  * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container
-  image and provide the Kubelet as a binary for distros to package
+  * Use upstream k8s.gcr.io `kube-apiserver`, `kube-controller-manager`, `kube-scheduler`, and `kube-proxy` container images
+  * Use [poseidon/kubelet](https://github.com/poseidon/kubelet) to package the upstream Kubelet binary and dependencies as a container image (checksummed, automated build)
+  * Add [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet) as a Typhoon distributed artifact in the security policy
+  * Update base images from debian 9 to debian 10
+  * Background: Kubernetes will [stop releasing](https://github.com/kubernetes/kubernetes/pull/88676) the hyperkube container image and provide the Kubelet as a binary for packaging
+* Choose Fedora CoreOS or Flatcar Linux (**action recommended**)
+  * Use a `fedora-coreos` module for Fedora CoreOS
+  * Use a `container-linux` module with OS set for Flatcar Linux (varies, see docs)
+  * CoreOS Container Linux [won't receive updates](https://coreos.com/os/eol/) after May 2020
 * Set Fedora CoreOS log driver back to the default `journald` ([#681](https://github.com/poseidon/typhoon/pull/681))
 * Deprecate `asset_dir` variable and remove docs ([#678](https://github.com/poseidon/typhoon/pull/678))
+* Deprecate support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes. A future release will drop support.
 
 #### DigitalOcean
 
