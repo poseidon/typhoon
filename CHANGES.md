@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
+  * Tolerate master and not-ready taints, rather than tolerating all taints
+
 ## v1.18.0
 
 * Kubernetes [v1.18.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1180)
