@@ -50,6 +50,7 @@ data "ct_config" "controller-ignitions" {
 
   content = data.template_file.controller-configs.*.rendered[count.index]
   strict  = true
+  snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])
 }
 
 data "template_file" "controller-configs" {
@@ -85,6 +86,7 @@ data "ct_config" "worker-ignitions" {
 
   content = data.template_file.worker-configs.*.rendered[count.index]
   strict  = true
+  snippets = lookup(var.snippets, var.workers.*.name[count.index], [])
 }
 
 data "template_file" "worker-configs" {

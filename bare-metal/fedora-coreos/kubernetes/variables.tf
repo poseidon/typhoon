@@ -13,12 +13,12 @@ variable "matchbox_http_endpoint" {
 variable "os_stream" {
   type        = string
   description = "Fedora CoreOS release stream (e.g. testing, stable)"
-  default     = "testing"
+  default     = "stable"
 }
 
 variable "os_version" {
   type        = string
-  description = "Fedora CoreOS version to PXE and install (e.g. 30.20190712.0)"
+  description = "Fedora CoreOS version to PXE and install (e.g. 31.20200310.3.0)"
 }
 
 # machines

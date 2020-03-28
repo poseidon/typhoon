@@ -18,6 +18,8 @@ Notable changes between versions.
   * Use a `fedora-coreos` module for Fedora CoreOS
   * Use a `container-linux` module with OS set for Flatcar Linux (varies, see docs)
   * CoreOS Container Linux [won't receive updates](https://coreos.com/os/eol/) after May 2020
+* Add support for Fedora CoreOS snippets (`terraform-provider-ct` v0.5+) ([#686](https://github.com/poseidon/typhoon/pull/686))
+* Recommend updating `terraform-provider-ct` plugin from v0.4.0 to [v0.5.0](https://github.com/poseidon/terraform-provider-ct/releases/tag/v0.5.0)
 * Set Fedora CoreOS log driver back to the default `journald` ([#681](https://github.com/poseidon/typhoon/pull/681))
 * Deprecate `asset_dir` variable and remove docs ([#678](https://github.com/poseidon/typhoon/pull/678))
 * Deprecate support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes. A future release will drop support.
@@ -26,6 +28,10 @@ Notable changes between versions.
 
 * Fix Fedora CoreOS AMI to filter for stable images ([#685](https://github.com/poseidon/typhoon/pull/685))
   * Latest Fedora CoreOS `testing` or `bodhi-update` images could be chosen depending on the region
+
+#### Bare-Metal
+
+* Update default `os_stream` from testing to stable
 
 #### DigitalOcean
 
