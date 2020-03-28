@@ -22,6 +22,11 @@ Notable changes between versions.
 * Deprecate `asset_dir` variable and remove docs ([#678](https://github.com/poseidon/typhoon/pull/678))
 * Deprecate support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes. A future release will drop support.
 
+#### AWS
+
+* Fix Fedora CoreOS AMI to filter for stable images ([#685](https://github.com/poseidon/typhoon/pull/685))
+  * Latest Fedora CoreOS `testing` or `bodhi-update` images could be chosen depending on the region
+
 #### DigitalOcean
 
 * Rename `image` variable to `os_image` for consistency ([#677](https://github.com/poseidon/typhoon/pull/677)) (action required)
