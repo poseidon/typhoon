@@ -134,5 +134,4 @@ storage:
             docker://quay.io/poseidon/kubelet:v1.18.0 \
             --net=host \
             --dns=host \
-            -- \
-            /usr/local/bin/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
+            --exec=/usr/local/bin/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)
