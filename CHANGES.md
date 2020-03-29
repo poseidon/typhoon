@@ -33,6 +33,10 @@ Notable changes between versions.
 
 * Update default `os_stream` from testing to stable
 
+#### Google Cloud
+
+* Known: Use of stale Fedora CoreOS image may require terraform re-apply during bootstrap ([#687](https://github.com/poseidon/typhoon/pull/687))
+
 #### DigitalOcean
 
 * Rename `image` variable to `os_image` for consistency ([#677](https://github.com/poseidon/typhoon/pull/677)) (action required)

@@ -1,8 +1,5 @@
 # Google Cloud
 
-!!! danger
-    Typhoon for Fedora CoreOS is an alpha. Please report Fedora CoreOS bugs to [Fedora](https://github.com/coreos/fedora-coreos-tracker/issues) and Typhoon issues to Typhoon.
-
 In this tutorial, we'll create a Kubernetes v1.18.0 cluster on Google Compute Engine with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
@@ -76,13 +73,13 @@ Fedora CoreOS publishes images for Google Cloud, but does not yet upload them. G
 
 ```
 gsutil list
-gsutil cp fedora-coreos-31.20200113.3.1-gcp.x86_64.tar.gz gs://BUCKET
+gsutil cp fedora-coreos-31.20200310.3.0-gcp.x86_64.tar.gz gs://BUCKET
 ```
 
 Create a Compute Engine image from the file.
 
 ```
-gcloud compute images create fedora-coreos-31-20200113-3-1 --source-uri gs://BUCKET/fedora-coreos-31.20200113.3.1-gcp.x86_64.tar.gz
+gcloud compute images create fedora-coreos-31-20200310-3-0 --source-uri gs://BUCKET/fedora-coreos-31.20200310.3.0-gcp.x86_64.tar.gz
 ```
 
 ## Cluster
@@ -100,7 +97,7 @@ module "yavin" {
   dns_zone_name = "example-zone"
 
   # custom image name from above
-  os_image = "fedora-coreos-31-20200113-3-1"
+  os_image = "fedora-coreos-31-20200310-3-0"
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
