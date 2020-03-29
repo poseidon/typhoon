@@ -98,7 +98,7 @@ resource "azurerm_monitor_autoscale_setting" "workers" {
 data "ct_config" "worker-ignition" {
   content      = data.template_file.worker-config.rendered
   pretty_print = false
-  snippets     = var.clc_snippets
+  snippets     = var.snippets
 }
 
 # Worker Container Linux configs

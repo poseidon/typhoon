@@ -67,7 +67,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
 | disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
 | spot_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
-| clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
@@ -133,7 +133,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | vm_type | Machine type for instances | "Standard_DS1_v2" | See below |
 | os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
 | priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | "Regular" | "Low" |
-| clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
@@ -209,7 +209,7 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 | os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
-| clc_snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 

@@ -64,13 +64,13 @@ variable "worker_priority" {
   default     = "Regular"
 }
 
-variable "controller_clc_snippets" {
+variable "controller_snippets" {
   type        = list(string)
   description = "Controller Container Linux Config snippets"
   default     = []
 }
 
-variable "worker_clc_snippets" {
+variable "worker_snippets" {
   type        = list(string)
   description = "Worker Container Linux Config snippets"
   default     = []

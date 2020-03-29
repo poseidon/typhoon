@@ -125,7 +125,7 @@ systemd:
             Environment="ETCD_LOG_PACKAGE_LEVELS=etcdserver=WARNING,security=DEBUG"
 ```
 
-Reference the CLC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/cl/aws/#cluster), [Azure](/cl/azure/#cluster), [DigitalOcean](/cl/digital-ocean/#cluster), or [Google Cloud](/cl/google-cloud/#cluster) extend the `controller_clc_snippets` or `worker_clc_snippets` list variables.
+Reference the CLC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/cl/aws/#cluster), [Azure](/cl/azure/#cluster), [DigitalOcean](/cl/digital-ocean/#cluster), or [Google Cloud](/cl/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
 
 ```tf
 module "nemo" {
@@ -133,11 +133,11 @@ module "nemo" {
 
   controller_count        = 1
   worker_count            = 2
-  controller_clc_snippets = [
+  controller_snippets = [
     file("./custom-files"),
     file("./custom-units"),
   ]
-  worker_clc_snippets = [
+  worker_snippets = [
     file("./custom-files"),
     file("./custom-units")",
   ]
@@ -145,12 +145,12 @@ module "nemo" {
 }
 ```
 
-On [Bare-Metal](/cl/bare-metal/#cluster), different CLCs may be used for each node (since hardware may be heterogeneous). Extend the `clc_snippets` map variable by mapping a controller or worker name key to a list of snippets.
+On [Bare-Metal](/cl/bare-metal/#cluster), different CLCs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
 
 ```tf
 module "mercury" {
   ...
-  clc_snippets = {
+  snippets = {
     "node2" = [file("./units/hello.yaml")]
     "node3" = [
       file("./units/world.yaml"),

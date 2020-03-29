@@ -231,8 +231,8 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
-| controller_clc_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
-| worker_clc_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | networking | Choice of networking provider | "calico" | "flannel" or "calico" |
 | host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

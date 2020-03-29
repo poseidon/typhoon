@@ -52,7 +52,7 @@ variable "preemptible" {
   default     = false
 }
 
-variable "clc_snippets" {
+variable "snippets" {
   type        = list(string)
   description = "Container Linux Config snippets"
   default     = []

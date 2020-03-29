@@ -60,7 +60,7 @@ resource "digitalocean_tag" "workers" {
 data "ct_config" "worker-ignition" {
   content      = data.template_file.worker-config.rendered
   pretty_print = false
-  snippets     = var.worker_clc_snippets
+  snippets     = var.worker_snippets
 }
 
 # Worker Container Linux config

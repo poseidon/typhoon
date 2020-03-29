@@ -49,7 +49,7 @@ List of worker machine details (unique name, identifying MAC address, FQDN)
 EOD
 }
 
-variable "clc_snippets" {
+variable "snippets" {
   type        = map(list(string))
   description = "Map from machine names to lists of Container Linux Config snippets"
   default     = {}

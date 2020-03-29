@@ -6,6 +6,9 @@ Notable changes between versions.
 
 * Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
   * Tolerate master and not-ready taints, rather than tolerating all taints
+* Rename Container Linux `controller_clc_snippets` to `controller_snippets` for consistency
+* Rename Container Linux `worker_clc_snippets` to `worker_snippets` for consistency
+* Rename Container Linux `clc_snippets` (bare-metal) to `snippets` for consistency
 * Fix bootstrap when `networking` mode `flannel` (non-default) is chosen
   * Regressed in v1.18.0 changes for Calico ([#675](https://github.com/poseidon/typhoon/pull/675))
 
@@ -36,7 +39,7 @@ Notable changes between versions.
 
 #### Bare-Metal
 
-* Update default `os_stream` from testing to stable
+* Update Fedora CoreOS default `os_stream` from testing to stable
 
 #### Google Cloud
 
