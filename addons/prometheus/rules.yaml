@@ -252,25 +252,25 @@ data:
           "name": "kube-apiserver.rules",
           "rules": [
             {
-              "expr": "sum(rate(apiserver_request_duration_seconds_sum{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"}[5m])) without(instance, pod)\n/\nsum(rate(apiserver_request_duration_seconds_count{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"}[5m])) without(instance, pod)\n",
+              "expr": "sum(rate(apiserver_request_duration_seconds_sum{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod)\n/\nsum(rate(apiserver_request_duration_seconds_count{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod)\n",
               "record": "cluster:apiserver_request_duration_seconds:mean5m"
             },
             {
-              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
+              "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.99"
               },
               "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
+              "expr": "histogram_quantile(0.9, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.9"
               },
               "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
             },
             {
-              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
+              "expr": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
               "labels": {
                 "quantile": "0.5"
               },
@@ -805,6 +805,7 @@ data:
             {
               "alert": "ErrorBudgetBurn",
               "annotations": {
+                "message": "High requests error budget burn for job=apiserver (current value: {{ $value }})",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-errorbudgetburn"
               },
               "expr": "(\n  status_class_5xx:apiserver_request_total:ratio_rate1h{job=\"apiserver\"} > (14.4*0.010000)\n  and\n  status_class_5xx:apiserver_request_total:ratio_rate5m{job=\"apiserver\"} > (14.4*0.010000)\n)\nor\n(\n  status_class_5xx:apiserver_request_total:ratio_rate6h{job=\"apiserver\"} > (6*0.010000)\n  and\n  status_class_5xx:apiserver_request_total:ratio_rate30m{job=\"apiserver\"} > (6*0.010000)\n)\n",
@@ -816,6 +817,7 @@ data:
             {
               "alert": "ErrorBudgetBurn",
               "annotations": {
+                "message": "High requests error budget burn for job=apiserver (current value: {{ $value }})",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-errorbudgetburn"
               },
               "expr": "(\n  status_class_5xx:apiserver_request_total:ratio_rate1d{job=\"apiserver\"} > (3*0.010000)\n  and\n  status_class_5xx:apiserver_request_total:ratio_rate2h{job=\"apiserver\"} > (3*0.010000)\n)\nor\n(\n  status_class_5xx:apiserver_request_total:ratio_rate3d{job=\"apiserver\"} > (0.010000)\n  and\n  status_class_5xx:apiserver_request_total:ratio_rate6h{job=\"apiserver\"} > (0.010000)\n)\n",
@@ -851,30 +853,6 @@ data:
               "for": "10m",
               "labels": {
                 "severity": "critical"
-              }
-            },
-            {
-              "alert": "KubeAPIErrorsHigh",
-              "annotations": {
-                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
-              },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.03\n",
-              "for": "10m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "KubeAPIErrorsHigh",
-              "annotations": {
-                "message": "API server is returning errors for {{ $value | humanizePercentage }} of requests.",
-                "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeapierrorshigh"
-              },
-              "expr": "sum(rate(apiserver_request_total{job=\"apiserver\",code=~\"5..\"}[5m]))\n  /\nsum(rate(apiserver_request_total{job=\"apiserver\"}[5m])) > 0.01\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
               }
             },
             {
@@ -993,7 +971,7 @@ data:
                 "message": "Kubelet '{{ $labels.node }}' is running at {{ $value | humanizePercentage }} of its Pod capacity.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubelettoomanypods"
               },
-              "expr": "max(max(kubelet_running_pod_count{job=\"kubelet\"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job=\"kubelet\"}) by(node) / max(kube_node_status_capacity_pods{job=\"kube-state-metrics\"}) by(node) > 0.95\n",
+              "expr": "max(max(kubelet_running_pod_count{job=\"kubelet\"}) by(instance) * on(instance) group_left(node) kubelet_node_name{job=\"kubelet\"}) by(node) / max(kube_node_status_capacity_pods{job=\"kube-state-metrics\"} != 1) by(node) > 0.95\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -1029,7 +1007,7 @@ data:
                 "message": "Kubelet Pod startup 99th percentile latency is {{ $value }} seconds on node {{ $labels.node }}.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeletpodstartuplatencyhigh"
               },
-              "expr": "histogram_quantile(0.99, sum(rate(kubelet_pod_worker_duration_seconds_bucket{job=\"kubelet\"}[5m])) by (instance, le)) * on(instance) group_left(node) kubelet_node_name  > 5\n",
+              "expr": "histogram_quantile(0.99, sum(rate(kubelet_pod_worker_duration_seconds_bucket{job=\"kubelet\"}[5m])) by (instance, le)) * on(instance) group_left(node) kubelet_node_name  > 60\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -1085,9 +1063,167 @@ data:
         }
       ]
     }
+  loki.yaml: |-
+    {
+      "groups": [
+        {
+          "name": "loki_rules",
+          "rules": [
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job))",
+              "record": "job:loki_request_duration_seconds:99quantile"
+            },
+            {
+              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job))",
+              "record": "job:loki_request_duration_seconds:50quantile"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job) / sum(rate(loki_request_duration_seconds_count[1m])) by (job)",
+              "record": "job:loki_request_duration_seconds:avg"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)",
+              "record": "job:loki_request_duration_seconds_bucket:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job)",
+              "record": "job:loki_request_duration_seconds_sum:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (job)",
+              "record": "job:loki_request_duration_seconds_count:sum_rate"
+            },
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route))",
+              "record": "job_route:loki_request_duration_seconds:99quantile"
+            },
+            {
+              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route))",
+              "record": "job_route:loki_request_duration_seconds:50quantile"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (job, route)",
+              "record": "job_route:loki_request_duration_seconds:avg"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)",
+              "record": "job_route:loki_request_duration_seconds_bucket:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route)",
+              "record": "job_route:loki_request_duration_seconds_sum:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (job, route)",
+              "record": "job_route:loki_request_duration_seconds_count:sum_rate"
+            },
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route))",
+              "record": "namespace_job_route:loki_request_duration_seconds:99quantile"
+            },
+            {
+              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route))",
+              "record": "namespace_job_route:loki_request_duration_seconds:50quantile"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)",
+              "record": "namespace_job_route:loki_request_duration_seconds:avg"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route)",
+              "record": "namespace_job_route:loki_request_duration_seconds_bucket:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route)",
+              "record": "namespace_job_route:loki_request_duration_seconds_sum:sum_rate"
+            },
+            {
+              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)",
+              "record": "namespace_job_route:loki_request_duration_seconds_count:sum_rate"
+            }
+          ]
+        },
+        {
+          "name": "loki_alerts",
+          "rules": [
+            {
+              "alert": "LokiRequestErrors",
+              "annotations": {
+                "message": "{{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}% errors.\n"
+              },
+              "expr": "100 * sum(rate(loki_request_duration_seconds_count{status_code=~\"5..\"}[1m])) by (namespace, job, route)\n  /\nsum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)\n  > 10\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "LokiRequestLatency",
+              "annotations": {
+                "message": "{{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}s 99th percentile latency.\n"
+              },
+              "expr": "namespace_job_route:loki_request_duration_seconds:99quantile{route!~\"(?i).*tail.*\"} > 1\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
+              }
+            }
+          ]
+        }
+      ]
+    }
   node-exporter.yaml: |-
     {
       "groups": [
+        {
+          "name": "node-exporter.rules",
+          "rules": [
+            {
+              "expr": "count without (cpu) (\n  count without (mode) (\n    node_cpu_seconds_total{job=\"node-exporter\"}\n  )\n)\n",
+              "record": "instance:node_num_cpu:sum"
+            },
+            {
+              "expr": "1 - avg without (cpu, mode) (\n  rate(node_cpu_seconds_total{job=\"node-exporter\", mode=\"idle\"}[1m])\n)\n",
+              "record": "instance:node_cpu_utilisation:rate1m"
+            },
+            {
+              "expr": "(\n  node_load1{job=\"node-exporter\"}\n/\n  instance:node_num_cpu:sum{job=\"node-exporter\"}\n)\n",
+              "record": "instance:node_load1_per_cpu:ratio"
+            },
+            {
+              "expr": "1 - (\n  node_memory_MemAvailable_bytes{job=\"node-exporter\"}\n/\n  node_memory_MemTotal_bytes{job=\"node-exporter\"}\n)\n",
+              "record": "instance:node_memory_utilisation:ratio"
+            },
+            {
+              "expr": "rate(node_vmstat_pgmajfault{job=\"node-exporter\"}[1m])\n",
+              "record": "instance:node_vmstat_pgmajfault:rate1m"
+            },
+            {
+              "expr": "rate(node_disk_io_time_seconds_total{job=\"node-exporter\", device!~\"dm.*\"}[1m])\n",
+              "record": "instance_device:node_disk_io_time_seconds:rate1m"
+            },
+            {
+              "expr": "rate(node_disk_io_time_weighted_seconds_total{job=\"node-exporter\", device!~\"dm.*\"}[1m])\n",
+              "record": "instance_device:node_disk_io_time_weighted_seconds:rate1m"
+            },
+            {
+              "expr": "sum without (device) (\n  rate(node_network_receive_bytes_total{job=\"node-exporter\", device!=\"lo\"}[1m])\n)\n",
+              "record": "instance:node_network_receive_bytes_excluding_lo:rate1m"
+            },
+            {
+              "expr": "sum without (device) (\n  rate(node_network_transmit_bytes_total{job=\"node-exporter\", device!=\"lo\"}[1m])\n)\n",
+              "record": "instance:node_network_transmit_bytes_excluding_lo:rate1m"
+            },
+            {
+              "expr": "sum without (device) (\n  rate(node_network_receive_drop_total{job=\"node-exporter\", device!=\"lo\"}[1m])\n)\n",
+              "record": "instance:node_network_receive_drop_excluding_lo:rate1m"
+            },
+            {
+              "expr": "sum without (device) (\n  rate(node_network_transmit_drop_total{job=\"node-exporter\", device!=\"lo\"}[1m])\n)\n",
+              "record": "instance:node_network_transmit_drop_excluding_lo:rate1m"
+            }
+          ]
+        },
         {
           "name": "node-exporter",
           "rules": [
@@ -1207,6 +1343,41 @@ data:
               },
               "expr": "increase(node_network_transmit_errs_total[2m]) > 10\n",
               "for": "1h",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "NodeHighNumberConntrackEntriesUsed",
+              "annotations": {
+                "description": "{{ $value | humanizePercentage }} of conntrack entries are used",
+                "summary": "Number of conntrack are getting close to the limit"
+              },
+              "expr": "(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) > 0.75\n",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "NodeClockSkewDetected",
+              "annotations": {
+                "message": "Clock on {{ $labels.instance }} is out of sync by more than 300s. Ensure NTP is configured correctly on this host.",
+                "summary": "Clock skew detected."
+              },
+              "expr": "(\n  node_timex_offset_seconds > 0.05\nand\n  deriv(node_timex_offset_seconds[5m]) >= 0\n)\nor\n(\n  node_timex_offset_seconds < -0.05\nand\n  deriv(node_timex_offset_seconds[5m]) <= 0\n)\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "NodeClockNotSynchronising",
+              "annotations": {
+                "message": "Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured on this host.",
+                "summary": "Clock not synchronising."
+              },
+              "expr": "min_over_time(node_timex_sync_status[5m]) == 0\n",
+              "for": "10m",
               "labels": {
                 "severity": "warning"
               }

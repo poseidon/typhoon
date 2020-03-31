@@ -15,6 +15,10 @@ Notable changes between versions.
 * Fix Azure worker UDP outbound connections ([#691](https://github.com/poseidon/typhoon/pull/691))
   * Fix Azure worker clock sync timeouts
 
+#### Addons
+
+* Refresh Prometheus rules and alerts
+
 ## v1.18.0
 
 * Kubernetes [v1.18.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1180)
