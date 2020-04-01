@@ -166,9 +166,9 @@ storage:
           sudo mkdir -p /opt/bootstrap/assets
           sudo mv manifests /opt/bootstrap/assets/manifests
           sudo mkdir -p /opt/bootstrap/assets/manifests/crds
-          sudo mv manifests-networking/crd*.yaml /opt/bootstrap/assets/manifests/crds
+          sudo mv manifests-networking/{crd,cluster}*.yaml /opt/bootstrap/assets/manifests/crds 2>/dev/null || true
           sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
-          rm -rf assets auth static-manifests tls
+          rm -rf assets auth static-manifests tls manifests-networking
     - path: /opt/bootstrap/apply
       mode: 0544
       contents:

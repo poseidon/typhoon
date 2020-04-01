@@ -6,6 +6,8 @@ Notable changes between versions.
 
 * Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
   * Tolerate master and not-ready taints, rather than tolerating all taints
+* Fix bootstrap when `networking` mode `flannel` (non-default) is chosen
+  * Regressed in v1.18.0 changes for Calico ([#675](https://github.com/poseidon/typhoon/pull/675))
 
 ## v1.18.0
 
