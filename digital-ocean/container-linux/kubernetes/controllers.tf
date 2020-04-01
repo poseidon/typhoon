@@ -1,5 +1,5 @@
 locals {
-  official_images = ["coreos-stable", "coreos-beta", "coreos-alpha"]
+  official_images   = ["coreos-stable", "coreos-beta", "coreos-alpha"]
   is_official_image = contains(local.official_images, var.os_image)
 }
 

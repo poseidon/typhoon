@@ -56,15 +56,15 @@ variable "snippets" {
 }
 
 variable "worker_node_labels" {
-  type = map(list(string))
+  type        = map(list(string))
   description = "Map from worker names to lists of initial node labels"
-  default = {}
+  default     = {}
 }
 
 variable "worker_node_taints" {
-  type = map(list(string))
+  type        = map(list(string))
   description = "Map from worker names to lists of initial node taints"
-  default = {}
+  default     = {}
 }
 
 # configuration

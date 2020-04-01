@@ -31,15 +31,15 @@ resource "aws_route_table" "default" {
 }
 
 resource "aws_route" "egress-ipv4" {
-  route_table_id = aws_route_table.default.id
+  route_table_id         = aws_route_table.default.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.gateway.id
+  gateway_id             = aws_internet_gateway.gateway.id
 }
 
 resource "aws_route" "egress-ipv6" {
-  route_table_id = aws_route_table.default.id
+  route_table_id              = aws_route_table.default.id
   destination_ipv6_cidr_block = "::/0"
-  gateway_id = aws_internet_gateway.gateway.id
+  gateway_id                  = aws_internet_gateway.gateway.id
 }
 
 # Subnets (one per availability zone)

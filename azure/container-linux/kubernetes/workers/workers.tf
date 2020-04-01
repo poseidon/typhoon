@@ -9,19 +9,19 @@ locals {
 resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   resource_group_name = var.resource_group_name
 
-  name                   = "${var.name}-worker"
-  location               = var.region
-  sku = var.vm_type
+  name      = "${var.name}-worker"
+  location  = var.region
+  sku       = var.vm_type
   instances = var.worker_count
   # instance name prefix for instances in the set
-  computer_name_prefix = "${var.name}-worker"
+  computer_name_prefix   = "${var.name}-worker"
   single_placement_group = false
-  custom_data          = base64encode(data.ct_config.worker-ignition.rendered)
+  custom_data            = base64encode(data.ct_config.worker-ignition.rendered)
 
   # storage
   os_disk {
     storage_account_type = "Standard_LRS"
-    caching           = "ReadWrite"
+    caching              = "ReadWrite"
   }
 
   source_image_reference {
@@ -36,16 +36,16 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
     for_each = local.flavor == "flatcar" ? [1] : []
 
     content {
-      name = local.channel
+      name      = local.channel
       publisher = "kinvolk"
-      product = "flatcar-container-linux"
+      product   = "flatcar-container-linux"
     }
   }
 
   # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
   admin_username = "core"
   admin_ssh_key {
-    username = "core"
+    username   = "core"
     public_key = var.ssh_authorized_key
   }
 
