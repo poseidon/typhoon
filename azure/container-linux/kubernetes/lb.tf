@@ -72,6 +72,7 @@ resource "azurerm_lb_rule" "ingress-http" {
   name                           = "ingress-http"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "ingress"
+  disable_outbound_snat          = true
 
   protocol                = "Tcp"
   frontend_port           = 80
@@ -86,12 +87,27 @@ resource "azurerm_lb_rule" "ingress-https" {
   name                           = "ingress-https"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "ingress"
+  disable_outbound_snat          = true
 
   protocol                = "Tcp"
   frontend_port           = 443
   backend_port            = 443
   backend_address_pool_id = azurerm_lb_backend_address_pool.worker.id
   probe_id                = azurerm_lb_probe.ingress.id
+}
+
+# Worker outbound TCP/UDP SNAT
+resource "azurerm_lb_outbound_rule" "worker-outbound" {
+  resource_group_name = azurerm_resource_group.cluster.name
+
+  name            = "worker"
+  loadbalancer_id = azurerm_lb.cluster.id
+  frontend_ip_configuration {
+    name = "ingress"
+  }
+
+  protocol                = "All"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.worker.id
 }
 
 # Address pool of controllers

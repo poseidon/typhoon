@@ -12,6 +12,8 @@ Notable changes between versions.
 * Rename Container Linux `clc_snippets` (bare-metal) to `snippets` for consistency
 * Fix bootstrap when `networking` mode `flannel` (non-default) is chosen ([#689](https://github.com/poseidon/typhoon/pull/689))
   * Regressed in v1.18.0 changes for Calico ([#675](https://github.com/poseidon/typhoon/pull/675))
+* Fix Azure worker UDP outbound connections ([#691](https://github.com/poseidon/typhoon/pull/691))
+  * Fix Azure worker clock sync timeouts
 
 ## v1.18.0
 
