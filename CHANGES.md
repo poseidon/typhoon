@@ -17,7 +17,8 @@ Notable changes between versions.
 
 #### Addons
 
-* Refresh Prometheus rules and alerts
+* Refresh Prometheus rules/alerts and Grafana dashboards ([#692](https://github.com/poseidon/typhoon/pull/692))
+* Update Grafana from v6.7.1 to v6.7.2
 
 ## v1.18.0
 
