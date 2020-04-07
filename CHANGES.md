@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.4.5 to [v3.4.7](https://github.com/etcd-io/etcd/releases/tag/v3.4.7)
 * Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
   * Tolerate master and not-ready taints, rather than tolerating all taints
 * Update flannel from v0.11.0 to v0.12.0 ([#690](https://github.com/poseidon/typhoon/pull/690))
