@@ -1,6 +1,6 @@
 # Bare-Metal
 
-In this tutorial, we'll network boot and provision a Kubernetes v1.18.0 cluster on bare-metal with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll network boot and provision a Kubernetes v1.18.1 cluster on bare-metal with CoreOS Container Linux or Flatcar Linux.
 
 First, we'll deploy a [Matchbox](https://github.com/poseidon/matchbox) service and setup a network boot environment. Then, we'll declare a Kubernetes cluster using the Typhoon Terraform module and power on machines. On PXE boot, machines will install Container Linux to disk, reboot into the disk install, and provision themselves as Kubernetes controllers or workers via Ignition.
 
@@ -160,7 +160,7 @@ Define a Kubernetes cluster using the module `bare-metal/container-linux/kuberne
 
 ```tf
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.18.0"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.18.1"
 
   # bare-metal
   cluster_name            = "mercury"
@@ -299,9 +299,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/mercury-config
 $ kubectl get nodes
 NAME                STATUS  ROLES   AGE  VERSION
-node1.example.com   Ready   <none>  10m  v1.18.0
-node2.example.com   Ready   <none>  10m  v1.18.0
-node3.example.com   Ready   <none>  10m  v1.18.0
+node1.example.com   Ready   <none>  10m  v1.18.1
+node2.example.com   Ready   <none>  10m  v1.18.1
+node3.example.com   Ready   <none>  10m  v1.18.1
 ```
 
 List the pods.

@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.18.1
+
+* Kubernetes [v1.18.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1181)
 * Update etcd from v3.4.5 to [v3.4.7](https://github.com/etcd-io/etcd/releases/tag/v3.4.7)
 * Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
   * Tolerate master and not-ready taints, rather than tolerating all taints
