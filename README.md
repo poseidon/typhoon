@@ -35,6 +35,7 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 |---------------|------------------|------------------|--------|
 | AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](aws/fedora-coreos/kubernetes) | stable |
 | Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](bare-metal/fedora-coreos/kubernetes) | beta |
+| DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](digital-ocean/fedora-coreos/kubernetes) | alpha |
 | Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | beta |
 
 Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org/releases/).
@@ -44,14 +45,14 @@ Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org
 | AWS           | Flatcar Linux    | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
 | Azure         | Flatcar Linux    | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
 | Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
+| DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | alpha |
 | Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | alpha |
-| Digital Ocean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | alpha |
 
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)
 * Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
-* Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
+* Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), [DigitalOcean](docs/fedora-coreos/digitalocean.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
 * Flatcar Linux tutorials for [AWS](docs/cl/aws.md), [Azure](docs/cl/azure.md), [Bare-Metal](docs/cl/bare-metal.md), [DigitalOcean](docs/cl/digital-ocean.md), and [Google Cloud](docs/cl/google-cloud.md)
 
 ## Usage

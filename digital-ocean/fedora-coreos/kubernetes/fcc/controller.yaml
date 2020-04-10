@@ -1,0 +1,214 @@
+---
+variant: fcos
+version: 1.0.0
+systemd:
+  units:
+    - name: etcd-member.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=etcd (System Container)
+        Documentation=https://github.com/coreos/etcd
+        Wants=network-online.target network.target
+        After=network-online.target
+        [Service]
+        # https://github.com/opencontainers/runc/pull/1807
+        # Type=notify
+        # NotifyAccess=exec
+        Type=exec
+        Restart=on-failure
+        RestartSec=10s
+        TimeoutStartSec=0
+        LimitNOFILE=40000
+        ExecStartPre=/bin/mkdir -p /var/lib/etcd
+        ExecStartPre=-/usr/bin/podman rm etcd
+        #--volume $${NOTIFY_SOCKET}:/run/systemd/notify \
+        ExecStart=/usr/bin/podman run --name etcd \
+          --env-file /etc/etcd/etcd.env \
+          --network host \
+          --volume /var/lib/etcd:/var/lib/etcd:rw,Z \
+          --volume /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
+          quay.io/coreos/etcd:v3.4.7
+        ExecStop=/usr/bin/podman stop etcd
+        [Install]
+        WantedBy=multi-user.target
+    - name: docker.service
+      enabled: true
+    - name: wait-for-dns.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Wait for DNS entries
+        Before=kubelet.service
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        ExecStart=/bin/sh -c 'while ! /usr/bin/grep '^[^#[:space:]]' /etc/resolv.conf > /dev/null; do sleep 1; done'
+        [Install]
+        RequiredBy=kubelet.service
+        RequiredBy=etcd-member.service
+    - name: kubelet.service
+      contents: |
+        [Unit]
+        Description=Kubelet via Hyperkube (System Container)
+        Requires=afterburn.service
+        After=afterburn.service
+        Wants=rpc-statd.service
+        [Service]
+        EnvironmentFile=/run/metadata/afterburn
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/bin/mkdir -p /opt/cni/bin
+        ExecStartPre=/bin/mkdir -p /var/lib/calico
+        ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
+        ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
+        ExecStartPre=-/usr/bin/podman rm kubelet
+        ExecStart=/usr/bin/podman run --name kubelet \
+          --privileged \
+          --pid host \
+          --network host \
+          --volume /etc/kubernetes:/etc/kubernetes:ro,z \
+          --volume /usr/lib/os-release:/etc/os-release:ro \
+          --volume /etc/ssl/certs:/etc/ssl/certs:ro \
+          --volume /lib/modules:/lib/modules:ro \
+          --volume /run:/run \
+          --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
+          --volume /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
+          --volume /etc/pki/tls/certs:/usr/share/ca-certificates:ro \
+          --volume /var/lib/calico:/var/lib/calico:ro \
+          --volume /var/lib/docker:/var/lib/docker \
+          --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
+          --volume /var/log:/var/log \
+          --volume /var/run/lock:/var/run/lock:z \
+          --volume /opt/cni/bin:/opt/cni/bin:z \
+          quay.io/poseidon/kubelet:v1.18.1 \
+          --anonymous-auth=false \
+          --authentication-token-webhook \
+          --authorization-mode=Webhook \
+          --cgroup-driver=systemd \
+          --cgroups-per-qos=true \
+          --enforce-node-allocatable=pods \
+          --client-ca-file=/etc/kubernetes/ca.crt \
+          --cluster_dns=${cluster_dns_service_ip} \
+          --cluster_domain=${cluster_domain_suffix} \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
+          --exit-on-lock-contention \
+          --healthz-port=0 \
+          --hostname-override=$${AFTERBURN_DIGITALOCEAN_IPV4_PRIVATE_0} \
+          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --lock-file=/var/run/lock/kubelet.lock \
+          --network-plugin=cni \
+          --node-labels=node.kubernetes.io/master \
+          --node-labels=node.kubernetes.io/controller="true" \
+          --pod-manifest-path=/etc/kubernetes/manifests \
+          --read-only-port=0 \
+          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+          --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+        ExecStop=-/usr/bin/podman stop kubelet
+        Delegate=yes
+        Restart=always
+        RestartSec=10
+        [Install]
+        WantedBy=multi-user.target
+    - name: kubelet.path
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
+    - name: bootstrap.service
+      contents: |
+        [Unit]
+        Description=Kubernetes control plane
+        ConditionPathExists=!/opt/bootstrap/bootstrap.done
+        [Service]
+        Type=oneshot
+        RemainAfterExit=true
+        WorkingDirectory=/opt/bootstrap
+        ExecStartPre=-/usr/bin/podman rm bootstrap
+        ExecStart=/usr/bin/podman run --name bootstrap \
+            --network host \
+            --volume /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro,Z \
+            --volume /opt/bootstrap/assets:/assets:ro,Z \
+            --volume /opt/bootstrap/apply:/apply:ro,Z \
+            --entrypoint=/apply \
+            quay.io/poseidon/kubelet:v1.18.1
+        ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
+        ExecStartPost=-/usr/bin/podman stop bootstrap
+storage:
+  directories:
+    - path: /etc/kubernetes
+    - path: /opt/bootstrap
+  files:
+    - path: /opt/bootstrap/layout
+      mode: 0544
+      contents:
+        inline: |
+          #!/bin/bash -e
+          mkdir -p -- auth tls/etcd tls/k8s static-manifests manifests/coredns manifests-networking
+          awk '/#####/ {filename=$2; next} {print > filename}' assets
+          mkdir -p /etc/ssl/etcd/etcd
+          mkdir -p /etc/kubernetes/bootstrap-secrets
+          mv tls/etcd/{peer*,server*} /etc/ssl/etcd/etcd/
+          mv tls/etcd/etcd-client* /etc/kubernetes/bootstrap-secrets/
+          chown -R etcd:etcd /etc/ssl/etcd
+          chmod -R 500 /etc/ssl/etcd
+          mv auth/kubeconfig /etc/kubernetes/bootstrap-secrets/
+          mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
+          sudo mkdir -p /etc/kubernetes/manifests
+          sudo mv static-manifests/* /etc/kubernetes/manifests/
+          sudo mkdir -p /opt/bootstrap/assets
+          sudo mv manifests /opt/bootstrap/assets/manifests
+          sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
+          rm -rf assets auth static-manifests tls manifests-networking
+    - path: /opt/bootstrap/apply
+      mode: 0544
+      contents:
+        inline: |
+          #!/bin/bash -e
+          export KUBECONFIG=/etc/kubernetes/secrets/kubeconfig
+          until kubectl version; do
+            echo "Waiting for static pod control plane"
+            sleep 5
+          done
+          until kubectl apply -f /assets/manifests -R; do
+             echo "Retry applying manifests"
+             sleep 5
+          done
+    - path: /etc/sysctl.d/max-user-watches.conf
+      contents:
+        inline: |
+          fs.inotify.max_user_watches=16184
+    - path: /etc/systemd/system.conf.d/accounting.conf
+      contents:
+        inline: |
+          [Manager]
+          DefaultCPUAccounting=yes
+          DefaultMemoryAccounting=yes
+          DefaultBlockIOAccounting=yes
+    - path: /etc/etcd/etcd.env
+      mode: 0644
+      contents:
+        inline: |
+          # TODO: Use a systemd dropin once podman v1.4.5 is avail.
+          NOTIFY_SOCKET=/run/systemd/notify
+          ETCD_NAME=${etcd_name}
+          ETCD_DATA_DIR=/var/lib/etcd
+          ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379
+          ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380
+          ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
+          ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
+          ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381
+          ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}
+          ETCD_STRICT_RECONFIG_CHECK=true
+          ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt
+          ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt
+          ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key
+          ETCD_CLIENT_CERT_AUTH=true
+          ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt
+          ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
+          ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
+          ETCD_PEER_CLIENT_CERT_AUTH=true

@@ -1,6 +1,6 @@
 # Digital Ocean
 
-In this tutorial, we'll create a Kubernetes v1.18.1 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.18.1 cluster on DigitalOcean with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets.
 
@@ -59,19 +59,31 @@ provider "ct" {
 }
 ```
 
+## Fedora CoreOS Images
+
+Fedora CoreOS publishes images for DigitalOcean, but does not yet upload them. DigitalOcean allows [custom images](https://blog.digitalocean.com/custom-images/) to be uploaded via URL or file.
+
+Import a [Fedora CoreOS](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) image via URL to desired a region(s). Reference the DigitalOcean image and set the `os_image` in the next step.
+
+```tf
+data "digitalocean_image" "fedora-coreos-31-20200323-3-2" {
+  name = "fedora-coreos-31.20200323.3.2-digitalocean.x86_64.qcow2.gz"
+}
+```
+
 ## Cluster
 
-Define a Kubernetes cluster using the module `digital-ocean/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `digital-ocean/fedora-coreos/kubernetes`.
 
 ```tf
 module "nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes?ref=v1.18.1"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-coreos/kubernetes?ref=v1.18.1"
 
   # Digital Ocean
   cluster_name = "nemo"
   region       = "nyc3"
   dns_zone     = "digital-ocean.example.com"
-  os_image     = "coreos-stable"
+  os_image     = data.digitalocean_image.fedora-coreos-31-20200323-3-2.id
 
   # configuration
   ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
@@ -81,29 +93,7 @@ module "nemo" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital-ocean/container-linux/kubernetes/variables.tf) source.
-
-### Flatcar Linux Only
-
-!!! warning
-    Typhoon for Flatcar Linux on DigitalOcean is alpha. Also IPv6 is unsupported with DigitalOcean custom images.
-
-Flatcar Linux publishes DigitalOcean images, but does not upload them. DigitalOcean allows [custom boot images](https://blog.digitalocean.com/custom-images/) by file or URL.
-
-[Download](https://www.flatcar-linux.org/releases/) the Flatcar Linux DigitalOcean bin image (or copy the URL) and [upload](https://cloud.digitalocean.com/images/custom_images) it as a custom image. Rename the image with the channel and version to refer to these images over time.
-
-```tf
-module "nemo" {
-  ...
-  os_image = data.digitalocean_image.flatcar-stable.id
-}
-
-data "digitalocean_image" "flatcar-stable" {
-  name = "flatcar-stable-2303.4.0.bin.bz2"
-}
-```
-
-Set the [os_image](#variables) to the custom image id.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital-ocean/fedora-coreos/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -189,7 +179,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital-ocean/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital-ocean/fedora-coreos/kubernetes/variables.tf) source.
 
 ### Required
 
@@ -198,6 +188,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital
 | cluster_name | Unique cluster name (prepended to dns_zone) | "nemo" |
 | region | Digital Ocean region | "nyc1", "sfo2", "fra1", tor1" |
 | dns_zone | Digital Ocean domain (i.e. DNS zone) | "do.example.com" |
+| os_image | Fedora CoreOS image for instances | "custom-image-id" |
 | ssh_fingerprints | SSH public key fingerprints | ["d7:9d..."] |
 
 #### DNS Zone
@@ -243,9 +234,8 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Droplet type for controllers | "s-2vcpu-2gb" | s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb, ... |
 | worker_type | Droplet type for workers | "s-1vcpu-2gb" | s-1vcpu-2gb, s-2vcpu-2gb, ... |
-| os_image | Container Linux image for instances | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, "custom-image-id" |
-| controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
-| worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |
+| controller_snippets | Controller Fedora CoreOS Config snippets | [] | [example](/advanced/customization/) |
+| worker_snippets | Worker Fedora CoreOS Config snippets | [] | [example](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "flannel" or "calico" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
@@ -254,3 +244,4 @@ Check the list of valid [droplet types](https://developers.digitalocean.com/docu
 
 !!! warning
     Do not choose a `controller_type` smaller than 2GB. Smaller droplets are not sufficient for running a controller and bootstrapping will fail.
+

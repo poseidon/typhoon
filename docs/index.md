@@ -35,6 +35,7 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 |---------------|------------------|------------------|--------|
 | AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](fedora-coreos/aws.md) | stable |
 | Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](fedora-coreos/bare-metal.md) | beta |
+| DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](fedora-coreos/digitalocean.md) | alpha |
 | Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | beta |
 
 Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org/releases/).
@@ -44,13 +45,13 @@ Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org
 | AWS           | Flatcar Linux    | [aws/container-linux/kubernetes](cl/aws.md) | stable |
 | Azure         | Flatcar Linux    | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
 | Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
+| DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | alpha |
 | Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | alpha |
-| Digital Ocean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | alpha |
 
 ## Documentation
 
 * Architecture [concepts](architecture/concepts.md) and [operating-systems](architecture/operating-systems.md)
-* Fedora CoreOS tutorials for [AWS](fedora-coreos/aws.md), [Bare-Metal](fedora-coreos/bare-metal.md), and [Google Cloud](fedora-coreos/google-cloud.md)
+* Fedora CoreOS tutorials for [AWS](fedora-coreos/aws.md), [Bare-Metal](fedora-coreos/bare-metal.md), [DigitalOcean](fedora-coreos/digitalocean.md), and [Google Cloud](fedora-coreos/google-cloud.md)
 * Flatcar Linux tutorials for [AWS](cl/aws.md), [Azure](cl/azure.md), [Bare-Metal](cl/bare-metal.md), [DigitalOcean](cl/digital-ocean.md), and [Google Cloud](cl/google-cloud.md)
 
 ## Example

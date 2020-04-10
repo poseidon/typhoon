@@ -73,13 +73,13 @@ Fedora CoreOS publishes images for Google Cloud, but does not yet upload them. G
 
 ```
 gsutil list
-gsutil cp fedora-coreos-31.20200310.3.0-gcp.x86_64.tar.gz gs://BUCKET
+gsutil cp fedora-coreos-31.20200323.3.2-gcp.x86_64.tar.gz gs://BUCKET
 ```
 
 Create a Compute Engine image from the file.
 
 ```
-gcloud compute images create fedora-coreos-31-20200310-3-0 --source-uri gs://BUCKET/fedora-coreos-31.20200310.3.0-gcp.x86_64.tar.gz
+gcloud compute images create fedora-coreos-31-20200323-3-2 --source-uri gs://BUCKET/fedora-coreos-31.20200323.3.2-gcp.x86_64.tar.gz
 ```
 
 ## Cluster
@@ -97,7 +97,7 @@ module "yavin" {
   dns_zone_name = "example-zone"
 
   # custom image name from above
-  os_image = "fedora-coreos-31-20200310-3-0"
+  os_image = "fedora-coreos-31-20200323-3-2"
 
   # configuration
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
@@ -107,7 +107,7 @@ module "yavin" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/fedora-coreos/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -194,7 +194,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/fedora-coreos/kubernetes/variables.tf) source.
 
 ### Required
 
@@ -204,6 +204,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | region | Google Cloud region | "us-central1" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
+| os_image | Fedora CoreOS image for compute instances | "fedora-coreos-31-20200323-3-2" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Fedora CoreOS [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep fedora-coreos`.
@@ -233,7 +234,6 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
-| os_image | Fedora CoreOS image for compute instances | "" | "fedora-coreos-31-20200113-3-1" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
