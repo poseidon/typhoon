@@ -165,8 +165,8 @@ module "mercury" {
   # bare-metal
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
-  os_channel              = "coreos-stable"
-  os_version              = "2191.5.0"
+  os_channel              = "flatcar-stable"
+  os_version              = "2345.3.1"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -337,7 +337,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | cluster_name | Unique cluster name | "mercury" |
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
 | os_channel | Channel for a Container Linux derivative | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge |
-| os_version | Version for a Container Linux derivative to PXE and install | "1632.3.0" |
+| os_version | Version for a Container Linux derivative to PXE and install | "2345.3.1" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
 | controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |

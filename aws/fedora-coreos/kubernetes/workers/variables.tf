@@ -37,7 +37,7 @@ variable "instance_type" {
 variable "os_image" {
   type        = string
   description = "AMI channel for Fedora CoreOS (not yet used)"
-  default     = "coreos-stable"
+  default     = "stable"
 }
 
 variable "disk_size" {

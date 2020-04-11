@@ -4,6 +4,31 @@ Notable changes between versions.
 
 ## Latest
 
+* Choose Fedora CoreOS or Flatcar Linux (**action required**)
+  * Use a `fedora-coreos` module for Fedora CoreOS
+  * Use a `container-linux` module for Flatcar Linux
+  * CoreOS Container Linux [won't receive updates](https://coreos.com/os/eol/) after May 2020
+
+#### AWS
+
+* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable`
+
+#### Azure
+
+* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable`
+
+#### Bare-Metal
+
+* Container Linux users should change [os_channel](https://typhoon.psdn.io/cl/bare-metal/#required) from a CoreOS channel to a Flatcar channel
+
+#### Google
+
+* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**)
+
+#### DigitalOcean
+
+* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**)
+
 ## v1.18.1
 
 * Kubernetes [v1.18.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1181)

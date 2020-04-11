@@ -43,8 +43,7 @@ variable "worker_type" {
 
 variable "os_image" {
   type        = string
-  description = "Container Linux image for instances (e.g. coreos-stable)"
-  default     = "coreos-stable"
+  description = "Container Linux image for instances (e.g. coreos-stable, custom-image-id)"
 }
 
 variable "controller_snippets" {
@@ -64,12 +63,6 @@ variable "worker_snippets" {
 variable "ssh_fingerprints" {
   type        = list(string)
   description = "SSH public key fingerprints. (e.g. see `ssh-add -l -E md5`)"
-}
-
-variable "asset_dir" {
-  type        = string
-  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
-  default     = ""
 }
 
 variable "networking" {
@@ -106,6 +99,12 @@ variable "enable_aggregation" {
 }
 
 # unofficial, undocumented, unsupported
+
+variable "asset_dir" {
+  type        = string
+  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
+  default     = ""
+}
 
 variable "cluster_domain_suffix" {
   type        = string

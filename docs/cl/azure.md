@@ -228,7 +228,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
-| os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta |
+| os_image | Channel for a Container Linux derivative | "flatcar-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |

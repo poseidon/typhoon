@@ -5,8 +5,10 @@ Typhoon AWS, Azure, and Google Cloud allow additional groups of workers to be de
 Internal Terraform Modules:
 
 * `aws/container-linux/kubernetes/workers`
+* `aws/fedora-coreos/kubernetes/workers`
 * `azure/container-linux/kubernetes/workers`
 * `google-cloud/container-linux/kubernetes/workers`
+* `google-cloud/fedora-coreos/kubernetes/workers`
 
 ## AWS
 
@@ -20,7 +22,7 @@ module "tempest-worker-pool" {
   vpc_id          = module.tempest.vpc_id
   subnet_ids      = module.tempest.subnet_ids
   security_groups = module.tempest.worker_security_groups
-  
+
   # configuration
   name               = "tempest-pool"
   kubeconfig         = module.tempest.kubeconfig
@@ -29,7 +31,7 @@ module "tempest-worker-pool" {
   # optional
   worker_count  = 2
   instance_type = "m5.large"
-  os_image      = "coreos-beta"
+  os_image      = "flatcar-beta"
 }
 ```
 
@@ -62,12 +64,12 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | instance_type | EC2 instance type | "t3.small" | "t3.medium" |
-| os_image | AMI channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha |
+| os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alph, coreos-stable, coreos-beta, coreos-alpha |
 | disk_size | Size of the EBS volume in GB | 40 | 100 |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
 | disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
 | spot_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
-| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
@@ -80,7 +82,7 @@ Create a cluster following the Azure [tutorial](../cl/azure.md#cluster). Define 
 ```tf
 module "ramius-worker-pool" {
   source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes/workers?ref=v1.18.1"
-  
+
   # Azure
   region                  = module.ramius.region
   resource_group_name     = module.ramius.resource_group_name
@@ -131,9 +133,9 @@ The Azure internal `workers` module supports a number of [variables](https://git
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | vm_type | Machine type for instances | "Standard_DS1_v2" | See below |
-| os_image | Channel for a Container Linux derivative | "coreos-stable" | coreos-stable, coreos-beta, coreos-alpha |
-| priority | Set priority to Low to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | "Regular" | "Low" |
-| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| os_image | Channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, coreos-stable, coreos-beta, coreos-alpha |
+| priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | "Regular" | "Spot" |
+| snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 
@@ -156,7 +158,7 @@ module "yavin-worker-pool" {
   name               = "yavin-16x"
   kubeconfig         = module.yavin.kubeconfig
   ssh_authorized_key = var.ssh_authorized_key
-  
+
   # optional
   worker_count = 2
   machine_type = "n1-standard-16"
@@ -196,6 +198,7 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 | region | Region for the worker pool instances. May differ from the cluster's region | "europe-west2" |
 | network | Must be set to `network_name` output by cluster | module.cluster.network_name |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
+| os_image | Container Linux image for compute instances | "fedora-coreos-or-flatcar-image", coreos-stable, coreos-beta, coreos-alpha |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`.
@@ -206,10 +209,9 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | machine_type | Compute instance machine type | "n1-standard-1" | See below |
-| os_image | Container Linux image for compute instances | "coreos-stable" | "coreos-alpha", "coreos-beta" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
-| snippets | Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
 

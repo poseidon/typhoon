@@ -37,7 +37,6 @@ variable "machine_type" {
 variable "os_image" {
   type        = string
   description = "Container Linux image for compute instanges (e.g. gcloud compute images list)"
-  default     = "coreos-stable"
 }
 
 variable "disk_size" {
