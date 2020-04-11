@@ -21,14 +21,6 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 Typhoon provides a Terraform Module for each supported operating system and platform.
 
-| Platform      | Operating System | Terraform Module | Status |
-|---------------|------------------|------------------|--------|
-| AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
-| Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
-| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
-| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | stable |
-
 Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 
 | Platform      | Operating System | Terraform Module | Status |
@@ -47,6 +39,17 @@ Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org
 | Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
 | DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | alpha |
 | Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | alpha |
+
+Typhoon is available for CoreOS Container Linux ([no updates](https://coreos.com/os/eol/) after May 2020).
+
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Container Linux  | [aws/container-linux/kubernetes](cl/aws.md) | stable |
+| Azure         | Container Linux  | [azure/container-linux/kubernetes](cl/azure.md) | alpha |
+| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](cl/bare-metal.md) | stable |
+| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](cl/digital-ocean.md) | beta |
+| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](cl/google-cloud.md) | stable |
+
 
 ## Documentation
 

@@ -21,14 +21,6 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 Typhoon provides a Terraform Module for each supported operating system and platform.
 
-| Platform      | Operating System | Terraform Module | Status |
-|---------------|------------------|------------------|--------|
-| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| Azure         | Container Linux  | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
-| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
-| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
-
 Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 
 | Platform      | Operating System | Terraform Module | Status |
@@ -47,6 +39,16 @@ Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org
 | Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
 | DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | alpha |
 | Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | alpha |
+
+Typhoon is available for CoreOS Container Linux ([no updates](https://coreos.com/os/eol/) after May 2020).
+
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
+| Azure         | Container Linux  | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
+| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
+| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
+| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
 
 ## Documentation
 

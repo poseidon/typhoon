@@ -7,6 +7,9 @@ Notable changes between versions.
 ## v1.18.1
 
 * Kubernetes [v1.18.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1181)
+* Choose Fedora CoreOS or Flatcar Linux (**action recommended**)
+  * Use a `fedora-coreos` module for Fedora CoreOS
+  * Use a `container-linux` module with OS set to Flatcar Linux
 * Update etcd from v3.4.5 to [v3.4.7](https://github.com/etcd-io/etcd/releases/tag/v3.4.7)
 * Change `kube-proxy` and `calico` or `flannel` to tolerate specific taints ([#682](https://github.com/poseidon/typhoon/pull/682))
   * Tolerate master and not-ready taints, rather than tolerating all taints
@@ -16,6 +19,7 @@ Notable changes between versions.
 * Rename Container Linux `controller_clc_snippets` to `controller_snippets` for consistency ([#688](https://github.com/poseidon/typhoon/pull/688))
 * Rename Container Linux `worker_clc_snippets` to `worker_snippets` for consistency
 * Rename Container Linux `clc_snippets` (bare-metal) to `snippets` for consistency
+* Drop support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes
 
 #### Azure
 
