@@ -82,6 +82,8 @@ Create a Compute Engine image from the file.
 gcloud compute images create fedora-coreos-31-20200323-3-2 --source-uri gs://BUCKET/fedora-coreos-31.20200323.3.2-gcp.x86_64.tar.gz
 ```
 
+Set the [os_image](#variables) in the next step.
+
 ## Cluster
 
 Define a Kubernetes cluster using the module `google-cloud/fedora-coreos/kubernetes`.
@@ -96,10 +98,8 @@ module "yavin" {
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
 
-  # custom image name from above
-  os_image = "fedora-coreos-31-20200323-3-2"
-
   # configuration
+  os_image           = "fedora-coreos-31-20200323-3-2"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # optional

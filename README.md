@@ -26,6 +26,7 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](aws/fedora-coreos/kubernetes) | stable |
+| Azure         | Fedora CoreOS | [azure/fedora-coreos/kubernetes](azure/fedora-coreos/kubernetes) | alpha |
 | Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](bare-metal/fedora-coreos/kubernetes) | beta |
 | DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](digital-ocean/fedora-coreos/kubernetes) | alpha |
 | Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | beta |
@@ -54,7 +55,7 @@ Typhoon is available for CoreOS Container Linux ([no updates](https://coreos.com
 
 * [Docs](https://typhoon.psdn.io)
 * Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
-* Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), [DigitalOcean](docs/fedora-coreos/digitalocean.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
+* Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Azure](docs/fedora-coreos/azure.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), [DigitalOcean](docs/fedora-coreos/digitalocean.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
 * Flatcar Linux tutorials for [AWS](docs/cl/aws.md), [Azure](docs/cl/azure.md), [Bare-Metal](docs/cl/bare-metal.md), [DigitalOcean](docs/cl/digital-ocean.md), and [Google Cloud](docs/cl/google-cloud.md)
 
 ## Usage

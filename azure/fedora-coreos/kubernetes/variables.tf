@@ -48,8 +48,7 @@ variable "worker_type" {
 
 variable "os_image" {
   type        = string
-  description = "Channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta)"
-  default     = "flatcar-stable"
+  description = "Fedora CoreOS image for instances"
 }
 
 variable "disk_size" {
@@ -66,13 +65,13 @@ variable "worker_priority" {
 
 variable "controller_snippets" {
   type        = list(string)
-  description = "Controller Container Linux Config snippets"
+  description = "Controller Fedora CoreOS Config snippets"
   default     = []
 }
 
 variable "worker_snippets" {
   type        = list(string)
-  description = "Worker Container Linux Config snippets"
+  description = "Worker Fedora CoreOS Config snippets"
   default     = []
 }
 

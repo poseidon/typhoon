@@ -1,6 +1,6 @@
 # Azure
 
-In this tutorial, we'll create a Kubernetes v1.18.1 cluster on Azure with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.18.1 cluster on Azure with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a resource group, virtual network, subnets, security groups, controller availability set, worker scale set, load balancer, and TLS assets.
 
@@ -57,13 +57,33 @@ provider "ct" {
 
 Additional configuration options are described in the `azurerm` provider [docs](https://www.terraform.io/docs/providers/azurerm/).
 
+## Fedora CoreOS Images
+
+Fedora CoreOS publishes images for Azure, but does not yet upload them. Azure allows custom images to be uploaded to a storage account bucket and imported.
+
+[Download](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) a Fedora CoreOS Azure VHD image and upload it to an Azure storage account container (i.e. bucket) via the UI (quite slow).
+
+```
+xz -d fedora-coreos-31.20200323.3.2-azure.x86_64.vhd.xz
+```
+
+Create an Azure disk (note its ID) and create an Azure image from it (note its ID).
+
+```
+az disk create --name fedora-coreos-31.20200323.3.2 -g GROUP --source https://BUCKET.blob.core.windows.net/fedora-coreos/fedora-coreos-31.20200323.3.2-azure.x86_64.vhd
+
+az image create --name fedora-coreos-31.20200323.3.2 -g GROUP --os-type=linux --source /subscriptions/some/path/providers/Microsoft.Compute/disks/fedora-coreos-31.20200323.3.2
+```
+
+Set the [os_image](#variables) in the next step.
+
 ## Cluster
 
-Define a Kubernetes cluster using the module `azure/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `azure/fedora-coreos/kubernetes`.
 
 ```tf
 module "ramius" {
-  source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes?ref=v1.18.1"
+  source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes?ref=v1.18.1"
 
   # Azure
   cluster_name   = "ramius"
@@ -72,6 +92,7 @@ module "ramius" {
   dns_zone_group = "example-group"
 
   # configuration
+  os_image           = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-31.20200323.3.2"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # optional
@@ -80,16 +101,7 @@ module "ramius" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
-
-### Flatcar Linux Only
-
-Flatcar Linux publishes images to the Azure Marketplace and requires accepting their legal terms.
-
-```
-az vm image terms show --publish kinvolk --offer flatcar-container-linux --plan stable
-az vm image terms accept --publish kinvolk --offer flatcar-container-linux --plan stable
-```
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/fedora-coreos/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -175,7 +187,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/fedora-coreos/kubernetes/variables.tf) source.
 
 ### Required
 
@@ -185,6 +197,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/c
 | region | Azure region | "centralus" |
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
+| os_image | Fedora CoreOS image for instances | "/subscriptions/..../custom-image" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 !!! tip
@@ -225,11 +238,10 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
-| os_image | Channel for a Container Linux derivative | "flatcar-stable" | coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
-| controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
-| worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
+| controller_snippets | Controller Fedora CoreOS Config snippets | [] | [example](/advanced/customization/#usage) |
+| worker_snippets | Worker Fedora CoreOS Config snippets | [] | [example](/advanced/customization/#usage) |
 | networking | Choice of networking provider | "calico" | "flannel" or "calico" |
 | host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |

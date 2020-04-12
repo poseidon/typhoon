@@ -63,13 +63,15 @@ provider "ct" {
 
 Fedora CoreOS publishes images for DigitalOcean, but does not yet upload them. DigitalOcean allows [custom images](https://blog.digitalocean.com/custom-images/) to be uploaded via URL or file.
 
-Import a [Fedora CoreOS](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) image via URL to desired a region(s). Reference the DigitalOcean image and set the `os_image` in the next step.
+Import a [Fedora CoreOS](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) image via URL to desired a region(s).
 
 ```tf
 data "digitalocean_image" "fedora-coreos-31-20200323-3-2" {
   name = "fedora-coreos-31.20200323.3.2-digitalocean.x86_64.qcow2.gz"
 }
 ```
+
+Set the [os_image](#variables) in the next step.
 
 ## Cluster
 
@@ -83,9 +85,9 @@ module "nemo" {
   cluster_name = "nemo"
   region       = "nyc3"
   dns_zone     = "digital-ocean.example.com"
-  os_image     = data.digitalocean_image.fedora-coreos-31-20200323-3-2.id
 
   # configuration
+  os_image         = data.digitalocean_image.fedora-coreos-31-20200323-3-2.id
   ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
 
   # optional

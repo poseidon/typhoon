@@ -46,8 +46,7 @@ variable "vm_type" {
 
 variable "os_image" {
   type        = string
-  description = "Channel for a Container Linux derivative (flatcar-stable, flatcar-beta, coreos-stable, coreos-beta, coreos-alpha)"
-  default     = "flatcar-stable"
+  description = "Fedora CoreOS image for instances"
 }
 
 variable "priority" {
@@ -58,7 +57,7 @@ variable "priority" {
 
 variable "snippets" {
   type        = list(string)
-  description = "Container Linux Config snippets"
+  description = "Fedora CoreOS Config snippets"
   default     = []
 }
 

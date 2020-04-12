@@ -7,6 +7,7 @@ Internal Terraform Modules:
 * `aws/container-linux/kubernetes/workers`
 * `aws/fedora-coreos/kubernetes/workers`
 * `azure/container-linux/kubernetes/workers`
+* `azure/fedora-coreos/kubernetes/workers`
 * `google-cloud/container-linux/kubernetes/workers`
 * `google-cloud/fedora-coreos/kubernetes/workers`
 
@@ -91,14 +92,14 @@ module "ramius-worker-pool" {
   backend_address_pool_id = module.ramius.backend_address_pool_id
 
   # configuration
-  name               = "ramius-low-priority"
+  name               = "ramius-spot"
   kubeconfig         = module.ramius.kubeconfig
   ssh_authorized_key = var.ssh_authorized_key
 
   # optional
   worker_count = 2
   vm_type      = "Standard_F4"
-  priority     = "Low"
+  priority     = "Spot"
 }
 ```
 

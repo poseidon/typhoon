@@ -11,11 +11,12 @@ Notable changes between versions.
 
 #### AWS
 
-* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable`
+* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### Azure
 
-* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable`
+* Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
+* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### Bare-Metal
 
@@ -23,11 +24,11 @@ Notable changes between versions.
 
 #### Google
 
-* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**)
+* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### DigitalOcean
 
-* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**)
+* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 ## v1.18.1
 
@@ -44,7 +45,7 @@ Notable changes between versions.
 * Rename Container Linux `controller_clc_snippets` to `controller_snippets` for consistency ([#688](https://github.com/poseidon/typhoon/pull/688))
 * Rename Container Linux `worker_clc_snippets` to `worker_snippets` for consistency
 * Rename Container Linux `clc_snippets` (bare-metal) to `snippets` for consistency
-* Drop support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes
+* Drop support for [gitRepo](https://kubernetes.io/docs/concepts/storage/volumes/#gitrepo) volumes ([kubelet#3](https://github.com/poseidon/kubelet/pull/3))
 
 #### Azure
 
