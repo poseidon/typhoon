@@ -103,7 +103,7 @@ systemd:
           --mount volume=etc-iscsi,target=/etc/iscsi \
           --volume usr-sbin-iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
           --mount volume=usr-sbin-iscsiadm,target=/sbin/iscsiadm \
-          docker://quay.io/poseidon/kubelet:v1.18.1 -- \
+          docker://quay.io/poseidon/kubelet:v1.18.2 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -147,7 +147,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.18.1 \
+            docker://quay.io/poseidon/kubelet:v1.18.2 \
             --net=host \
             --dns=host \
             --exec=/apply

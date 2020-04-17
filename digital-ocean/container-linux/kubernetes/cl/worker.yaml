@@ -74,7 +74,7 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          docker://quay.io/poseidon/kubelet:v1.18.1 -- \
+          docker://quay.io/poseidon/kubelet:v1.18.2 -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -131,7 +131,7 @@ storage:
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.18.1 \
+            docker://quay.io/poseidon/kubelet:v1.18.2 \
             --net=host \
             --dns=host \
             --exec=/usr/local/bin/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)

@@ -4,10 +4,19 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.18.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1182)
 * Choose Fedora CoreOS or Flatcar Linux (**action required**)
   * Use a `fedora-coreos` module for Fedora CoreOS
   * Use a `container-linux` module for Flatcar Linux
   * CoreOS Container Linux [won't receive updates](https://coreos.com/os/eol/) after May 2020
+
+### Fedora CoreOS
+
+#### Azure
+
+* Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
+
+### Flatcar Linux / Container Linux
 
 #### AWS
 
@@ -15,7 +24,6 @@ Notable changes between versions.
 
 #### Azure
 
-* Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
 * Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### Bare-Metal
