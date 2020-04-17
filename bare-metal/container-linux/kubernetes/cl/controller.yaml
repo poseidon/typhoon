@@ -185,8 +185,6 @@ storage:
           sudo mv static-manifests/* /etc/kubernetes/manifests/
           sudo mkdir -p /opt/bootstrap/assets
           sudo mv manifests /opt/bootstrap/assets/manifests
-          sudo mkdir -p /opt/bootstrap/assets/manifests/crds
-          sudo mv manifests-networking/{crd,cluster}*.yaml /opt/bootstrap/assets/manifests/crds 2>/dev/null || true
           sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
     - path: /opt/bootstrap/apply
@@ -199,10 +197,6 @@ storage:
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
-          done
-          until kubectl apply -f /assets/manifests/crds -R; do
-             echo "Retry Custom Resource Definition manifests"
-             sleep 5
           done
           until kubectl apply -f /assets/manifests -R; do
              echo "Retry applying manifests"
