@@ -67,7 +67,7 @@ Fedora CoreOS publishes images for Azure, but does not yet upload them. Azure al
 xz -d fedora-coreos-31.20200323.3.2-azure.x86_64.vhd.xz
 ```
 
-Create an Azure disk (note its ID) and create an Azure image from it (note its ID).
+Create an Azure disk (note disk ID) and create an Azure image from it (note image ID).
 
 ```
 az disk create --name fedora-coreos-31.20200323.3.2 -g GROUP --source https://BUCKET.blob.core.windows.net/fedora-coreos/fedora-coreos-31.20200323.3.2-azure.x86_64.vhd

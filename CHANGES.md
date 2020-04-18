@@ -8,6 +8,7 @@ Notable changes between versions.
 * Choose Fedora CoreOS or Flatcar Linux (**action required**)
   * Use a `fedora-coreos` module for Fedora CoreOS
   * Use a `container-linux` module for Flatcar Linux
+* Change Container Linux modules' defaults from CoreOS Container Linux to [Flatcar Container Linux](https://typhoon.psdn.io/architecture/operating-systems/) ([#702](https://github.com/poseidon/typhoon/pull/702))
   * CoreOS Container Linux [won't receive updates](https://coreos.com/os/eol/) after May 2020
 
 ### Fedora CoreOS
@@ -16,27 +17,29 @@ Notable changes between versions.
 
 * Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
 
-### Flatcar Linux / Container Linux
+### Container Linux
 
 #### AWS
 
-* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Change `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### Azure
 
-* Change Container Linux `os_image` default from `coreos-stable` to `flatcar-stable` ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Change `os_image` to be required. Recommend uploading a Flatcar Linux image (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Disable Flatcar Linux Azure Marketplace image [support](https://github.com/poseidon/typhoon/pull/664) (**breaking**, [#707](https://github.com/poseidon/typhoon/pull/707))
+  * Revert to manual uploading until marketplace issue is closed ([#703](https://github.com/poseidon/typhoon/issues/703))
 
 #### Bare-Metal
 
-* Container Linux users should change [os_channel](https://typhoon.psdn.io/cl/bare-metal/#required) from a CoreOS channel to a Flatcar channel
+* Recommend changing [os_channel](https://typhoon.psdn.io/cl/bare-metal/#required) from `coreos-stable` to `flatcar-stable`
 
 #### Google
 
-* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Change `os_image` to be required. Recommend uploading a Flatcar Linux image (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 #### DigitalOcean
 
-* Change Container Linux `os_image` to be required. Container Linux users should upload a Flatcar Linux image and set it (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Change `os_image` to be required. Recommend uploading a Flatcar Linux image (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
 
 ## v1.18.1
 

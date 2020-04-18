@@ -24,23 +24,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
     caching              = "ReadWrite"
   }
 
-  source_image_reference {
-    publisher = local.flavor == "flatcar" ? "Kinvolk" : "CoreOS"
-    offer     = local.flavor == "flatcar" ? "flatcar-container-linux" : "CoreOS"
-    sku       = local.channel
-    version   = "latest"
-  }
-
-  # Gross hack just for Flatcar Linux
-  dynamic "plan" {
-    for_each = local.flavor == "flatcar" ? [1] : []
+  // CoreOS Container Linux or Flatcar Container Linux (manual upload)
+  dynamic "source_image_reference" {
+    for_each = local.flavor == "coreos" ? [1] : []
 
     content {
-      name      = local.channel
-      publisher = "kinvolk"
-      product   = "flatcar-container-linux"
+      publisher = "CoreOS"
+      offer     = "CoreOS"
+      sku       = local.channel
+      version   = "latest"
     }
   }
+  source_image_id = local.flavor == "coreos" ? null : var.os_image
 
   # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
   admin_username = "core"
