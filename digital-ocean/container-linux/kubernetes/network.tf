@@ -1,7 +1,10 @@
 resource "digitalocean_firewall" "rules" {
   name = var.cluster_name
 
-  tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+  tags = [
+    digitalocean_tag.controllers.name,
+    digitalocean_tag.workers.name
+  ]
 
   # allow ssh, internal flannel, internal node-exporter, internal kubelet
   inbound_rule {
@@ -59,7 +62,7 @@ resource "digitalocean_firewall" "rules" {
 resource "digitalocean_firewall" "controllers" {
   name = "${var.cluster_name}-controllers"
 
-  tags = ["${var.cluster_name}-controller"]
+  tags = [digitalocean_tag.controllers.name]
 
   # etcd
   inbound_rule {
@@ -93,7 +96,7 @@ resource "digitalocean_firewall" "controllers" {
 resource "digitalocean_firewall" "workers" {
   name = "${var.cluster_name}-workers"
 
-  tags = ["${var.cluster_name}-worker"]
+  tags = [digitalocean_tag.workers.name]
 
   # allow HTTP/HTTPS ingress
   inbound_rule {

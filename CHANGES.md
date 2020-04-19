@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.18.2
+
 * Kubernetes [v1.18.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1182)
 * Choose Fedora CoreOS or Flatcar Linux (**action required**)
   * Use a `fedora-coreos` module for Fedora CoreOS
@@ -13,13 +15,17 @@ Notable changes between versions.
 
 ### Fedora CoreOS
 
-* Fix race condition during bootstrap related to SELinux shared content label ([#708](https://github.com/poseidon/typhoon/pull/708))
+* Fix bootstrap race condition from SELinux unshared content label ([#708](https://github.com/poseidon/typhoon/pull/708))
 
 #### Azure
 
 * Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
 
-### Container Linux
+#### DigitalOcean
+
+* Fix race condition creating firewall allow rules ([#709](https://github.com/poseidon/typhoon/pull/709))
+
+### Flatcar Linux
 
 #### AWS
 
@@ -42,6 +48,7 @@ Notable changes between versions.
 #### DigitalOcean
 
 * Change `os_image` to be required. Recommend uploading a Flatcar Linux image (**action required**) ([#702](https://github.com/poseidon/typhoon/pull/702))
+* Fix race condition creating firewall allow rules ([#709](https://github.com/poseidon/typhoon/pull/709))
 
 ## v1.18.1
 
