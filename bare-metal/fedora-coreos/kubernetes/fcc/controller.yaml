@@ -127,9 +127,10 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
+        ExecStartPre=-/usr/bin/podman rm bootstrap
         ExecStart=/usr/bin/podman run --name bootstrap \
             --network host \
-            --volume /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro,Z \
+            --volume /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro,z \
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
             --entrypoint=/apply \

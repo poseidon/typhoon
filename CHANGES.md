@@ -13,6 +13,8 @@ Notable changes between versions.
 
 ### Fedora CoreOS
 
+* Fix race condition during bootstrap related to SELinux shared content label ([#708](https://github.com/poseidon/typhoon/pull/708))
+
 #### Azure
 
 * Add support for Fedora CoreOS ([#704](https://github.com/poseidon/typhoon/pull/704))
