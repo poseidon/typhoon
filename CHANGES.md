@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.13.1 to [v3.13.3](https://docs.projectcalico.org/v3.13/release-notes/)
+
 #### Addons
 
 * Update Prometheus from v2.17.1 to v2.17.2
