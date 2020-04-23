@@ -181,11 +181,11 @@ storage:
           chmod -R 500 /etc/ssl/etcd
           mv auth/kubeconfig /etc/kubernetes/bootstrap-secrets/
           mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
-          sudo mkdir -p /etc/kubernetes/manifests
-          sudo mv static-manifests/* /etc/kubernetes/manifests/
-          sudo mkdir -p /opt/bootstrap/assets
-          sudo mv manifests /opt/bootstrap/assets/manifests
-          sudo mv manifests-networking/* /opt/bootstrap/assets/manifests/
+          mkdir -p /etc/kubernetes/manifests
+          mv static-manifests/* /etc/kubernetes/manifests/
+          mkdir -p /opt/bootstrap/assets
+          mv manifests /opt/bootstrap/assets/manifests
+          mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
     - path: /opt/bootstrap/apply
       filesystem: root
