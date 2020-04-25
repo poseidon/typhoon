@@ -30,7 +30,7 @@ systemd:
     - name: kubelet.service
       contents: |
         [Unit]
-        Description=Kubelet via Hyperkube
+        Description=Kubelet
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
@@ -80,6 +80,7 @@ systemd:
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
+          --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --cgroup-driver=$${KUBELET_CGROUP_DRIVER} \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
@@ -88,7 +89,7 @@ systemd:
           --exit-on-lock-contention \
           --healthz-port=0 \
           --hostname-override=${domain_name} \
-          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --kubeconfig=/var/lib/kubelet/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
           --node-labels=node.kubernetes.io/node \
@@ -100,6 +101,7 @@ systemd:
           %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
+          --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
         Restart=always

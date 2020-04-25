@@ -21,7 +21,7 @@ systemd:
       enabled: true
       contents: |
         [Unit]
-        Description=Kubelet via Hyperkube (System Container)
+        Description=Kubelet (System Container)
         Requires=afterburn.service
         After=afterburn.service
         Wants=rpc-statd.service
@@ -56,6 +56,7 @@ systemd:
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
+          --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --cgroup-driver=systemd \
           --cgroups-per-qos=true \
           --enforce-node-allocatable=pods \
@@ -66,12 +67,13 @@ systemd:
           --exit-on-lock-contention \
           --healthz-port=0 \
           --hostname-override=$${AFTERBURN_DIGITALOCEAN_IPV4_PRIVATE_0} \
-          --kubeconfig=/etc/kubernetes/kubeconfig \
+          --kubeconfig=/var/lib/kubelet/kubeconfig \
           --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
           --node-labels=node.kubernetes.io/node \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
+          --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStop=-/usr/bin/podman stop kubelet
         Delegate=yes

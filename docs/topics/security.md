@@ -7,8 +7,10 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 **Kubernetes**
 
 * etcd with peer-to-peer and client-auth TLS
-* Generated kubelet TLS certificates and `kubeconfig` (365 days)
-* [Role-Based Access Control](https://kubernetes.io/docs/admin/authorization/rbac/) is enabled. Apps must define RBAC policies
+* Kubelets TLS bootstrap certificates (72 hours)
+* Generated TLS certificate (365 days) for admin `kubeconfig`
+* [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/node/) is enabled to limit Kubelet authorization
+* [Role-Based Access Control](https://kubernetes.io/docs/admin/authorization/rbac/) is enabled. Apps must define RBAC policies for API access
 * Workloads run on worker nodes only, unless they tolerate the master taint
 * Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [NetworkPolicy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/networkpolicy) support [^1]
 

@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Use Kubelet [TLS bootstrap](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) with bootstrap token authentication ([#713](https://github.com/poseidon/typhoon/pull/713))
+  * Enable Node [Authorization](https://kubernetes.io/docs/reference/access-authn-authz/node/) and [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) to reduce authorization scope
+  * Renew Kubelet certificates every 72 hours
 * Update Calico from v3.13.1 to [v3.13.3](https://docs.projectcalico.org/v3.13/release-notes/)
 
 #### Addons

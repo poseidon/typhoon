@@ -882,10 +882,10 @@ data:
             {
               "alert": "KubeClientCertificateExpiration",
               "annotations": {
-                "message": "A client certificate used to authenticate to the apiserver is expiring in less than 7.0 days.",
+                "message": "A client certificate used to authenticate to the apiserver is expiring in less than 1.0 hours.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration"
               },
-              "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 604800\n",
+              "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 3600\n",
               "labels": {
                 "severity": "warning"
               }
@@ -893,10 +893,10 @@ data:
             {
               "alert": "KubeClientCertificateExpiration",
               "annotations": {
-                "message": "A client certificate used to authenticate to the apiserver is expiring in less than 24.0 hours.",
+                "message": "A client certificate used to authenticate to the apiserver is expiring in less than 0.1 hours.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubeclientcertificateexpiration"
               },
-              "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 86400\n",
+              "expr": "apiserver_client_certificate_expiration_seconds_count{job=\"apiserver\"} > 0 and on(job) histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job=\"apiserver\"}[5m]))) < 300\n",
               "labels": {
                 "severity": "critical"
               }
