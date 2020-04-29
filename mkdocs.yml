@@ -55,6 +55,7 @@ nav:
     - 'Google Cloud': 'architecture/google-cloud.md'
   - 'Fedora CoreOS':
     - 'AWS': 'fedora-coreos/aws.md'
+    - 'Azure': 'fedora-coreos/azure.md'
     - 'Bare-Metal': 'fedora-coreos/bare-metal.md'
     - 'Digital Ocean': 'fedora-coreos/digitalocean.md'
     - 'Google Cloud': 'fedora-coreos/google-cloud.md'
