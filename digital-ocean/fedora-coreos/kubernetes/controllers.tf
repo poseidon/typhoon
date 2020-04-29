@@ -64,10 +64,10 @@ resource "digitalocean_tag" "controllers" {
 
 # Controller Ignition configs
 data "ct_config" "controller-ignitions" {
-  count        = var.controller_count
-  content      = data.template_file.controller-configs.*.rendered[count.index]
-  strict       = true
-  snippets     = var.controller_snippets
+  count    = var.controller_count
+  content  = data.template_file.controller-configs.*.rendered[count.index]
+  strict   = true
+  snippets = var.controller_snippets
 }
 
 # Controller Fedora CoreOS configs

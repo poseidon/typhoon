@@ -60,9 +60,9 @@ resource "digitalocean_tag" "workers" {
 
 # Worker Ignition config
 data "ct_config" "worker-ignition" {
-  content      = data.template_file.worker-config.rendered
-  strict       = true
-  snippets     = var.worker_snippets
+  content  = data.template_file.worker-config.rendered
+  strict   = true
+  snippets = var.worker_snippets
 }
 
 # Worker Fedora CoreOS config
