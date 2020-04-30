@@ -9,9 +9,15 @@ Notable changes between versions.
   * Renew Kubelet certificates every 72 hours
 * Update Calico from v3.13.1 to [v3.13.3](https://docs.projectcalico.org/v3.13/release-notes/)
 
+#### AWS
+
+* Fix Terraform plan error when `controller_count` exceeds AWS zones (e.g. 5 controllers) ([#714](https://github.com/poseidon/typhoon/pull/714))
+  * Regressed in v1.17.1 ([#605](https://github.com/poseidon/typhoon/pull/605))
+
 #### Addons
 
 * Update Prometheus from v2.17.1 to v2.17.2
+* Update Grafana from v6.7.2 to v7.0.0-beta1
 
 ## v1.18.2
 
