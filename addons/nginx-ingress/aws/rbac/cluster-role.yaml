@@ -51,3 +51,12 @@ rules:
       - ingresses/status
     verbs:
       - update
+  - apiGroups:
+      - "networking.k8s.io"
+    resources:
+      - ingressclasses
+    verbs:
+      - get
+      - list
+      - watch
+
