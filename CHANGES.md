@@ -18,7 +18,7 @@ Notable changes between versions.
 
 * Update nginx-ingress from v0.30.0 to [v0.32.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.32.0)
   * Add support for [IngressClass](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)
-* Update Prometheus from v2.17.1 to v2.18.0-rc.1
+* Update Prometheus from v2.17.1 to v2.18.0
 * Update Grafana from v6.7.2 to v7.0.0-beta1
 
 ## v1.18.2
