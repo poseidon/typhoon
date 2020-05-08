@@ -14,6 +14,12 @@ Notable changes between versions.
 * Fix Terraform plan error when `controller_count` exceeds AWS zones (e.g. 5 controllers) ([#714](https://github.com/poseidon/typhoon/pull/714))
   * Regressed in v1.17.1 ([#605](https://github.com/poseidon/typhoon/pull/605))
 
+#### Google
+
+* Use new Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
+  * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
+  * Deprecate `os_image` variable. Manual image uploads are no longer needed
+
 #### Addons
 
 * Update nginx-ingress from v0.30.0 to [v0.32.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.32.0)

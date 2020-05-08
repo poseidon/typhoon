@@ -34,9 +34,17 @@ variable "machine_type" {
   default     = "n1-standard-1"
 }
 
+variable "os_stream" {
+  type        = string
+  description = "Fedora CoreOS stream for compute instances (e.g. stable, testing, next)"
+  default = "stable"
+}
+
+# Deprecated
 variable "os_image" {
   type        = string
-  description = "Fedora CoreOS image for compute instanges (e.g. gcloud compute images list)"
+  description = "Fedora CoreOS image for compute instances (e.g. fedora-coreos)"
+  default = ""
 }
 
 variable "disk_size" {

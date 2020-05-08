@@ -210,6 +210,7 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | machine_type | Compute instance machine type | "n1-standard-1" | See below |
+| os_stream | Fedora CoreOS stream for compute instances | "stable" | "testing", "next" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | preemptible | If true, Compute Engine will terminate instances randomly within 24 hours | false | true |
 | snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
