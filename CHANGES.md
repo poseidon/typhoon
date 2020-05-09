@@ -9,10 +9,16 @@ Notable changes between versions.
   * Renew Kubelet certificates every 72 hours
 * Update Calico from v3.13.1 to [v3.13.3](https://docs.projectcalico.org/v3.13/release-notes/)
 
-#### AWS
+### AWS
 
 * Fix Terraform plan error when `controller_count` exceeds AWS zones (e.g. 5 controllers) ([#714](https://github.com/poseidon/typhoon/pull/714))
   * Regressed in v1.17.1 ([#605](https://github.com/poseidon/typhoon/pull/605))
+
+### Fedora CoreOS
+
+* Fix Calico `install-cni` crashloop on Pod restarts ([#724](https://github.com/poseidon/typhoon/pull/724))
+  * SELinux enforcement requires consistent file context MCS level
+  * Restarting a node resolved the issue as a previous workaround
 
 #### Google
 
