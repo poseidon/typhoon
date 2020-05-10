@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: docker.io/grafana/grafana:7.0.0-beta2
+          image: docker.io/grafana/grafana:7.0.0-beta3
           env:
             - name: GF_PATHS_CONFIG
               value: "/etc/grafana/custom.ini"
