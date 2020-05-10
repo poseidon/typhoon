@@ -57,37 +57,14 @@ provider "ct" {
 
 Additional configuration options are described in the `azurerm` provider [docs](https://www.terraform.io/docs/providers/azurerm/).
 
-### Flatcar Linux Images
+## Flatcar Linux Images
 
-Flatcar Linux publishes images for Azure. Azure allows custom images to be uploaded to a storage account bucket and imported.
-
-[Download](https://www.flatcar-linux.org/releases/) a Flatcar Linux Azure VHD image and upload it to an Azure storage account container (i.e. bucket).
-
-Azure requires fixed VHDs and Flatcar Linux provides dynamic VHDs, so uploads require Azure tools and cannot be done through the UI. Azure's tool compilation requires old versions, so Flatcar Linux has packaged a container image you may choose to use. See their [docs](https://docs.flatcar-linux.org/os/booting-on-azure/#uploading-your-own-image).
+Flatcar Linux publishes images to the Azure Marketplace and requires accepting terms.
 
 ```
-bzip2 -d flatcar_production_azure_image.vhd.bz2
+az vm image terms show --publish kinvolk --offer flatcar-container-linux-free --plan stable
+az vm image terms accept --publish kinvolk --offer flatcar-container-linux-free --plan stable
 ```
-
-```
-podman run -it --entrypoint=/bin/bash quay.io/kinvolk/azure-flatcar-image-upload
-...
-
-# az login
-# az storage account keys list --resource-group GROUP	--account-name BUCKET | jq -r '.[0].value'
-# azure-vhd-utils upload --localvhdpath /data/flatcar_production_azure_image.vhd --stgaccountname BUCKET --containername flatcar-linux --blobname flatcar-stable-2345.3.1 --stgaccountkey "KEYFROMABOVE"
-# exit
-```
-
-Create an Azure disk (note disk ID) and create an Azure image from it (note image ID).
-
-```
-az disk create --name flatcar-stable-2345.3.1 -g GROUP --source https://BUCKET.blob.core.windows.net/flatcar-linux/flatcar_production_azure_image.vhd
-
-az image create --name flatcar-stable-2345.3.1 -g GROUP --os-type=linux --source /subscriptions/some/path/providers/Microsoft.Compute/disks/flatcar-stable-2345.3.1
-```
-
-Set the [os_image](#variables) in the next step.
 
 ## Cluster
 
@@ -104,7 +81,6 @@ module "ramius" {
   dns_zone_group = "example-group"
 
   # configuration
-  os_image           = "/subscriptions/some/path/Microsoft.Compute/images/flatcar-stable-2345.3.1"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # optional
@@ -114,15 +90,6 @@ module "ramius" {
 ```
 
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
-
-### Flatcar Linux Only
-
-Flatcar Linux publishes images to the Azure Marketplace and requires accepting their legal terms.
-
-```
-az vm image terms show --publish kinvolk --offer flatcar-container-linux --plan stable
-az vm image terms accept --publish kinvolk --offer flatcar-container-linux --plan stable
-```
 
 ## ssh-agent
 
@@ -218,7 +185,6 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/c
 | region | Azure region | "centralus" |
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
-| os_image | Container Linux image for instances | "/subscriptions/..../some-flatcar-image", coreos-stable, coreos-beta, coreos-alpha |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 !!! tip
@@ -259,6 +225,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
 | worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
+| os_image | Channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge, coreos-stable, coreos-beta, coreos-alpha |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |

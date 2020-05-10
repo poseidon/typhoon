@@ -32,6 +32,15 @@ Notable changes between versions.
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Deprecate `os_image` variable. Manual image uploads are no longer needed
 
+
+### Flatcar Linux
+
+#### Azure
+
+* Use the Flatcar Linux Azure Marketplace image
+  * Restore [#664](https://github.com/poseidon/typhoon/pull/664) (reverted in [#707](https://github.com/poseidon/typhoon/pull/707)) but use Flatcar Linux new free offer (not byol)
+* Change `os_image` to use a `flatcar-stable` default
+
 #### Addons
 
 * Update nginx-ingress from v0.30.0 to [v0.32.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.32.0)

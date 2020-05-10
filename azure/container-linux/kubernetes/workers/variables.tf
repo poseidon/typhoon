@@ -46,7 +46,7 @@ variable "vm_type" {
 
 variable "os_image" {
   type        = string
-  description = "Channel for a Container Linux derivative (flatcar-stable, flatcar-beta, coreos-stable, coreos-beta, coreos-alpha)"
+  description = "Channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge, coreos-stable, coreos-beta, coreos-alpha)"
   default     = "flatcar-stable"
 }
 

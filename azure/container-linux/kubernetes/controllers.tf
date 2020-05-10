@@ -53,18 +53,24 @@ resource "azurerm_linux_virtual_machine" "controllers" {
     storage_account_type = "Premium_LRS"
   }
 
-  // CoreOS Container Linux or Flatcar Container Linux (manual upload)
-  dynamic "source_image_reference" {
-    for_each = local.flavor == "coreos" ? [1] : []
+  # CoreOS Container Linux or Flatcar Container Linux
+  source_image_reference {
+    publisher = local.flavor == "flatcar" ? "Kinvolk" : "CoreOS"
+    offer     = local.flavor == "flatcar" ? "flatcar-container-linux-free" : "CoreOS"
+    sku       = local.channel
+    version   = "latest"
+  }
+
+  # Gross hack for Flatcar Linux
+  dynamic "plan" {
+    for_each = local.flavor == "flatcar" ? [1] : []
 
     content {
-      publisher = "CoreOS"
-      offer     = "CoreOS"
-      sku       = local.channel
-      version   = "latest"
+      name = local.channel
+      publisher = "kinvolk"
+      product = "flatcar-container-linux-free"
     }
   }
-  source_image_id = local.flavor == "coreos" ? null : var.os_image
 
   # network
   network_interface_ids = [
