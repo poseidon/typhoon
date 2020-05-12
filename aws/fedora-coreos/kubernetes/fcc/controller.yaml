@@ -207,6 +207,22 @@ storage:
           ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
           ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
           ETCD_PEER_CLIENT_CERT_AUTH=true
+    - path: /etc/selinux/config
+        mode: 0644
+        overwrite: true
+        contents:
+          inline: |
+            # This file controls the state of SELinux on the system.
+            # SELINUX= can take one of these three values:
+            #     disabled - SELinux security policy is enforced.
+            #     permissive - SELinux prints warnings instead of disabled.
+            #     disabled - No SELinux policy is loaded.
+            SELINUX=permissive
+            # SELINUXTYPE= can take one of these three values:
+            #     targeted - Targeted processes are protected,
+            #     minimum - Modification of targeted policy. Only selected processes are protected.
+            #     mls - Multi Level Security protection.
+            SELINUXTYPE=targeted
 passwd:
   users:
     - name: core

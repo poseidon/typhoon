@@ -112,6 +112,35 @@ storage:
           DefaultCPUAccounting=yes
           DefaultMemoryAccounting=yes
           DefaultBlockIOAccounting=yes
+    - path: /etc/sysconfig/docker
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          # Modify these options if you want to change the way the docker daemon runs
+          OPTIONS="--selinux-enabled \
+            --log-driver=json-file \
+            --live-restore \
+            --default-ulimit nofile=65536:65536 \
+            --init-path /usr/libexec/docker/docker-init \
+            --userland-proxy-path /usr/libexec/docker/docker-proxy \
+          "
+    - path: /etc/selinux/config
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          # This file controls the state of SELinux on the system.
+          # SELINUX= can take one of these three values:
+          #     disabled - SELinux security policy is enforced.
+          #     permissive - SELinux prints warnings instead of disabled.
+          #     disabled - No SELinux policy is loaded.
+          SELINUX=permissive
+          # SELINUXTYPE= can take one of these three values:
+          #     targeted - Targeted processes are protected,
+          #     minimum - Modification of targeted policy. Only selected processes are protected.
+          #     mls - Multi Level Security protection.
+                SELINUXTYPE=targeted
 passwd:
   users:
     - name: core
