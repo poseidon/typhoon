@@ -20,9 +20,15 @@ Notable changes between versions.
   * SELinux enforcement requires consistent file context MCS level
   * Restarting a node resolved the issue as a previous workaround
 
+#### AWS
+
+* Support Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#727](https://github.com/poseidon/typhoon/pull/727))
+  * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
+  * Remove unused `os_image` variable
+
 #### Google
 
-* Use new Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
+* Support Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Deprecate `os_image` variable. Manual image uploads are no longer needed
 

@@ -41,9 +41,9 @@ variable "worker_type" {
   default     = "t3.small"
 }
 
-variable "os_image" {
+variable "os_stream" {
   type        = string
-  description = "AMI channel for Fedora CoreOS (not yet used)"
+  description = "Fedora CoreOs image stream for instances (e.g. stable, testing, next)"
   default     = "stable"
 }
 
