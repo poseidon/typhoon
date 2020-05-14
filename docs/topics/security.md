@@ -20,6 +20,9 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 
 * Container Linux auto-updates are enabled
 * Hosts limit logins to SSH key-based auth (user "core")
+* SELinux enforcing mode [^2]
+
+[^2]: SELinux is enforcing on Fedora CoreOS, permissive on Flatcar Linux.
 
 **Platform**
 

@@ -15,7 +15,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * Single or multi-master, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 * Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/), [spot](https://typhoon.psdn.io/cl/aws/#spot) workers, and [snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) customization
-* Ready for Ingress, Prometheus, Grafana, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
+* Ready for Ingress, Prometheus, Grafana, CSI, and other optional [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Docs
 
