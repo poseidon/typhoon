@@ -32,7 +32,6 @@ Notable changes between versions.
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Deprecate `os_image` variable. Manual image uploads are no longer needed
 
-
 ### Flatcar Linux
 
 #### Azure
@@ -41,12 +40,12 @@ Notable changes between versions.
   * Restore [#664](https://github.com/poseidon/typhoon/pull/664) (reverted in [#707](https://github.com/poseidon/typhoon/pull/707)) but use Flatcar Linux new free offer (not byol)
 * Change `os_image` to use a `flatcar-stable` default
 
-#### Addons
+### Addons
 
 * Update nginx-ingress from v0.30.0 to [v0.32.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.32.0)
   * Add support for [IngressClass](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)
 * Update Prometheus from v2.17.1 to v2.18.1
-* Update Grafana from v6.7.2 to v7.0.0-beta3
+* Update Grafana from v6.7.2 to v7.0.0
 
 ## v1.18.2
 
