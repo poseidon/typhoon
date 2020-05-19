@@ -21,7 +21,7 @@ resource "azurerm_subnet" "controller" {
 
   name                 = "controller"
   virtual_network_name = azurerm_virtual_network.network.name
-  address_prefix       = cidrsubnet(var.host_cidr, 1, 0)
+  address_prefixes     = [cidrsubnet(var.host_cidr, 1, 0)]
 }
 
 resource "azurerm_subnet_network_security_group_association" "controller" {
@@ -34,7 +34,7 @@ resource "azurerm_subnet" "worker" {
 
   name                 = "worker"
   virtual_network_name = azurerm_virtual_network.network.name
-  address_prefix       = cidrsubnet(var.host_cidr, 1, 1)
+  address_prefixes     = [cidrsubnet(var.host_cidr, 1, 1)]
 }
 
 resource "azurerm_subnet_network_security_group_association" "worker" {

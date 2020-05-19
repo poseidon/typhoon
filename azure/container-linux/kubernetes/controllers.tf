@@ -66,9 +66,9 @@ resource "azurerm_linux_virtual_machine" "controllers" {
     for_each = local.flavor == "flatcar" ? [1] : []
 
     content {
-      name = local.channel
+      name      = local.channel
       publisher = "kinvolk"
-      product = "flatcar-container-linux-free"
+      product   = "flatcar-container-linux-free"
     }
   }
 

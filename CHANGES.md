@@ -14,6 +14,12 @@ Notable changes between versions.
 * Fix Terraform plan error when `controller_count` exceeds AWS zones (e.g. 5 controllers) ([#714](https://github.com/poseidon/typhoon/pull/714))
   * Regressed in v1.17.1 ([#605](https://github.com/poseidon/typhoon/pull/605))
 
+### Azure
+
+* Update Azure subnets to set `address_prefixes` list ([#730](https://github.com/poseidon/typhoon/pull/730))
+  * Fix warning that `address_prefix` is deprecated
+  * Require `terraform-provider-azurerm` v2.8.0+ (action required)
+
 ### Fedora CoreOS
 
 * Fix Calico `install-cni` crashloop on Pod restarts ([#724](https://github.com/poseidon/typhoon/pull/724))
