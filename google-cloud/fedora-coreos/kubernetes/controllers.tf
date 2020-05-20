@@ -59,7 +59,10 @@ resource "google_compute_instance" "controllers" {
   tags           = ["${var.cluster_name}-controller"]
 
   lifecycle {
-    ignore_changes = [metadata]
+    ignore_changes = [
+      metadata,
+      boot_disk[0].initialize_params
+    ]
   }
 }
 

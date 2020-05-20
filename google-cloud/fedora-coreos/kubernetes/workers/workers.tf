@@ -64,6 +64,9 @@ resource "google_compute_instance_template" "worker" {
   }
 
   lifecycle {
+    ignore_changes = [
+      disk[0].source_image
+    ]
     # To update an Instance Template, Terraform should replace the existing resource
     create_before_destroy = true
   }
