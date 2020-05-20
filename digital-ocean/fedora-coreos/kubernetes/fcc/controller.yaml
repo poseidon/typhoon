@@ -55,6 +55,7 @@ systemd:
         After=afterburn.service
         Wants=rpc-statd.service
         [Service]
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.18.2
         EnvironmentFile=/run/metadata/afterburn
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -81,7 +82,7 @@ systemd:
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
           --volume /opt/cni/bin:/opt/cni/bin:z \
-          quay.io/poseidon/kubelet:v1.18.2 \
+          $${KUBELET_IMAGE} \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \

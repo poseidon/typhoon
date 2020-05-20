@@ -62,6 +62,7 @@ systemd:
         After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
+        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.2
         EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -101,7 +102,7 @@ systemd:
           --mount volume=var-log,target=/var/log \
           --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
           --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          docker://quay.io/poseidon/kubelet:v1.18.2 -- \
+          $${KUBELET_IMAGE} -- \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
