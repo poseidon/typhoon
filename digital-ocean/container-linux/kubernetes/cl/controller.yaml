@@ -62,7 +62,7 @@ systemd:
         After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.2
+        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.3
         EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -147,7 +147,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.18.2 \
+            docker://quay.io/poseidon/kubelet:v1.18.3 \
             --net=host \
             --dns=host \
             --exec=/apply
