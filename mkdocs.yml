@@ -1,26 +1,28 @@
-site_name: 'Typhoon'
-site_description: 'A minimal and free Kubernetes distribution'
-site_author: 'Dalton Hubble'
-repo_name: 'poseidon/typhoon'
-repo_url: 'https://github.com/poseidon/typhoon'
+site_name: Typhoon
+site_description: A minimal and free Kubernetes distribution
+site_author: Dalton Hubble
+repo_name: poseidon/typhoon
+repo_url: https://github.com/poseidon/typhoon
 theme:
-  name: 'material'
-  feature:
-    tabs: 'true'
-  palette:
-    primary: 'blue'
-    accent: 'pink'
+  name: material
+  features:
+    - tabs
   logo: 'img/spin.png'
   favicon: 'img/favicon.ico'
+  icon:
+    repo: fontawesome/brands/github-alt
+  palette:
+    primary: blue
+    accent: pink
   font:
     text: 'Roboto Slab'
     code: 'Roboto Mono'
 extra:
   social:
-    - type: 'github'
-      link: 'https://github.com/poseidon'
-    - type: 'twitter'
-      link: 'https://twitter.com/typhoon8s'
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/poseidon
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/typhoon8s
 markdown_extensions:
   - admonition
   - codehilite
@@ -59,12 +61,12 @@ nav:
     - 'Bare-Metal': 'fedora-coreos/bare-metal.md'
     - 'Digital Ocean': 'fedora-coreos/digitalocean.md'
     - 'Google Cloud': 'fedora-coreos/google-cloud.md'
-  - 'Container Linux':
-    - 'AWS': 'cl/aws.md'
-    - 'Azure': 'cl/azure.md'
-    - 'Bare-Metal': 'cl/bare-metal.md'
-    - 'Digital Ocean': 'cl/digital-ocean.md'
-    - 'Google Cloud': 'cl/google-cloud.md'
+  - 'Flatcar Linux':
+    - 'AWS': 'flatcar-linux/aws.md'
+    - 'Azure': 'flatcar-linux/azure.md'
+    - 'Bare-Metal': 'flatcar-linux/bare-metal.md'
+    - 'Digital Ocean': 'flatcar-linux/digitalocean.md'
+    - 'Google Cloud': 'flatcar-linux/google-cloud.md'
   - 'Topics':
     - 'Maintenance': 'topics/maintenance.md'
     - 'Hardware': 'topics/hardware.md'

@@ -1,6 +1,6 @@
 # Operating Systems
 
-Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/), [Flatcar Linux](https://www.flatcar-linux.org/) and Container Linux (EOL in May 2020). These operating systems were chosen because they offer:
+Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/) and [Flatcar Linux](https://www.flatcar-linux.org/). These operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades

@@ -2,12 +2,16 @@
 
 Notable changes between versions.
 
-## Latest
+## v1.18.3
 
 * Use Kubelet [TLS bootstrap](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) with bootstrap token authentication ([#713](https://github.com/poseidon/typhoon/pull/713))
   * Enable Node [Authorization](https://kubernetes.io/docs/reference/access-authn-authz/node/) and [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) to reduce authorization scope
   * Renew Kubelet certificates every 72 hours
+* Add CoreDNS node affinity preference for controller nodes ([#188](https://github.com/poseidon/terraform-render-bootstrap/pull/188))
 * Update Calico from v3.13.1 to [v3.14.0](https://docs.projectcalico.org/v3.14/release-notes/)
+* Deprecate CoreOS Container Linux support (no OS [updates](https://coreos.com/os/eol/) after May 2020)
+  * Use a `fedora-coreos` module for Fedora CoreOS
+  * Use a `container-linux` module for Flatcar Linux
 
 ### AWS
 
@@ -20,6 +24,10 @@ Notable changes between versions.
   * Fix warning that `address_prefix` is deprecated
   * Require `terraform-provider-azurerm` v2.8.0+ (action required)
 
+### DigitalOcean
+
+* Promote DigitalOcean to beta on both Fedora CoreOS and Flatcar Linux
+
 ### Fedora CoreOS
 
 * Fix Calico `install-cni` crashloop on Pod restarts ([#724](https://github.com/poseidon/typhoon/pull/724))
@@ -28,13 +36,13 @@ Notable changes between versions.
 
 #### AWS
 
-* Support Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#727](https://github.com/poseidon/typhoon/pull/727))
+* Support Fedora CoreOS [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#727](https://github.com/poseidon/typhoon/pull/727))
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Remove unused `os_image` variable
 
 #### Google
 
-* Support Fedora CoreOS official [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
+* Support Fedora CoreOS [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Deprecate `os_image` variable. Manual image uploads are no longer needed
 
@@ -45,6 +53,10 @@ Notable changes between versions.
 * Use the Flatcar Linux Azure Marketplace image
   * Restore [#664](https://github.com/poseidon/typhoon/pull/664) (reverted in [#707](https://github.com/poseidon/typhoon/pull/707)) but use Flatcar Linux new free offer (not byol)
 * Change `os_image` to use a `flatcar-stable` default
+
+#### Google
+
+* Promote Flatcar Linux to beta
 
 ### Addons
 
