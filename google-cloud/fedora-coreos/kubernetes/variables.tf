@@ -49,14 +49,14 @@ variable "worker_type" {
 variable "os_stream" {
   type        = string
   description = "Fedora CoreOS stream for compute instances (e.g. stable, testing, next)"
-  default = "stable"
+  default     = "stable"
 }
 
 # Deprecated
 variable "os_image" {
   type        = string
   description = "Fedora CoreOS image for compute instances (e.g. fedora-coreos)"
-  default = ""
+  default     = ""
 }
 
 variable "disk_size" {

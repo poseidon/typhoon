@@ -8,7 +8,7 @@ module "workers" {
   security_groups = [aws_security_group.worker.id]
   worker_count    = var.worker_count
   instance_type   = var.worker_type
-  os_stream        = var.os_stream
+  os_stream       = var.os_stream
   disk_size       = var.disk_size
   spot_price      = var.worker_price
   target_groups   = var.worker_target_groups
