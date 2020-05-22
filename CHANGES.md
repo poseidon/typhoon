@@ -7,8 +7,9 @@ Notable changes between versions.
 * Use Kubelet [TLS bootstrap](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) with bootstrap token authentication ([#713](https://github.com/poseidon/typhoon/pull/713))
   * Enable Node [Authorization](https://kubernetes.io/docs/reference/access-authn-authz/node/) and [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) to reduce authorization scope
   * Renew Kubelet certificates every 72 hours
-* Add CoreDNS node affinity preference for controller nodes ([#188](https://github.com/poseidon/terraform-render-bootstrap/pull/188))
+* Update etcd from v3.4.7 to [v3.4.9](https://github.com/etcd-io/etcd/releases/tag/v3.4.9)
 * Update Calico from v3.13.1 to [v3.14.0](https://docs.projectcalico.org/v3.14/release-notes/)
+* Add CoreDNS node affinity preference for controller nodes ([#188](https://github.com/poseidon/terraform-render-bootstrap/pull/188))
 * Deprecate CoreOS Container Linux support (no OS [updates](https://coreos.com/os/eol/) after May 2020)
   * Use a `fedora-coreos` module for Fedora CoreOS
   * Use a `container-linux` module for Flatcar Linux
