@@ -2,6 +2,12 @@
 
 Notable changes between versions.
 
+## Latest
+
+### Addons
+
+* Update node-exporter from v1.0.0-rc.1 to [v1.0.0](https://github.com/prometheus/node_exporter/releases/tag/v1.0.0)
+
 ## v1.18.3
 
 * Use Kubelet [TLS bootstrap](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) with bootstrap token authentication ([#713](https://github.com/poseidon/typhoon/pull/713))
