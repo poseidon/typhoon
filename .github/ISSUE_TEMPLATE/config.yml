@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Typhoon Security
+    url: https://typhoon.psdn.io/topics/security/
+    about: Please report security vulnerabilities via email

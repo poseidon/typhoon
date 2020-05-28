@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-<!--- READ: Issues are used to receive focused bug reports from users and to track planned future enhancements by the authors. Topics like cluster operation, support, debugging help, advice, and Kubernetes concepts are out of scope and should not use issues--->
+<!-- READ: Issues are used to receive focused bug reports from users and to track planned future enhancements by the authors. Topics like cluster operation, support, debugging help, advice, and Kubernetes concepts are out of scope and should not use issues-->
 
 **Description**
 
@@ -34,6 +34,6 @@ A clear and concise description of what you expected to happen.
 
 ### Possible Solution
 
-<!--- Most bug reports should have some inkling about solutions. Otherwise, your report may be less of a bug and more of a support request (see top).--->
+<!-- Most bug reports should have some inkling about solutions. Otherwise, your report may be less of a bug and more of a support request (see top).-->
 
 Link to a PR or description.
