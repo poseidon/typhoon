@@ -52,7 +52,19 @@ Typhoon uses upstream container images (where possible) and upstream binaries.
 !!! note
     Kubernetes releases `kubelet` as a binary for distros to package, either as a DEB/RPM on traditional distros or as a container image for container-optimized operating systems.
 
-Typhoon [packages](https://github.com/poseidon/kubelet) the upstream Kubelet and its dependencies as a [container image](https://quay.io/repository/poseidon/kubelet) for use in Typhoon. The upstream Kubelet binary is checksummed and packaged directly. Quay automated builds provide verifiability and confidence in image contents.
+Typhoon [packages](https://github.com/poseidon/kubelet) the upstream Kubelet and its dependencies as a [container image](https://quay.io/repository/poseidon/kubelet). Builds fetch the upstream Kubelet binary and verify its checksum.
+
+The Kubelet image is published to Quay.io and Dockerhub.
+
+* [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet) (official)
+* [docker.io/psdn/kubelet](https://hub.docker.com/r/psdn/kubelet) (fallback)
+
+Two tag styles indicate the build strategy used.
+
+* Typhoon internal infra publishes single and multi-arch images (e.g. `v1.18.3`, `v1.18.3-amd64`, `v1.18.3-arm64`, `v1.18.3-2-g23228e6-amd64`, `v1.18.3-2-g23228e6-arm64`)
+* Quay and Dockerhub automated builds publish verifiable images (e.g. `build-SHA` on Quay, `build-TAG` on Dockerhub)
+
+The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization.md#kubelet).
 
 ## Disclosures
 
