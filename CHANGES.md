@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
+
 ### Addons
 
 * Update node-exporter from v1.0.0-rc.1 to [v1.0.0](https://github.com/prometheus/node_exporter/releases/tag/v1.0.0)
