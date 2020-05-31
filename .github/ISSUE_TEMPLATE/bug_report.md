@@ -32,7 +32,7 @@ A clear and concise description of what you expected to happen.
 * Terraform: `terraform version` (reporting latest is **not** helpful)
 * Plugins: Provider plugin versions (reporting latest is **not** helpful)
 
-### Possible Solution
+**Possible Solution**
 
 <!-- Most bug reports should have some inkling about solutions. Otherwise, your report may be less of a bug and more of a support request (see top).-->
 
