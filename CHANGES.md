@@ -16,6 +16,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Update Prometheus from v2.18.1 to [v2.19.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.19.0-rc.0)
 * Update node-exporter from v1.0.0-rc.1 to [v1.0.0](https://github.com/prometheus/node_exporter/releases/tag/v1.0.0)
 * Update kube-state-metrics from v1.9.6 to v1.9.7
 * Update Grafana from v7.0.0 to v7.0.3
