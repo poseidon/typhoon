@@ -64,9 +64,9 @@ Two tag styles indicate the build strategy used.
 * Typhoon internal infra publishes single and multi-arch images (e.g. `v1.18.3`, `v1.18.3-amd64`, `v1.18.3-arm64`, `v1.18.3-2-g23228e6-amd64`, `v1.18.3-2-g23228e6-arm64`)
 * Quay and Dockerhub automated builds publish verifiable images (e.g. `build-SHA` on Quay, `build-TAG` on Dockerhub)
 
-The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization.md#kubelet).
+The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#kubelet).
 
 ## Disclosures
 
-If you find security issues, please email dghubble at gmail. If the issue lies in upstream Kubernetes, please inform upstream Kubernetes as well.
+If you find security issues, please email `security@psdn.io`. If the issue lies in upstream Kubernetes, please inform upstream Kubernetes as well.
 

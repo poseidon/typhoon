@@ -176,7 +176,7 @@ To customize low-level Kubernetes control plane bootstrapping, see the [poseidon
 
 ## Kubelet
 
-Typhoon publishes Kubelet [container images](/topics/security.md#container-images) to Quay.io (default) and to Dockerhub (in case of a Quay [outage](https://github.com/poseidon/typhoon/issues/735) or breach). Quay automated builds also provide the option for fully verifiable tagged images (`build-{short_sha}`).
+Typhoon publishes Kubelet [container images](/topics/security/#container-images) to Quay.io (default) and to Dockerhub (in case of a Quay [outage](https://github.com/poseidon/typhoon/issues/735) or breach). Quay automated builds also provide the option for fully verifiable tagged images (`build-{short_sha}`).
 
 To set an alternative Kubelet image, use a snippet to set a systemd dropin.
 
