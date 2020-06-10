@@ -14,6 +14,17 @@ Notable changes between versions.
   strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
 * Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
 
+### Fedora CoreOS
+
+#### Azure
+
+* Use `strict` Fedora CoreOS Config (FCC) snippet parsing ([#755](https://github.com/poseidon/typhoon/pull/755))
+
+### Flatcar Linux
+
+* Use `strict` Container Linux Config (CLC) snippet parsing ([#755](https://github.com/poseidon/typhoon/pull/755))
+  * Require `terraform-provider-ct` v0.4+, recommend v0.5+ (**action required**)
+
 ### Addons
 
 * Update Prometheus from v2.18.1 to [v2.19.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.19.0-rc.0)

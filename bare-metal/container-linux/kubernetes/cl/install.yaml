@@ -2,7 +2,7 @@
 systemd:
   units:
     - name: installer.service
-      enable: true
+      enabled: true
       contents: |
         [Unit]
         Requires=network-online.target

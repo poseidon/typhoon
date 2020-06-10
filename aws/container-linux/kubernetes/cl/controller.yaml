@@ -2,7 +2,7 @@
 systemd:
   units:
     - name: etcd-member.service
-      enable: true
+      enabled: true
       dropins:
         - name: 40-etcd-cluster.conf
           contents: |
@@ -28,11 +28,11 @@ systemd:
             Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
             Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
     - name: docker.service
-      enable: true
+      enabled: true
     - name: locksmithd.service
       mask: true
     - name: wait-for-dns.service
-      enable: true
+      enabled: true
       contents: |
         [Unit]
         Description=Wait for DNS entries
@@ -46,7 +46,7 @@ systemd:
         RequiredBy=kubelet.service
         RequiredBy=etcd-member.service
     - name: kubelet.service
-      enable: true
+      enabled: true
       contents: |
         [Unit]
         Description=Kubelet
@@ -191,6 +191,7 @@ storage:
           done
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
+      mode: 0644
       contents:
         inline: |
           fs.inotify.max_user_watches=16184

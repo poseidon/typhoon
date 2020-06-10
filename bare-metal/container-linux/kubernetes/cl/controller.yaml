@@ -2,7 +2,7 @@
 systemd:
   units:
     - name: etcd-member.service
-      enable: true
+      enabled: true
       dropins:
         - name: 40-etcd-cluster.conf
           contents: |
@@ -28,11 +28,11 @@ systemd:
             Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
             Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
     - name: docker.service
-      enable: true
+      enabled: true
     - name: locksmithd.service
       mask: true
     - name: kubelet.path
-      enable: true
+      enabled: true
       contents: |
         [Unit]
         Description=Watch for kubeconfig
@@ -41,7 +41,7 @@ systemd:
         [Install]
         WantedBy=multi-user.target
     - name: wait-for-dns.service
-      enable: true
+      enabled: true
       contents: |
         [Unit]
         Description=Wait for DNS entries
@@ -161,6 +161,7 @@ storage:
   directories:
     - path: /etc/kubernetes
       filesystem: root
+      mode: 0755
   files:
     - path: /etc/hostname
       filesystem: root
@@ -207,6 +208,7 @@ storage:
           done
     - path: /etc/sysctl.d/max-user-watches.conf
       filesystem: root
+      mode: 0644
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
