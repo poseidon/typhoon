@@ -13,6 +13,7 @@ Notable changes between versions.
   automated image builds are still available with an alternate tag
   strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
 * Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
+* Remove unused Kubelet `-lock-file` and `-exit-on-lock-contention`
 
 ### Fedora CoreOS
 

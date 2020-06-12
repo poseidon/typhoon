@@ -73,10 +73,8 @@ systemd:
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
-          --exit-on-lock-contention \
           --healthz-port=0 \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
-          --lock-file=/var/run/lock/kubelet.lock \
           --network-plugin=cni \
           --node-labels=node.kubernetes.io/node \
           %{~ for label in split(",", node_labels) ~}
