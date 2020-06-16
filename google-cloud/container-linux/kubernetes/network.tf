@@ -112,6 +112,32 @@ resource "google_compute_firewall" "internal-vxlan" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
+# Cilium VXLAN
+resource "google_compute_firewall" "internal-linux-vxlan" {
+  count = var.networking == "cilium" ? 1 : 0
+
+  name    = "${var.cluster_name}-linux-vxlan"
+  network = google_compute_network.network.name
+
+  allow {
+    protocol = "udp"
+    ports    = [8472]
+  }
+
+  # Cilium health
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = [4240]
+  }
+
+  source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+  target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
+}
+
 # Allow Prometheus to scrape node-exporter daemonset
 resource "google_compute_firewall" "internal-node-exporter" {
   name    = "${var.cluster_name}-internal-node-exporter"

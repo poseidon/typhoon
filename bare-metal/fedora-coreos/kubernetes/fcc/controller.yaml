@@ -186,6 +186,11 @@ storage:
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
+    - path: /etc/sysctl.d/reverse-path-filter.conf
+      contents:
+        inline: |
+          net.ipv4.conf.default.rp_filter=0
+          net.ipv4.conf.*.rp_filter=0
     - path: /etc/systemd/system.conf.d/accounting.conf
       contents:
         inline: |

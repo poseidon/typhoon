@@ -6,6 +6,11 @@ resource "digitalocean_firewall" "rules" {
     digitalocean_tag.workers.name
   ]
 
+  inbound_rule {
+    protocol    = "icmp"
+    source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
+  }
+
   # allow ssh, internal flannel, internal node-exporter, internal kubelet
   inbound_rule {
     protocol         = "tcp"
@@ -13,9 +18,24 @@ resource "digitalocean_firewall" "rules" {
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
+  # Cilium health
+  inbound_rule {
+    protocol    = "tcp"
+    port_range  = "4240"
+    source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
+  }
+
+  # IANA vxlan (flannel, calico)
   inbound_rule {
     protocol    = "udp"
     port_range  = "4789"
+    source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
+  }
+
+  # Linux vxlan (Cilium)
+  inbound_rule {
+    protocol    = "udp"
+    port_range  = "8472"
     source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
   }
 
@@ -33,6 +53,7 @@ resource "digitalocean_firewall" "rules" {
     source_tags = [digitalocean_tag.workers.name]
   }
 
+  # Kubelet
   inbound_rule {
     protocol    = "tcp"
     port_range  = "10250"
