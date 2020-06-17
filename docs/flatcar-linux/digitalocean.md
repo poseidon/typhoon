@@ -1,4 +1,4 @@
-# Digital Ocean
+# DigitalOcean
 
 In this tutorial, we'll create a Kubernetes v1.18.3 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
 

@@ -8,12 +8,10 @@ Notable changes between versions.
   * Publish Kubelet images from internal infra to Quay and Dockerhub
     * [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet) (official)
     * [docker.io/psdn/kubelet](https://hub.docker.com/r/psdn/kubelet) (fallback)
-  * Document use of alternate Kubelet images during registry incidents
-  * For those preferring to trust images built by Quay/Dockerhub,
-  automated image builds are still available with an alternate tag
-  strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
+  * [Document](https://typhoon.psdn.io/advanced/customization/#kubelet) use of alternate Kubelet images during registry incidents
+  * For those preferring to trust images built by Quay/Dockerhub, automated image builds are still available with an alternate tag strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
 * Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
-* Remove unused Kubelet `-lock-file` and `-exit-on-lock-contention`
+* Remove unused Kubelet `-lock-file` and `-exit-on-lock-contention` ([#758](https://github.com/poseidon/typhoon/pull/758))
 
 ### Fedora CoreOS
 
