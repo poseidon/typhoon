@@ -26,6 +26,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Update nginx-ingress from v0.32.0 to [v0.33.0](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.33.0)
 * Update Prometheus from v2.18.1 to [v2.19.0](https://github.com/prometheus/prometheus/releases/tag/v2.19.0)
 * Update node-exporter from v1.0.0-rc.1 to [v1.0.1](https://github.com/prometheus/node_exporter/releases/tag/v1.0.1)
 * Update kube-state-metrics from v1.9.6 to v1.9.7
