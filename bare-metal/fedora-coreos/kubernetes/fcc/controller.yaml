@@ -97,11 +97,10 @@ systemd:
           --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           --network-plugin=cni \
-          --node-labels=node.kubernetes.io/master \
           --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
-          --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+          --register-with-taints=node-role.kubernetes.io/controller=:NoSchedule \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStop=-/usr/bin/podman stop kubelet

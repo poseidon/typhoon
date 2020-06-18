@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.18.4
+
 * Kubernetes [v1.18.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1184)
 * Update Kubelet image publishing ([#749](https://github.com/poseidon/typhoon/pull/749))
   * Build Kubelet images internally and publish to Quay and Dockerhub
@@ -13,6 +15,10 @@ Notable changes between versions.
   * [Document](https://typhoon.psdn.io/advanced/customization/#kubelet) use of alternate Kubelet images during registry incidents
 * Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
   * Fix [CVE-2020-13597](https://github.com/kubernetes/kubernetes/issues/91507)
+* Rename controller NoSchedule taint from `node-role.kubernetes.io/master` to `node-role.kubernetes.io/controller` ([#764](https://github.com/poseidon/typhoon/pull/764))
+  * Tolerate the new taint name for workloads that may run on controller nodes
+* Remove node label `node.kubernetes.io/master` from controller nodes ([#764](https://github.com/poseidon/typhoon/pull/764))
+  * Use `node.kubernetes.io/controller` (present since v1.9.5, [#160](https://github.com/poseidon/typhoon/pull/160)) to node select controllers
 * Remove unused Kubelet `-lock-file` and `-exit-on-lock-contention` ([#758](https://github.com/poseidon/typhoon/pull/758))
 
 ### Fedora CoreOS
