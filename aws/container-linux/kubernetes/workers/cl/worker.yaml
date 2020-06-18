@@ -25,7 +25,7 @@ systemd:
         Description=Kubelet
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.3-4-g57fa88a
+        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.4
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -129,7 +129,7 @@ storage:
             --volume config,kind=host,source=/etc/kubernetes \
             --mount volume=config,target=/etc/kubernetes \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.18.3-4-g57fa88a \
+            docker://quay.io/poseidon/kubelet:v1.18.4 \
             --net=host \
             --dns=host \
             --exec=/usr/local/bin/kubectl -- --kubeconfig=/etc/kubernetes/kubeconfig delete node $(hostname)

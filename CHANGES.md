@@ -4,13 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Kubelet image build infra and publishing ([#749](https://github.com/poseidon/typhoon/pull/749))
-  * Publish Kubelet images from internal infra to Quay and Dockerhub
+* Kubernetes [v1.18.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1184)
+* Update Kubelet image publishing ([#749](https://github.com/poseidon/typhoon/pull/749))
+  * Build Kubelet images internally and publish to Quay and Dockerhub
     * [quay.io/poseidon/kubelet](https://quay.io/repository/poseidon/kubelet) (official)
     * [docker.io/psdn/kubelet](https://hub.docker.com/r/psdn/kubelet) (fallback)
+  * Continue offering automated image builds with an alternate tag strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
   * [Document](https://typhoon.psdn.io/advanced/customization/#kubelet) use of alternate Kubelet images during registry incidents
-  * For those preferring to trust images built by Quay/Dockerhub, automated image builds are still available with an alternate tag strategy (see [docs](https://typhoon.psdn.io/topics/security/#container-images))
 * Update Calico from v3.14.0 to [v3.14.1](https://docs.projectcalico.org/v3.14/release-notes/)
+  * Fix [CVE-2020-13597](https://github.com/kubernetes/kubernetes/issues/91507)
 * Remove unused Kubelet `-lock-file` and `-exit-on-lock-contention` ([#758](https://github.com/poseidon/typhoon/pull/758))
 
 ### Fedora CoreOS
@@ -34,6 +36,7 @@ Notable changes between versions.
 
 ## v1.18.3
 
+* Kubernetes [v1.18.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1183)
 * Use Kubelet [TLS bootstrap](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/) with bootstrap token authentication ([#713](https://github.com/poseidon/typhoon/pull/713))
   * Enable Node [Authorization](https://kubernetes.io/docs/reference/access-authn-authz/node/) and [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) to reduce authorization scope
   * Renew Kubelet certificates every 72 hours
