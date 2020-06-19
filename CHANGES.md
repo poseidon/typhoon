@@ -26,6 +26,7 @@ Notable changes between versions.
 #### Azure
 
 * Use `strict` Fedora CoreOS Config (FCC) snippet parsing ([#755](https://github.com/poseidon/typhoon/pull/755))
+* Reduce Calico vxlan interface MTU to maintain performance ([#767](https://github.com/poseidon/typhoon/pull/766))
 
 #### AWS
 
