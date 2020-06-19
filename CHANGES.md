@@ -27,6 +27,11 @@ Notable changes between versions.
 
 * Use `strict` Fedora CoreOS Config (FCC) snippet parsing ([#755](https://github.com/poseidon/typhoon/pull/755))
 
+#### AWS
+
+* Fix Kubelet service race with hostname update ([#766](https://github.com/poseidon/typhoon/pull/766))
+  * Wait for a hostname to avoid Kubelet trying to register as `localhost`
+
 ### Flatcar Linux
 
 * Use `strict` Container Linux Config (CLC) snippet parsing ([#755](https://github.com/poseidon/typhoon/pull/755))
