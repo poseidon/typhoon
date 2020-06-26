@@ -4,6 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+* Add Cilium v1.8.0 as a (experimental) CNI provider option ([#760](https://github.com/poseidon/typhoon/pull/760))
+  * Set `networking` to "cilium" to enable
+
+#### Addons
+
+* Update Prometheus from v2.19.0 to [v2.19.1](https://github.com/prometheus/prometheus/releases/tag/v2.19.1)
+
 ## v1.18.4
 
 * Kubernetes [v1.18.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1184)
