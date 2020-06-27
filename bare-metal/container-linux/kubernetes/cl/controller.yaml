@@ -60,7 +60,7 @@ systemd:
         Description=Kubelet
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.4
+        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.18.5
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -147,7 +147,7 @@ systemd:
             --volume script,kind=host,source=/opt/bootstrap/apply \
             --mount volume=script,target=/apply \
             --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.18.4 \
+            docker://quay.io/poseidon/kubelet:v1.18.5 \
             --net=host \
             --dns=host \
             --exec=/apply

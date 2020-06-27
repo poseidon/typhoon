@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.18.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1185)
 * Add Cilium v1.8.0 as a (experimental) CNI provider option ([#760](https://github.com/poseidon/typhoon/pull/760))
   * Set `networking` to "cilium" to enable
 * Update Calico from v3.14.1 to [v3.15.0](https://docs.projectcalico.org/v3.15/release-notes/)
