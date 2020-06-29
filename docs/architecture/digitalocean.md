@@ -30,6 +30,7 @@ Add a DigitalOcean load balancer to distribute IPv4 TCP traffic (HTTP/HTTPS Ingr
 resource "digitalocean_loadbalancer" "ingress" {
   name        = "ingress"
   region      = "fra1"
+  vpc_uuid    = module.nemo.vpc_id
   droplet_tag = module.nemo.worker_tag
 
   healthcheck {

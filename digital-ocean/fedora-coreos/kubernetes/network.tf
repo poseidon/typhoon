@@ -1,3 +1,10 @@
+# Network VPC
+resource "digitalocean_vpc" "network" {
+  name        = var.cluster_name
+  region      = var.region
+  description = "Network for ${var.cluster_name} cluster"
+}
+
 resource "digitalocean_firewall" "rules" {
   name = var.cluster_name
 

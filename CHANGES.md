@@ -9,6 +9,13 @@ Notable changes between versions.
   * Set `networking` to "cilium" to enable
 * Update Calico from v3.14.1 to [v3.15.0](https://docs.projectcalico.org/v3.15/release-notes/)
 
+#### DigitalOcean
+
+* Isolate each cluster in an independent DigitalOcean VPC ([#776](https://github.com/poseidon/typhoon/pull/776))
+  * Create droplets in a VPC per cluster (matches Typhoon AWS, Azure, and GCP)
+  * Require `terraform-provider-digitalocean` v1.16.0+ (action required)
+  * Output `vpc_id` for use with an attached DigitalOcean [loadbalancer](https://github.com/poseidon/typhoon/blob/v1.18.5/docs/architecture/digitalocean.md#custom-load-balancer)
+
 #### Addons
 
 * Update Prometheus from v2.19.0 to [v2.19.1](https://github.com/prometheus/prometheus/releases/tag/v2.19.1)

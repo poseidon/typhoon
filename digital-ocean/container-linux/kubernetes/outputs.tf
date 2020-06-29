@@ -2,6 +2,8 @@ output "kubeconfig-admin" {
   value = module.bootstrap.kubeconfig-admin
 }
 
+# Outputs for Kubernetes Ingress
+
 output "controllers_dns" {
   value = digitalocean_record.controllers[0].fqdn
 }
@@ -43,5 +45,12 @@ output "controller_tag" {
 output "worker_tag" {
   description = "Tag applied to worker droplets"
   value       = digitalocean_tag.workers.name
+}
+
+# Outputs for custom load balancing
+
+output "vpc_id" {
+  description = "ID of the cluster VPC"
+  value       = digitalocean_vpc.network.id
 }
 
