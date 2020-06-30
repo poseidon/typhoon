@@ -117,7 +117,7 @@ resource "azurerm_network_security_rule" "controller-apiserver" {
 
 resource "azurerm_network_security_rule" "controller-cilium-health" {
   resource_group_name = azurerm_resource_group.cluster.name
-  count = var.networking == "cilium" ? 1 : 0
+  count               = var.networking == "cilium" ? 1 : 0
 
   name                        = "allow-cilium-health"
   network_security_group_name = azurerm_network_security_group.controller.name
@@ -299,7 +299,7 @@ resource "azurerm_network_security_rule" "worker-https" {
 
 resource "azurerm_network_security_rule" "worker-cilium-health" {
   resource_group_name = azurerm_resource_group.cluster.name
-  count = var.networking == "cilium" ? 1 : 0
+  count               = var.networking == "cilium" ? 1 : 0
 
   name                        = "allow-cilium-health"
   network_security_group_name = azurerm_network_security_group.worker.name
