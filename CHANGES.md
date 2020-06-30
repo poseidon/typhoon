@@ -20,6 +20,7 @@ Notable changes between versions.
 
 #### Google
 
+* Promote Fedora CoreOS to stable
 * Remove `os_image` variable (deprecated in v1.18.3)
   * Use `os_stream` to select a Fedora CoreOS image stream
 
