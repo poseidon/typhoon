@@ -18,11 +18,17 @@ Notable changes between versions.
 
 ### Fedora CoreOS
 
-#### Google
+#### Google Cloud
 
 * Promote Fedora CoreOS to stable
-* Remove `os_image` variable (deprecated in v1.18.3)
+* Remove `os_image` variable deprecated in v1.18.3 ([#777](https://github.com/poseidon/typhoon/pull/777))
   * Use `os_stream` to select a Fedora CoreOS image stream
+
+### Flatcar Linux
+
+#### Azure
+
+* Allow using Flatcar Linux Edge by setting `os_image` to "flatcar-edge" ([#778](https://github.com/poseidon/typhoon/pull/778))
 
 #### Addons
 
