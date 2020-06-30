@@ -190,7 +190,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/digital
 | cluster_name | Unique cluster name (prepended to dns_zone) | "nemo" |
 | region | Digital Ocean region | "nyc1", "sfo2", "fra1", tor1" |
 | dns_zone | Digital Ocean domain (i.e. DNS zone) | "do.example.com" |
-| os_image | Container Linux image for instances | "custom-image-id", coreos-stable, coreos-beta, coreos-alpha |
+| os_image | Container Linux image for instances | "uploaded-flatcar-image-id" |
 | ssh_fingerprints | SSH public key fingerprints | ["d7:9d..."] |
 
 #### DNS Zone

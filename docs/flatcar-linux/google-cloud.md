@@ -204,7 +204,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | region | Google Cloud region | "us-central1" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
-| os_image | Container Linux image for compute instances | "flatcar-linux-2303-4-0", coreos-stable, coreos-beta, coreos-alpha |
+| os_image | Container Linux image for compute instances | "flatcar-linux-2303-4-0" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.

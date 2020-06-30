@@ -213,7 +213,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
-| os_stream | Fedora CoreOS stream for compute instances | "stable" | "testing", "next" |
+| os_stream | Fedora CoreOS stream for compute instances | "stable" | "stable", "testing", "next" |
 | disk_size | Size of the disk in GB | 40 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
