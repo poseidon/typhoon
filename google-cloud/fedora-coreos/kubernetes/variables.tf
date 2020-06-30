@@ -52,13 +52,6 @@ variable "os_stream" {
   default     = "stable"
 }
 
-# Deprecated
-variable "os_image" {
-  type        = string
-  description = "Fedora CoreOS image for compute instances (e.g. fedora-coreos)"
-  default     = ""
-}
-
 variable "disk_size" {
   type        = number
   description = "Size of the disk in GB"

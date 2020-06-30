@@ -16,6 +16,13 @@ Notable changes between versions.
   * Require `terraform-provider-digitalocean` v1.16.0+ (action required)
   * Output `vpc_id` for use with an attached DigitalOcean [loadbalancer](https://github.com/poseidon/typhoon/blob/v1.18.5/docs/architecture/digitalocean.md#custom-load-balancer)
 
+### Fedora CoreOS
+
+#### Google
+
+* Remove `os_image` variable (deprecated in v1.18.3)
+  * Use `os_stream` to select a Fedora CoreOS image stream
+
 #### Addons
 
 * Update Prometheus from v2.19.0 to [v2.19.1](https://github.com/prometheus/prometheus/releases/tag/v2.19.1)
@@ -105,7 +112,7 @@ Notable changes between versions.
 
 #### Google
 
-* Support Fedora CoreOS [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/722))
+* Support Fedora CoreOS [image streams](https://docs.fedoraproject.org/en-US/fedora-coreos/update-streams/) ([#723](https://github.com/poseidon/typhoon/pull/723))
   * Add `os_stream` variable to set the stream to `stable` (default), `testing`, or `next`
   * Deprecate `os_image` variable. Manual image uploads are no longer needed
 
