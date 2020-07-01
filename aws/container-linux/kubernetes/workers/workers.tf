@@ -1,4 +1,5 @@
 # Workers AutoScaling Group
+
 resource "aws_autoscaling_group" "workers" {
   name = "${var.name}-worker ${aws_launch_configuration.worker.name}"
 
@@ -33,13 +34,21 @@ resource "aws_autoscaling_group" "workers" {
   # used. Disable wait to avoid issues and align with other clouds.
   wait_for_capacity_timeout = "0"
 
-  tags = merge(var.default_tags, [
-    {
-      key                 = "Name"
-      value               = "${var.name}-worker"
+  tag {
+    key                 = "Name"
+    value               = "${var.name}-worker"
+    propagate_at_launch = ture
+  }
+
+  dynamic "tag" {
+    for_each = var.default_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.values
       propagate_at_launch = true
-    },
-  ])
+    }
+  }
 }
 
 # Worker template
