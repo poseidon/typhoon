@@ -4,9 +4,9 @@ variable "name" {
 }
 
 variable "default_tags" {
-  type        = list(string)
+  type        = map(string)
   description = "list of default AWS resources tags"
-  default     = []
+  default     = {}
 }
 
 # AWS
