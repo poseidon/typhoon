@@ -3,6 +3,12 @@ variable "cluster_name" {
   description = "Unique cluster name (prepended to dns_zone)"
 }
 
+variable "default_tags" {
+  type = list(string)
+  description = "list of default AWS resources tags"
+  default = []
+}
+
 # AWS
 
 variable "dns_zone" {

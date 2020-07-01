@@ -17,9 +17,9 @@ resource "aws_route53_record" "etcds" {
 resource "aws_instance" "controllers" {
   count = var.controller_count
 
-  tags = {
+  tags = merge(var.default_tags, {
     Name = "${var.cluster_name}-controller-${count.index}"
-  }
+  })
 
   instance_type = var.controller_type
 

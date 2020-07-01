@@ -9,25 +9,25 @@ resource "aws_vpc" "network" {
   enable_dns_support               = true
   enable_dns_hostnames             = true
 
-  tags = {
+  tags = merge(var.default_tags, {
     "Name" = var.cluster_name
-  }
+  })
 }
 
 resource "aws_internet_gateway" "gateway" {
   vpc_id = aws_vpc.network.id
 
-  tags = {
+  tags = merge(var.default_tags, {
     "Name" = var.cluster_name
-  }
+  })
 }
 
 resource "aws_route_table" "default" {
   vpc_id = aws_vpc.network.id
 
-  tags = {
+  tags = merge(var.default_tags, {
     "Name" = var.cluster_name
-  }
+  })
 }
 
 resource "aws_route" "egress-ipv4" {
@@ -55,9 +55,9 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch         = true
   assign_ipv6_address_on_creation = true
 
-  tags = {
+  tags = merge(var.default_tags, {
     "Name" = "${var.cluster_name}-public-${count.index}"
-  }
+  })
 }
 
 resource "aws_route_table_association" "public" {

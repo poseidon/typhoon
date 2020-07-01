@@ -21,6 +21,8 @@ resource "aws_lb_target_group" "workers-http" {
     # Interval between health checks required to be 10 or 30
     interval = 10
   }
+
+  tags = var.default_tags
 }
 
 resource "aws_lb_target_group" "workers-https" {
@@ -44,5 +46,7 @@ resource "aws_lb_target_group" "workers-https" {
     # Interval between health checks required to be 10 or 30
     interval = 10
   }
+
+  tags = var.default_tags
 }
 

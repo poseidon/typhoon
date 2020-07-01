@@ -3,6 +3,12 @@ variable "name" {
   description = "Unique name for the worker pool"
 }
 
+variable "default_tags" {
+  type        = list(string)
+  description = "list of default AWS resources tags"
+  default     = []
+}
+
 # AWS
 
 variable "vpc_id" {
