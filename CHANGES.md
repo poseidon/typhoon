@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update Grafana from v7.0.4 to [v7.0.5](https://github.com/grafana/grafana/releases/tag/v7.0.5)
+* Update Cilium from v1.8.0 to [v1.8.1](https://github.com/cilium/cilium/releases/tag/v1.8.1)
 
 ## v1.18.5
 
