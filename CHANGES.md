@@ -7,6 +7,10 @@ Notable changes between versions.
 * Update Grafana from v7.0.4 to [v7.0.5](https://github.com/grafana/grafana/releases/tag/v7.0.5)
 * Update Cilium from v1.8.0 to [v1.8.1](https://github.com/cilium/cilium/releases/tag/v1.8.1)
 
+#### Addons
+
+* Update Prometheus from v2.19.1 to [v2.19.2](https://github.com/prometheus/prometheus/releases/tag/v2.19.2)
+
 ## v1.18.5
 
 * Kubernetes [v1.18.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1185)
