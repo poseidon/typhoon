@@ -2,12 +2,16 @@
 
 Notable changes between versions.
 
-## Latest
+## v1.18.6
 
+* Kubernetes [v1.18.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1186)
+* Update Calico from v3.15.0 to [v3.15.1](https://docs.projectcalico.org/v3.15/release-notes/)
 * Update Cilium from v1.8.0 to [v1.8.1](https://github.com/cilium/cilium/releases/tag/v1.8.1)
 
 #### Addons
 
+* Update nginx-ingress from v0.33.0 to [v0.34.1](https://github.com/kubernetes/ingress-nginx/releases/tag/nginx-0.34.1)
+  * [ingress-nginx](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.34.0) will publish images only to gcr.io
 * Update Prometheus from v2.19.1 to [v2.19.2](https://github.com/prometheus/prometheus/releases/tag/v2.19.2)
 * Update Grafana from v7.0.4 to [v7.0.6](https://github.com/grafana/grafana/releases/tag/v7.0.6)
 

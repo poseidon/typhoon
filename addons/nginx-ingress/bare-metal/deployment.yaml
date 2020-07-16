@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.33.0
+          image: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller:v0.34.1
           args:
             - /nginx-ingress-controller
             - --ingress-class=public
