@@ -218,7 +218,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
 | worker_snippets | Worker Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
-| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
+| networking | Choice of networking provider | "calico" | "calico" or "cilium" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |

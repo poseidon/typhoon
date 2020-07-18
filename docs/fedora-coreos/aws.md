@@ -216,7 +216,7 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 | worker_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
 | controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
 | worker_snippets | Worker Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
-| networking | Choice of networking provider | "calico" | "calico" or "flannel" |
+| networking | Choice of networking provider | "calico" | "calico" or "cilium" or "flannel" |
 | network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
