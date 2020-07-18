@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+#### Addons
+
+* Update Grafana from v7.0.6 to [v7.1.0](https://github.com/grafana/grafana/releases/tag/v7.1.0)
+
 ## v1.18.6
 
 * Kubernetes [v1.18.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1186)
