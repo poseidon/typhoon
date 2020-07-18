@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.4.9 to [v3.4.10](https://github.com/etcd-io/etcd/releases/tag/v3.4.10)
+
 #### Addons
 
 * Update Grafana from v7.0.6 to [v7.1.0](https://github.com/grafana/grafana/releases/tag/v7.1.0)
