@@ -156,6 +156,10 @@ systemd:
         WantedBy=multi-user.target
 storage:
   directories:
+    - path: /var/lib/etcd
+      filesystem: root
+      mode: 0700
+      overwrite: true
     - path: /etc/kubernetes
       filesystem: root
       mode: 0755
@@ -180,6 +184,7 @@ storage:
           mv tls/etcd/etcd-client* /etc/kubernetes/bootstrap-secrets/
           chown -R etcd:etcd /etc/ssl/etcd
           chmod -R 500 /etc/ssl/etcd
+          chmod -R 700 /var/lib/etcd
           mv auth/kubeconfig /etc/kubernetes/bootstrap-secrets/
           mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
           mkdir -p /etc/kubernetes/manifests

@@ -139,6 +139,8 @@ systemd:
         ExecStartPost=-/usr/bin/podman stop bootstrap
 storage:
   directories:
+    - path: /var/lib/etcd
+      mode: 0700
     - path: /etc/kubernetes
     - path: /opt/bootstrap
   files:
