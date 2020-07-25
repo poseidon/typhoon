@@ -83,7 +83,7 @@ module "mercury" {
 }
 ```
 
-### Container Linux
+### Flatcar Linux
 
 Define a Container Linux Config (CLC) ([config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md), [examples](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md)) in version control near your Terraform workspace directory (e.g. perhaps in a `snippets` subdirectory). You may organize snippets into multiple files, if desired.
 
@@ -125,7 +125,7 @@ systemd:
             Environment="ETCD_LOG_PACKAGE_LEVELS=etcdserver=WARNING,security=DEBUG"
 ```
 
-Reference the CLC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/cl/aws/#cluster), [Azure](/cl/azure/#cluster), [DigitalOcean](/cl/digital-ocean/#cluster), or [Google Cloud](/cl/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
+Reference the CLC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/flatcar-linux/aws/#cluster), [Azure](/flatcar-linux/azure/#cluster), [DigitalOcean](/flatcar-linux/digital-ocean/#cluster), or [Google Cloud](/flatcar-linux/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
 
 ```tf
 module "nemo" {
@@ -145,7 +145,7 @@ module "nemo" {
 }
 ```
 
-On [Bare-Metal](/cl/bare-metal/#cluster), different CLCs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
+On [Bare-Metal](/flatcar-linux/bare-metal/#cluster), different CLCs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
 
 ```tf
 module "mercury" {
