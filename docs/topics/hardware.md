@@ -183,7 +183,7 @@ show ip route bgp
 
 ### Port Forwarding
 
-Expose the [Ingress Controller](/addons/ingress.md#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP (e.g. 10.3.0.12).
+Expose the [Ingress Controller](/addons/ingress/#bare-metal) by adding `port-forward` rules that DNAT a port on the router's WAN interface to an internal IP and port. By convention, a public Ingress controller is assigned a fixed service IP (e.g. 10.3.0.12).
 
 ```
 configure
