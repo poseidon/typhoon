@@ -29,7 +29,7 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 | Azure         | Fedora CoreOS | [azure/fedora-coreos/kubernetes](fedora-coreos/azure.md) | alpha |
 | Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](fedora-coreos/bare-metal.md) | beta |
 | DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](fedora-coreos/digitalocean.md) | beta |
-| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | stable |
+| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](fedora-coreos/google-cloud/kubernetes) | stable |
 
 Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/).
 
