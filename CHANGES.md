@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.4.9 to [v3.4.10](https://github.com/etcd-io/etcd/releases/tag/v3.4.10)
+* Update CoreDNS from v1.6.7 to [v1.7.0](https://coredns.io/2020/06/15/coredns-1.7.0-release/)
 
 #### Addons
 
