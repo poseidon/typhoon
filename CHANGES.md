@@ -8,6 +8,13 @@ Notable changes between versions.
 * Update CoreDNS from v1.6.7 to [v1.7.0](https://coredns.io/2020/06/15/coredns-1.7.0-release/)
 * Update Cilium from v1.8.1 to [v1.8.2](https://github.com/cilium/cilium/releases/tag/v1.8.2)
 
+### Fedora CoreOS
+
+* Fix support for Flannel with Fedora CoreOS ([#795](https://github.com/poseidon/typhoon/pull/795))
+  * Fedora CoreOS fixes to align network interface defaults altered MAC address assignment for
+  the `flannel.1` interface in a way that caused flannel to drop pod-to-pod traffic
+  * Configure flannel interfaces explicitly
+
 #### Addons
 
 * Update Prometheus from v2.19.2 to [v2.20.0](https://github.com/prometheus/prometheus/releases/tag/v2.20.0)

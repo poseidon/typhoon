@@ -193,6 +193,13 @@ storage:
         inline: |
           net.ipv4.conf.default.rp_filter=0
           net.ipv4.conf.*.rp_filter=0
+    - path: /etc/systemd/network/50-flannel.link
+      contents:
+        inline: |
+          [Match]
+          OriginalName=flannel*
+          [Link]
+          MACAddressPolicy=none
     - path: /etc/systemd/system.conf.d/accounting.conf
       contents:
         inline: |
