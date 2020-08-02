@@ -66,6 +66,12 @@ Two tag styles indicate the build strategy used.
 
 The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#kubelet).
 
+### flannel-cni
+
+Typhoon packages the [flannel-cni](https://github.com/poseidon/flannel-cni) container image to provide security patches.
+
+* [quay.io/poseidon/flannel-cni](https://quay.io/repository/poseidon/flannel-cni) (official)
+
 ## Disclosures
 
 If you find security issues, please email `security@psdn.io`. If the issue lies in upstream Kubernetes, please inform upstream Kubernetes as well.
