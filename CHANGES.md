@@ -11,6 +11,12 @@ Notable changes between versions.
   * Update CNI plugins and fix CVEs with Flannel (non-default)
   * Transition to a poseidon maintained container image
 
+### AWS
+
+* Allow `terraform-provider-aws` v3.0+ ([#803](https://github.com/poseidon/typhoon/pull/803))
+  * Recommend updating `terraform-provider-aws` to v3.0+
+  * Continue to allow v2.23+, no v3.x specific features are used
+
 ### Fedora CoreOS
 
 * Fix support for Flannel with Fedora CoreOS ([#795](https://github.com/poseidon/typhoon/pull/795))
