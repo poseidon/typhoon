@@ -134,9 +134,9 @@ The [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) p
 Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
 
 ```sh
-wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.5.0/terraform-provider-ct-v0.5.0-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.5.0-linux-amd64.tar.gz
-mv terraform-provider-ct-v0.5.0-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.5.0
+wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.5.0/terraform-provider-ct-v0.6.1-linux-amd64.tar.gz
+tar xzf terraform-provider-ct-v0.6.1-linux-amd64.tar.gz
+mv terraform-provider-ct-v0.6.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.6.1
 ```
 
 Binary names are versioned. This enables the ability to upgrade different plugins and have clusters pin different versions.
@@ -147,8 +147,8 @@ $ tree ~/.terraform.d/
 └── plugins
     ├── terraform-provider-ct_v0.2.1
     ├── terraform-provider-ct_v0.3.0
-    ├── terraform-provider-ct_v0.5.0
-    └── terraform-provider-matchbox_v0.3.0
+    ├── terraform-provider-ct_v0.6.1
+    └── terraform-provider-matchbox_v0.4.1
 ```
 
 
@@ -157,7 +157,7 @@ Update the version of the `ct` plugin in each Terraform working directory. Typho
 ```
 # providers.tf
 provider "ct" {
-  version = "0.5.0"
+  version = "0.6.1"
 }
 ```
 
@@ -193,7 +193,7 @@ terraform apply
 
 # add kubeconfig to new workers
 terraform state list | grep null_resource
-terraform taint -module digital-ocean-nemo null_resource.copy-worker-secrets[N]
+terraform taint module.nemo.null_resource.copy-worker-secrets[N]
 terraform apply
 ```
 
@@ -203,17 +203,92 @@ Expect downtime.
 
 Google Cloud creates a new worker template and edits the worker instance group instantly. Manually terminate workers and replacement workers will use the user-data.
 
-## Terraform v0.12.x
+## Terraform Versions
 
-Terraform [v0.12](https://www.hashicorp.com/blog/announcing-terraform-0-12) introduced major changes to the provider plugin protocol and HCL language (first-class expressions, formal list and map types, nullable variables, variable constraints, and short-circuiting ternary operators).
+Terraform [v0.13](https://www.hashicorp.com/blog/announcing-hashicorp-terraform-0-13) introduced major changes to the provider plugin system. Terraform `init` can automatically install both `hashicorp` and `poseidon` provider plugins, eliminating the need to manually install plugin binaries.
 
-Typhoon modules have been adapted for Terraform v0.12. Provider plugins requirements now enforce v0.12 compatibility. However, some HCL language changes were breaking (list [type hint](https://www.terraform.io/upgrade-guides/0-12.html#referring-to-list-variables) workarounds in v0.11 now have new meaning). Typhoon cannot offer both v0.11 and v0.12 compatibility in the same release. Upcoming releases require upgrading Terraform to v0.12.
+Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.12.26+ to ease migration. Poseidon publishes [providers](/topics/security/#terraform-providers) to the Terraform Provider Registry for usage with v0.13+.
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
+| ?                 | v0.13.x             |
+| ?                 | v0.12.26+, v0.13.x  |
 | v1.15.0 - ?       | v0.12.x             |
 | v1.10.3 - v1.15.0 | v0.11.x             |
 | v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
 | v1.7.3 - v1.9.1   | v0.10.x             |
 | v1.6.4 - v1.7.2   | v0.9.x              |
+
+### New Workspace
+
+With a new Terraform workspace, use Terraform v0.13.x and the updated Typhoon [tutorials](/fedora-coreos/aws/#provider).
+
+### Existing Workspace
+
+An existing Terraform workspace may already manage earlier Typhoon clusters created with Terraform v0.12.x.
+
+First, upgrade `terraform-provider-ct` to v0.6.1 following the [guide](#upgrade-terraform-provider-ct) above. As usual, read about how `apply` affects existing cluster nodes when `ct` is upgraded. But `terraform-provider-ct` v0.6.1 is compatible with both Terraform v0.12 and v0.13, so do this first.
+
+```
+provider "ct" {
+  version = "0.6.1"
+}
+```
+
+Next, create Typhoon clusters using the `ref` that introduced Terraform v0.13 forward compatibility (SHA) or later. You will see a compatibility warning. Use blue/green cluster replacement to shift to these new clusters, then eliminate older clusters.
+
+```
+module "nemo" {
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-coreos/kubernetes?ref=SHA"
+  ...
+}
+```
+
+Install Terraform v0.13. Once all clusters in a workspace are on SHA or above, you are ready to start using Terraform v0.13.
+
+```
+terraform version
+v0.13.0
+```
+
+Update `providers.tf` to match the Typhoon [tutorials](/fedora-coreos/aws/#provider) and use new `required_providers` block.
+
+```
+terraform init
+terraform 0.13upgrade    # sometimes helpful
+```
+
+!!! note
+    You will see `Could not retrieve the list of available versions for provider -/ct: provider`
+
+In state files, existing clusters use Terraform v0.12 providers (e.g. `-/aws`). Pivot to Terraform v0.13 providers (e.g. `hashicorp/aws`) with the following commands, as applicable. Repeat until `terraform init` no longer shows old-style providers.
+
+```
+terraform state replace-provider -- -/aws hashicorp/aws
+terraform state replace-provider -- -/azurerm hashicorp/azurerm
+terraform state replace-provider -- -/google hashicorp/google
+
+terraform state replace-provider -- -/digitalocean digitalocean/digitalocean
+terraform state replace-provider -- -/ct poseidon/ct
+terraform state replace-provider -- -/matchbox poseidon/matchbox
+
+terraform state replace-provider -- -/local hashicorp/local
+terraform state replace-provider -- -/null hashicorp/null
+terraform state replace-provider -- -/random hashicorp/random
+terraform state replace-provider -- -/template hashicorp/template
+terraform state replace-provider -- -/tls hashicorp/tls
+```
+
+Finally, verify Terraform v0.13 plan shows no diff.
+
+```
+terraform plan
+No changes. Infrastructure is up-to-date.
+```
+
+### v0.12.x
+
+Terraform [v0.12](https://www.hashicorp.com/blog/announcing-terraform-0-12) introduced major changes to the provider plugin protocol and HCL language (first-class expressions, formal list and map types, nullable variables, variable constraints, and short-circuiting ternary operators).
+
+Typhoon modules have been adapted for Terraform v0.12. Provider plugins requirements now enforce v0.12 compatibility. However, some HCL language changes were breaking (list [type hint](https://www.terraform.io/upgrade-guides/0-12.html#referring-to-list-variables) workarounds in v0.11 now have new meaning). Typhoon cannot offer both v0.11 and v0.12 compatibility in the same release. Upcoming releases require upgrading Terraform to v0.12.
 

@@ -4,6 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
+* Migrate from Terraform v0.12.x to v0.13.x (action required)
+  * Recommend Terraform v0.13.x ([migration guide](https://github.com/poseidon/typhoon/blob/260033e978f03d068b79e553e7c428a64b22a475/docs/topics/maintenance.md#terraform-versions))
+    * Support automatic install of poseidon's provider plugins
+    * [poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest)
+    * [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest)
+  * Require Terraform v0.12.26+ (migration compatibility)
+  * Require `terraform-provider-ct` v0.6.1
+  * Require `terraform-provider-matchbox` v0.4.1
 * Update etcd from v3.4.9 to [v3.4.10](https://github.com/etcd-io/etcd/releases/tag/v3.4.10)
 * Update CoreDNS from v1.6.7 to [v1.7.0](https://coredns.io/2020/06/15/coredns-1.7.0-release/)
 * Update Cilium from v1.8.1 to [v1.8.2](https://github.com/cilium/cilium/releases/tag/v1.8.2)
@@ -16,6 +24,11 @@ Notable changes between versions.
 * Allow `terraform-provider-aws` v3.0+ ([#803](https://github.com/poseidon/typhoon/pull/803))
   * Recommend updating `terraform-provider-aws` to v3.0+
   * Continue to allow v2.23+, no v3.x specific features are used
+
+### DigitalOcean
+
+* Require `terraform-provider-digitalocean` v1.21+ for Terraform v0.13.x (unenforced)
+* Require `terraform-provider-digitalocean` v1.20+ for Terraform v0.12.x
 
 ### Fedora CoreOS
 
