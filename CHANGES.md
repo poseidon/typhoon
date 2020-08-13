@@ -4,11 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
-* Migrate from Terraform v0.12.x to v0.13.x (action required)
-  * Recommend Terraform v0.13.x ([migration guide](https://github.com/poseidon/typhoon/blob/260033e978f03d068b79e553e7c428a64b22a475/docs/topics/maintenance.md#terraform-versions))
-    * Support automatic install of poseidon's provider plugins
-    * [poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest)
-    * [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest)
+* Migrate from Terraform v0.12.x to v0.13.x ([#804](https://github.com/poseidon/typhoon/pull/804)) (**action required**)
+  * Recommend Terraform v0.13.x ([migration guide](https://github.com/poseidon/typhoon/blob/5e70d7e2c8c71c37d9a0896a0945188f009011f9/docs/topics/maintenance.md#terraform-versions))
+  * Support automatic install of poseidon's provider plugins ([poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest), [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest))
   * Require Terraform v0.12.26+ (migration compatibility)
   * Require `terraform-provider-ct` v0.6.1
   * Require `terraform-provider-matchbox` v0.4.1
@@ -16,7 +14,7 @@ Notable changes between versions.
 * Update CoreDNS from v1.6.7 to [v1.7.0](https://coredns.io/2020/06/15/coredns-1.7.0-release/)
 * Update Cilium from v1.8.1 to [v1.8.2](https://github.com/cilium/cilium/releases/tag/v1.8.2)
 * Update [coreos/flannel-cni](https://github.com/coreos/flannel-cni) to [poseidon/flannel-cni](https://github.com/poseidon/flannel-cni) ([#798](https://github.com/poseidon/typhoon/pull/798))
-  * Update CNI plugins and fix CVEs with Flannel (non-default)
+  * Update CNI plugins and fix CVEs with Flannel CNI (non-default)
   * Transition to a poseidon maintained container image
 
 ### AWS
