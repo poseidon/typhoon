@@ -154,8 +154,7 @@ $ tree ~/.terraform.d/
 
 Update the version of the `ct` plugin in each Terraform working directory. Typhoon clusters managed in the working directory **must** be v1.12.2 or higher.
 
-```
-# providers.tf
+```tf
 provider "ct" {
   version = "0.6.1"
 }
@@ -211,7 +210,7 @@ Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.18.7 - ?       | v0.12.26+, v0.13.x  |
+| v1.18.8 - ?       | v0.12.26+, v0.13.x  |
 | v1.15.0 - v1.18.8 | v0.12.x             |
 | v1.10.3 - v1.15.0 | v0.11.x             |
 | v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
@@ -228,7 +227,7 @@ An existing Terraform workspace may already manage earlier Typhoon clusters crea
 
 First, upgrade `terraform-provider-ct` to v0.6.1 following the [guide](#upgrade-terraform-provider-ct) above. As usual, read about how `apply` affects existing cluster nodes when `ct` is upgraded. But `terraform-provider-ct` v0.6.1 is compatible with both Terraform v0.12 and v0.13, so do this first.
 
-```
+```tf
 provider "ct" {
   version = "0.6.1"
 }
