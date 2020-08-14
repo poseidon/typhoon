@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+### v1.18.8
+
+* Kubernetes [v1.18.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1188)
 * Migrate from Terraform v0.12.x to v0.13.x ([#804](https://github.com/poseidon/typhoon/pull/804)) (**action required**)
   * Recommend Terraform v0.13.x ([migration guide](https://github.com/poseidon/typhoon/blob/5e70d7e2c8c71c37d9a0896a0945188f009011f9/docs/topics/maintenance.md#terraform-versions))
   * Support automatic install of poseidon's provider plugins ([poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest), [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest))

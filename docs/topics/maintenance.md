@@ -13,12 +13,12 @@ Typhoon provides tagged releases to allow clusters to be versioned using ordinar
 
 ```
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.18.6"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.18.8"
   ...
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.18.6"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.18.8"
   ...
 }
 ```
@@ -212,7 +212,7 @@ Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
 | v1.18.7 - ?       | v0.12.26+, v0.13.x  |
-| v1.15.0 - v1.18.6 | v0.12.x             |
+| v1.15.0 - v1.18.8 | v0.12.x             |
 | v1.10.3 - v1.15.0 | v0.11.x             |
 | v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
 | v1.7.3 - v1.9.1   | v0.10.x             |
@@ -234,16 +234,16 @@ provider "ct" {
 }
 ```
 
-Next, create Typhoon clusters using the `ref` that introduced Terraform v0.13 forward compatibility (`5e70d7e2c8c71c37d9a0896a0945188f009011f9`) or later. You will see a compatibility warning. Use blue/green cluster replacement to shift to these new clusters, then eliminate older clusters.
+Next, create Typhoon clusters using the `ref` that introduced Terraform v0.13 forward compatibility (`v1.18.8`) or later. You will see a compatibility warning. Use blue/green cluster replacement to shift to these new clusters, then eliminate older clusters.
 
 ```
 module "nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-coreos/kubernetes?ref=5e70d7e2c8c71c37d9a0896a0945188f009011f9"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/fedora-coreos/kubernetes?ref=v1.18.8"
   ...
 }
 ```
 
-Install Terraform v0.13. Once all clusters in a workspace are on `5e70d7e2c8c71c37d9a0896a0945188f009011f9` or above, you are ready to start using Terraform v0.13.
+Install Terraform v0.13. Once all clusters in a workspace are on `v1.18.8` or above, you are ready to start using Terraform v0.13.
 
 ```
 terraform version
