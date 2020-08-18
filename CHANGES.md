@@ -33,6 +33,8 @@ Notable changes between versions.
 
 ### Fedora CoreOS
 
+* Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
+
 * Fix support for Flannel with Fedora CoreOS ([#795](https://github.com/poseidon/typhoon/pull/795))
   * Configure `flannel.1` link to select its own MAC address to solve flannel
   pod-to-pod traffic drops starting with default link changes in Fedora CoreOS
