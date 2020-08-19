@@ -4,7 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-### v1.18.8
+### Fedora CoreOS
+
+* Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
+
+## v1.18.8
 
 * Kubernetes [v1.18.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1188)
 * Migrate from Terraform v0.12.x to v0.13.x ([#804](https://github.com/poseidon/typhoon/pull/804)) (**action required**)
@@ -32,8 +36,6 @@ Notable changes between versions.
 * Require `terraform-provider-digitalocean` v1.20+ for Terraform v0.12.x
 
 ### Fedora CoreOS
-
-* Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
 
 * Fix support for Flannel with Fedora CoreOS ([#795](https://github.com/poseidon/typhoon/pull/795))
   * Configure `flannel.1` link to select its own MAC address to solve flannel
