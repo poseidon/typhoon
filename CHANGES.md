@@ -4,7 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-### v1.18.8
+### Fedora CoreOS
+
+* Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
+
+## v1.18.8
 
 * Kubernetes [v1.18.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1188)
 * Migrate from Terraform v0.12.x to v0.13.x ([#804](https://github.com/poseidon/typhoon/pull/804)) (**action required**)

@@ -170,6 +170,7 @@ storage:
           mv manifests /opt/bootstrap/assets/manifests
           mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
+          chcon -R -u system_u -t container_file_t /etc/kubernetes/bootstrap-secrets
     - path: /opt/bootstrap/apply
       mode: 0544
       contents:
