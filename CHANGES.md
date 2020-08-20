@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.4.10 to [v3.4.12](https://github.com/etcd-io/etcd/releases/tag/v3.4.12)
+
 ### Fedora CoreOS
 
 * Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
