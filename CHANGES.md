@@ -10,6 +10,10 @@ Notable changes between versions.
 
 * Fix SELinux label of bootstrap-secrets on non-bootstrapping controllers ([#808](https://github.com/poseidon/typhoon/pull/808))
 
+### Addons
+
+* Update Grafana from v7.1.3 to [v7.1.4](https://github.com/grafana/grafana/releases/tag/v7.1.4)
+
 ## v1.18.8
 
 * Kubernetes [v1.18.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v1188)
