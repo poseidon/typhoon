@@ -4,7 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.19.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1190)
 * Update etcd from v3.4.10 to [v3.4.12](https://github.com/etcd-io/etcd/releases/tag/v3.4.12)
+* Update Calico from v3.15.1 to [v3.15.2](https://docs.projectcalico.org/v3.15/release-notes/)
 
 ### Fedora CoreOS
 
