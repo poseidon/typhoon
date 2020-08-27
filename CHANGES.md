@@ -14,7 +14,7 @@ Notable changes between versions.
 
 ### Addons
 
-* Update Grafana from v7.1.3 to [v7.1.4](https://github.com/grafana/grafana/releases/tag/v7.1.4)
+* Update Grafana from v7.1.3 to [v7.1.5](https://github.com/grafana/grafana/releases/tag/v7.1.5)
 
 ## v1.18.8
 
