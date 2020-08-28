@@ -16,10 +16,10 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 | Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|---------------------------------|---------------|
-| Kernel            | ~4.19.x | ~5.5.x |
+| Kernel            | ~4.19.x | ~5.7.x |
 | systemd           | 241 | 243 |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
-| Container Engine  | docker 18.06.3-ce  | docker 18.09.8 |
+| Container Engine  | docker 18.06.3-ce  | docker 19.03.11 |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
 | logging driver    | json-file | journald |
 | cgroup driver     | cgroupfs (except Flatcar edge) | systemd  |
@@ -37,8 +37,8 @@ Together, they diversify Typhoon to support a range of container technologies.
 | control plane images | upstream images | upstream images |
 | on-host etcd      | rkt-fly   | podman |
 | on-host kubelet   | rkt-fly   | podman |
-| CNI plugins       | calico or flannel | calico or flannel |
-| coordinated drain & OS update | [CLUO](https://github.com/coreos/container-linux-update-operator) addon | (planned) |
+| CNI plugins       | calico, cilium, flannel | calico, cilium, flannel |
+| coordinated drain & OS update | [FLUO](https://github.com/kinvolk/flatcar-linux-update-operator) addon | [fleetlock](https://github.com/poseidon/fleetlock) |
 
 ## Directory Locations
 

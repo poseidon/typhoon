@@ -82,3 +82,4 @@ nav:
     - 'Nginx Ingress': 'addons/ingress.md'
     - 'Prometheus': 'addons/prometheus.md'
     - 'Grafana': 'addons/grafana.md'
+    - 'fleetlock': 'addons/fleetlock.md'

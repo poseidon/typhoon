@@ -14,6 +14,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Introduce [fleetlock](https://github.com/poseidon/fleetlock) for Fedora CoreOS reboot coordination ([#814](https://github.com/poseidon/typhoon/pull/814))
 * Update Grafana from v7.1.3 to [v7.1.5](https://github.com/grafana/grafana/releases/tag/v7.1.5)
 
 ## v1.18.8
