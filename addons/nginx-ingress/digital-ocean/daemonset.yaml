@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: nginx-ingress-controller
-          image: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller:v0.34.1
+          image: k8s.gcr.io/ingress-nginx/controller:v0.35.0
           args:
             - /nginx-ingress-controller
             - --ingress-class=public
@@ -47,7 +47,6 @@ spec:
               containerPort: 10254
               hostPort: 10254
           livenessProbe:
-            failureThreshold: 3
             httpGet:
               path: /healthz
               port: 10254
@@ -55,15 +54,16 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             successThreshold: 1
+            failureThreshold: 3
             timeoutSeconds: 5
           readinessProbe:
-            failureThreshold: 3
             httpGet:
               path: /healthz
               port: 10254
               scheme: HTTP
             periodSeconds: 10
             successThreshold: 1
+            failureThreshold: 3
             timeoutSeconds: 5
           lifecycle:
             preStop:
