@@ -17,9 +17,10 @@ spec:
       labels:
         name: nginx-ingress-controller
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: nginx-ingress-controller
           image: k8s.gcr.io/ingress-nginx/controller:v0.35.0

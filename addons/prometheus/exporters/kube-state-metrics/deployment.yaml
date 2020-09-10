@@ -18,9 +18,10 @@ spec:
       labels:
         name: kube-state-metrics
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: kube-state-metrics
       containers:
       - name: kube-state-metrics

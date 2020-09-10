@@ -14,9 +14,10 @@ spec:
       labels:
         name: prometheus
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: prometheus
       containers:
         - name: prometheus

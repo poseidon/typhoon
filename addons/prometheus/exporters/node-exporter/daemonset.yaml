@@ -17,13 +17,13 @@ spec:
       labels:
         name: node-exporter
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       serviceAccountName: node-exporter
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
       hostNetwork: true
       hostPID: true
       containers:
