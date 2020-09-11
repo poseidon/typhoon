@@ -9,6 +9,10 @@ Notable changes between versions.
 * Update Cilium from v1.8.2 to [v1.8.3](https://github.com/cilium/cilium/releases/tag/v1.8.3)
 * Update Calico from v1.15.2 to [v1.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 
+### Addons
+
+* Update IngressClass resources to `networking.k8s.io/v1` ([#824](https://github.com/poseidon/typhoon/pull/824))
+
 ## v1.19.0
 
 * Kubernetes [v1.19.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1190)
