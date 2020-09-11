@@ -37,7 +37,7 @@ For example, ensure an `/opt/hello` file is created with permissions 0644.
 ```yaml
 # custom-files
 variant: fcos
-version: 1.0.0
+version: 1.1.0
 storage:
   files:
     - path: /opt/hello
@@ -183,7 +183,7 @@ To set an alternative Kubelet image, use a snippet to set a systemd dropin.
 ```
 # host-image-override.yaml
 variant: fcos           <- remove for Flatcar Linux
-version: 1.0.0          <- remove for Flatcar Linux
+version: 1.1.0          <- remove for Flatcar Linux
 systemd:
   units:
     - name: kubelet.service
