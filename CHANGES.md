@@ -7,7 +7,7 @@ Notable changes between versions.
 * Kubernetes [v1.19.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1191)
   * Change control plane seccomp annotations to GA `seccompProfile` ([#822](https://github.com/poseidon/typhoon/pull/822))
 * Update Cilium from v1.8.2 to [v1.8.3](https://github.com/cilium/cilium/releases/tag/v1.8.3)
-  * Promote Cilium from experimental to general availability
+  * Promote Cilium from experimental to general availability ([#827](https://github.com/poseidon/typhoon/pull/827))
 * Update Calico from v1.15.2 to [v1.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 
 ### Fedora CoreOS
@@ -19,6 +19,7 @@ Notable changes between versions.
 
 * Update IngressClass resources to `networking.k8s.io/v1` ([#824](https://github.com/poseidon/typhoon/pull/824))
 * Update Prometheus from v2.20.0 to [v2.21.0](https://github.com/prometheus/prometheus/releases/tag/v2.21.0)
+  * Remove Kubernetes node name labelmap `relabel_config` from etcd, Kubelet, and CAdvisor scrape config ([#828](https://github.com/poseidon/typhoon/pull/828))
 
 ## v1.19.0
 
