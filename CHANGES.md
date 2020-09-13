@@ -17,6 +17,7 @@ Notable changes between versions.
 ### Addons
 
 * Update IngressClass resources to `networking.k8s.io/v1` ([#824](https://github.com/poseidon/typhoon/pull/824))
+* Update Prometheus from v2.20.0 to [v2.21.0](https://github.com/prometheus/prometheus/releases/tag/v2.21.0)
 
 ## v1.19.0
 
