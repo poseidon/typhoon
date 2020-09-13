@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+### Addons
+
+* Reduce apiserver metrics cardinality for non-core APIs ([#830](https://github.com/poseidon/typhoon/pull/830))
+
+## v1.19.1
+
 * Kubernetes [v1.19.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1191)
   * Change control plane seccomp annotations to GA `seccompProfile` ([#822](https://github.com/poseidon/typhoon/pull/822))
 * Update Cilium from v1.8.2 to [v1.8.3](https://github.com/cilium/cilium/releases/tag/v1.8.3)

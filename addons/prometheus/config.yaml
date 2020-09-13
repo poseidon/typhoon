@@ -68,6 +68,9 @@ data:
       - source_labels: [__name__, group]
         regex: apiserver_request_duration_seconds_bucket;.+
         action: drop
+      - source_labels: [__name__, group]
+        regex: apiserver_request_duration_seconds_count;.+
+        action: drop
 
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
     # metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).
