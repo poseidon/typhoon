@@ -49,6 +49,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -140,6 +141,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -231,6 +233,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -335,6 +338,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -440,6 +444,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -544,6 +549,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -649,6 +655,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -767,6 +774,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -858,6 +866,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },

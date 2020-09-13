@@ -6,6 +6,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Refresh Prometheus rules/alerts and Grafana dashboards ([#831](https://github.com/poseidon/typhoon/pull/831))
 * Reduce apiserver metrics cardinality for non-core APIs ([#830](https://github.com/poseidon/typhoon/pull/830))
 
 ## v1.19.1
