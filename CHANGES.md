@@ -7,6 +7,7 @@ Notable changes between versions.
 * Kubernetes [v1.19.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1191)
   * Change control plane seccomp annotations to GA `seccompProfile` ([#822](https://github.com/poseidon/typhoon/pull/822))
 * Update Cilium from v1.8.2 to [v1.8.3](https://github.com/cilium/cilium/releases/tag/v1.8.3)
+  * Promote Cilium from experimental to general availability
 * Update Calico from v1.15.2 to [v1.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 
 ### Fedora CoreOS
