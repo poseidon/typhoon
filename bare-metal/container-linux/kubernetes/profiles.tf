@@ -130,6 +130,10 @@ resource "matchbox_profile" "cached-flatcar-linux-install" {
     var.kernel_args,
   ])
 
+  vars = {
+    install_disk = concat(var.controllers.*.install_disk, var.workers.*.install_disk)[count.index]
+  }
+
   container_linux_config = data.template_file.cached-container-linux-install-configs.*.rendered[count.index]
 }
 
