@@ -38,7 +38,7 @@ data "template_file" "container-linux-install-configs" {
     os_channel         = local.channel
     os_version         = var.os_version
     ignition_endpoint  = format("%s/ignition", var.matchbox_http_endpoint)
-    install_disk       = var.install_disk
+    install_disk       = concat(var.controllers.*.install_disk, var.workers.*.install_disk)[count.index]
     ssh_authorized_key = var.ssh_authorized_key
     # only cached-container-linux profile adds -b baseurl
     baseurl_flag = ""
@@ -79,7 +79,7 @@ data "template_file" "cached-container-linux-install-configs" {
     os_channel         = local.channel
     os_version         = var.os_version
     ignition_endpoint  = format("%s/ignition", var.matchbox_http_endpoint)
-    install_disk       = var.install_disk
+    install_disk       = concat(var.controllers.*.install_disk, var.workers.*.install_disk)[count.index]
     ssh_authorized_key = var.ssh_authorized_key
     # profile uses -b baseurl to install from matchbox cache
     baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/${local.flavor}"
