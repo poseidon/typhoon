@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.19.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1192)
+* Update flannel from v0.12.0 to v0.13.0-rc2 ([#216](https://github.com/poseidon/terraform-render-bootstrap/pull/216))
+  * Update flannel-cni from v0.4.0 to v0.4.1
+  * Update CNI plugins from v0.8.6 to v0.8.7
+
 ### Addons
 
 * Refresh Prometheus rules/alerts and Grafana dashboards ([#831](https://github.com/poseidon/typhoon/pull/831))
