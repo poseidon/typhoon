@@ -4,6 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+### Flatcar Linux
+
+* Remove references to CoreOS Container Linux ([#839](https://github.com/poseidon/typhoon/pull/839))
+  * Fix error querying for coreos AMI on AWS ([#838](https://github.com/poseidon/typhoon/issues/838))
+
+## v1.19.2
+
 * Kubernetes [v1.19.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1192)
 * Update flannel from v0.12.0 to v0.13.0-rc2 ([#216](https://github.com/poseidon/terraform-render-bootstrap/pull/216))
   * Update flannel-cni from v0.4.0 to v0.4.1

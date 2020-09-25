@@ -1,7 +1,5 @@
 locals {
-  # coreos-stable -> Container Linux Stable
   # flatcar-stable -> Flatcar Linux Stable
-  flavor  = split("-", var.os_image)[0]
   channel = split("-", var.os_image)[1]
 }
 
@@ -24,23 +22,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
     caching              = "ReadWrite"
   }
 
-  # CoreOS Container Linux or Flatcar Container Linux
+  # Flatcar Container Linux
   source_image_reference {
-    publisher = local.flavor == "flatcar" ? "Kinvolk" : "CoreOS"
-    offer     = local.flavor == "flatcar" ? "flatcar-container-linux-free" : "CoreOS"
+    publisher = "Kinvolk"
+    offer     = "flatcar-container-linux-free"
     sku       = local.channel
     version   = "latest"
   }
 
-  # Gross hack for Flatcar Linux
-  dynamic "plan" {
-    for_each = local.flavor == "flatcar" ? [1] : []
-
-    content {
-      name      = local.channel
-      publisher = "kinvolk"
-      product   = "flatcar-container-linux-free"
-    }
+  plan {
+    name      = local.channel
+    publisher = "kinvolk"
+    product   = "flatcar-container-linux-free"
   }
 
   # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
@@ -111,7 +104,7 @@ data "template_file" "worker-config" {
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
-    cgroup_driver          = local.flavor == "flatcar" && local.channel == "edge" ? "systemd" : "cgroupfs"
+    cgroup_driver          = local.channel == "edge" ? "systemd" : "cgroupfs"
     node_labels            = join(",", var.node_labels)
   }
 }

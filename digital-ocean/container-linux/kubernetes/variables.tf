@@ -43,7 +43,7 @@ variable "worker_type" {
 
 variable "os_image" {
   type        = string
-  description = "Container Linux image for instances (e.g. coreos-stable, custom-image-id)"
+  description = "Flatcar Linux image for instances (e.g. custom-image-id)"
 }
 
 variable "controller_snippets" {

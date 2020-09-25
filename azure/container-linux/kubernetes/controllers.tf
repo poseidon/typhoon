@@ -16,9 +16,7 @@ resource "azurerm_dns_a_record" "etcds" {
 
 locals {
   # Container Linux derivative
-  # coreos-stable -> Container Linux Stable
   # flatcar-stable -> Flatcar Linux Stable
-  flavor  = split("-", var.os_image)[0]
   channel = split("-", var.os_image)[1]
 }
 
@@ -53,23 +51,18 @@ resource "azurerm_linux_virtual_machine" "controllers" {
     storage_account_type = "Premium_LRS"
   }
 
-  # CoreOS Container Linux or Flatcar Container Linux
+  # Flatcar Container Linux
   source_image_reference {
-    publisher = local.flavor == "flatcar" ? "Kinvolk" : "CoreOS"
-    offer     = local.flavor == "flatcar" ? "flatcar-container-linux-free" : "CoreOS"
+    publisher = "Kinvolk"
+    offer     = "flatcar-container-linux-free"
     sku       = local.channel
     version   = "latest"
   }
 
-  # Gross hack for Flatcar Linux
-  dynamic "plan" {
-    for_each = local.flavor == "flatcar" ? [1] : []
-
-    content {
-      name      = local.channel
-      publisher = "kinvolk"
-      product   = "flatcar-container-linux-free"
-    }
+  plan {
+    name      = local.channel
+    publisher = "kinvolk"
+    product   = "flatcar-container-linux-free"
   }
 
   # network
@@ -157,7 +150,7 @@ data "template_file" "controller-configs" {
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
     etcd_initial_cluster   = join(",", data.template_file.etcds.*.rendered)
-    cgroup_driver          = local.flavor == "flatcar" && local.channel == "edge" ? "systemd" : "cgroupfs"
+    cgroup_driver          = local.channel == "edge" ? "systemd" : "cgroupfs"
     kubeconfig             = indent(10, module.bootstrap.kubeconfig-kubelet)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)

@@ -36,7 +36,7 @@ variable "instance_type" {
 
 variable "os_image" {
   type        = string
-  description = "AMI channel for a Container Linux derivative (coreos-stable, coreos-beta, coreos-alpha, flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
+  description = "AMI channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
   default     = "flatcar-stable"
 }
 

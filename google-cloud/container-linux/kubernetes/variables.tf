@@ -48,7 +48,7 @@ variable "worker_type" {
 
 variable "os_image" {
   type        = string
-  description = "Container Linux image for compute instances (e.g. coreos-stable, custom-image)"
+  description = "Flatcar Linux image for compute instances (e.g. custom-image)"
 }
 
 variable "disk_size" {
