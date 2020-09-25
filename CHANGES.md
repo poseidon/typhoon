@@ -9,6 +9,10 @@ Notable changes between versions.
 * Remove references to CoreOS Container Linux ([#839](https://github.com/poseidon/typhoon/pull/839))
   * Fix error querying for coreos AMI on AWS ([#838](https://github.com/poseidon/typhoon/issues/838))
 
+### Addons
+
+* Update Grafana from v7.1.5 to [v7.2.0](https://github.com/grafana/grafana/releases/tag/v7.2.0)
+
 ## v1.19.2
 
 * Kubernetes [v1.19.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1192)
