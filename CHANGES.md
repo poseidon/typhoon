@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.8.3 to [v1.8.4](https://github.com/cilium/cilium/releases/tag/v1.8.4)
+
 ### Flatcar Linux
 
 * Remove references to CoreOS Container Linux ([#839](https://github.com/poseidon/typhoon/pull/839))
