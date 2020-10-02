@@ -16,10 +16,10 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 | Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|---------------------------------|---------------|
-| Kernel            | ~4.19.x | ~5.7.x |
-| systemd           | 241 | 243 |
+| Kernel            | ~5.4.x | ~5.8.x |
+| systemd           | 245 | 245 |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
-| Container Engine  | docker 18.06.3-ce  | docker 19.03.11 |
+| Container Engine  | docker 19.3.12  | docker 19.03.11 |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
 | logging driver    | json-file | journald |
 | cgroup driver     | cgroupfs (except Flatcar edge) | systemd  |

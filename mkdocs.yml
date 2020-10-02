@@ -7,7 +7,8 @@ repo_url: https://github.com/poseidon/typhoon
 theme:
   name: material
   features:
-    - tabs
+    - navigation.tabs
+    - navigation.instant
   logo: 'img/spin.png'
   favicon: 'img/favicon.ico'
   icon:
