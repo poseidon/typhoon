@@ -13,7 +13,7 @@ Notable changes between versions.
 
 ### Addons
 
-* Update nginx-ingress from v0.35.0 to [v0.40.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.40.0)
+* Update nginx-ingress from v0.35.0 to [v0.40.2](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.40.2)
 * Update Grafana from v7.1.5 to [v7.2.0](https://github.com/grafana/grafana/releases/tag/v7.2.0)
 
 ## v1.19.2
