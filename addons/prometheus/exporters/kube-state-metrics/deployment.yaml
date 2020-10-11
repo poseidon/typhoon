@@ -25,10 +25,12 @@ spec:
       serviceAccountName: kube-state-metrics
       containers:
       - name: kube-state-metrics
-        image: quay.io/coreos/kube-state-metrics:v1.9.7
+        image: quay.io/coreos/kube-state-metrics:v2.0.0-alpha.1
         ports:
           - name: metrics
             containerPort: 8080
+          - name: telemetry
+            containerPort: 8081
         livenessProbe:
           httpGet:
             path: /healthz
@@ -41,3 +43,5 @@ spec:
             port: 8081
           initialDelaySeconds: 5
           timeoutSeconds: 5
+        securityContext:
+          runAsUser: 65534
