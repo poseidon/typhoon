@@ -1,7 +1,7 @@
 site_name: Typhoon
 site_description: A minimal and free Kubernetes distribution
 site_author: Dalton Hubble
-copyright: Poseidon Labs
+copyright: Poseidon Laboratories
 repo_name: poseidon/typhoon
 repo_url: https://github.com/poseidon/typhoon
 theme:

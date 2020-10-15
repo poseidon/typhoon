@@ -1,6 +1,6 @@
 # DigitalOcean
 
-In this tutorial, we'll create a Kubernetes v1.19.2 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.19.3 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets.
 
@@ -81,7 +81,7 @@ Define a Kubernetes cluster using the module `digital-ocean/container-linux/kube
 
 ```tf
 module "nemo" {
-  source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes?ref=v1.19.2"
+  source = "git::https://github.com/poseidon/typhoon//digital-ocean/container-linux/kubernetes?ref=v1.19.3"
 
   # Digital Ocean
   cluster_name = "nemo"
@@ -155,9 +155,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/nemo-config
 $ kubectl get nodes
 NAME               STATUS  ROLES   AGE  VERSION
-10.132.110.130     Ready   <none>  10m  v1.19.2
-10.132.115.81      Ready   <none>  10m  v1.19.2
-10.132.124.107     Ready   <none>  10m  v1.19.2
+10.132.110.130     Ready   <none>  10m  v1.19.3
+10.132.115.81      Ready   <none>  10m  v1.19.3
+10.132.124.107     Ready   <none>  10m  v1.19.3
 ```
 
 List the pods.
