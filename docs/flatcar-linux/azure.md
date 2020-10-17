@@ -1,6 +1,6 @@
 # Azure
 
-In this tutorial, we'll create a Kubernetes v1.19.3 cluster on Azure with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.19.3 cluster on Azure with Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a resource group, virtual network, subnets, security groups, controller availability set, worker scale set, load balancer, and TLS assets.
 
@@ -52,7 +52,7 @@ terraform {
     }
     azurerm = {
       source = "hashicorp/azurerm"
-      version = "2.31.1"
+      version = "2.32.0"
     }
   }
 }

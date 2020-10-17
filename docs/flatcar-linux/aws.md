@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.19.3 cluster on AWS with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.19.3 cluster on AWS with Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -55,7 +55,7 @@ terraform {
     }
     aws = {
       source = "hashicorp/aws"
-      version = "3.10.0"
+      version = "3.11.0"
     }
   }
 }

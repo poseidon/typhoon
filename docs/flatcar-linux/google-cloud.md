@@ -1,6 +1,6 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.19.3 cluster on Google Compute Engine with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.19.3 cluster on Google Compute Engine with Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
@@ -56,7 +56,7 @@ terraform {
     }
     google = {
       source = "hashicorp/google"
-      version = "3.42.0"
+      version = "3.43.0"
     }
   }
 }

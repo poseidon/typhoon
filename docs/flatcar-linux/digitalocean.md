@@ -1,6 +1,6 @@
 # DigitalOcean
 
-In this tutorial, we'll create a Kubernetes v1.19.3 cluster on DigitalOcean with CoreOS Container Linux or Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.19.3 cluster on DigitalOcean with Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets.
 
