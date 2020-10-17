@@ -52,3 +52,9 @@ output "worker_target_group_https" {
   value       = module.workers.target_group_https
 }
 
+# Outputs for debug
+
+output "assets_dist" {
+  value = module.bootstrap.assets_dist
+}
+

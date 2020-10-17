@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Remove `asset_dir` variable (default off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
+
 ## v1.19.3
 
 * Update Cilium from v1.8.3 to [v1.8.4](https://github.com/cilium/cilium/releases/tag/v1.8.4)

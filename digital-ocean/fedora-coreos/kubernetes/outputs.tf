@@ -53,3 +53,10 @@ output "vpc_id" {
   description = "ID of the cluster VPC"
   value       = digitalocean_vpc.network.id
 }
+
+# Outputs for debug
+
+output "assets_dist" {
+  value = module.bootstrap.assets_dist
+}
+

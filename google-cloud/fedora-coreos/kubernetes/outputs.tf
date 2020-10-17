@@ -42,3 +42,9 @@ output "worker_target_pool" {
   value       = module.workers.target_pool
 }
 
+# Outputs for debug
+
+output "assets_dist" {
+  value = module.bootstrap.assets_dist
+}
+
