@@ -6,6 +6,12 @@ Notable changes between versions.
 
 * Remove `asset_dir` variable (default off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
 
+### Flatcar Linux
+
+* Change `kubelet.service` container runner from rkt to docker ([#855](https://github.com/poseidon/typhoon/pull/855))
+* Change `delete-node.service` to be inlined and use docker ([#855](https://github.com/poseidon/typhoon/pull/855))
+  * Fix mount to restore permission to delete the local node on shutdown (cloud-only)
+
 ## v1.19.3
 
 * Update Cilium from v1.8.3 to [v1.8.4](https://github.com/cilium/cilium/releases/tag/v1.8.4)

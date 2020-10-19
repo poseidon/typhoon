@@ -31,9 +31,11 @@ systemd:
       contents: |
         [Unit]
         Description=Kubelet
+        Requires=docker.service
+        After=docker.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=docker://quay.io/poseidon/kubelet:v1.19.3
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.19.3
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -41,43 +43,29 @@ systemd:
         ExecStartPre=/bin/mkdir -p /var/lib/calico
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
         ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
-        ExecStartPre=-/usr/bin/rkt rm --uuid-file=/var/cache/kubelet-pod.uuid
-        ExecStart=/usr/bin/rkt run \
-          --uuid-file-save=/var/cache/kubelet-pod.uuid \
-          --stage1-from-dir=stage1-fly.aci \
-          --hosts-entry host \
-          --insecure-options=image \
-          --volume etc-kubernetes,kind=host,source=/etc/kubernetes,readOnly=true \
-          --mount volume=etc-kubernetes,target=/etc/kubernetes \
-          --volume etc-machine-id,kind=host,source=/etc/machine-id,readOnly=true \
-          --mount volume=etc-machine-id,target=/etc/machine-id \
-          --volume etc-os-release,kind=host,source=/usr/lib/os-release,readOnly=true \
-          --mount volume=etc-os-release,target=/etc/os-release \
-          --volume=etc-resolv,kind=host,source=/etc/resolv.conf,readOnly=true \
-          --mount volume=etc-resolv,target=/etc/resolv.conf \
-          --volume etc-ssl-certs,kind=host,source=/etc/ssl/certs,readOnly=true \
-          --mount volume=etc-ssl-certs,target=/etc/ssl/certs \
-          --volume lib-modules,kind=host,source=/lib/modules,readOnly=true \
-          --mount volume=lib-modules,target=/lib/modules \
-          --volume run,kind=host,source=/run \
-          --mount volume=run,target=/run \
-          --volume usr-share-certs,kind=host,source=/usr/share/ca-certificates,readOnly=true \
-          --mount volume=usr-share-certs,target=/usr/share/ca-certificates \
-          --volume var-lib-calico,kind=host,source=/var/lib/calico,readOnly=true \
-          --mount volume=var-lib-calico,target=/var/lib/calico \
-          --volume var-lib-docker,kind=host,source=/var/lib/docker \
-          --mount volume=var-lib-docker,target=/var/lib/docker \
-          --volume var-lib-kubelet,kind=host,source=/var/lib/kubelet,recursive=true \
-          --mount volume=var-lib-kubelet,target=/var/lib/kubelet \
-          --volume var-log,kind=host,source=/var/log \
-          --mount volume=var-log,target=/var/log \
-          --volume opt-cni-bin,kind=host,source=/opt/cni/bin \
-          --mount volume=opt-cni-bin,target=/opt/cni/bin \
-          --volume etc-iscsi,kind=host,source=/etc/iscsi \
-          --mount volume=etc-iscsi,target=/etc/iscsi \
-          --volume usr-sbin-iscsiadm,kind=host,source=/usr/sbin/iscsiadm \
-          --mount volume=usr-sbin-iscsiadm,target=/sbin/iscsiadm \
-          $${KUBELET_IMAGE} -- \
+        # Podman, rkt, or runc run container processes, whereas docker run
+        # is a client to a daemon and requires workarounds to use within a
+        # systemd unit. https://github.com/moby/moby/issues/6791
+        ExecStartPre=/usr/bin/docker run -d \
+          --name kubelet \
+          --privileged \
+          --pid host \
+          --network host \
+          -v /etc/kubernetes:/etc/kubernetes:ro \
+          -v /etc/machine-id:/etc/machine-id:ro \
+          -v /usr/lib/os-release:/etc/os-release:ro \
+          -v /lib/modules:/lib/modules:ro \
+          -v /run:/run \
+          -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+          -v /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
+          -v /var/lib/calico:/var/lib/calico:ro \
+          -v /var/lib/docker:/var/lib/docker \
+          -v /var/lib/kubelet:/var/lib/kubelet:rshared \
+          -v /var/log:/var/log \
+          -v /opt/cni/bin:/opt/cni/bin \
+          -v /etc/iscsi:/etc/iscsi \
+          -v /usr/sbin/iscsiadm:/usr/sbin/iscsiadm \
+          $${KUBELET_IMAGE} \
           --anonymous-auth=false \
           --authentication-token-webhook \
           --authorization-mode=Webhook \
@@ -102,7 +90,9 @@ systemd:
           --read-only-port=0 \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
-        ExecStop=-/usr/bin/rkt stop --uuid-file=/var/cache/kubelet-pod.uuid
+        ExecStart=docker logs -f kubelet
+        ExecStop=docker stop kubelet
+        ExecStopPost=docker rm kubelet
         Restart=always
         RestartSec=5
         [Install]
