@@ -95,10 +95,11 @@ systemd:
         [Unit]
         Description=Delete Kubernetes node on shutdown
         [Service]
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.19.3
         Type=oneshot
         RemainAfterExit=true
         ExecStart=/bin/true
-        ExecStop=/bin/bash -c '/usr/bin/podman run --volume /etc/kubernetes:/etc/kubernetes:ro,z --entrypoint /usr/local/bin/kubectl quay.io/poseidon/kubelet:v1.19.3 --kubeconfig=/etc/kubernetes/kubeconfig delete node $HOSTNAME'
+        ExecStop=/bin/bash -c '/usr/bin/podman run --volume /var/lib/kubelet:/var/lib/kubelet:ro,z --entrypoint /usr/local/bin/kubectl $${KUBELET_IMAGE} --kubeconfig=/var/lib/kubelet/kubeconfig delete node $HOSTNAME'
         [Install]
         WantedBy=multi-user.target
 storage:

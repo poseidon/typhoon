@@ -4,13 +4,17 @@ Notable changes between versions.
 
 ## Latest
 
-* Remove `asset_dir` variable (default off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
+* Remove `asset_dir` variable (defaulted off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
+
+### Fedora CoreOS
+
+* Fix local node delete oneshot on node shutdown ([#856](https://github.com/poseidon/typhoon/pull/855))
 
 ### Flatcar Linux
 
 * Change `kubelet.service` container runner from rkt to docker ([#855](https://github.com/poseidon/typhoon/pull/855))
-* Change `delete-node.service` to be inlined and use docker ([#855](https://github.com/poseidon/typhoon/pull/855))
-  * Fix mount to restore permission to delete the local node on shutdown (cloud-only)
+* Change `delete-node.service` to use docker and an inline ExecStart ([#855](https://github.com/poseidon/typhoon/pull/855))
+* Fix local node delete oneshot on node shutdown ([#855](https://github.com/poseidon/typhoon/pull/855))
 
 ## v1.19.3
 
