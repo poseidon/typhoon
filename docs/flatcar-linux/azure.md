@@ -71,11 +71,11 @@ az vm image terms accept --publish kinvolk --offer flatcar-container-linux-free 
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `azure/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `azure/flatcar-linux/kubernetes`.
 
 ```tf
 module "ramius" {
-  source = "git::https://github.com/poseidon/typhoon//azure/container-linux/kubernetes?ref=v1.19.3"
+  source = "git::https://github.com/poseidon/typhoon//azure/flatcar-linux/kubernetes?ref=v1.19.3"
 
   # Azure
   cluster_name   = "ramius"
@@ -92,7 +92,7 @@ module "ramius" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/flatcar-linux/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -178,7 +178,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/flatcar-linux/kubernetes/variables.tf) source.
 
 ### Required
 

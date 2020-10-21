@@ -167,7 +167,7 @@ Typhoon chooses variables to expose with purpose. If you must customize clusters
 
 ```
 module "nemo" {
-  source = "git::https://github.com/USERNAME/typhoon//digital-ocean/container-linux/kubernetes?ref=myspecialcase"
+  source = "git::https://github.com/USERNAME/typhoon//digital-ocean/flatcar-linux/kubernetes?ref=myspecialcase"
   ...
 }
 ```

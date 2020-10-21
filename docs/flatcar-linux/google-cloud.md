@@ -88,11 +88,11 @@ Set the [os_image](#variables) in the next step.
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `google-cloud/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `google-cloud/flatcar-linux/kubernetes`.
 
 ```tf
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.19.3"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/flatcar-linux/kubernetes?ref=v1.19.3"
 
   # Google Cloud
   cluster_name  = "yavin"
@@ -109,7 +109,7 @@ module "yavin" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/flatcar-linux/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -196,7 +196,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-cloud/flatcar-linux/kubernetes/variables.tf) source.
 
 ### Required
 

@@ -18,7 +18,7 @@ module "yavin" {
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.19.3"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.19.3"
   ...
 }
 ```
@@ -66,7 +66,7 @@ Delete or comment the Terraform config for the cluster.
 
 ```
 - module "mercury" {
--   source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes"
+-   source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes"
 -   ...
 -}
 ```
@@ -94,7 +94,7 @@ Once you're confident in the new cluster, delete the Terraform config for the ol
 
 ```
 - module "yavin" {
--   source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes"
+-   source = "git::https://github.com/poseidon/typhoon//google-cloud/flatcar-linux/kubernetes"
 -   ...
 -}
 ```

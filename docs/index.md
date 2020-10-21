@@ -14,7 +14,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 * Kubernetes v1.19.3 (upstream)
 * Single or multi-master, [Calico](https://www.projectcalico.org/) or [Cilium](https://github.com/cilium/cilium) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/), SELinux enforcing
-* Advanced features like [worker pools](advanced/worker-pools/), [preemptible](fedora-coreos/google-cloud/#preemption) workers, and [snippets](advanced/customization/#container-linux) customization
+* Advanced features like [worker pools](advanced/worker-pools/), [preemptible](fedora-coreos/google-cloud/#preemption) workers, and [snippets](advanced/customization/#hosts) customization
 * Ready for Ingress, Prometheus, Grafana, CSI, or other [addons](addons/overview/)
 
 ## Modules
@@ -35,11 +35,11 @@ Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Flatcar Linux    | [aws/container-linux/kubernetes](flatcar-linux/aws.md) | stable |
-| Azure         | Flatcar Linux    | [azure/container-linux/kubernetes](flatcar-linux/azure.md) | alpha |
-| Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](flatcar-linux/bare-metal.md) | stable |
-| DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](flatcar-linux/digitalocean.md) | beta |
-| Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](flatcar-linux/google-cloud.md) | beta |
+| AWS           | Flatcar Linux    | [aws/flatcar-linux/kubernetes](flatcar-linux/aws.md) | stable |
+| Azure         | Flatcar Linux    | [azure/flatcar-linux/kubernetes](flatcar-linux/azure.md) | alpha |
+| Bare-Metal    | Flatcar Linux    | [bare-metal/flatcar-linux/kubernetes](flatcar-linux/bare-metal.md) | stable |
+| DigitalOcean | Flatcar Linux  | [digital-ocean/flatcar-linux/kubernetes](flatcar-linux/digitalocean.md) | beta |
+| Google Cloud  | Flatcar Linux  | [google-cloud/flatcar-linux/kubernetes](flatcar-linux/google-cloud.md) | beta |
 
 ## Documentation
 

@@ -150,11 +150,11 @@ terraform {
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `bare-metal/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `bare-metal/flatcar-linux/kubernetes`.
 
 ```tf
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/container-linux/kubernetes?ref=v1.19.3"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.19.3"
 
   # bare-metal
   cluster_name            = "mercury"
@@ -190,7 +190,7 @@ module "mercury" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/flatcar-linux/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -322,7 +322,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/flatcar-linux/kubernetes/variables.tf) source.
 
 ### Required
 

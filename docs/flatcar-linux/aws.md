@@ -68,11 +68,11 @@ Additional configuration options are described in the `aws` provider [docs](http
 
 ## Cluster
 
-Define a Kubernetes cluster using the module `aws/container-linux/kubernetes`.
+Define a Kubernetes cluster using the module `aws/flatcar-linux/kubernetes`.
 
 ```tf
 module "tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/container-linux/kubernetes?ref=v1.19.3"
+  source = "git::https://github.com/poseidon/typhoon//aws/flatcar-linux/kubernetes?ref=v1.19.3"
 
   # AWS
   cluster_name = "tempest"
@@ -88,7 +88,7 @@ module "tempest" {
 }
 ```
 
-Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/container-linux/kubernetes/variables.tf) source.
+Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/flatcar-linux/kubernetes/variables.tf) source.
 
 ## ssh-agent
 
@@ -174,7 +174,7 @@ Learn about [maintenance](/topics/maintenance/) and [addons](/addons/overview/).
 
 ## Variables
 
-Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/container-linux/kubernetes/variables.tf) source.
+Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/aws/flatcar-linux/kubernetes/variables.tf) source.
 
 ### Required
 
