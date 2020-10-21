@@ -3,8 +3,8 @@ resource "matchbox_group" "install" {
 
   name = format("install-%s", concat(var.controllers.*.name, var.workers.*.name)[count.index])
 
-  # pick one of 4 Matchbox profiles (Container Linux or Flatcar, cached or non-cached)
-  profile = local.flavor == "flatcar" ? var.cached_install ? matchbox_profile.cached-flatcar-linux-install.*.name[count.index] : matchbox_profile.flatcar-install.*.name[count.index] : var.cached_install ? matchbox_profile.cached-container-linux-install.*.name[count.index] : matchbox_profile.container-linux-install.*.name[count.index]
+  # pick Matchbox profile (Flatcar upstream or Matchbox image cache)
+  profile = var.cached_install ? matchbox_profile.cached-flatcar-install.*.name[count.index] : matchbox_profile.flatcar-install.*.name[count.index]
 
   selector = {
     mac = concat(var.controllers.*.mac, var.workers.*.mac)[count.index]

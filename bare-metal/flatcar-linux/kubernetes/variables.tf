@@ -17,7 +17,7 @@ variable "os_channel" {
 
 variable "os_version" {
   type        = string
-  description = "Version for a Container Linux derivative to PXE and install (e.g. 2079.5.1)"
+  description = "Version of Flatcar Linux to PXE and install (e.g. 2079.5.1)"
 }
 
 # machines
@@ -122,14 +122,14 @@ variable "download_protocol" {
 
 variable "cached_install" {
   type        = bool
-  description = "Whether Container Linux should PXE boot and install from matchbox /assets cache. Note that the admin must have downloaded the os_version into matchbox assets."
+  description = "Whether Flatcar Linux should PXE boot and install from matchbox /assets cache. Note that the admin must have downloaded the os_version into matchbox assets."
   default     = false
 }
 
 variable "install_disk" {
   type        = string
   default     = "/dev/sda"
-  description = "Disk device to which the install profiles should install Container Linux (e.g. /dev/sda)"
+  description = "Disk device to which the install profiles should install Flatcar Linux (e.g. /dev/sda)"
 }
 
 variable "kernel_args" {
