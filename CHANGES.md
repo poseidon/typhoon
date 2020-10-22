@@ -18,6 +18,10 @@ Notable changes between versions.
 * Fix local node delete oneshot on node shutdown ([#855](https://github.com/poseidon/typhoon/pull/855))
 * Remove CoreOS Container Linux Matchbox profiles ([#859](https://github.com/poseidon/typhoon/pull/858))
 
+### Addons
+
+* Update Grafana from v7.2.1 to [v7.2.2](https://github.com/grafana/grafana/releases/tag/v7.2.2)
+
 ## v1.19.3
 
 * Update Cilium from v1.8.3 to [v1.8.4](https://github.com/cilium/cilium/releases/tag/v1.8.4)
