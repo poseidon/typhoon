@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v1.16.3 to [v1.16.4](https://github.com/projectcalico/calico/releases/tag/v3.16.4)
 * Remove `asset_dir` variable (defaulted off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
 
 ### Fedora CoreOS
