@@ -24,7 +24,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: grafana
-          image: docker.io/grafana/grafana:7.2.2
+          image: docker.io/grafana/grafana:7.3.0
           env:
             - name: GF_PATHS_CONFIG
               value: "/etc/grafana/custom.ini"
