@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.8.4 to [v1.8.5](https://github.com/cilium/cilium/releases/tag/v1.8.5)
 * Update Calico from v1.16.3 to [v1.16.4](https://github.com/projectcalico/calico/releases/tag/v3.16.4)
 * Remove `asset_dir` variable (defaulted off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
 
