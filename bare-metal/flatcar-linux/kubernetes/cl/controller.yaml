@@ -3,30 +3,31 @@ systemd:
   units:
     - name: etcd-member.service
       enabled: true
-      dropins:
-        - name: 40-etcd-cluster.conf
-          contents: |
-            [Service]
-            Environment="ETCD_IMAGE_TAG=v3.4.12"
-            Environment="ETCD_IMAGE_URL=docker://quay.io/coreos/etcd"
-            Environment="RKT_RUN_ARGS=--insecure-options=image"
-            Environment="ETCD_NAME=${etcd_name}"
-            Environment="ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379"
-            Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380"
-            Environment="ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379"
-            Environment="ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380"
-            Environment="ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381"
-            Environment="ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}"
-            Environment="ETCD_STRICT_RECONFIG_CHECK=true"
-            Environment="ETCD_SSL_DIR=/etc/ssl/etcd"
-            Environment="ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt"
-            Environment="ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt"
-            Environment="ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key"
-            Environment="ETCD_CLIENT_CERT_AUTH=true"
-            Environment="ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt"
-            Environment="ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt"
-            Environment="ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key"
-            Environment="ETCD_PEER_CLIENT_CERT_AUTH=true"
+      contents: |
+        [Unit]
+        Description=etcd (System Container)
+        Documentation=https://github.com/etcd-io/etcd
+        Requires=docker.service
+        After=docker.service
+        [Service]
+        Environment=ETCD_IMAGE=quay.io/coreos/etcd:v3.4.12
+        ExecStartPre=/usr/bin/docker run -d \
+          --name etcd \
+          --network host \
+          --env-file /etc/etcd/etcd.env \
+          --user 232:232 \
+          --volume /etc/ssl/etcd:/etc/ssl/certs:ro \
+          --volume /var/lib/etcd:/var/lib/etcd:rw \
+          $${ETCD_IMAGE}
+        ExecStart=docker logs -f etcd
+        ExecStop=docker stop etcd
+        ExecStopPost=docker rm etcd
+        Restart=always
+        RestartSec=10s
+        TimeoutStartSec=0
+        LimitNOFILE=40000
+        [Install]
+        WantedBy=multi-user.target
     - name: docker.service
       enabled: true
     - name: locksmithd.service
@@ -57,7 +58,7 @@ systemd:
     - name: kubelet.service
       contents: |
         [Unit]
-        Description=Kubelet
+        Description=Kubelet (System Container)
         Requires=docker.service
         After=docker.service
         Wants=rpc-statd.service
@@ -201,6 +202,28 @@ storage:
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
+    - path: /etc/etcd/etcd.env
+      filesystem: root
+      mode: 0644
+      contents:
+          inline: |
+            ETCD_NAME=${etcd_name}
+            ETCD_DATA_DIR=/var/lib/etcd
+            ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379
+            ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380
+            ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
+            ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
+            ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381
+            ETCD_INITIAL_CLUSTER=${etcd_initial_cluster}
+            ETCD_STRICT_RECONFIG_CHECK=true
+            ETCD_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/server-ca.crt
+            ETCD_CERT_FILE=/etc/ssl/certs/etcd/server.crt
+            ETCD_KEY_FILE=/etc/ssl/certs/etcd/server.key
+            ETCD_CLIENT_CERT_AUTH=true
+            ETCD_PEER_TRUSTED_CA_FILE=/etc/ssl/certs/etcd/peer-ca.crt
+            ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
+            ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
+            ETCD_PEER_CLIENT_CERT_AUTH=true
 passwd:
   users:
     - name: core

@@ -35,7 +35,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 | control plane     | static pods   | static pods   |
 | kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
 | control plane images | upstream images | upstream images |
-| on-host etcd      | rkt-fly   | podman |
+| on-host etcd      | docker    | podman |
 | on-host kubelet   | docker    | podman |
 | CNI plugins       | calico, cilium, flannel | calico, cilium, flannel |
 | coordinated drain & OS update | [FLUO](https://github.com/kinvolk/flatcar-linux-update-operator) addon | [fleetlock](https://github.com/poseidon/fleetlock) |
