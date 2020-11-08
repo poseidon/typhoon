@@ -8,28 +8,25 @@ systemd:
       contents: |
         [Unit]
         Description=etcd (System Container)
-        Documentation=https://github.com/coreos/etcd
+        Documentation=https://github.com/etcd-io/etcd
         Wants=network-online.target network.target
         After=network-online.target
         [Service]
-        # https://github.com/opencontainers/runc/pull/1807
-        # Type=notify
-        # NotifyAccess=exec
+        Environment=ETCD_IMAGE=quay.io/coreos/etcd:v3.4.12
         Type=exec
-        Restart=on-failure
-        RestartSec=10s
-        TimeoutStartSec=0
-        LimitNOFILE=40000
         ExecStartPre=/bin/mkdir -p /var/lib/etcd
         ExecStartPre=-/usr/bin/podman rm etcd
-        #--volume $${NOTIFY_SOCKET}:/run/systemd/notify \
         ExecStart=/usr/bin/podman run --name etcd \
           --env-file /etc/etcd/etcd.env \
           --network host \
           --volume /var/lib/etcd:/var/lib/etcd:rw,Z \
           --volume /etc/ssl/etcd:/etc/ssl/certs:ro,Z \
-          quay.io/coreos/etcd:v3.4.12
+          $${ETCD_IMAGE}
         ExecStop=/usr/bin/podman stop etcd
+        Restart=on-failure
+        RestartSec=10s
+        TimeoutStartSec=0
+        LimitNOFILE=40000
         [Install]
         WantedBy=multi-user.target
     - name: docker.service
@@ -210,8 +207,6 @@ storage:
       mode: 0644
       contents:
         inline: |
-          # TODO: Use a systemd dropin once podman v1.4.5 is avail.
-          NOTIFY_SOCKET=/run/systemd/notify
           ETCD_NAME=${etcd_name}
           ETCD_DATA_DIR=/var/lib/etcd
           ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379

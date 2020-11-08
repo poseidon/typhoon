@@ -10,6 +10,8 @@ Notable changes between versions.
 
 ### Fedora CoreOS
 
+* Improve `etcd-member.service` systemd unit ([#868](https://github.com/poseidon/typhoon/pull/868))
+  * Allow a snippet with a systemd dropin to set an alternate image (e.g. mirror)
 * Fix local node delete oneshot on node shutdown ([#856](https://github.com/poseidon/typhoon/pull/855))
 
 ### Flatcar Linux
