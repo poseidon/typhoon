@@ -78,6 +78,7 @@ nav:
     - 'FAQ': 'topics/faq.md'
   - 'Advanced':
     - 'Overview': 'advanced/overview.md'
+    - 'ARM64': 'advanced/arm64.md'
     - 'Customization': 'advanced/customization.md'
     - 'Worker Pools': 'advanced/worker-pools.md'
   - 'Addons':

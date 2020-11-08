@@ -15,6 +15,15 @@ Notable changes between versions.
   * Allow a snippet with a systemd dropin to set an alternate image (e.g. mirror)
 * Fix local node delete oneshot on node shutdown ([#856](https://github.com/poseidon/typhoon/pull/855))
 
+#### AWS
+
+* Add experimental Fedora CoreOS arm64 support ([docs](https://typhoon.psdn.io/advanced/arm64/), [#875](https://github.com/poseidon/typhoon/pull/875))
+  * Allow arm64 full-cluster or mixed/hybrid cluster with worker pools
+  * Add `arch` variable to cluster module
+  * Add `daemonset_tolerations` variable to cluster module
+  * Add `node_taints` variable to workers module
+  * Requires flannel CNI provider and use of experimental AMI (see docs)
+
 ### Flatcar Linux
 
 * Rename `container-linux` modules to `flatcar-linux` ([#858](https://github.com/poseidon/typhoon/issues/858)) (**action required**)

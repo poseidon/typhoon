@@ -9,6 +9,7 @@ module "workers" {
   worker_count    = var.worker_count
   instance_type   = var.worker_type
   os_stream       = var.os_stream
+  arch            = var.arch
   disk_size       = var.disk_size
   spot_price      = var.worker_price
   target_groups   = var.worker_target_groups

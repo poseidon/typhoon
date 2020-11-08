@@ -108,3 +108,17 @@ variable "node_labels" {
   description = "List of initial node labels"
   default     = []
 }
+
+variable "node_taints" {
+  type        = list(string)
+  description = "List of initial node taints"
+  default     = []
+}
+
+# unofficial, undocumented, unsupported
+
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+}

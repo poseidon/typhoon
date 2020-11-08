@@ -155,3 +155,15 @@ variable "cluster_domain_suffix" {
   default     = "cluster.local"
 }
 
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+}
+
+variable "daemonset_tolerations" {
+  type        = list(string)
+  description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"
+  default     = []
+}
+

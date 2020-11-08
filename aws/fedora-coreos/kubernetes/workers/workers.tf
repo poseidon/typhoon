@@ -44,7 +44,7 @@ resource "aws_autoscaling_group" "workers" {
 
 # Worker template
 resource "aws_launch_configuration" "worker" {
-  image_id          = data.aws_ami.fedora-coreos.image_id
+  image_id          = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm.image_id : data.aws_ami.fedora-coreos.image_id
   instance_type     = var.instance_type
   spot_price        = var.spot_price > 0 ? var.spot_price : null
   enable_monitoring = false
@@ -86,6 +86,7 @@ data "template_file" "worker-config" {
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
+    node_taints            = join(",", var.node_taints)
   }
 }
 
