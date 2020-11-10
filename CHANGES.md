@@ -326,7 +326,7 @@ Notable changes between versions.
 
 #### Bare-Metal
 
-* Recommend changing [os_channel](https://typhoon.psdn.io/flatcar-linux/bare-metal/#required) from `coreos-stable` to `flatcar-stable`
+* Recommend changing [os_channel](https://typhoon.psdn.io/cl/bare-metal/#required) from `coreos-stable` to `flatcar-stable`
 
 #### Google
 
@@ -1208,7 +1208,7 @@ Notable changes between versions.
 * Introduce [Container Linux Config snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) on bare-metal
   * Validate and additively merge custom Container Linux Configs during terraform plan
   * Define files, systemd units, dropins, networkd configs, mounts, users, and more
-  * [Require](https://typhoon.psdn.io/flatcar-linux/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (**action required!**)
+  * [Require](https://typhoon.psdn.io/cl/bare-metal/#terraform-setup) `terraform-provider-ct` plugin v0.2.1 (**action required!**)
 
 #### Addons
 
