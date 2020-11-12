@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.19.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1194)
 * Update Cilium from v1.8.4 to [v1.9.0](https://github.com/cilium/cilium/releases/tag/v1.9.0)
 * Update Calico from v3.16.3 to [v3.16.5](https://github.com/projectcalico/calico/releases/tag/v3.16.5)
 * Remove `asset_dir` variable (defaulted off in [v1.17.0](https://github.com/poseidon/typhoon/pull/595), deprecated in [v1.18.0](https://github.com/poseidon/typhoon/pull/678))
@@ -35,6 +36,7 @@ Notable changes between versions.
 
 ## v1.19.3
 
+* Kubernetes [v1.19.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1193)
 * Update Cilium from v1.8.3 to [v1.8.4](https://github.com/cilium/cilium/releases/tag/v1.8.4)
 * Update Calico from v1.15.3 to [v1.16.3](https://github.com/projectcalico/calico/releases/tag/v3.16.3) ([#851](https://github.com/poseidon/typhoon/pull/851))
 * Update flannel from v0.13.0-rc2 to v0.13.0 ([#219](https://github.com/poseidon/terraform-render-bootstrap/pull/219))

@@ -35,7 +35,7 @@ systemd:
         After=docker.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.19.3
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.19.4
         Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
