@@ -121,24 +121,20 @@ systemd:
       contents: |
         [Unit]
         Description=Kubernetes control plane
+        Wants=docker.service
+        After=docker.service
         ConditionPathExists=!/opt/bootstrap/bootstrap.done
         [Service]
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
-        ExecStart=/usr/bin/rkt run \
-            --trust-keys-from-https \
-            --volume config,kind=host,source=/etc/kubernetes/bootstrap-secrets \
-            --mount volume=config,target=/etc/kubernetes/secrets \
-            --volume assets,kind=host,source=/opt/bootstrap/assets \
-            --mount volume=assets,target=/assets \
-            --volume script,kind=host,source=/opt/bootstrap/apply \
-            --mount volume=script,target=/apply \
-            --insecure-options=image \
-            docker://quay.io/poseidon/kubelet:v1.19.3 \
-            --net=host \
-            --dns=host \
-            --exec=/apply
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.19.3
+        ExecStart=/usr/bin/docker run \
+            -v /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro \
+            -v /opt/bootstrap/assets:/assets:ro \
+            -v /opt/bootstrap/apply:/apply:ro \
+            --entrypoint=/apply \
+            $${KUBELET_IMAGE}
         ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
         [Install]
         WantedBy=multi-user.target
