@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.19.4
+
 * Kubernetes [v1.19.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1194)
 * Update Cilium from v1.8.4 to [v1.9.0](https://github.com/cilium/cilium/releases/tag/v1.9.0)
 * Update Calico from v3.16.3 to [v3.16.5](https://github.com/projectcalico/calico/releases/tag/v3.16.5)
@@ -41,7 +43,7 @@ Notable changes between versions.
 * Update nginx-ingress from v0.40.2 to [v0.41.2](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.41.2)
 * Update Prometheus from v2.22.0 to [v2.22.1](https://github.com/prometheus/prometheus/releases/tag/v2.22.1)
 * Update kube-state-metrics from v2.0.0-alpha.1 to [v2.0.0-alpha.2](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0-alpha.2)
-* Update Grafana from v7.2.1 to [v7.3.1](https://github.com/grafana/grafana/releases/tag/v7.3.1)
+* Update Grafana from v7.2.1 to [v7.3.2](https://github.com/grafana/grafana/releases/tag/v7.3.2)
 
 ## v1.19.3
 
