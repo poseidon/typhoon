@@ -51,28 +51,6 @@ data:
               }
             },
             {
-              "alert": "etcdHighNumberOfFailedGRPCRequests",
-              "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}."
-              },
-              "expr": "100 * sum(rate(grpc_server_handled_total{job=~\".*etcd.*\", grpc_code!=\"OK\"}[5m])) without (grpc_type, grpc_code)\n  /\nsum(rate(grpc_server_handled_total{job=~\".*etcd.*\"}[5m])) without (grpc_type, grpc_code)\n  > 1\n",
-              "for": "10m",
-              "labels": {
-                "severity": "warning"
-              }
-            },
-            {
-              "alert": "etcdHighNumberOfFailedGRPCRequests",
-              "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}."
-              },
-              "expr": "100 * sum(rate(grpc_server_handled_total{job=~\".*etcd.*\", grpc_code!=\"OK\"}[5m])) without (grpc_type, grpc_code)\n  /\nsum(rate(grpc_server_handled_total{job=~\".*etcd.*\"}[5m])) without (grpc_type, grpc_code)\n  > 5\n",
-              "for": "5m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
               "alert": "etcdGRPCRequestsSlow",
               "annotations": {
                 "message": "etcd cluster \"{{ $labels.job }}\": gRPC requests to {{ $labels.grpc_method }} are taking {{ $value }}s on etcd instance {{ $labels.instance }}."
