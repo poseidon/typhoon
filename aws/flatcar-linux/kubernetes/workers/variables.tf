@@ -38,6 +38,11 @@ variable "os_image" {
   type        = string
   description = "AMI channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
   default     = "flatcar-stable"
+
+  validation {
+    condition = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha", "flatcar-edge"], var.os_image)
+    error_message = "The os_image must be flatcar-stable, flatcar-beta, flatcar-alpha, or flatcar-edge."
+  }
 }
 
 variable "disk_size" {

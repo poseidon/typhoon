@@ -50,6 +50,11 @@ variable "os_stream" {
   type        = string
   description = "Fedora CoreOS stream for compute instances (e.g. stable, testing, next)"
   default     = "stable"
+
+  validation {
+    condition = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "disk_size" {

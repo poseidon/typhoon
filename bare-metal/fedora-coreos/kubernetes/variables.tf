@@ -12,8 +12,13 @@ variable "matchbox_http_endpoint" {
 
 variable "os_stream" {
   type        = string
-  description = "Fedora CoreOS release stream (e.g. testing, stable)"
+  description = "Fedora CoreOS release stream (e.g. stable, testing, next)"
   default     = "stable"
+
+  validation {
+    condition = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "os_version" {

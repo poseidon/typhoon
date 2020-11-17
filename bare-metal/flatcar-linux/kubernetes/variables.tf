@@ -13,6 +13,11 @@ variable "matchbox_http_endpoint" {
 variable "os_channel" {
   type        = string
   description = "Channel for a Flatcar Linux (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
+
+  validation {
+    condition = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha", "flatcar-edge"], var.os_channel)
+    error_message = "The os_channel must be flatcar-stable, flatcar-beta, flatcar-alpha, or flatcar-edge."
+  }
 }
 
 variable "os_version" {

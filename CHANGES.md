@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Add input variable validations ([#880](https://github.com/poseidon/typhoon/pull/880))
+  * Require Terraform v0.13+ ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-versions))
+
 ## v1.19.4
 
 * Kubernetes [v1.19.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1194)
