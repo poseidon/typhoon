@@ -7,6 +7,10 @@ Notable changes between versions.
 * Add input variable validations ([#880](https://github.com/poseidon/typhoon/pull/880))
   * Require Terraform v0.13+ ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-versions))
 
+### Addons
+
+* Update Grafana from v7.3.2 to [v7.3.3](https://github.com/grafana/grafana/releases/tag/v7.3.3)
+
 ## v1.19.4
 
 * Kubernetes [v1.19.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v1194)
