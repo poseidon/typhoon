@@ -7,6 +7,13 @@ Notable changes between versions.
 * Add input variable validations ([#880](https://github.com/poseidon/typhoon/pull/880))
   * Require Terraform v0.13+ ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-versions))
 
+### AWS
+
+* Enable Network Load Balancer (NLB) dualstack ([#883](https://github.com/poseidon/typhoon/pull/883))
+  * NLB subnets assigned both IPv4 and IPv6 addresses
+  * NLB DNS name has both A and AAAA records
+  * NLB to target node traffic is IPv4 (no change)
+
 ### Addons
 
 * Update Prometheus from v2.22.1 to [v2.22.2](https://github.com/prometheus/prometheus/releases/tag/v2.22.2)
