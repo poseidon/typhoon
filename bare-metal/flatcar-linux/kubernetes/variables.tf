@@ -15,7 +15,7 @@ variable "os_channel" {
   description = "Channel for a Flatcar Linux (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
 
   validation {
-    condition = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha", "flatcar-edge"], var.os_channel)
+    condition     = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha", "flatcar-edge"], var.os_channel)
     error_message = "The os_channel must be flatcar-stable, flatcar-beta, flatcar-alpha, or flatcar-edge."
   }
 }

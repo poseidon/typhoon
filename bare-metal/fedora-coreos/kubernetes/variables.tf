@@ -16,7 +16,7 @@ variable "os_stream" {
   default     = "stable"
 
   validation {
-    condition = contains(["stable", "testing", "next"], var.os_stream)
+    condition     = contains(["stable", "testing", "next"], var.os_stream)
     error_message = "The os_stream must be stable, testing, or next."
   }
 }

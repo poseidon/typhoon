@@ -47,7 +47,7 @@ variable "os_stream" {
   default     = "stable"
 
   validation {
-    condition = contains(["stable", "testing", "next"], var.os_stream)
+    condition     = contains(["stable", "testing", "next"], var.os_stream)
     error_message = "The os_stream must be stable, testing, or next."
   }
 }
@@ -166,7 +166,7 @@ variable "arch" {
   default     = "amd64"
 
   validation {
-    condition = var.arch == "amd64" || var.arch == "arm64"
+    condition     = var.arch == "amd64" || var.arch == "arm64"
     error_message = "The arch must be amd64 or arm64."
   }
 }
