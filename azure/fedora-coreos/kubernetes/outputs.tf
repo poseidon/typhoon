@@ -1,5 +1,6 @@
 output "kubeconfig-admin" {
-  value = module.bootstrap.kubeconfig-admin
+  value     = module.bootstrap.kubeconfig-admin
+  sensitive = true
 }
 
 # Outputs for Kubernetes Ingress
@@ -32,7 +33,8 @@ output "security_group_id" {
 }
 
 output "kubeconfig" {
-  value = module.bootstrap.kubeconfig-kubelet
+  value     = module.bootstrap.kubeconfig-kubelet
+  sensitive = true
 }
 
 # Outputs for custom firewalling
@@ -61,6 +63,7 @@ output "backend_address_pool_id" {
 # Outputs for debug
 
 output "assets_dist" {
-  value = module.bootstrap.assets_dist
+  value     = module.bootstrap.assets_dist
+  sensitive = true
 }
 

@@ -1,5 +1,6 @@
 output "kubeconfig-admin" {
-  value = module.bootstrap.kubeconfig-admin
+  value     = module.bootstrap.kubeconfig-admin
+  sensitive = true
 }
 
 # Outputs for Kubernetes Ingress
@@ -32,7 +33,8 @@ output "worker_security_groups" {
 }
 
 output "kubeconfig" {
-  value = module.bootstrap.kubeconfig-kubelet
+  value     = module.bootstrap.kubeconfig-kubelet
+  sensitive = true
 }
 
 # Outputs for custom load balancing
@@ -55,6 +57,7 @@ output "worker_target_group_https" {
 # Outputs for debug
 
 output "assets_dist" {
-  value = module.bootstrap.assets_dist
+  value     = module.bootstrap.assets_dist
+  sensitive = true
 }
 

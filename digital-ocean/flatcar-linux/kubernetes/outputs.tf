@@ -1,5 +1,6 @@
 output "kubeconfig-admin" {
-  value = module.bootstrap.kubeconfig-admin
+  value     = module.bootstrap.kubeconfig-admin
+  sensitive = true
 }
 
 # Outputs for Kubernetes Ingress
@@ -32,7 +33,8 @@ output "workers_ipv6" {
 # Outputs for worker pools
 
 output "kubeconfig" {
-  value = module.bootstrap.kubeconfig-kubelet
+  value     = module.bootstrap.kubeconfig-kubelet
+  sensitive = true
 }
 
 # Outputs for custom firewalls
@@ -57,6 +59,7 @@ output "vpc_id" {
 # Outputs for debug
 
 output "assets_dist" {
-  value = module.bootstrap.assets_dist
+  value     = module.bootstrap.assets_dist
+  sensitive = true
 }
 
