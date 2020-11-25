@@ -10,6 +10,8 @@ Notable changes between versions.
 * Update Calico from v3.16.5 to v3.17.0 ([#890](https://github.com/poseidon/typhoon/pull/890))
   * Enable Calico MTU auto-detection
   * Remove [workaround](https://github.com/poseidon/typhoon/pull/724) to Calico cni-plugin [issue](https://github.com/projectcalico/cni-plugin/issues/874)
+* Relax `terraform-provider-ct` version constraint to v0.6+ ([#893](https://github.com/poseidon/typhoon/pull/893))
+  * Allow upgrading `terraform-provider-ct` to v0.7.x ([warn](https://typhoon.psdn.io/topics/maintenance/#upgrade-terraform-provider-ct))
 
 ### AWS
 

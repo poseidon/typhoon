@@ -129,34 +129,22 @@ Typhoon supports multi-controller clusters, so it is possible to upgrade a clust
 
 ### Upgrade terraform-provider-ct
 
-The [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin parses, validates, and converts Container Linux Configs into Ignition user-data for provisioning instances. Since Typhoon v1.12.2+, the plugin can be updated in-place so that on apply, only workers will be replaced.
-
-Add the [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin binary for your system to `~/.terraform.d/plugins/`, noting the final name.
-
-```sh
-wget https://github.com/poseidon/terraform-provider-ct/releases/download/v0.5.0/terraform-provider-ct-v0.6.1-linux-amd64.tar.gz
-tar xzf terraform-provider-ct-v0.6.1-linux-amd64.tar.gz
-mv terraform-provider-ct-v0.6.1-linux-amd64/terraform-provider-ct ~/.terraform.d/plugins/terraform-provider-ct_v0.6.1
-```
-
-Binary names are versioned. This enables the ability to upgrade different plugins and have clusters pin different versions.
-
-```
-$ tree ~/.terraform.d/
-/home/user/.terraform.d/
-└── plugins
-    ├── terraform-provider-ct_v0.2.1
-    ├── terraform-provider-ct_v0.3.0
-    ├── terraform-provider-ct_v0.6.1
-    └── terraform-provider-matchbox_v0.4.1
-```
-
+The [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin parses, validates, and converts Fedora CoreOS or Flatcar Linux Configs into Ignition user-data for provisioning instances. Since Typhoon v1.12.2+, the plugin can be updated in-place so that on apply, only workers will be replaced.
 
 Update the version of the `ct` plugin in each Terraform working directory. Typhoon clusters managed in the working directory **must** be v1.12.2 or higher.
 
-```tf
-provider "ct" {
-  version = "0.6.1"
+```diff
+provider "ct" {}
+
+terraform {
+  required_providers {
+    ct = {
+      source  = "poseidon/ct"
+-     version = "0.6.1"
++     version = "0.7.1"
+    }
+    ...
+  }
 }
 ```
 
@@ -168,7 +156,6 @@ terraform plan
 ```
 
 Apply the change. Worker nodes' user-data will be changed and workers will be replaced. Rollout happens slightly differently on each platform:
-
 
 #### AWS
 
