@@ -15,6 +15,12 @@ Notable changes between versions.
   * NLB DNS name has both A and AAAA records
   * NLB to target node traffic is IPv4 (no change)
 
+### Fedora CoreOS
+
+#### AWS
+
+* Fix AMI query for which could fail in some regions ([#887](https://github.com/poseidon/typhoon/pull/887))
+
 ### Addons
 
 * Update Prometheus from v2.22.2 to [v2.23.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.23.0-rc.0)

@@ -44,7 +44,7 @@ resource "aws_autoscaling_group" "workers" {
 
 # Worker template
 resource "aws_launch_configuration" "worker" {
-  image_id          = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm.image_id : data.aws_ami.fedora-coreos.image_id
+  image_id          = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
   instance_type     = var.instance_type
   spot_price        = var.spot_price > 0 ? var.spot_price : null
   enable_monitoring = false

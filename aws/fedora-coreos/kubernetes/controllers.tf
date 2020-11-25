@@ -22,7 +22,7 @@ resource "aws_instance" "controllers" {
   }
 
   instance_type = var.controller_type
-  ami           = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm.image_id : data.aws_ami.fedora-coreos.image_id
+  ami           = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
   user_data     = data.ct_config.controller-ignitions.*.rendered[count.index]
 
   # storage
