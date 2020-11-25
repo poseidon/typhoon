@@ -32,7 +32,7 @@ Notable changes between versions.
 ### Addons
 
 * Update Prometheus from v2.22.2 to [v2.23.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.23.0-rc.0)
-* Update Grafana from v7.3.2 to [v7.3.3](https://github.com/grafana/grafana/releases/tag/v7.3.3)
+* Update Grafana from v7.3.2 to [v7.3.4](https://github.com/grafana/grafana/releases/tag/v7.3.4)
 
 ## v1.19.4
 
