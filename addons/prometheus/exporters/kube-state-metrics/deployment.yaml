@@ -25,7 +25,7 @@ spec:
       serviceAccountName: kube-state-metrics
       containers:
       - name: kube-state-metrics
-        image: quay.io/coreos/kube-state-metrics:v2.0.0-alpha.2
+        image: quay.io/coreos/kube-state-metrics:v2.0.0-alpha.3
         ports:
           - name: metrics
             containerPort: 8080
