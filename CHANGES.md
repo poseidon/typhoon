@@ -21,6 +21,11 @@ Notable changes between versions.
 
 * Fix AMI query for which could fail in some regions ([#887](https://github.com/poseidon/typhoon/pull/887))
 
+#### Bare-Metal
+
+* Use initramfs and rootfs images as initrd's ([#889](https://github.com/poseidon/typhoon/pull/889))
+  * Requires Fedora CoreOS version with rootfs images (e.g. 32.20200923.3.0+)
+
 ### Addons
 
 * Update Prometheus from v2.22.2 to [v2.23.0-rc.0](https://github.com/prometheus/prometheus/releases/tag/v2.23.0-rc.0)

@@ -160,7 +160,7 @@ module "mercury" {
   cluster_name            = "mercury"
   matchbox_http_endpoint  = "http://matchbox.example.com"
   os_stream               = "stable"
-  os_version              = "31.20200113.3.1"
+  os_version              = "32.20201104.3.0"
 
   # configuration
   k8s_domain_name    = "node1.example.com"
@@ -321,7 +321,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | cluster_name | Unique cluster name | "mercury" |
 | matchbox_http_endpoint | Matchbox HTTP read-only endpoint | "http://matchbox.example.com:port" |
 | os_stream | Fedora CoreOS release stream | "stable" |
-| os_version | Fedora CoreOS version to PXE and install | "31.20200113.3.1" |
+| os_version | Fedora CoreOS version to PXE and install | "32.20201104.3.0" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
 | controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |
