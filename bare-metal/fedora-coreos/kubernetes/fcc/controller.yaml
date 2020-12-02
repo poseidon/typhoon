@@ -157,7 +157,7 @@ storage:
           mv tls/etcd/etcd-client* /etc/kubernetes/bootstrap-secrets/
           chown -R etcd:etcd /etc/ssl/etcd
           chmod -R 500 /etc/ssl/etcd
-          mv auth/kubeconfig /etc/kubernetes/bootstrap-secrets/
+          mv auth/* /etc/kubernetes/bootstrap-secrets/
           mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
           mkdir -p /etc/kubernetes/manifests
           mv static-manifests/* /etc/kubernetes/manifests/
@@ -171,7 +171,7 @@ storage:
       contents:
         inline: |
           #!/bin/bash -e
-          export KUBECONFIG=/etc/kubernetes/secrets/kubeconfig
+          export KUBECONFIG=/etc/kubernetes/secrets/admin.conf
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
