@@ -125,7 +125,7 @@ systemd:
         ExecStartPre=-/usr/bin/podman rm bootstrap
         ExecStart=/usr/bin/podman run --name bootstrap \
             --network host \
-            --volume /etc/kubernetes/bootstrap-secrets:/etc/kubernetes/secrets:ro,z \
+            --volume /etc/kubernetes/pki:/etc/kubernetes/pki:ro,z \
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
             --entrypoint=/apply \
@@ -152,26 +152,26 @@ storage:
           mkdir -p -- auth tls/etcd tls/k8s static-manifests manifests/coredns manifests-networking
           awk '/#####/ {filename=$2; next} {print > filename}' assets
           mkdir -p /etc/ssl/etcd/etcd
-          mkdir -p /etc/kubernetes/bootstrap-secrets
+          mkdir -p /etc/kubernetes/pki
           mv tls/etcd/{peer*,server*} /etc/ssl/etcd/etcd/
-          mv tls/etcd/etcd-client* /etc/kubernetes/bootstrap-secrets/
+          mv tls/etcd/etcd-client* /etc/kubernetes/pki/
           chown -R etcd:etcd /etc/ssl/etcd
           chmod -R 500 /etc/ssl/etcd
-          mv auth/* /etc/kubernetes/bootstrap-secrets/
-          mv tls/k8s/* /etc/kubernetes/bootstrap-secrets/
+          mv auth/* /etc/kubernetes/pki/
+          mv tls/k8s/* /etc/kubernetes/pki/
           mkdir -p /etc/kubernetes/manifests
           mv static-manifests/* /etc/kubernetes/manifests/
           mkdir -p /opt/bootstrap/assets
           mv manifests /opt/bootstrap/assets/manifests
           mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
-          chcon -R -u system_u -t container_file_t /etc/kubernetes/bootstrap-secrets
+          chcon -R -u system_u -t container_file_t /etc/kubernetes/pki
     - path: /opt/bootstrap/apply
       mode: 0544
       contents:
         inline: |
           #!/bin/bash -e
-          export KUBECONFIG=/etc/kubernetes/secrets/admin.conf
+          export KUBECONFIG=/etc/kubernetes/pki/admin.conf
           until kubectl version; do
             echo "Waiting for static pod control plane"
             sleep 5
