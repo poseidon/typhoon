@@ -32,6 +32,7 @@ Notable changes between versions.
 
 #### Bare-Metal
 
+* Promote Fedora CoreOS to stable
 * Use initramfs and rootfs images as initrd's ([#889](https://github.com/poseidon/typhoon/pull/889))
   * Requires Fedora CoreOS version with rootfs images (e.g. 32.20200923.3.0+)
 
