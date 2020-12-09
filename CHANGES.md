@@ -4,7 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
-* Kubernetes [v1.20.0-rc.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1200-rc0)
+* Kubernetes [v1.20.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1200)
 * Add input variable validations ([#880](https://github.com/poseidon/typhoon/pull/880))
   * Require Terraform v0.13+ ([migration guide](https://typhoon.psdn.io/topics/maintenance/#terraform-versions))
 * Support Terraform v0.13.x and v0.14.x ([#905](https://github.com/poseidon/typhoon/pull/905))
