@@ -2,7 +2,7 @@
 
 Notable changes between versions.
 
-## Latest
+## v1.20.0
 
 * Kubernetes [v1.20.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1200)
 * Add input variable validations ([#880](https://github.com/poseidon/typhoon/pull/880))
@@ -27,7 +27,7 @@ Notable changes between versions.
 
 ### Bare-Metal
 
-* Remove iSCSI `/etc/iscsi` and `iscsadm` mounts from Kubelet ()
+* Remove iSCSI `/etc/iscsi` and `iscsadm` mounts from Kubelet ([#912](https://github.com/poseidon/typhoon/pull/912))
 
 ### Fedora CoreOS
 
