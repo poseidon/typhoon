@@ -25,6 +25,10 @@ Notable changes between versions.
   * NLB DNS name has both A and AAAA records
   * NLB to target node traffic is IPv4 (no change)
 
+### Bare-Metal
+
+* Remove iSCSI `/etc/iscsi` and `iscsadm` mounts from Kubelet ()
+
 ### Fedora CoreOS
 
 #### AWS

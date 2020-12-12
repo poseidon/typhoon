@@ -63,8 +63,6 @@ systemd:
           -v /var/lib/kubelet:/var/lib/kubelet:rshared \
           -v /var/log:/var/log \
           -v /opt/cni/bin:/opt/cni/bin \
-          -v /etc/iscsi:/etc/iscsi \
-          -v /usr/sbin/iscsiadm:/usr/sbin/iscsiadm \
           $${KUBELET_IMAGE} \
           --anonymous-auth=false \
           --authentication-token-webhook \

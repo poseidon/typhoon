@@ -47,8 +47,6 @@ systemd:
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
           --volume /opt/cni/bin:/opt/cni/bin:z \
-          --volume /etc/iscsi:/etc/iscsi \
-          --volume /sbin/iscsiadm:/sbin/iscsiadm \
           $${KUBELET_IMAGE} \
           --anonymous-auth=false \
           --authentication-token-webhook \
