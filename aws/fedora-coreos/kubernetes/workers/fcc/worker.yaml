@@ -3,7 +3,7 @@ variant: fcos
 version: 1.1.0
 systemd:
   units:
-    - name: docker.service
+    - name: containerd.service
       enabled: true
     - name: wait-for-dns.service
       enabled: true
@@ -47,7 +47,7 @@ systemd:
           --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
           --volume /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
           --volume /var/lib/calico:/var/lib/calico:ro \
-          --volume /var/lib/docker:/var/lib/docker \
+          --volume /var/lib/containerd:/var/lib/containerd:ro \
           --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
@@ -59,6 +59,8 @@ systemd:
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --cgroup-driver=systemd \
           --cgroups-per-qos=true \
+          --container-runtime=remote \
+          --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
           --enforce-node-allocatable=pods \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
@@ -130,6 +132,18 @@ storage:
           DefaultCPUAccounting=yes
           DefaultMemoryAccounting=yes
           DefaultBlockIOAccounting=yes
+    - path: /etc/containerd/config.toml
+      overwrite: true
+      contents:
+        inline: |
+          [plugins]
+            [plugins."io.containerd.grpc.v1.cri"]
+              enable_selinux = true
+              [plugins."io.containerd.grpc.v1.cri".cni]
+                bin_dir = "/opt/cni/bin"
+                conf_dir = "/etc/kubernetes/cni/net.d"
+                max_conf_num = 1
+                conf_template = ""
 passwd:
   users:
     - name: core
