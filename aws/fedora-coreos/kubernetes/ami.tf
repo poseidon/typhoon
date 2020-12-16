@@ -14,15 +14,33 @@ data "aws_ami" "fedora-coreos" {
   }
 
   filter {
-    name   = "name"
-    values = ["fedora-coreos-31.*.*.*-hvm"]
+    name   = "description"
+    values = ["Fedora CoreOS ${var.os_stream} *"]
+  }
+}
+
+# Experimental Fedora CoreOS arm64 / aarch64 AMIs from Poseidon
+# WARNING: These AMIs will be removed when Fedora CoreOS publishes arm64 AMIs
+# and may be removed for any reason before then as well. Do not use.
+data "aws_ami" "fedora-coreos-arm" {
+  count = var.arch == "arm64" ? 1 : 0
+
+  most_recent = true
+  owners      = ["099663496933"]
+
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
   }
 
   filter {
-    name   = "description"
-    values = ["Fedora CoreOS stable*"]
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 
-  # try to filter out dev images (AWS filters can't)
-  name_regex = "^fedora-coreos-31.[0-9]*.[0-9]*.[0-9]*-hvm*"
+  filter {
+    name   = "name"
+    values = ["fedora-coreos-*"]
+  }
 }
+

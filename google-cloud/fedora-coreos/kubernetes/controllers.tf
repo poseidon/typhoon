@@ -42,7 +42,7 @@ resource "google_compute_instance" "controllers" {
     auto_delete = true
 
     initialize_params {
-      image = var.os_image == "" ? data.google_compute_image.fedora-coreos.self_link : var.os_image
+      image = data.google_compute_image.fedora-coreos.self_link
       size  = var.disk_size
     }
   }
@@ -59,7 +59,10 @@ resource "google_compute_instance" "controllers" {
   tags           = ["${var.cluster_name}-controller"]
 
   lifecycle {
-    ignore_changes = [metadata]
+    ignore_changes = [
+      metadata,
+      boot_disk[0].initialize_params
+    ]
   }
 }
 

@@ -17,18 +17,18 @@ spec:
       labels:
         name: node-exporter
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
       serviceAccountName: node-exporter
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
       hostNetwork: true
       hostPID: true
       containers:
       - name: node-exporter
-        image: quay.io/prometheus/node-exporter:v1.0.0-rc.0
+        image: quay.io/prometheus/node-exporter:v1.0.1
         args:
           - --path.procfs=/host/proc
           - --path.sysfs=/host/sys

@@ -1,6 +1,6 @@
 # Operating Systems
 
-Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/), [Flatcar Linux](https://www.flatcar-linux.org/) and Container Linux (EOL in May 2020). These operating systems were chosen because they offer:
+Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/) and [Flatcar Linux](https://www.flatcar-linux.org/). These operating systems were chosen because they offer:
 
 * Minimalism and focus on clustered operation
 * Automated and atomic operating system upgrades
@@ -16,10 +16,10 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 | Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|---------------------------------|---------------|
-| Kernel            | ~4.19.x | ~5.5.x |
-| systemd           | 241 | 243 |
+| Kernel            | ~5.4.x | ~5.8.x |
+| systemd           | 245 | 245 |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
-| Container Engine  | docker 18.06.3-ce  | docker 18.09.8 |
+| Container Engine  | docker 19.3.12  | docker 19.03.11 |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
 | logging driver    | json-file | journald |
 | cgroup driver     | cgroupfs (except Flatcar edge) | systemd  |
@@ -35,10 +35,10 @@ Together, they diversify Typhoon to support a range of container technologies.
 | control plane     | static pods   | static pods   |
 | kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
 | control plane images | upstream images | upstream images |
-| on-host etcd      | rkt-fly   | podman |
-| on-host kubelet   | rkt-fly   | podman |
-| CNI plugins       | calico or flannel | calico or flannel |
-| coordinated drain & OS update | [CLUO](https://github.com/coreos/container-linux-update-operator) addon | (planned) |
+| on-host etcd      | docker    | podman |
+| on-host kubelet   | docker    | podman |
+| CNI plugins       | calico, cilium, flannel | calico, cilium, flannel |
+| coordinated drain & OS update | [FLUO](https://github.com/kinvolk/flatcar-linux-update-operator) addon | [fleetlock](https://github.com/poseidon/fleetlock) |
 
 ## Directory Locations
 

@@ -11,10 +11,10 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
-* Kubernetes v1.18.2 (upstream)
-* Single or multi-master, [Calico](https://www.projectcalico.org/) or [flannel](https://github.com/coreos/flannel) networking
-* On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
-* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/), [preemptible](https://typhoon.psdn.io/cl/google-cloud/#preemption) workers, and [snippets](https://typhoon.psdn.io/advanced/customization/#container-linux) customization
+* Kubernetes v1.20.0 (upstream)
+* Single or multi-master, [Calico](https://www.projectcalico.org/) or [Cilium](https://github.com/cilium/cilium) or [flannel](https://github.com/coreos/flannel) networking
+* On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/), SELinux enforcing
+* Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/), [preemptible](https://typhoon.psdn.io/flatcar-linux/google-cloud/#preemption) workers, and [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customization
 * Ready for Ingress, Prometheus, Grafana, CSI, or other [addons](https://typhoon.psdn.io/addons/overview/)
 
 ## Modules
@@ -27,36 +27,26 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 |---------------|------------------|------------------|--------|
 | AWS           | Fedora CoreOS | [aws/fedora-coreos/kubernetes](aws/fedora-coreos/kubernetes) | stable |
 | Azure         | Fedora CoreOS | [azure/fedora-coreos/kubernetes](azure/fedora-coreos/kubernetes) | alpha |
-| Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](bare-metal/fedora-coreos/kubernetes) | beta |
-| DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](digital-ocean/fedora-coreos/kubernetes) | alpha |
-| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | beta |
+| Bare-Metal    | Fedora CoreOS | [bare-metal/fedora-coreos/kubernetes](bare-metal/fedora-coreos/kubernetes) | stable |
+| DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](digital-ocean/fedora-coreos/kubernetes) | beta |
+| Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | stable |
 
-Typhoon is available for [Flatcar Container Linux](https://www.flatcar-linux.org/releases/).
-
-| Platform      | Operating System | Terraform Module | Status |
-|---------------|------------------|------------------|--------|
-| AWS           | Flatcar Linux    | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| Azure         | Flatcar Linux    | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
-| Bare-Metal    | Flatcar Linux    | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
-| DigitalOcean | Flatcar Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | alpha |
-| Google Cloud  | Flatcar Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | alpha |
-
-Typhoon is available for CoreOS Container Linux ([no updates](https://coreos.com/os/eol/) after May 2020).
+Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/).
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
-| AWS           | Container Linux  | [aws/container-linux/kubernetes](aws/container-linux/kubernetes) | stable |
-| Azure         | Container Linux  | [azure/container-linux/kubernetes](azure/container-linux/kubernetes) | alpha |
-| Bare-Metal    | Container Linux  | [bare-metal/container-linux/kubernetes](bare-metal/container-linux/kubernetes) | stable |
-| Digital Ocean | Container Linux  | [digital-ocean/container-linux/kubernetes](digital-ocean/container-linux/kubernetes) | beta |
-| Google Cloud  | Container Linux  | [google-cloud/container-linux/kubernetes](google-cloud/container-linux/kubernetes) | stable |
+| AWS           | Flatcar Linux    | [aws/flatcar-linux/kubernetes](aws/flatcar-linux/kubernetes) | stable |
+| Azure         | Flatcar Linux    | [azure/flatcar-linux/kubernetes](azure/flatcar-linux/kubernetes) | alpha |
+| Bare-Metal    | Flatcar Linux    | [bare-metal/flatcar-linux/kubernetes](bare-metal/flatcar-linux/kubernetes) | stable |
+| DigitalOcean | Flatcar Linux  | [digital-ocean/flatcar-linux/kubernetes](digital-ocean/flatcar-linux/kubernetes) | beta |
+| Google Cloud  | Flatcar Linux  | [google-cloud/flatcar-linux/kubernetes](google-cloud/flatcar-linux/kubernetes) | beta |
 
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)
 * Architecture [concepts](https://typhoon.psdn.io/architecture/concepts/) and [operating systems](https://typhoon.psdn.io/architecture/operating-systems/)
 * Fedora CoreOS tutorials for [AWS](docs/fedora-coreos/aws.md), [Azure](docs/fedora-coreos/azure.md), [Bare-Metal](docs/fedora-coreos/bare-metal.md), [DigitalOcean](docs/fedora-coreos/digitalocean.md), and [Google Cloud](docs/fedora-coreos/google-cloud.md)
-* Flatcar Linux tutorials for [AWS](docs/cl/aws.md), [Azure](docs/cl/azure.md), [Bare-Metal](docs/cl/bare-metal.md), [DigitalOcean](docs/cl/digital-ocean.md), and [Google Cloud](docs/cl/google-cloud.md)
+* Flatcar Linux tutorials for [AWS](docs/flatcar-linux/aws.md), [Azure](docs/flatcar-linux/azure.md), [Bare-Metal](docs/flatcar-linux/bare-metal.md), [DigitalOcean](docs/flatcar-linux/digitalocean.md), and [Google Cloud](docs/flatcar-linux/google-cloud.md)
 
 ## Usage
 
@@ -64,7 +54,7 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 
 ```tf
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/container-linux/kubernetes?ref=v1.18.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.20.0"
 
   # Google Cloud
   cluster_name  = "yavin"
@@ -103,9 +93,9 @@ In 4-8 minutes (varies by platform), the cluster will be ready. This Google Clou
 $ export KUBECONFIG=/home/user/.kube/configs/yavin-config
 $ kubectl get nodes
 NAME                                       ROLES    STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.18.2
-yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.18.2
-yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.18.2
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.20.0
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.20.0
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.20.0
 ```
 
 List the pods.

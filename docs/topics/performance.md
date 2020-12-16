@@ -38,7 +38,7 @@ Network performance varies based on the platform and CNI plugin. `iperf` was use
 
 Notes:
 
-* Calico and Flannel have comparable performance. Platform and configuration differences dominate.
+* Calico, Cilium, and Flannel have comparable performance. Platform and configuration differences dominate.
 * Azure and DigitalOcean network performance can be quite variable or depend on machine type
 * Only [certain AWS EC2 instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) allow jumbo frames. This is why the default MTU on AWS must be 1480.
 

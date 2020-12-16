@@ -34,10 +34,15 @@ variable "instance_type" {
   default     = "t3.small"
 }
 
-variable "os_image" {
+variable "os_stream" {
   type        = string
-  description = "AMI channel for Fedora CoreOS (not yet used)"
+  description = "Fedora CoreOS image stream for instances (e.g. stable, testing, next)"
   default     = "stable"
+
+  validation {
+    condition     = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "disk_size" {
@@ -107,4 +112,23 @@ variable "node_labels" {
   type        = list(string)
   description = "List of initial node labels"
   default     = []
+}
+
+variable "node_taints" {
+  type        = list(string)
+  description = "List of initial node taints"
+  default     = []
+}
+
+# unofficial, undocumented, unsupported
+
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+
+  validation {
+    condition     = var.arch == "amd64" || var.arch == "arm64"
+    error_message = "The arch must be amd64 or arm64."
+  }
 }

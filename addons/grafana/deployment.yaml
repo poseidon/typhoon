@@ -18,12 +18,13 @@ spec:
       labels:
         name: grafana
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: grafana
-          image: docker.io/grafana/grafana:7.0.0-beta2
+          image: docker.io/grafana/grafana:7.3.5
           env:
             - name: GF_PATHS_CONFIG
               value: "/etc/grafana/custom.ini"

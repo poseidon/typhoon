@@ -37,9 +37,10 @@ resource "digitalocean_droplet" "workers" {
   size  = var.worker_type
 
   # network
-  # TODO: Only official DigitalOcean images support IPv6
-  ipv6               = false
   private_networking = true
+  vpc_uuid           = digitalocean_vpc.network.id
+  # TODO: Only official DigitalOcean images support IPv6
+  ipv6 = false
 
   user_data = data.ct_config.worker-ignition.rendered
   ssh_keys  = var.ssh_fingerprints

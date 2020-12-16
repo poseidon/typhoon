@@ -49,6 +49,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -72,7 +73,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(coredns_dns_request_count_total{instance=~\"$instance\"}[5m])) by (proto)",
+                  "expr": "sum(rate(coredns_dns_requests_total{instance=~\"$instance\"}[5m])) by (proto)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{proto}}",
@@ -140,6 +141,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -163,7 +165,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(coredns_dns_request_type_count_total{instance=~\"$instance\"}[5m])) by (type)",
+                  "expr": "sum(rate(coredns_dns_requests_total{instance=~\"$instance\"}[5m])) by (type)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{type}}",
@@ -231,6 +233,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": "true"
               },
@@ -254,7 +257,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(coredns_dns_request_count_total{instance=~\"$instance\"}[5m])) by (zone)",
+                  "expr": "sum(rate(coredns_dns_requests_total{instance=~\"$instance\"}[5m])) by (zone)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{zone}}",
@@ -335,6 +338,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -440,6 +444,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -463,7 +468,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(rate(coredns_dns_response_rcode_count_total{instance=~\"$instance\"}[5m])) by (rcode)",
+                  "expr": "sum(rate(coredns_dns_responses_total{instance=~\"$instance\"}[5m])) by (rcode)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{rcode}}",
@@ -544,6 +549,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -649,6 +655,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -767,6 +774,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },
@@ -790,7 +798,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(coredns_cache_size{instance=~\"$instance\"}) by (type)",
+                  "expr": "sum(coredns_cache_entries{instance=~\"$instance\"}) by (type)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{type}}",
@@ -858,6 +866,7 @@ data:
                 "min": false,
                 "rightSide": false,
                 "show": "true",
+                "sideWidth": null,
                 "total": false,
                 "values": false
               },

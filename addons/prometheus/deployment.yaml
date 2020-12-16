@@ -14,13 +14,14 @@ spec:
       labels:
         name: prometheus
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: prometheus
       containers:
         - name: prometheus
-          image: quay.io/prometheus/prometheus:v2.18.1
+          image: quay.io/prometheus/prometheus:v2.23.0
           args:
             - --web.listen-address=0.0.0.0:9090
             - --config.file=/etc/prometheus/prometheus.yaml

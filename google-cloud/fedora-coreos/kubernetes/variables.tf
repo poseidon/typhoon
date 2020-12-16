@@ -49,14 +49,12 @@ variable "worker_type" {
 variable "os_stream" {
   type        = string
   description = "Fedora CoreOS stream for compute instances (e.g. stable, testing, next)"
-  default = "stable"
-}
+  default     = "stable"
 
-# Deprecated
-variable "os_image" {
-  type        = string
-  description = "Fedora CoreOS image for compute instances (e.g. fedora-coreos)"
-  default = ""
+  validation {
+    condition     = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "disk_size" {
@@ -88,12 +86,6 @@ variable "worker_snippets" {
 variable "ssh_authorized_key" {
   type        = string
   description = "SSH public key for user 'core'"
-}
-
-variable "asset_dir" {
-  type        = string
-  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
-  default     = ""
 }
 
 variable "networking" {

@@ -12,8 +12,13 @@ variable "matchbox_http_endpoint" {
 
 variable "os_stream" {
   type        = string
-  description = "Fedora CoreOS release stream (e.g. testing, stable)"
+  description = "Fedora CoreOS release stream (e.g. stable, testing, next)"
   default     = "stable"
+
+  validation {
+    condition     = contains(["stable", "testing", "next"], var.os_stream)
+    error_message = "The os_stream must be stable, testing, or next."
+  }
 }
 
 variable "os_version" {
@@ -78,12 +83,6 @@ variable "k8s_domain_name" {
 variable "ssh_authorized_key" {
   type        = string
   description = "SSH public key for user 'core'"
-}
-
-variable "asset_dir" {
-  type        = string
-  description = "Absolute path to a directory where generated assets should be placed (contains secrets)"
-  default     = ""
 }
 
 variable "networking" {

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingress-controller-public
+  name: nginx-ingress-controller
   namespace: ingress
 spec:
   replicas: 2
@@ -10,19 +10,20 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      name: ingress-controller-public
+      name: nginx-ingress-controller
       phase: prod
   template:
     metadata:
       labels:
-        name: ingress-controller-public
+        name: nginx-ingress-controller
         phase: prod
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.32.0
+          image: k8s.gcr.io/ingress-nginx/controller:v0.41.2
           args:
             - /nginx-ingress-controller
             - --ingress-class=public
@@ -76,4 +77,3 @@ spec:
             runAsUser: 101 # www-data
       restartPolicy: Always
       terminationGracePeriodSeconds: 300
-
