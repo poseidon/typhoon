@@ -2,6 +2,10 @@
 
 Notable changes between versions.
 
+## Latest
+
+* Kubernetes [v1.20.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1201)
+
 ## v1.20.0
 
 * Kubernetes [v1.20.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1200)
