@@ -11,6 +11,10 @@ Notable changes between versions.
 * Fedora CoreOS 33 has stronger crypto defaults ([**notice**](https://docs.fedoraproject.org/en-US/fedora-coreos/faq/#_why_does_ssh_stop_working_after_upgrading_to_fedora_33), [#915](https://github.com/poseidon/typhoon/issues/915))
   * Use a non-RSA SSH key or add the workaround provided in upstream [Fedora docs](https://docs.fedoraproject.org/en-US/fedora-coreos/faq/#_why_does_ssh_stop_working_after_upgrading_to_fedora_33) as a [snippet](https://typhoon.psdn.io/advanced/customization/#fedora-coreos) (**action required**)
 
+### Addons
+
+* Update Grafana from v7.3.5 to [v7.3.6](https://github.com/grafana/grafana/releases/tag/v7.3.6)
+
 ## v1.20.0
 
 * Kubernetes [v1.20.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1200)

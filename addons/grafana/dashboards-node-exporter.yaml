@@ -36,6 +36,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -129,6 +130,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 0,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -255,6 +257,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -420,7 +423,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "100 -\n(\n  node_memory_MemAvailable_bytes{job=\"node-exporter\", instance=\"$instance\"}\n/\n  node_memory_MemTotal_bytes{job=\"node-exporter\", instance=\"$instance\"}\n* 100\n)\n",
+                  "expr": "100 -\n(\n  avg(node_memory_MemAvailable_bytes{job=\"node-exporter\", instance=\"$instance\"})\n/\n  avg(node_memory_MemTotal_bytes{job=\"node-exporter\", instance=\"$instance\"})\n* 100\n)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -462,6 +465,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 0,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -578,6 +582,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -697,6 +702,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 0,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -790,6 +796,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 0,
+              "fillGradient": 0,
               "gridPos": {
 
               },

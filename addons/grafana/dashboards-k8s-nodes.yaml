@@ -172,7 +172,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(kubelet_running_pods{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"})",
+                  "expr": "sum(kubelet_running_pods{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"}) OR sum(kubelet_running_pod_count{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"})",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{instance}}",
@@ -256,7 +256,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(kubelet_running_containers{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"})",
+                  "expr": "sum(kubelet_running_containers{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"}) OR sum(kubelet_running_container_count{cluster=\"$cluster\", job=\"kubelet\", instance=~\"$instance\"})",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{instance}}",
@@ -553,6 +553,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -645,6 +646,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -750,6 +752,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -855,6 +858,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -954,6 +958,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1066,6 +1071,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1160,6 +1166,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1267,6 +1274,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1374,6 +1382,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1466,6 +1475,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1572,6 +1582,7 @@ data:
               "datasource": "$datasource",
               "description": "Pod lifecycle event generator",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1664,6 +1675,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1769,6 +1781,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1874,6 +1887,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2000,6 +2014,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2105,6 +2120,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2197,6 +2213,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2289,6 +2306,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2613,6 +2631,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2705,6 +2724,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2810,6 +2830,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2902,6 +2923,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3007,6 +3029,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3120,6 +3143,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3225,6 +3249,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3330,6 +3355,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3422,6 +3448,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3514,6 +3541,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },

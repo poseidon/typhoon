@@ -9,7 +9,8 @@ data:
             {
               "alert": "etcdMembersDown",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": members are down ({{ $value }})."
+                "description": "etcd cluster \"{{ $labels.job }}\": members are down ({{ $value }}).",
+                "summary": "etcd cluster members are down."
               },
               "expr": "max without (endpoint) (\n  sum without (instance) (up{job=~\".*etcd.*\"} == bool 0)\nor\n  count without (To) (\n    sum without (instance) (rate(etcd_network_peer_sent_failures_total{job=~\".*etcd.*\"}[120s])) > 0.01\n  )\n)\n> 0\n",
               "for": "10m",
@@ -20,7 +21,8 @@ data:
             {
               "alert": "etcdInsufficientMembers",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": insufficient members ({{ $value }})."
+                "description": "etcd cluster \"{{ $labels.job }}\": insufficient members ({{ $value }}).",
+                "summary": "etcd cluster has insufficient number of members."
               },
               "expr": "sum(up{job=~\".*etcd.*\"} == bool 1) without (instance) < ((count(up{job=~\".*etcd.*\"}) without (instance) + 1) / 2)\n",
               "for": "3m",
@@ -31,7 +33,8 @@ data:
             {
               "alert": "etcdNoLeader",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": member {{ $labels.instance }} has no leader."
+                "description": "etcd cluster \"{{ $labels.job }}\": member {{ $labels.instance }} has no leader.",
+                "summary": "etcd cluster has no leader."
               },
               "expr": "etcd_server_has_leader{job=~\".*etcd.*\"} == 0\n",
               "for": "1m",
@@ -42,7 +45,8 @@ data:
             {
               "alert": "etcdHighNumberOfLeaderChanges",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": {{ $value }} leader changes within the last 15 minutes. Frequent elections may be a sign of insufficient resources, high network latency, or disruptions by other components and should be investigated."
+                "description": "etcd cluster \"{{ $labels.job }}\": {{ $value }} leader changes within the last 15 minutes. Frequent elections may be a sign of insufficient resources, high network latency, or disruptions by other components and should be investigated.",
+                "summary": "etcd cluster has high number of leader changes."
               },
               "expr": "increase((max without (instance) (etcd_server_leader_changes_seen_total{job=~\".*etcd.*\"}) or 0*absent(etcd_server_leader_changes_seen_total{job=~\".*etcd.*\"}))[15m:1m]) >= 4\n",
               "for": "5m",
@@ -53,7 +57,8 @@ data:
             {
               "alert": "etcdGRPCRequestsSlow",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": gRPC requests to {{ $labels.grpc_method }} are taking {{ $value }}s on etcd instance {{ $labels.instance }}."
+                "description": "etcd cluster \"{{ $labels.job }}\": gRPC requests to {{ $labels.grpc_method }} are taking {{ $value }}s on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd grpc requests are slow"
               },
               "expr": "histogram_quantile(0.99, sum(rate(grpc_server_handling_seconds_bucket{job=~\".*etcd.*\", grpc_type=\"unary\"}[5m])) without(grpc_type))\n> 0.15\n",
               "for": "10m",
@@ -64,7 +69,8 @@ data:
             {
               "alert": "etcdMemberCommunicationSlow",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": member communication with {{ $labels.To }} is taking {{ $value }}s on etcd instance {{ $labels.instance }}."
+                "description": "etcd cluster \"{{ $labels.job }}\": member communication with {{ $labels.To }} is taking {{ $value }}s on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd cluster member communication is slow."
               },
               "expr": "histogram_quantile(0.99, rate(etcd_network_peer_round_trip_time_seconds_bucket{job=~\".*etcd.*\"}[5m]))\n> 0.15\n",
               "for": "10m",
@@ -75,7 +81,8 @@ data:
             {
               "alert": "etcdHighNumberOfFailedProposals",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": {{ $value }} proposal failures within the last 30 minutes on etcd instance {{ $labels.instance }}."
+                "description": "etcd cluster \"{{ $labels.job }}\": {{ $value }} proposal failures within the last 30 minutes on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd cluster has high number of proposal failures."
               },
               "expr": "rate(etcd_server_proposals_failed_total{job=~\".*etcd.*\"}[15m]) > 5\n",
               "for": "15m",
@@ -86,7 +93,8 @@ data:
             {
               "alert": "etcdHighFsyncDurations",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": 99th percentile fync durations are {{ $value }}s on etcd instance {{ $labels.instance }}."
+                "description": "etcd cluster \"{{ $labels.job }}\": 99th percentile fsync durations are {{ $value }}s on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd cluster 99th percentile fsync durations are too high."
               },
               "expr": "histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket{job=~\".*etcd.*\"}[5m]))\n> 0.5\n",
               "for": "10m",
@@ -95,9 +103,21 @@ data:
               }
             },
             {
+              "alert": "etcdHighFsyncDurations",
+              "annotations": {
+                "message": "etcd cluster \"{{ $labels.job }}\": 99th percentile fsync durations are {{ $value }}s on etcd instance {{ $labels.instance }}."
+              },
+              "expr": "histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket{job=~\".*etcd.*\"}[5m]))\n> 1\n",
+              "for": "10m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
               "alert": "etcdHighCommitDurations",
               "annotations": {
-                "message": "etcd cluster \"{{ $labels.job }}\": 99th percentile commit durations {{ $value }}s on etcd instance {{ $labels.instance }}."
+                "description": "etcd cluster \"{{ $labels.job }}\": 99th percentile commit durations {{ $value }}s on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd cluster 99th percentile commit durations are too high."
               },
               "expr": "histogram_quantile(0.99, rate(etcd_disk_backend_commit_duration_seconds_bucket{job=~\".*etcd.*\"}[5m]))\n> 0.25\n",
               "for": "10m",
@@ -108,7 +128,8 @@ data:
             {
               "alert": "etcdHighNumberOfFailedHTTPRequests",
               "annotations": {
-                "message": "{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}"
+                "description": "{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}",
+                "summary": "etcd has high number of failed HTTP requests."
               },
               "expr": "sum(rate(etcd_http_failed_total{job=~\".*etcd.*\", code!=\"404\"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~\".*etcd.*\"}[5m]))\nwithout (code) > 0.01\n",
               "for": "10m",
@@ -119,7 +140,8 @@ data:
             {
               "alert": "etcdHighNumberOfFailedHTTPRequests",
               "annotations": {
-                "message": "{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}."
+                "description": "{{ $value }}% of requests for {{ $labels.method }} failed on etcd instance {{ $labels.instance }}.",
+                "summary": "etcd has high number of failed HTTP requests."
               },
               "expr": "sum(rate(etcd_http_failed_total{job=~\".*etcd.*\", code!=\"404\"}[5m])) without (code) / sum(rate(etcd_http_received_total{job=~\".*etcd.*\"}[5m]))\nwithout (code) > 0.05\n",
               "for": "10m",
@@ -130,9 +152,32 @@ data:
             {
               "alert": "etcdHTTPRequestsSlow",
               "annotations": {
-                "message": "etcd instance {{ $labels.instance }} HTTP requests to {{ $labels.method }} are slow."
+                "description": "etcd instance {{ $labels.instance }} HTTP requests to {{ $labels.method }} are slow.",
+                "summary": "etcd instance HTTP requests are slow."
               },
               "expr": "histogram_quantile(0.99, rate(etcd_http_successful_duration_seconds_bucket[5m]))\n> 0.15\n",
+              "for": "10m",
+              "labels": {
+                "severity": "warning"
+              }
+            },
+            {
+              "alert": "etcdBackendQuotaLowSpace",
+              "annotations": {
+                "message": "etcd cluster \"{{ $labels.job }}\": database size exceeds the defined quota on etcd instance {{ $labels.instance }}, please defrag or increase the quota as the writes to etcd will be disabled when it is full."
+              },
+              "expr": "(etcd_mvcc_db_total_size_in_bytes/etcd_server_quota_backend_bytes)*100 > 95\n",
+              "for": "10m",
+              "labels": {
+                "severity": "critical"
+              }
+            },
+            {
+              "alert": "etcdExcessiveDatabaseGrowth",
+              "annotations": {
+                "message": "etcd cluster \"{{ $labels.job }}\": Observed surge in etcd writes leading to 50% increase in database size over the past four hours on etcd instance {{ $labels.instance }}, please check as it might be disruptive."
+              },
+              "expr": "increase(((etcd_mvcc_db_total_size_in_bytes/etcd_server_quota_backend_bytes)*100)[240m:1m]) > 50\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -275,10 +320,6 @@ data:
                 "verb": "write"
               },
               "record": "cluster_quantile:apiserver_request_duration_seconds:histogram_quantile"
-            },
-            {
-              "expr": "sum(rate(apiserver_request_duration_seconds_sum{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod)\n/\nsum(rate(apiserver_request_duration_seconds_count{subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod)\n",
-              "record": "cluster:apiserver_request_duration_seconds:mean5m"
             },
             {
               "expr": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{job=\"apiserver\",subresource!=\"log\",verb!~\"LIST|WATCH|WATCHLIST|DELETECOLLECTION|PROXY|CONNECT\"}[5m])) without(instance, pod))\n",
@@ -444,10 +485,6 @@ data:
           "name": "k8s.rules",
           "rules": [
             {
-              "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])) by (namespace)\n",
-              "record": "namespace:container_cpu_usage_seconds_total:sum_rate"
-            },
-            {
               "expr": "sum by (cluster, namespace, pod, container) (\n  rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}[5m])\n) * on (cluster, namespace, pod) group_left(node) topk by (cluster, namespace, pod) (\n  1, max by(cluster, namespace, pod, node) (kube_pod_info{node!=\"\"})\n)\n",
               "record": "node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate"
             },
@@ -466,10 +503,6 @@ data:
             {
               "expr": "container_memory_swap{job=\"kubernetes-cadvisor\", image!=\"\"}\n* on (namespace, pod) group_left(node) topk by(namespace, pod) (1,\n  max by(namespace, pod, node) (kube_pod_info{node!=\"\"})\n)\n",
               "record": "node_namespace_pod_container:container_memory_swap"
-            },
-            {
-              "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", image!=\"\", container!=\"POD\"}) by (namespace)\n",
-              "record": "namespace:container_memory_usage_bytes:sum"
             },
             {
               "expr": "sum by (namespace) (\n    sum by (namespace, pod) (\n        max by (namespace, pod, container) (\n            kube_pod_container_resource_requests_memory_bytes{job=\"kube-state-metrics\"}\n        ) * on(namespace, pod) group_left() max by (namespace, pod) (\n            kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n        )\n    )\n)\n",
@@ -573,10 +606,6 @@ data:
         {
           "name": "node.rules",
           "rules": [
-            {
-              "expr": "sum(min(kube_pod_info{node!=\"\"}) by (cluster, node))\n",
-              "record": ":kube_pod_info_node_count:"
-            },
             {
               "expr": "topk by(namespace, pod) (1,\n  max by (node, namespace, pod) (\n    label_replace(kube_pod_info{job=\"kube-state-metrics\",node!=\"\"}, \"pod\", \"$1\", \"pod\", \"(.*)\")\n))\n",
               "record": "node_namespace_pod:kube_pod_info:"
@@ -779,7 +808,7 @@ data:
             {
               "alert": "KubeJobFailed",
               "annotations": {
-                "description": "Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete.",
+                "description": "Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete. Removing failed job after investigation should clear this alert.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubejobfailed",
                 "summary": "Job failed to complete."
               },
@@ -796,7 +825,7 @@ data:
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubehpareplicasmismatch",
                 "summary": "HPA has not matched descired number of replicas."
               },
-              "expr": "(kube_hpa_status_desired_replicas{job=\"kube-state-metrics\"}\n  !=\nkube_hpa_status_current_replicas{job=\"kube-state-metrics\"})\n  and\nchanges(kube_hpa_status_current_replicas[15m]) == 0\n",
+              "expr": "(kube_hpa_status_desired_replicas{job=\"kube-state-metrics\"}\n  !=\nkube_hpa_status_current_replicas{job=\"kube-state-metrics\"})\n  and\n(kube_hpa_status_current_replicas{job=\"kube-state-metrics\"}\n  >\nkube_hpa_spec_min_replicas{job=\"kube-state-metrics\"})\n  and\n(kube_hpa_status_current_replicas{job=\"kube-state-metrics\"}\n  <\nkube_hpa_spec_max_replicas{job=\"kube-state-metrics\"})\n  and\nchanges(kube_hpa_status_current_replicas[15m]) == 0\n",
               "for": "15m",
               "labels": {
                 "severity": "warning"
@@ -866,7 +895,7 @@ data:
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-kubememoryquotaovercommit",
                 "summary": "Cluster has overcommitted memory resource requests."
               },
-              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"memory\"})\n  /\nsum(kube_node_status_allocatable_memory_bytes{job=\"node-exporter\"})\n  > 1.5\n",
+              "expr": "sum(kube_resourcequota{job=\"kube-state-metrics\", type=\"hard\", resource=\"memory\"})\n  /\nsum(kube_node_status_allocatable_memory_bytes{job=\"kube-state-metrics\"})\n  > 1.5\n",
               "for": "5m",
               "labels": {
                 "severity": "warning"
@@ -1096,11 +1125,11 @@ data:
             {
               "alert": "AggregatedAPIErrors",
               "annotations": {
-                "description": "An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has reported errors. The number of errors have increased for it in the past five minutes. High values indicate that the availability of the service changes too often.",
+                "description": "An aggregated API {{ $labels.name }}/{{ $labels.namespace }} has reported errors. It has appeared unavailable {{ $value | humanize }} times averaged over the past 10m.",
                 "runbook_url": "https://github.com/kubernetes-monitoring/kubernetes-mixin/tree/master/runbook.md#alert-name-aggregatedapierrors",
                 "summary": "An aggregated API has reported errors."
               },
-              "expr": "sum by(name, namespace)(increase(aggregator_unavailable_apiservice_count[5m])) > 2\n",
+              "expr": "sum by(name, namespace)(increase(aggregator_unavailable_apiservice_count[10m])) > 4\n",
               "labels": {
                 "severity": "warning"
               }
@@ -1341,115 +1370,6 @@ data:
         }
       ]
     }
-  loki.yaml: |-
-    {
-      "groups": [
-        {
-          "name": "loki_rules",
-          "rules": [
-            {
-              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job))",
-              "record": "job:loki_request_duration_seconds:99quantile"
-            },
-            {
-              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job))",
-              "record": "job:loki_request_duration_seconds:50quantile"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job) / sum(rate(loki_request_duration_seconds_count[1m])) by (job)",
-              "record": "job:loki_request_duration_seconds:avg"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job)",
-              "record": "job:loki_request_duration_seconds_bucket:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job)",
-              "record": "job:loki_request_duration_seconds_sum:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (job)",
-              "record": "job:loki_request_duration_seconds_count:sum_rate"
-            },
-            {
-              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route))",
-              "record": "job_route:loki_request_duration_seconds:99quantile"
-            },
-            {
-              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route))",
-              "record": "job_route:loki_request_duration_seconds:50quantile"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (job, route)",
-              "record": "job_route:loki_request_duration_seconds:avg"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, job, route)",
-              "record": "job_route:loki_request_duration_seconds_bucket:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (job, route)",
-              "record": "job_route:loki_request_duration_seconds_sum:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (job, route)",
-              "record": "job_route:loki_request_duration_seconds_count:sum_rate"
-            },
-            {
-              "expr": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route))",
-              "record": "namespace_job_route:loki_request_duration_seconds:99quantile"
-            },
-            {
-              "expr": "histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route))",
-              "record": "namespace_job_route:loki_request_duration_seconds:50quantile"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)",
-              "record": "namespace_job_route:loki_request_duration_seconds:avg"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, namespace, job, route)",
-              "record": "namespace_job_route:loki_request_duration_seconds_bucket:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_sum[1m])) by (namespace, job, route)",
-              "record": "namespace_job_route:loki_request_duration_seconds_sum:sum_rate"
-            },
-            {
-              "expr": "sum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)",
-              "record": "namespace_job_route:loki_request_duration_seconds_count:sum_rate"
-            }
-          ]
-        },
-        {
-          "name": "loki_alerts",
-          "rules": [
-            {
-              "alert": "LokiRequestErrors",
-              "annotations": {
-                "message": "{{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}% errors.\n"
-              },
-              "expr": "100 * sum(rate(loki_request_duration_seconds_count{status_code=~\"5..\"}[1m])) by (namespace, job, route)\n  /\nsum(rate(loki_request_duration_seconds_count[1m])) by (namespace, job, route)\n  > 10\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
-              "alert": "LokiRequestLatency",
-              "annotations": {
-                "message": "{{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}s 99th percentile latency.\n"
-              },
-              "expr": "namespace_job_route:loki_request_duration_seconds:99quantile{route!~\"(?i).*tail.*\"} > 1\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            }
-          ]
-        }
-      ]
-    }
   node-exporter.yaml: |-
     {
       "groups": [
@@ -1607,7 +1527,7 @@ data:
                 "description": "{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} receive errors in the last two minutes.",
                 "summary": "Network interface is reporting many receive errors."
               },
-              "expr": "increase(node_network_receive_errs_total[2m]) > 10\n",
+              "expr": "rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01\n",
               "for": "1h",
               "labels": {
                 "severity": "warning"
@@ -1619,7 +1539,7 @@ data:
                 "description": "{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} transmit errors in the last two minutes.",
                 "summary": "Network interface is reporting many transmit errors."
               },
-              "expr": "increase(node_network_transmit_errs_total[2m]) > 10\n",
+              "expr": "rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01\n",
               "for": "1h",
               "labels": {
                 "severity": "warning"
@@ -1665,7 +1585,7 @@ data:
                 "message": "Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured on this host.",
                 "summary": "Clock not synchronising."
               },
-              "expr": "min_over_time(node_timex_sync_status[5m]) == 0\n",
+              "expr": "min_over_time(node_timex_sync_status[5m]) == 0\nand\nnode_timex_maxerror_seconds >= 16\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -1741,18 +1661,6 @@ data:
               }
             },
             {
-              "alert": "PrometheusErrorSendingAlertsToAnyAlertmanager",
-              "annotations": {
-                "description": "{{ printf \"%.1f\" $value }}% minimum errors while sending alerts from Prometheus {{$labels.instance}} to any Alertmanager.",
-                "summary": "Prometheus encounters more than 3% errors sending alerts to any Alertmanager."
-              },
-              "expr": "min without(alertmanager) (\n  rate(prometheus_notifications_errors_total{job=\"prometheus\"}[5m])\n/\n  rate(prometheus_notifications_sent_total{job=\"prometheus\"}[5m])\n)\n* 100\n> 3\n",
-              "for": "15m",
-              "labels": {
-                "severity": "critical"
-              }
-            },
-            {
               "alert": "PrometheusNotConnectedToAlertmanagers",
               "annotations": {
                 "description": "Prometheus {{$labels.instance}} is not connected to any Alertmanagers.",
@@ -1794,7 +1702,7 @@ data:
                 "description": "Prometheus {{$labels.instance}} is not ingesting samples.",
                 "summary": "Prometheus is not ingesting samples."
               },
-              "expr": "rate(prometheus_tsdb_head_samples_appended_total{job=\"prometheus\"}[5m]) <= 0\n",
+              "expr": "(\n  rate(prometheus_tsdb_head_samples_appended_total{job=\"prometheus\"}[5m]) <= 0\nand\n  (\n    sum without(scrape_job) (prometheus_target_metadata_cache_entries{job=\"prometheus\"}) > 0\n  or\n    sum without(rule_group) (prometheus_rule_group_rules{job=\"prometheus\"}) > 0\n  )\n)\n",
               "for": "10m",
               "labels": {
                 "severity": "warning"
@@ -1842,7 +1750,7 @@ data:
                 "description": "Prometheus {{$labels.instance}} remote write is {{ printf \"%.1f\" $value }}s behind for {{ $labels.remote_name}}:{{ $labels.url }}.",
                 "summary": "Prometheus remote write is behind."
               },
-              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\n(\n  max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{job=\"prometheus\"}[5m])\n- on(job, instance) group_right\n  max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{job=\"prometheus\"}[5m])\n)\n> 120\n",
+              "expr": "# Without max_over_time, failed scrapes could create false negatives, see\n# https://www.robustperception.io/alerting-on-gauges-in-prometheus-2-0 for details.\n(\n  max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{job=\"prometheus\"}[5m])\n- ignoring(remote_name, url) group_right\n  max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{job=\"prometheus\"}[5m])\n)\n> 120\n",
               "for": "15m",
               "labels": {
                 "severity": "critical"
@@ -1894,6 +1802,18 @@ data:
               "for": "15m",
               "labels": {
                 "severity": "warning"
+              }
+            },
+            {
+              "alert": "PrometheusErrorSendingAlertsToAnyAlertmanager",
+              "annotations": {
+                "description": "{{ printf \"%.1f\" $value }}% minimum errors while sending alerts from Prometheus {{$labels.instance}} to any Alertmanager.",
+                "summary": "Prometheus encounters more than 3% errors sending alerts to any Alertmanager."
+              },
+              "expr": "min without (alertmanager) (\n  rate(prometheus_notifications_errors_total{job=\"prometheus\",alertmanager!~``}[5m])\n/\n  rate(prometheus_notifications_sent_total{job=\"prometheus\",alertmanager!~``}[5m])\n)\n* 100\n> 3\n",
+              "for": "15m",
+              "labels": {
+                "severity": "critical"
               }
             }
           ]

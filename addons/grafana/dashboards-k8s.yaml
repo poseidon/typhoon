@@ -140,8 +140,9 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "decimals": 3,
-              "description": "How much error budget is left looking at our 0.990% availability gurantees?",
+              "description": "How much error budget is left looking at our 0.990% availability guarantees?",
               "fill": 10,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -336,6 +337,7 @@ data:
               "datasource": "$datasource",
               "description": "How many read requests (LIST,GET) per second do the apiservers get by code?",
               "fill": 10,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -444,6 +446,7 @@ data:
               "datasource": "$datasource",
               "description": "How many percent of read requests (LIST,GET) per second are returned with errors (5xx)?",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -537,6 +540,7 @@ data:
               "datasource": "$datasource",
               "description": "How many seconds is the 99th percentile for reading (LIST|GET) a given resource?",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -729,6 +733,7 @@ data:
               "datasource": "$datasource",
               "description": "How many write requests (POST|PUT|PATCH|DELETE) per second do the apiservers get by code?",
               "fill": 10,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -837,6 +842,7 @@ data:
               "datasource": "$datasource",
               "description": "How many percent of write requests (POST|PUT|PATCH|DELETE) per second are returned with errors (5xx)?",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -930,6 +936,7 @@ data:
               "datasource": "$datasource",
               "description": "How many seconds is the 99th percentile for writing (POST|PUT|PATCH|DELETE) a given resource?",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1035,6 +1042,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1127,6 +1135,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1219,6 +1228,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1324,6 +1334,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1416,6 +1427,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1508,6 +1520,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1832,6 +1845,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -1937,6 +1951,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2042,6 +2057,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2147,6 +2163,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2260,6 +2277,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2365,6 +2383,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2470,6 +2489,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2562,6 +2582,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2654,6 +2675,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -2868,6 +2890,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3019,7 +3042,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "(\n  kubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n  -\n  kubelet_volume_stats_available_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n)\n/\nkubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n* 100\n",
+                  "expr": "max without(instance,node) (\n(\n  kubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n  -\n  kubelet_volume_stats_available_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n)\n/\nkubelet_volume_stats_capacity_bytes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n* 100)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -3064,6 +3087,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3215,7 +3239,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "kubelet_volume_stats_inodes_used{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n/\nkubelet_volume_stats_inodes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n* 100\n",
+                  "expr": "max without(instance,node) (\nkubelet_volume_stats_inodes_used{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n/\nkubelet_volume_stats_inodes{cluster=\"$cluster\", job=\"kubelet\", namespace=\"$namespace\", persistentvolumeclaim=\"$volume\"}\n* 100)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -3505,6 +3529,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3618,6 +3643,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3744,6 +3770,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3857,6 +3884,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -3962,6 +3990,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -4067,6 +4096,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -4159,6 +4189,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -4251,6 +4282,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
@@ -4516,7 +4548,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}[3m]))",
+                  "expr": "sum(rate(container_cpu_usage_seconds_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}[3m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -4599,7 +4631,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}) / 1024^3",
+                  "expr": "sum(container_memory_usage_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", container!=\"\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}) / 1024^3",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -4682,7 +4714,7 @@ data:
               "tableColumn": "",
               "targets": [
                 {
-                  "expr": "sum(rate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}[3m])) + sum(rate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=\"$namespace\",pod=~\"$statefulset.*\"}[3m]))",
+                  "expr": "sum(rate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$statefulset.*\"}[3m])) + sum(rate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\",pod=~\"$statefulset.*\"}[3m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "",
@@ -5077,6 +5109,7 @@ data:
               "dashes": false,
               "datasource": "$datasource",
               "fill": 1,
+              "fillGradient": 0,
               "gridPos": {
 
               },
