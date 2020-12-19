@@ -217,7 +217,7 @@ resource "digitalocean_domain" "zone-for-clusters" {
 DigitalOcean droplets are created with your SSH public key "fingerprint" (i.e. MD5 hash) to allow access. If your SSH public key is at `~/.ssh/id_rsa`, find the fingerprint with,
 
 ```bash
-ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub | awk '{print $2}'
+ssh-keygen -E md5 -lf ~/.ssh/id_ed25519.pub | awk '{print $2}'
 MD5:d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7
 ```
 
@@ -225,7 +225,7 @@ If you use `ssh-agent` (e.g. Yubikey for SSH), find the fingerprint with,
 
 ```
 ssh-add -l -E md5
-2048 MD5:d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7 cardno:000603633110 (RSA)
+256 MD5:20:d0:eb:ad:50:b0:09:6d:4b:ba:ad:7c:9c:c1:39:24 foo@xample.com (ED25519)
 ```
 
 Digital Ocean requires the SSH public key be uploaded to your account, so you may also find the fingerprint under Settings -> Security. Finally, if you don't have an SSH key, [create one now](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/).
