@@ -188,6 +188,12 @@ module "mercury" {
   # set to http only if you cannot chainload to iPXE firmware with https support
   # download_protocol = "http"
 }
+
+# Obtain cluster kubeconfig
+resource "local_file" "kubeconfig-mercury" {
+  content  = module.mercury.kubeconfig-admin
+  filename = "/home/user/.kube/configs/mercury-config"
+}
 ```
 
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/flatcar-linux/kubernetes/variables.tf) source.
@@ -278,7 +284,7 @@ systemd[1]: Started Kubernetes control plane.
 
 ## Verify
 
-[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Obtain the generated cluster `kubeconfig` from module outputs (e.g. write to a local file).
+[Install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) on your system. Obtain the generated cluster `kubeconfig` from module outputs, e.g. written to a local file as previously defined with the [Cluster](#cluster).
 
 ```
 resource "local_file" "kubeconfig-mercury" {
