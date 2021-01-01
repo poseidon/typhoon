@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Update nginx-ingress from v0.41.2 to [v0.43.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.43.0)
+
+## v1.20.1
+
 * Kubernetes [v1.20.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1201)
 
 ### Fedora CoreOS
