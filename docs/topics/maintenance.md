@@ -197,7 +197,8 @@ Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.20.0 - ?       | v0.13.x             |
+| v1.20.2 - ?       | v0.13.x, v0.14.4+   |
+| v1.20.0 - v1.20.1 | v0.13.x             |
 | v1.18.8 - v1.19.4 | v0.12.26+, v0.13.x  |
 | v1.15.0 - v1.18.8 | v0.12.x             |
 | v1.10.3 - v1.15.0 | v0.11.x             |

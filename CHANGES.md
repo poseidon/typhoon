@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Support Terraform v0.13.x and v0.14.4+ ([#924](https://github.com/poseidon/typhoon/pull/923))
+
 ### Addons
 
 * Update nginx-ingress from v0.41.2 to [v0.43.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.43.0)
