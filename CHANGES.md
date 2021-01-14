@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.20.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1202)
 * Support Terraform v0.13.x and v0.14.4+ ([#924](https://github.com/poseidon/typhoon/pull/923))
 
 ### Addons
