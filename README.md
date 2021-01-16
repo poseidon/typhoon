@@ -136,12 +136,12 @@ Typhoon addresses real world needs, which you may share. It is honest about limi
 
 ## Social Contract
 
-Typhoon is not a product, trial, or free-tier. It is not run by a company, does not offer support or services, and does not accept or make any money. It is not associated with any operating system or platform vendor.
+Typhoon is not a product, trial, or free-tier. Typhoon does not offer support, services, or charge money. And Typhoon is independent of operating system or platform vendors.
 
 Typhoon clusters will contain only [free](https://www.debian.org/intro/free) components. Cluster components will not collect data on users without their permission.
 
-## Donations
+## Sponsors
 
-Typhoon does not accept money donations. Instead, we encourage you to donate to one of [these organizations](https://github.com/poseidon/typhoon/wiki/Donations) to show your appreciation.
+Poseidon's Github [Sponsors](https://github.com/sponsors/poseidon) support the infrastructure and operational costs of providing Typhoon. If you'd like your company here, please contact dghubble at psdn.io.
 
-* [DigitalOcean](https://www.digitalocean.com/) kindly provides credits to support Typhoon test clusters.
+* [DigitalOcean](https://www.digitalocean.com/) kindly provides us cloud credits
