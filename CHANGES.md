@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.9.1 to [v1.9.2](https://github.com/cilium/cilium/releases/tag/v1.9.2)
+
 ## v1.20.2
 
 * Kubernetes [v1.20.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1202)
