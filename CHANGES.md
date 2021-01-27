@@ -4,7 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.9.1 to [v1.9.2](https://github.com/cilium/cilium/releases/tag/v1.9.2)
+* Update Cilium from v1.9.1 to [v1.9.3](https://github.com/cilium/cilium/releases/tag/v1.9.3)
 
 ## v1.20.2
 
