@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update Cilium from v1.9.1 to [v1.9.4](https://github.com/cilium/cilium/releases/tag/v1.9.4)
+* Update Calico from v3.17.1 to [v3.17.2](https://github.com/projectcalico/calico/releases/tag/v3.17.2)
 
 ## v1.20.2
 
