@@ -10,6 +10,7 @@ Notable changes between versions.
 ### Addons
 
 * Update nginx-ingress from v0.43.0 to [v0.44.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.44.0)
+* Update Prometheus from v2.24.1 to [v2.24.1](https://github.com/prometheus/prometheus/releases/tag/v2.24.1)
 
 ## v1.20.2
 
