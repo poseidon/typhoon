@@ -7,6 +7,10 @@ Notable changes between versions.
 * Update Cilium from v1.9.1 to [v1.9.4](https://github.com/cilium/cilium/releases/tag/v1.9.4)
 * Update Calico from v3.17.1 to [v3.17.2](https://github.com/projectcalico/calico/releases/tag/v3.17.2)
 
+### Addons
+
+* Update nginx-ingress from v0.43.0 to [v0.44.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.44.0)
+
 ## v1.20.2
 
 * Kubernetes [v1.20.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1202)
