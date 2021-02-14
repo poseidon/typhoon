@@ -12,6 +12,7 @@ Notable changes between versions.
 
 * Update nginx-ingress from v0.43.0 to [v0.44.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.44.0)
 * Update Prometheus from v2.24.1 to [v2.24.1](https://github.com/prometheus/prometheus/releases/tag/v2.24.1)
+  * Update node-exporter from v1.0.1 to [v1.1.1](https://github.com/prometheus/node_exporter/releases/tag/v1.1.1)
 * Update Grafana from v7.3.7 to [v7.4.0](https://github.com/grafana/grafana/releases/tag/v7.4.0)
 
 ## v1.20.2
