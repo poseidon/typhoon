@@ -4,15 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
-* Kubernetes [v1.20.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1203)
+* Kubernetes [v1.20.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1204)
 * Update Cilium from v1.9.1 to [v1.9.4](https://github.com/cilium/cilium/releases/tag/v1.9.4)
-* Update Calico from v3.17.1 to [v3.17.2](https://github.com/projectcalico/calico/releases/tag/v3.17.2)
+* Update Calico from v3.17.1 to [v3.17.3](https://github.com/projectcalico/calico/releases/tag/v3.17.3)
 * Update flannel-cni from v0.4.1 to [v0.4.2](https://github.com/poseidon/flannel-cni/releases/tag/v0.4.2)
 
 ### Addons
 
 * Update nginx-ingress from v0.43.0 to [v0.44.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.44.0)
-* Update Prometheus from v2.24.1 to [v2.24.1](https://github.com/prometheus/prometheus/releases/tag/v2.24.1)
+* Update Prometheus from v2.24.0 to [v2.24.1](https://github.com/prometheus/prometheus/releases/tag/v2.24.1)
   * Update node-exporter from v1.0.1 to [v1.1.1](https://github.com/prometheus/node_exporter/releases/tag/v1.1.1)
 * Update Grafana from v7.3.7 to [v7.4.0](https://github.com/grafana/grafana/releases/tag/v7.4.0)
 
