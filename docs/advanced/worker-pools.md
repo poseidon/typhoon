@@ -90,7 +90,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | instance_type | EC2 instance type | "t3.small" | "t3.medium" |
-| os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge |
+| os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | os_stream | Fedora CoreOS stream for compute instances | "stable" | "testing", "next" |
 | disk_size | Size of the EBS volume in GB | 40 | 100 |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
@@ -189,7 +189,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
 | vm_type | Machine type for instances | "Standard_DS1_v2" | See below |
-| os_image | Channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge |
+| os_image | Channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | "Regular" | "Spot" |
 | snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

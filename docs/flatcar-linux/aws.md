@@ -210,7 +210,7 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | EC2 instance type for controllers | "t3.small" | See below |
 | worker_type | EC2 instance type for workers | "t3.small" | See below |
-| os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge |
+| os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the EBS volume in GB | 40 | 100 |
 | disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
 | disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |

@@ -36,12 +36,12 @@ variable "instance_type" {
 
 variable "os_image" {
   type        = string
-  description = "AMI channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha, flatcar-edge)"
+  description = "AMI channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha)"
   default     = "flatcar-stable"
 
   validation {
-    condition     = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha", "flatcar-edge"], var.os_image)
-    error_message = "The os_image must be flatcar-stable, flatcar-beta, flatcar-alpha, or flatcar-edge."
+    condition     = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha"], var.os_image)
+    error_message = "The os_image must be flatcar-stable, flatcar-beta, or flatcar-alpha."
   }
 }
 

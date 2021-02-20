@@ -64,7 +64,6 @@ systemd:
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.4
-        Environment=KUBELET_CGROUP_DRIVER=${cgroup_driver}
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -93,7 +92,6 @@ systemd:
           --authentication-token-webhook \
           --authorization-mode=Webhook \
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
-          --cgroup-driver=$${KUBELET_CGROUP_DRIVER} \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \

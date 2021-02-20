@@ -4,6 +4,22 @@ Notable changes between versions.
 
 ## Latest
 
+### Flatcar Linux
+
+#### AWS
+
+* Remove `os_image` option `flatcar-edge` ([#943](https://github.com/poseidon/typhoon/pull/943))
+
+#### Azure
+
+* Remove `os_image` option `flatcar-edge` ([#943](https://github.com/poseidon/typhoon/pull/943))
+
+#### Bare-Metal
+
+* Remove `os_channel` option `flatcar-edge` ([#943](https://github.com/poseidon/typhoon/pull/943))
+
+## v1.20.4
+
 * Kubernetes [v1.20.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1204)
 * Update Cilium from v1.9.1 to [v1.9.4](https://github.com/cilium/cilium/releases/tag/v1.9.4)
 * Update Calico from v3.17.1 to [v3.17.3](https://github.com/projectcalico/calico/releases/tag/v3.17.3)
