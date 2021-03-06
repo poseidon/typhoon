@@ -20,6 +20,11 @@ Notable changes between versions.
 
 * Remove `os_channel` option `flatcar-edge` ([#943](https://github.com/poseidon/typhoon/pull/943))
 
+### Addons
+
+* Update kube-state-metrics from v2.0.0-alpha.3 to [v2.0.0-rc.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0-rc.0)
+* Update node-exporter from v1.1.1 to [v1.1.2](https://github.com/prometheus/node_exporter/releases/tag/v1.1.2)
+
 ## v1.20.4
 
 * Kubernetes [v1.20.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1204)
