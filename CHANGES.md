@@ -23,6 +23,7 @@ Notable changes between versions.
 ### Addons
 
 * Update kube-state-metrics from v2.0.0-alpha.3 to [v2.0.0-rc.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0-rc.0)
+  * Switch image from `quay.io` to `k8s.gcr.io` ([#946](https://github.com/poseidon/typhoon/pull/946))
 * Update node-exporter from v1.1.1 to [v1.1.2](https://github.com/prometheus/node_exporter/releases/tag/v1.1.2)
 * Update Grafana from v7.4.2 to [v7.4.3](https://github.com/grafana/grafana/releases/tag/v7.4.3)
 
