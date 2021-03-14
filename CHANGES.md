@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.4.14 to [v3.4.15](https://github.com/etcd-io/etcd/releases/tag/v3.4.15)
+* Update Cilium from v1.9.4 to [v1.9.5](https://github.com/cilium/cilium/releases/tag/v1.9.5)
 * Update Calico from v3.17.3 to [v3.18.1](https://github.com/projectcalico/calico/releases/tag/v3.18.1)
 * Mark bootstrap token as sensitive in Terraform plans ([#949](https://github.com/poseidon/typhoon/pull/949))
 
