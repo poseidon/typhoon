@@ -22,6 +22,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Update Prometheus from v2.25.0 to [v2.25.1](https://github.com/prometheus/prometheus/releases/tag/v2.25.1)
 * Update kube-state-metrics from v2.0.0-alpha.3 to [v2.0.0-rc.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0-rc.0)
   * Switch image from `quay.io` to `k8s.gcr.io` ([#946](https://github.com/poseidon/typhoon/pull/946))
 * Update node-exporter from v1.1.1 to [v1.1.2](https://github.com/prometheus/node_exporter/releases/tag/v1.1.2)
