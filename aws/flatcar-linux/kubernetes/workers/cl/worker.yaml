@@ -25,9 +25,12 @@ systemd:
         Description=Kubelet
         Requires=docker.service
         After=docker.service
+        Requires=coreos-metadata.service
+        After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
+        EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -71,6 +74,7 @@ systemd:
           --node-labels=${label} \
           %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
+          --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \
           --read-only-port=0 \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins

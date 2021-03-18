@@ -23,9 +23,12 @@ systemd:
       contents: |
         [Unit]
         Description=Kubelet (System Container)
+        Requires=afterburn.service
+        After=afterburn.service
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
+        EnvironmentFile=/run/metadata/afterburn
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -72,6 +75,7 @@ systemd:
           --register-with-taints=${taint} \
           %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
+          --provider-id=aws:///$${AFTERBURN_AWS_AVAILABILITY_ZONE}/$${AFTERBURN_AWS_INSTANCE_ID} \
           --read-only-port=0 \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
