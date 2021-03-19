@@ -19,7 +19,7 @@ Create a cluster following the AWS [tutorial](../flatcar-linux/aws.md#cluster). 
 
     ```tf
     module "tempest-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes/workers?ref=v1.20.5"
 
       # AWS
       vpc_id          = module.tempest.vpc_id
@@ -42,7 +42,7 @@ Create a cluster following the AWS [tutorial](../flatcar-linux/aws.md#cluster). 
 
     ```tf
     module "tempest-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//aws/flatcar-linux/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//aws/flatcar-linux/kubernetes/workers?ref=v1.20.5"
 
       # AWS
       vpc_id          = module.tempest.vpc_id
@@ -110,7 +110,7 @@ Create a cluster following the Azure [tutorial](../flatcar-linux/azure.md#cluste
 
     ```tf
     module "ramius-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes/workers?ref=v1.20.5"
 
       # Azure
       region                  = module.ramius.region
@@ -136,7 +136,7 @@ Create a cluster following the Azure [tutorial](../flatcar-linux/azure.md#cluste
 
     ```tf
     module "ramius-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//azure/flatcar-linux/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//azure/flatcar-linux/kubernetes/workers?ref=v1.20.5"
 
       # Azure
       region                  = module.ramius.region
@@ -205,7 +205,7 @@ Create a cluster following the Google Cloud [tutorial](../flatcar-linux/google-c
 
     ```tf
     module "yavin-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.20.5"
 
       # Google Cloud
       region       = "europe-west2"
@@ -229,7 +229,7 @@ Create a cluster following the Google Cloud [tutorial](../flatcar-linux/google-c
 
     ```tf
     module "yavin-worker-pool" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/flatcar-linux/kubernetes/workers?ref=v1.20.4"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/flatcar-linux/kubernetes/workers?ref=v1.20.5"
 
       # Google Cloud
       region       = "europe-west2"
@@ -260,11 +260,11 @@ Verify a managed instance group of workers joins the cluster within a few minute
 ```
 $ kubectl get nodes
 NAME                                             STATUS   AGE    VERSION
-yavin-controller-0.c.example-com.internal        Ready    6m     v1.20.4
-yavin-worker-jrbf.c.example-com.internal         Ready    5m     v1.20.4
-yavin-worker-mzdm.c.example-com.internal         Ready    5m     v1.20.4
-yavin-16x-worker-jrbf.c.example-com.internal     Ready    3m     v1.20.4
-yavin-16x-worker-mzdm.c.example-com.internal     Ready    3m     v1.20.4
+yavin-controller-0.c.example-com.internal        Ready    6m     v1.20.5
+yavin-worker-jrbf.c.example-com.internal         Ready    5m     v1.20.5
+yavin-worker-mzdm.c.example-com.internal         Ready    5m     v1.20.5
+yavin-16x-worker-jrbf.c.example-com.internal     Ready    3m     v1.20.5
+yavin-16x-worker-mzdm.c.example-com.internal     Ready    3m     v1.20.5
 ```
 
 ### Variables

@@ -24,7 +24,7 @@ systemd:
         Description=Kubelet (System Container)
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.4
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -83,7 +83,7 @@ systemd:
         [Unit]
         Description=Delete Kubernetes node on shutdown
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.4
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
         Type=oneshot
         RemainAfterExit=true
         ExecStart=/bin/true
