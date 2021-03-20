@@ -8,6 +8,7 @@ Notable changes between versions.
 * Update etcd from v3.4.14 to [v3.4.15](https://github.com/etcd-io/etcd/releases/tag/v3.4.15)
 * Update Cilium from v1.9.4 to [v1.9.5](https://github.com/cilium/cilium/releases/tag/v1.9.5)
 * Update Calico from v3.17.3 to [v3.18.1](https://github.com/projectcalico/calico/releases/tag/v3.18.1)
+* Update CoreDNS from v1.7.0 to [v1.8.0](https://coredns.io/2020/10/22/coredns-1.8.0-release/)
 * Mark bootstrap token as sensitive in Terraform plans ([#949](https://github.com/poseidon/typhoon/pull/949))
 
 ### Flatcar Linux
