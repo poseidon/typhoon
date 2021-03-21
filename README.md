@@ -142,6 +142,11 @@ Typhoon clusters will contain only [free](https://www.debian.org/intro/free) com
 
 ## Sponsors
 
-Poseidon's Github [Sponsors](https://github.com/sponsors/poseidon) support the infrastructure and operational costs of providing Typhoon. If you'd like your company here, please contact dghubble at psdn.io.
+Poseidon's Github [Sponsors](https://github.com/sponsors/poseidon) support the infrastructure and operational costs of providing Typhoon.
 
-* [DigitalOcean](https://www.digitalocean.com/) kindly provides us cloud credits
+<a href="https://www.digitalocean.com/">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+</a>
+<br>
+
+If you'd like your company here, please contact dghubble at psdn.io.
