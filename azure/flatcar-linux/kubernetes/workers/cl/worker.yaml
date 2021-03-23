@@ -86,6 +86,8 @@ systemd:
       contents: |
         [Unit]
         Description=Delete Kubernetes node on shutdown
+        Requires=docker.service
+        After=docker.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
         Type=oneshot
