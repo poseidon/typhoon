@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.20.5
+
 * Kubernetes [v1.20.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1205)
 * Update etcd from v3.4.14 to [v3.4.15](https://github.com/etcd-io/etcd/releases/tag/v3.4.15)
 * Update Cilium from v1.9.4 to [v1.9.5](https://github.com/cilium/cilium/releases/tag/v1.9.5)
@@ -11,10 +13,15 @@ Notable changes between versions.
 * Update CoreDNS from v1.7.0 to [v1.8.0](https://coredns.io/2020/10/22/coredns-1.8.0-release/)
 * Mark bootstrap token as sensitive in Terraform plans ([#949](https://github.com/poseidon/typhoon/pull/949))
 
+### Fedora CoreOS
+
+* Set Kubelet `provider-id` ([#951](https://github.com/poseidon/typhoon/pull/951))
+
 ### Flatcar Linux
 
 #### AWS
 
+* Set Kubelet `provider-id` ([#951](https://github.com/poseidon/typhoon/pull/951))
 * Remove `os_image` option `flatcar-edge` ([#943](https://github.com/poseidon/typhoon/pull/943))
 
 #### Azure
