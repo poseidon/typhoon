@@ -6,6 +6,7 @@ repo_name: poseidon/typhoon
 repo_url: https://github.com/poseidon/typhoon
 theme:
   name: material
+  custom_dir: 'theme'
   features:
     - navigation.tabs
     - navigation.instant
