@@ -73,6 +73,9 @@ systemd:
           %{~ for label in split(",", node_labels) ~}
           --node-labels=${label} \
           %{~ endfor ~}
+          %{~ for taint in split(",", node_taints) ~}
+          --register-with-taints=${taint} \
+          %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
           --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \
           --read-only-port=0 \
