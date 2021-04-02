@@ -36,7 +36,7 @@ systemd:
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.20.5
-        ExecStartPre=/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
         ExecStartPre=/bin/mkdir -p /var/lib/calico
@@ -50,6 +50,7 @@ systemd:
           --privileged \
           --pid host \
           --network host \
+          -v /etc/cni/net.d:/etc/cni/net.d:ro \
           -v /etc/kubernetes:/etc/kubernetes:ro \
           -v /etc/machine-id:/etc/machine-id:ro \
           -v /usr/lib/os-release:/etc/os-release:ro \
@@ -70,7 +71,6 @@ systemd:
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
-          --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --healthz-port=0 \
           --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \

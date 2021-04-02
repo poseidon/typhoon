@@ -46,7 +46,7 @@ Typhoon conventional directories.
 
 | Kubelet setting   | Host location                  |
 |-------------------|--------------------------------|
-| cni-conf-dir      | /etc/kubernetes/cni/net.d      |
+| cni-conf-dir      | /etc/cni/net.d                 |
 | pod-manifest-path | /etc/kubernetes/manifests      |
 | volume-plugin-dir | /var/lib/kubelet/volumeplugins |
 
