@@ -11,6 +11,9 @@ Notable changes between versions.
   * Enable `kube-scheduler` and `kube-controller-manager` separate authn/z kubeconfig
   * Change `kube-controller-manager` to mount `/var/lib/kubelet/volumeplugins` directly
   * Remove unused `cloud-provider` flags
+* Update Fedora CoreOS Config version from v1.1.0 to v1.2.0
+  * Require [poseidon/ct](https://github.com/poseidon/terraform-provider-ct) Terraform provider v0.8+ ([notes](https://typhoon.psdn.io/topics/maintenance/#upgrade-terraform-provider-ct))
+  * Require any [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customizations to update to v1.2.0
 
 ### AWS
 
