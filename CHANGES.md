@@ -6,6 +6,24 @@ Notable changes between versions.
 
 * Kubernetes [v1.21.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1210)
 
+### AWS
+
+* Allow setting custom initial node taints on worker pools ([#968](https://github.com/poseidon/typhoon/pull/968))
+  * Add `node_taints` variable to internal `workers` pool module to set initial node taints
+  * Add `daemonset_tolerations` so `kube-system` DaemonSets can tolerate custom taints
+
+### Azure
+
+* Allow setting custom initial node taints on worker pools ([#968](https://github.com/poseidon/typhoon/pull/968))
+  * Add `node_taints` variable to internal `workers` pool module to set initial node taints
+  * Add `daemonset_tolerations` so `kube-system` DaemonSets can tolerate custom taints
+
+### Google Cloud
+
+* Allow setting custom initial node taints on worker pools ([#968](https://github.com/poseidon/typhoon/pull/968))
+  * Add `node_taints` variable to internal `workers` pool module to set initial node taints
+  * Add `daemonset_tolerations` so `kube-system` DaemonSets can tolerate custom taints
+
 ### Addons
 
 * Update kube-state-metrics from v2.0.0-rc.0 to [v2.0.0-rc.1](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0-rc.1)

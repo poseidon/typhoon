@@ -80,6 +80,7 @@ nav:
     - 'Overview': 'advanced/overview.md'
     - 'ARM64': 'advanced/arm64.md'
     - 'Customization': 'advanced/customization.md'
+    - 'Nodes': 'advanced/nodes.md'
     - 'Worker Pools': 'advanced/worker-pools.md'
   - 'Addons':
     - 'Overview': 'addons/overview.md'

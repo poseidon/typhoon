@@ -21,7 +21,7 @@ Create a cluster with ARM64 controller and worker nodes. Container workloads mus
 
 ```tf
 module "gravitas" {
-  source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.19.4"
+  source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.21.0"
 
   # AWS
   cluster_name = "gravitas"
@@ -47,9 +47,9 @@ Verify the cluster has only arm64 (`aarch64`) nodes.
 ```
 $ kubectl get nodes -o wide
 NAME             STATUS   ROLES    AGE    VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                          KERNEL-VERSION            CONTAINER-RUNTIME
-ip-10-0-12-178   Ready    <none>   101s   v1.19.4   10.0.12.178   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-18-93    Ready    <none>   102s   v1.19.4   10.0.18.93    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-90-10    Ready    <none>   104s   v1.19.4   10.0.90.10    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
+ip-10-0-12-178   Ready    <none>   101s   v1.21.0   10.0.12.178   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
+ip-10-0-18-93    Ready    <none>   102s   v1.21.0   10.0.18.93    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
+ip-10-0-90-10    Ready    <none>   104s   v1.21.0   10.0.90.10    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
 ```
 
 ## Hybrid
@@ -60,7 +60,7 @@ Create a hybrid/mixed arch cluster by defining an AWS cluster. Then define a [wo
 
     ```tf
     module "gravitas" {
-      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.19.4"
+      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes?ref=v1.21.0"
 
       # AWS
       cluster_name = "gravitas"
@@ -83,7 +83,7 @@ Create a hybrid/mixed arch cluster by defining an AWS cluster. Then define a [wo
 
     ```tf
     module "gravitas-arm64" {
-      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes/workers?ref=v1.19.4"
+      source = "git::https://github.com/poseidon/typhoon//aws/fedora-coreos/kubernetes/workers?ref=v1.21.0"
 
       # AWS
       vpc_id          = module.gravitas.vpc_id
@@ -108,9 +108,9 @@ Verify amd64 (x86_64) and arm64 (aarch64) nodes are present.
 ```
 $ kubectl get nodes -o wide
 NAME             STATUS   ROLES    AGE    VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                          KERNEL-VERSION            CONTAINER-RUNTIME
-ip-10-0-14-73    Ready    <none>   116s   v1.19.4   10.0.14.73    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
-ip-10-0-17-167   Ready    <none>   104s   v1.19.4   10.0.17.167   <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
-ip-10-0-47-166   Ready    <none>   110s   v1.19.4   10.0.47.166   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-7-237    Ready    <none>   111s   v1.19.4   10.0.7.237    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
+ip-10-0-14-73    Ready    <none>   116s   v1.21.0   10.0.14.73    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
+ip-10-0-17-167   Ready    <none>   104s   v1.21.0   10.0.17.167   <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
+ip-10-0-47-166   Ready    <none>   110s   v1.21.0   10.0.47.166   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
+ip-10-0-7-237    Ready    <none>   111s   v1.21.0   10.0.7.237    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
 ```
 

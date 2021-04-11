@@ -176,4 +176,3 @@ variable "daemonset_tolerations" {
   description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"
   default     = []
 }
-

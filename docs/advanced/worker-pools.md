@@ -99,6 +99,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | snippets | Fedora CoreOS or Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
+| node_taints | List of initial node taints | [] | ["role=gpu:NoSchedule"] |
 
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/) or per-region and per-type [spot prices](https://aws.amazon.com/ec2/spot/pricing/).
 
@@ -194,6 +195,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
+| node_taints | List of initial node taints | [] | ["role=gpu:NoSchedule"] |
 
 Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) and their [specs](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general). Use `az vm list-skus` to get the identifier.
 
@@ -297,6 +299,7 @@ Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-z
 | snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |
 | service_cidr | Must match `service_cidr` of cluster | "10.3.0.0/16" | "10.3.0.0/24" |
 | node_labels | List of initial node labels | [] | ["worker-pool=foo"] |
+| node_taints | List of initial node taints | [] | ["role=gpu:NoSchedule"] |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 

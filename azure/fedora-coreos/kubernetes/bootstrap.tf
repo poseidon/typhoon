@@ -18,6 +18,7 @@ module "bootstrap" {
   cluster_domain_suffix = var.cluster_domain_suffix
   enable_reporting      = var.enable_reporting
   enable_aggregation    = var.enable_aggregation
+  daemonset_tolerations = var.daemonset_tolerations
 
   # Fedora CoreOS
   trusted_certs_dir = "/etc/pki/tls/certs"

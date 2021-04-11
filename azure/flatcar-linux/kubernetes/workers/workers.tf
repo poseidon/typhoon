@@ -105,6 +105,7 @@ data "template_file" "worker-config" {
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
+    node_taints            = join(",", var.node_taints)
   }
 }
 

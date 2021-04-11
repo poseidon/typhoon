@@ -88,6 +88,12 @@ variable "node_labels" {
   default     = []
 }
 
+variable "node_taints" {
+  type        = list(string)
+  description = "List of initial node taints"
+  default     = []
+}
+
 # unofficial, undocumented, unsupported
 
 variable "cluster_domain_suffix" {
