@@ -4,7 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.21.0
+
 * Kubernetes [v1.21.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1210)
+  * Enable `tokencleaner` controller
+  * Enable `kube-scheduler` and `kube-controller-manager` separate authn/z kubeconfig
+  * Change `kube-controller-manager` to mount `/var/lib/kubelet/volumeplugins` directly
+  * Remove unused `cloud-provider` flags
 
 ### AWS
 
