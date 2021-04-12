@@ -112,16 +112,12 @@ resource "azurerm_lb_outbound_rule" "worker-outbound" {
 
 # Address pool of controllers
 resource "azurerm_lb_backend_address_pool" "controller" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name            = "controller"
   loadbalancer_id = azurerm_lb.cluster.id
 }
 
 # Address pool of workers
 resource "azurerm_lb_backend_address_pool" "worker" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name            = "worker"
   loadbalancer_id = azurerm_lb.cluster.id
 }

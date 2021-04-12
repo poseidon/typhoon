@@ -26,6 +26,7 @@ Notable changes between versions.
 * Allow setting custom initial node taints on worker pools ([#968](https://github.com/poseidon/typhoon/pull/968))
   * Add `node_taints` variable to internal `workers` pool module to set initial node taints
   * Add `daemonset_tolerations` so `kube-system` DaemonSets can tolerate custom taints
+* Remove deprecated `azurerm_lb_backend_address_pool` field `resource_group_name` ([#972](https://github.com/poseidon/typhoon/pull/972))
 
 ### Google Cloud
 
