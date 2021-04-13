@@ -7,11 +7,12 @@ Notable changes between versions.
 ## v1.21.0
 
 * Kubernetes [v1.21.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1210)
-  * Enable `tokencleaner` controller
+  * Enable `tokencleaner` controller ([#969](https://github.com/poseidon/typhoon/pull/969))
   * Enable `kube-scheduler` and `kube-controller-manager` separate authn/z kubeconfig
+  * Change CNI config location from /etc/kubernetes/cni/net.d to /etc/cni/net.d ([#965](https://github.com/poseidon/typhoon/pull/965))
   * Change `kube-controller-manager` to mount `/var/lib/kubelet/volumeplugins` directly
   * Remove unused `cloud-provider` flags
-* Update Fedora CoreOS Config version from v1.1.0 to v1.2.0
+* Update Fedora CoreOS Config version from v1.1.0 to v1.2.0 ([#970](https://github.com/poseidon/typhoon/pull/970))
   * Require [poseidon/ct](https://github.com/poseidon/terraform-provider-ct) Terraform provider v0.8+ ([notes](https://typhoon.psdn.io/topics/maintenance/#upgrade-terraform-provider-ct))
   * Require any [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customizations to update to v1.2.0
 

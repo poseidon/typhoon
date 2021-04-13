@@ -26,7 +26,7 @@ Labels: node.kubernetes.io/node=
 Taints: <none>
 ```
 
-On auto-scaling cloud platforms, you may add [worker pools](/advanced/worker-pools) with different groups of nodes with their own labels and taints. On platforms like bare-metal, with heterogeneous machines, you may manage node labels and taints per node.
+On auto-scaling cloud platforms, you may add [worker pools](/advanced/worker-pools/) with different groups of nodes with their own labels and taints. On platforms like bare-metal, with heterogeneous machines, you may manage node labels and taints per node.
 
 ## Node Labels
 
