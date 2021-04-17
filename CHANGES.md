@@ -20,6 +20,10 @@ Notable changes between versions.
 
 * Reduce the default `disk_size` from 40GB to 30GB ([#983](https://github.com/poseidon/typhoon/pull/983))
 
+### Fedora CoreOS
+
+* Update Kubelet mounts for cgroups v2 ([#978](https://github.com/poseidon/typhoon/pull/978))
+
 ### Addons
 
 * Update kube-state-metrics from v2.0.0-rc.1 to [v2.0.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0)
