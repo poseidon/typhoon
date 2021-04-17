@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Addons
+
+* Update kube-state-metrics from v2.0.0-rc.1 to [v2.0.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0)
+
 ## v1.21.0
 
 * Kubernetes [v1.21.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1210)
