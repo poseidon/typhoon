@@ -31,6 +31,10 @@ Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 | DigitalOcean  | Fedora CoreOS | [digital-ocean/fedora-coreos/kubernetes](digital-ocean/fedora-coreos/kubernetes) | beta |
 | Google Cloud  | Fedora CoreOS | [google-cloud/fedora-coreos/kubernetes](google-cloud/fedora-coreos/kubernetes) | stable |
 
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Fedora CoreOS (ARM64) | [aws/fedora-coreos/kubernetes](aws/fedora-coreos/kubernetes) | alpha |
+
 Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/).
 
 | Platform      | Operating System | Terraform Module | Status |
@@ -126,7 +130,7 @@ Typhoon is strict about minimalism, maturity, and scope. These are not in scope:
 
 ## Help
 
-Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/).
+Schedule a meeting via [Github Sponsors](https://github.com/sponsors/poseidon?frequency=one-time) to discuss your use case. You can also ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/) (unmonitored).
 
 ## Motivation
 

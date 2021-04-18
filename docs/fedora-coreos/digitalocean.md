@@ -29,7 +29,7 @@ cd infra/clusters
 
 ## Provider
 
-Login to [DigitalOcean](https://cloud.digitalocean.com) or create an [account](https://cloud.digitalocean.com/registrations/new), if you don't have one.
+Login to [DigitalOcean](https://cloud.digitalocean.com). Or if you don't have one, create an account with our [referral link](https://m.do.co/c/94a5a4e76387) to get free credits.
 
 Generate a Personal Access Token with read/write scope from the [API tab](https://cloud.digitalocean.com/settings/api/tokens). Write the token to a file that can be referenced in configs.
 
