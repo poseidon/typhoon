@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.9.5 to [v1.9.6](https://github.com/cilium/cilium/releases/tag/v1.9.6)
+
 ### Addons
 
 * Update kube-state-metrics from v2.0.0-rc.1 to [v2.0.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0)
