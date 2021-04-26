@@ -236,7 +236,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
-| disk_size | Size of the disk in GB | 40 | 100 |
+| disk_size | Size of the disk in GB | 30 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |

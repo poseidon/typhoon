@@ -55,7 +55,7 @@ variable "os_stream" {
 variable "disk_size" {
   type        = number
   description = "Size of the EBS volume in GB"
-  default     = 40
+  default     = 30
 }
 
 variable "disk_type" {

@@ -60,7 +60,7 @@ variable "os_image" {
 variable "disk_size" {
   type        = number
   description = "Size of the disk in GB"
-  default     = 40
+  default     = 30
 }
 
 variable "worker_priority" {

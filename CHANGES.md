@@ -4,7 +4,21 @@ Notable changes between versions.
 
 ## Latest
 
+* Add Terraform v0.15.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
+  * Continue to support Terraform v0.13.x and v0.14.4+
 * Update Cilium from v1.9.5 to [v1.9.6](https://github.com/cilium/cilium/releases/tag/v1.9.6)
+
+### AWS
+
+* Reduce the default `disk_size` from 40GB to 30GB ([#983](https://github.com/poseidon/typhoon/pull/983))
+
+### Azure
+
+* Reduce the default `disk_size` from 40GB to 30GB ([#983](https://github.com/poseidon/typhoon/pull/983))
+
+### Google Cloud
+
+* Reduce the default `disk_size` from 40GB to 30GB ([#983](https://github.com/poseidon/typhoon/pull/983))
 
 ### Addons
 
