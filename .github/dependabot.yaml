@@ -3,7 +3,7 @@ updates:
 - package-ecosystem: pip
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
   pull-request-branch-name:
     separator: "-"
   open-pull-requests-limit: 3
