@@ -27,7 +27,8 @@ Notable changes between versions.
 ### Addons
 
 * Update kube-state-metrics from v2.0.0-rc.1 to [v2.0.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.0.0)
-* Update Grafana from v7.5.3 to [v7.5.4](https://github.com/grafana/grafana/releases/tag/v7.5.4)
+* Update Prometheus from v2.25.2 to [v2.27.0](https://github.com/prometheus/prometheus/releases/tag/v2.27.0)
+* Update Grafana from v7.5.3 to [v7.5.6](https://github.com/grafana/grafana/releases/tag/v7.5.6)
 * Update nginx-ingress from v0.45.0 to [v0.46.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v0.46.0)
 
 ## v1.21.0
