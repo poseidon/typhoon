@@ -4,10 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.21.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1211)
 * Add Terraform v0.15.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
   * Continue to support Terraform v0.13.x and v0.14.4+
 * Update etcd from v3.4.15 to [v3.4.16](https://github.com/etcd-io/etcd/releases/tag/v3.4.16)
 * Update Cilium from v1.9.5 to [v1.9.6](https://github.com/cilium/cilium/releases/tag/v1.9.6)
+* Update Calico from v3.18.1 to [v3.19.0](https://github.com/projectcalico/calico/releases/tag/v3.19.0)
 
 ### AWS
 
