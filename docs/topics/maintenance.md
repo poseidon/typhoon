@@ -13,12 +13,12 @@ Typhoon provides tagged releases to allow clusters to be versioned using ordinar
 
 ```
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.0"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.1"
   ...
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.21.0"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.21.1"
   ...
 }
 ```
@@ -193,12 +193,12 @@ Google Cloud creates a new worker template and edits the worker instance group i
 
 Terraform [v0.13](https://www.hashicorp.com/blog/announcing-hashicorp-terraform-0-13) introduced major changes to the provider plugin system. Terraform `init` can automatically install both `hashicorp` and `poseidon` provider plugins, eliminating the need to manually install plugin binaries.
 
-Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.12.26+ to ease migration. Poseidon publishes [providers](/topics/security/#terraform-providers) to the Terraform Provider Registry for usage with v0.13+.
+Typhoon modules have been updated for v0.13.x. Poseidon publishes [providers](/topics/security/#terraform-providers) to the Terraform Provider Registry for usage with v0.13+.
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.21.1 - ?       | v0.13.x, v0.14.4+, v0.15.0 |
-| v1.20.2 - v1.21.0 | v0.13.x, v0.14.4+   |
+| v1.21.1 - ?       | v0.13.x, v0.14.4+, v0.15.x |
+| v1.20.2 - v1.21.1 | v0.13.x, v0.14.4+   |
 | v1.20.0 - v1.20.2 | v0.13.x             |
 | v1.18.8 - v1.19.4 | v0.12.26+, v0.13.x  |
 | v1.15.0 - v1.18.8 | v0.12.x             |
@@ -209,7 +209,7 @@ Typhoon modules have been updated for v0.13.x, but retain compatibility with v0.
 
 ### New Workspace
 
-With a new Terraform workspace, use Terraform v0.13.x and the updated Typhoon [tutorials](/fedora-coreos/aws/#provider).
+With a new Terraform workspace, use Terraform v0.15.x and the updated Typhoon [tutorials](/fedora-coreos/aws/#provider).
 
 ### Existing Workspace
 

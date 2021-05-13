@@ -1,6 +1,6 @@
 # AWS
 
-In this tutorial, we'll create a Kubernetes v1.21.0 cluster on AWS with Flatcar Linux.
+In this tutorial, we'll create a Kubernetes v1.21.1 cluster on AWS with Flatcar Linux.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
@@ -55,7 +55,7 @@ terraform {
     }
     aws = {
       source = "hashicorp/aws"
-      version = "3.36.0"
+      version = "3.39.0"
     }
   }
 }
@@ -72,7 +72,7 @@ Define a Kubernetes cluster using the module `aws/flatcar-linux/kubernetes`.
 
 ```tf
 module "tempest" {
-  source = "git::https://github.com/poseidon/typhoon//aws/flatcar-linux/kubernetes?ref=v1.21.0"
+  source = "git::https://github.com/poseidon/typhoon//aws/flatcar-linux/kubernetes?ref=v1.21.1"
 
   # AWS
   cluster_name = "tempest"
@@ -145,9 +145,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/tempest-config
 $ kubectl get nodes
 NAME           STATUS  ROLES   AGE  VERSION
-ip-10-0-3-155  Ready   <none>  10m  v1.21.0
-ip-10-0-26-65  Ready   <none>  10m  v1.21.0
-ip-10-0-41-21  Ready   <none>  10m  v1.21.0
+ip-10-0-3-155  Ready   <none>  10m  v1.21.1
+ip-10-0-26-65  Ready   <none>  10m  v1.21.1
+ip-10-0-41-21  Ready   <none>  10m  v1.21.1
 ```
 
 List the pods.
