@@ -6,7 +6,7 @@
 Typhoon has experimental support for ARM64 with Fedora CoreOS on AWS. Full clusters can be created with ARM64 controller and worker nodes. Or worker pools of ARM64 nodes can be attached to an AMD64 cluster to create a hybrid/mixed architecture cluster.
 
 !!! note
-    Currently, CNI networking must be set to flannel.
+    Currently, CNI networking must be set to flannel or Cilium.
 
 ## AMIs
 
@@ -33,7 +33,7 @@ module "gravitas" {
 
   # optional
   arch         = "arm64"
-  networking   = "flannel"
+  networking   = "cilium"
   worker_count = 2
   worker_price = "0.0168"
 
@@ -71,7 +71,7 @@ Create a hybrid/mixed arch cluster by defining an AWS cluster. Then define a [wo
       ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
       # optional
-      networking   = "flannel"
+      networking   = "cilium"
       worker_count = 2
       worker_price = "0.021"
 
@@ -107,10 +107,10 @@ Verify amd64 (x86_64) and arm64 (aarch64) nodes are present.
 
 ```
 $ kubectl get nodes -o wide
-NAME             STATUS   ROLES    AGE    VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                          KERNEL-VERSION            CONTAINER-RUNTIME
-ip-10-0-14-73    Ready    <none>   116s   v1.21.1   10.0.14.73    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
-ip-10-0-17-167   Ready    <none>   104s   v1.21.1   10.0.17.167   <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
-ip-10-0-47-166   Ready    <none>   110s   v1.21.1   10.0.47.166   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-7-237    Ready    <none>   111s   v1.21.1   10.0.7.237    <none>        Fedora CoreOS 32.20201018.3.0     5.8.15-201.fc32.x86_64    docker://19.3.11
+NAME            STATUS   ROLES    AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                          KERNEL-VERSION             CONTAINER-RUNTIME
+ip-10-0-1-81    Ready    <none>   4m28s   v1.21.1   10.0.1.81     <none>        Fedora CoreOS 34.20210427.3.0     5.11.15-300.fc34.x86_64    docker://20.10.6
+ip-10-0-17-86   Ready    <none>   4m28s   v1.21.1   10.0.17.86    <none>        Fedora CoreOS 33.20210413.dev.0   5.10.19-200.fc33.aarch64   docker://19.3.13
+ip-10-0-21-45   Ready    <none>   4m28s   v1.21.1   10.0.21.45    <none>        Fedora CoreOS 34.20210427.3.0     5.11.15-300.fc34.x86_64    docker://20.10.6
+ip-10-0-40-36   Ready    <none>   4m22s   v1.21.1   10.0.40.36    <none>        Fedora CoreOS 34.20210427.3.0     5.11.15-300.fc34.x86_64    docker://20.10.6
 ```
 

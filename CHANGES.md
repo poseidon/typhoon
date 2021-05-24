@@ -4,7 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.9.6 to [v1.10.0-rc1](https://github.com/cilium/cilium/releases/tag/v1.10.0-rc1)
+* Update Cilium from v1.9.6 to [v1.10.0](https://github.com/cilium/cilium/releases/tag/v1.10.0)
+
+### Fedora CoreOS
+
+#### AWS
+
+* Extend experimental Fedora CoreOS arm64 support
+  * CNI provider may now be `flannel` or `cilium` (new)
 
 ## Kubernetes v1.21.0
 
