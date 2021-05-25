@@ -13,7 +13,7 @@ Notable changes between versions.
 * Extend experimental Fedora CoreOS arm64 support
   * CNI provider may now be `flannel` or `cilium` (new)
 
-## Kubernetes v1.21.0
+## v1.21.1
 
 * Kubernetes [v1.21.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1211)
 * Add Terraform v0.15.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
