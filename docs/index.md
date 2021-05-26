@@ -120,7 +120,7 @@ kube-system   kube-scheduler-controller-0               1/1    Running   0      
 
 ## Help
 
-Schedule a meeting via [Github Sponsors](https://github.com/sponsors/poseidon?frequency=one-time) to discuss your use case. You can also ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/) (unmonitored).
+Schedule a meeting via [Github Sponsors](https://github.com/sponsors/poseidon?frequency=one-time) to discuss your use case.
 
 ## Motivation
 
