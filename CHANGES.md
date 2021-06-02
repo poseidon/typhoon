@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update Cilium from v1.9.6 to [v1.10.0](https://github.com/cilium/cilium/releases/tag/v1.10.0)
+* Update Calico from v3.19.0 to [v3.19.1](https://github.com/projectcalico/calico/releases/tag/v3.19.1)
 
 ### Fedora CoreOS
 
