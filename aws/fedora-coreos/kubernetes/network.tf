@@ -1,5 +1,9 @@
 data "aws_availability_zones" "all" {
 }
+#locals 
+locals  {
+    tag_name = var.cluster_name
+  }
 
 # Network VPC, gateway, and routes
 
@@ -9,24 +13,24 @@ resource "aws_vpc" "network" {
   enable_dns_support               = true
   enable_dns_hostnames             = true
 
-  tags = {
-    "Name" = var.cluster_name
+  tags =  {
+    name = local.tag_name
   }
 }
 
 resource "aws_internet_gateway" "gateway" {
   vpc_id = aws_vpc.network.id
 
-  tags = {
-    "Name" = var.cluster_name
+  tags =  {
+    name = local.tag_name
   }
 }
 
 resource "aws_route_table" "default" {
   vpc_id = aws_vpc.network.id
 
-  tags = {
-    "Name" = var.cluster_name
+  tags =  {
+    name = local.tag_name
   }
 }
 
@@ -56,7 +60,7 @@ resource "aws_subnet" "public" {
   assign_ipv6_address_on_creation = true
 
   tags = {
-    "Name" = "${var.cluster_name}-public-${count.index}"
+    name = "${local.tag_name}-public-${count.index}"
   }
 }
 
