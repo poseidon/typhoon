@@ -7,6 +7,12 @@ Notable changes between versions.
 * Update Cilium from v1.9.6 to [v1.10.0](https://github.com/cilium/cilium/releases/tag/v1.10.0)
 * Update Calico from v3.19.0 to [v3.19.1](https://github.com/projectcalico/calico/releases/tag/v3.19.1)
 
+### Addons
+
+* Update kube-state-metrics from v2.0.0 to [v2.1.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.1.0)
+* Update Prometheus from v2.27.0 to [v2.27.1](https://github.com/prometheus/prometheus/releases/tag/v2.27.1)
+* Update Grafana from v7.5.6 to [v7.5.7](https://github.com/grafana/grafana/releases/tag/v7.5.7)
+
 ### Fedora CoreOS
 
 #### AWS
