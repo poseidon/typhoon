@@ -1,7 +1,7 @@
 # Terraform version and plugin versions
 
 terraform {
-  required_version = ">= 0.13.0, < 0.16.0"
+  required_version = ">= 0.13.0, < 2.0.0"
   required_providers {
     template = "~> 2.1"
     null     = "~> 2.1"

@@ -4,7 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.9.6 to [v1.10.0](https://github.com/cilium/cilium/releases/tag/v1.10.0)
+* Add Terraform v1.0.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
+  * Continue to support Terraform v0.13.x, v0.14.4+, and v0.15.x
+* Update Cilium from v1.9.6 to [v1.10.1](https://github.com/cilium/cilium/releases/tag/v1.10.1)
 * Update Calico from v3.19.0 to [v3.19.1](https://github.com/projectcalico/calico/releases/tag/v3.19.1)
 
 ### Addons
@@ -18,8 +20,16 @@ Notable changes between versions.
 
 #### AWS
 
-* Extend experimental Fedora CoreOS arm64 support
+* Extend experimental Fedora CoreOS arm64 support with Cilium
   * CNI provider may now be `flannel` or `cilium` (new)
+
+#### Bare-Metal
+
+* Workaround systemd path unit issue [fedora-coreos-tracker/#861](https://github.com/coreos/fedora-coreos-tracker/issues/861)
+
+#### DigitalOcean
+
+* Workaround systemd path unit issue [fedora-coreos-tracker/#861](https://github.com/coreos/fedora-coreos-tracker/issues/861)
 
 ## v1.21.1
 

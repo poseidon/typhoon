@@ -18,7 +18,7 @@ Install [Terraform](https://www.terraform.io/downloads.html) v0.13.0+ on your sy
 
 ```sh
 $ terraform version
-Terraform v0.15.0
+Terraform v1.0.0
 ```
 
 Read [concepts](/architecture/concepts/) to learn about Terraform, modules, and organizing resources. Change to your infrastructure repository (e.g. `infra`).
