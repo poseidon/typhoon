@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.21.2
+
+* Kubernetes [v1.21.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1212)
 * Add Terraform v1.0.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
   * Continue to support Terraform v0.13.x, v0.14.4+, and v0.15.x
 * Update Cilium from v1.9.6 to [v1.10.1](https://github.com/cilium/cilium/releases/tag/v1.10.1)
