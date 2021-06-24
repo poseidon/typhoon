@@ -9,6 +9,7 @@ Notable changes between versions.
 * Kubernetes [v1.21.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1212)
 * Add Terraform v1.0.x support ([#974](https://github.com/poseidon/typhoon/pull/974))
   * Continue to support Terraform v0.13.x, v0.14.4+, and v0.15.x
+* Update CoreDNS from v1.8.0 to [v1.8.4]([#1006](https://github.com/poseidon/typhoon/pull/1006))
 * Update Cilium from v1.9.6 to [v1.10.1](https://github.com/cilium/cilium/releases/tag/v1.10.1)
 * Update Calico from v3.19.0 to [v3.19.1](https://github.com/projectcalico/calico/releases/tag/v3.19.1)
 
