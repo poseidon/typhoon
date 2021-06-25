@@ -97,6 +97,11 @@ storage:
       contents:
         inline:
           ${domain_name}
+    - path: /etc/NetworkManager/conf.d/calico.conf
+      contents:
+        inline: |
+          [keyfile]
+          unmanaged-devices=interface-name:cali*;interface-name:tunl*;interface-name:vxlan.calico
     - path: /etc/sysctl.d/max-user-watches.conf
       contents:
         inline: |
@@ -125,4 +130,3 @@ passwd:
     - name: core
       ssh_authorized_keys:
         - ${ssh_authorized_key}
-

@@ -178,6 +178,11 @@ storage:
              echo "Retry applying manifests"
              sleep 5
           done
+    - path: /etc/NetworkManager/conf.d/calico.conf
+      contents:
+        inline: |
+          [keyfile]
+          unmanaged-devices=interface-name:cali*;interface-name:tunl*;interface-name:vxlan.calico
     - path: /etc/sysctl.d/max-user-watches.conf
       contents:
         inline: |
