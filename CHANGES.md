@@ -35,6 +35,10 @@ Notable changes between versions.
 
 * Workaround systemd path unit issue [fedora-coreos-tracker/#861](https://github.com/coreos/fedora-coreos-tracker/issues/861)
 
+### Known Issues
+
+* Cilium with recent Fedora CoreOS will have networking issues ([fedora-coreos#881](https://github.com/coreos/fedora-coreos-tracker/issues/881))
+
 ## v1.21.1
 
 * Kubernetes [v1.21.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1211)
