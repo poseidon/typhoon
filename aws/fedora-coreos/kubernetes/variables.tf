@@ -60,8 +60,8 @@ variable "disk_size" {
 
 variable "disk_type" {
   type        = string
-  description = "Type of the EBS volume (e.g. standard, gp2, io1)"
-  default     = "gp2"
+  description = "Type of the EBS volume (e.g. standard, gp2, gp3, io1)"
+  default     = "gp3"
 }
 
 variable "disk_iops" {

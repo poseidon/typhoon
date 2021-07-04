@@ -93,7 +93,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | os_image | AMI channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | os_stream | Fedora CoreOS stream for compute instances | "stable" | "testing", "next" |
 | disk_size | Size of the EBS volume in GB | 40 | 100 |
-| disk_type | Type of the EBS volume | "gp2" | standard, gp2, io1 |
+| disk_type | Type of the EBS volume | "gp3" | standard, gp2, gp3, io1 |
 | disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
 | spot_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
 | snippets | Fedora CoreOS or Container Linux Config snippets | [] | [examples](/advanced/customization/) |
