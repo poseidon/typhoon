@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.10.1 to [v1.10.2](https://github.com/cilium/cilium/releases/tag/v1.10.2)
+
 ### Addons
 
 * Update Prometheus from v2.28.0 to [v2.28.1](https://github.com/prometheus/prometheus/releases/tag/v2.28.1)
