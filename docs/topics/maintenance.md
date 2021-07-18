@@ -13,12 +13,12 @@ Typhoon provides tagged releases to allow clusters to be versioned using ordinar
 
 ```
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.3"
   ...
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.21.2"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.21.3"
   ...
 }
 ```
@@ -197,7 +197,7 @@ Typhoon modules have been updated for v0.13.x. Poseidon publishes [providers](/t
 
 | Typhoon Release   | Terraform version   |
 |-------------------|---------------------|
-| v1.21.2 - ?       | v0.13.x, v0.14.4+, v0.15.x, v1.0.x |
+| v1.21.3 - ?       | v0.13.x, v0.14.4+, v0.15.x, v1.0.x |
 | v1.21.1 - v1.21.1 | v0.13.x, v0.14.4+, v0.15.x |
 | v1.20.2 - v1.21.0 | v0.13.x, v0.14.4+   |
 | v1.20.0 - v1.20.2 | v0.13.x             |
