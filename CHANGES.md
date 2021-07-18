@@ -8,6 +8,7 @@ Notable changes between versions.
 
 * Kubernetes [v1.21.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1213)
 * Update Cilium from v1.10.1 to [v1.10.3](https://github.com/cilium/cilium/releases/tag/v1.10.3)
+* Require [poseidon/ct](https://github.com/poseidon/terraform-provider-ct) Terraform provider v0.9+ ([notes](https://typhoon.psdn.io/topics/maintenance/#upgrade-terraform-provider-ct))
 
 ### AWS
 
