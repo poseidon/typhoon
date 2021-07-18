@@ -17,6 +17,7 @@ Notable changes between versions.
 ### Addons
 
 * Update Prometheus from v2.28.0 to [v2.28.1](https://github.com/prometheus/prometheus/releases/tag/v2.28.1)
+* Update node-exporter from v1.1.2 to [v1.2.0](https://github.com/prometheus/node_exporter/releases/tag/v1.2.0)
 * Update Grafana from v8.0.3 to [v8.0.6](https://github.com/grafana/grafana/releases/tag/v8.0.6)
 
 ## v1.21.2
