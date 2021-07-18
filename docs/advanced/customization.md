@@ -12,9 +12,9 @@ Clusters are kept to a minimal Kubernetes control plane by offering components l
 
 ## Hosts
 
-Typhoon uses the [Ignition](https://github.com/coreos/ignition) system of Fedora CoreOS and Flatcar Linux to immutably declare a system via first-boot disk provisioning. Fedora CoreOS uses a [Fedora CoreOS Config](https://docs.fedoraproject.org/en-US/fedora-coreos/fcct-config/) (FCC) and Flatcar Linux uses a [Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md) (CLC). These define disk partitions, filesystems, systemd units, dropins, config files, mount units, raid arrays, and users.
+Typhoon uses the [Ignition](https://github.com/coreos/ignition) system of Fedora CoreOS and Flatcar Linux to immutably declare a system via first-boot disk provisioning. Fedora CoreOS uses a [Butane Config](https://coreos.github.io/butane/specs/) and Flatcar Linux uses a [Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md) (CLC). These define disk partitions, filesystems, systemd units, dropins, config files, mount units, raid arrays, and users.
 
-Controller and worker instances form a minimal and secure Kubernetes cluster on each platform. Typhoon provides the **snippets** feature to accept Fedora CoreOS Configs or Container Linux Configs to validate and additively merge into instance declarations. This allows advanced host customization and experimentation.
+Controller and worker instances form a minimal and secure Kubernetes cluster on each platform. Typhoon provides the **snippets** feature to accept Butane or Container Linux Configs to validate and additively merge into instance declarations. This allows advanced host customization and experimentation.
 
 !!! note
     Snippets cannot be used to modify an already existing instance, the antithesis of immutable provisioning. Ignition fully declares a system on first boot only.
@@ -30,14 +30,14 @@ Controller and worker instances form a minimal and secure Kubernetes cluster on 
 !!! note
     Fedora CoreOS snippets require `terraform-provider-ct` v0.5+
 
-Define a Fedora CoreOS Config (FCC) ([docs](https://docs.fedoraproject.org/en-US/fedora-coreos/fcct-config/), [config](https://github.com/coreos/fcct/blob/master/docs/configuration-v1_0.md), [examples](https://github.com/coreos/fcct/blob/master/docs/examples.md)) in version control near your Terraform workspace directory (e.g. perhaps in a `snippets` subdirectory). You may organize snippets into multiple files, if desired.
+Define a Butane Config ([docs](https://coreos.github.io/butane/specs/), [config](https://github.com/coreos/butane/blob/main/docs/config-fcos-v1_4.md)) in version control near your Terraform workspace directory (e.g. perhaps in a `snippets` subdirectory). You may organize snippets into multiple files, if desired.
 
 For example, ensure an `/opt/hello` file is created with permissions 0644.
 
 ```yaml
 # custom-files
 variant: fcos
-version: 1.2.0
+version: 1.4.0
 storage:
   files:
     - path: /opt/hello
@@ -185,7 +185,7 @@ To set an alternative etcd image or Kubelet image, use a snippet to set a system
     ```yaml
     # kubelet-image-override.yaml
     variant: fcos           <- remove for Flatcar Linux
-    version: 1.2.0          <- remove for Flatcar Linux
+    version: 1.4.0          <- remove for Flatcar Linux
     systemd:
       units:
         - name: kubelet.service
@@ -201,7 +201,7 @@ To set an alternative etcd image or Kubelet image, use a snippet to set a system
     ```yaml
     # etcd-image-override.yaml
     variant: fcos           <- remove for Flatcar Linux
-    version: 1.2.0          <- remove for Flatcar Linux
+    version: 1.4.0          <- remove for Flatcar Linux
     systemd:
       units:
         - name: etcd-member.service

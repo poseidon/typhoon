@@ -4,6 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+
+### Fedora CoreOS
+
+* Update Butane Config version from v1.2.0 to v1.4.0
+  * Rename Fedora CoreOS Config to Butane Config
+  * Require any [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customizations to update to v1.4.0
+
 ## v1.21.3
 
 * Kubernetes [v1.21.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1213)

@@ -57,7 +57,7 @@ EOD
 
 variable "snippets" {
   type        = map(list(string))
-  description = "Map from machine names to lists of Fedora CoreOS Config snippets"
+  description = "Map from machine names to lists of Butane snippets"
   default     = {}
 }
 
