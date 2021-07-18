@@ -216,8 +216,8 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 | disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
 | worker_target_groups | Target group ARNs to which worker instances should be added | [] | [aws_lb_target_group.app.id] |
 | worker_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
-| controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
-| worker_snippets | Worker Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
+| controller_snippets | Controller Butane snippets | [] | [examples](/advanced/customization/) |
+| worker_snippets | Worker Butane snippets | [] | [examples](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "calico" or "cilium" or "flannel" |
 | network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |

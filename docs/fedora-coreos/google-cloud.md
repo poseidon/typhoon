@@ -218,8 +218,8 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | os_stream | Fedora CoreOS stream for compute instances | "stable" | "stable", "testing", "next" |
 | disk_size | Size of the disk in GB | 30 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
-| controller_snippets | Controller Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
-| worker_snippets | Worker Fedora CoreOS Config snippets | [] | [examples](/advanced/customization/) |
+| controller_snippets | Controller Butane snippets | [] | [examples](/advanced/customization/) |
+| worker_snippets | Worker Butane snippets | [] | [examples](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "calico" or "cilium" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

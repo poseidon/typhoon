@@ -238,8 +238,8 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Droplet type for controllers | "s-2vcpu-2gb" | s-2vcpu-2gb, s-2vcpu-4gb, s-4vcpu-8gb, ... |
 | worker_type | Droplet type for workers | "s-1vcpu-2gb" | s-1vcpu-2gb, s-2vcpu-2gb, ... |
-| controller_snippets | Controller Fedora CoreOS Config snippets | [] | [example](/advanced/customization/) |
-| worker_snippets | Worker Fedora CoreOS Config snippets | [] | [example](/advanced/customization/) |
+| controller_snippets | Controller Butane snippets | [] | [example](/advanced/customization/) |
+| worker_snippets | Worker Butane snippets | [] | [example](/advanced/customization/) |
 | networking | Choice of networking provider | "calico" | "calico" or "cilium" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |

@@ -71,13 +71,13 @@ variable "worker_preemptible" {
 
 variable "controller_snippets" {
   type        = list(string)
-  description = "Controller Fedora CoreOS Config snippets"
+  description = "Controller Butane snippets"
   default     = []
 }
 
 variable "worker_snippets" {
   type        = list(string)
-  description = "Worker Fedora CoreOS Config snippets"
+  description = "Worker Butane snippets"
   default     = []
 }
 

@@ -57,7 +57,7 @@ variable "priority" {
 
 variable "snippets" {
   type        = list(string)
-  description = "Fedora CoreOS Config snippets"
+  description = "Butane snippets"
   default     = []
 }
 
