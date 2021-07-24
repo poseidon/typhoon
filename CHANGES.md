@@ -4,9 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
-
 ### Fedora CoreOS
 
+* Add Cilium cgroups v2 support on Fedora CoreOS
 * Update Butane Config version from v1.2.0 to v1.4.0
   * Rename Fedora CoreOS Config to Butane Config
   * Require any [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customizations to update to v1.4.0
@@ -26,6 +26,10 @@ Notable changes between versions.
 * Update Prometheus from v2.28.0 to [v2.28.1](https://github.com/prometheus/prometheus/releases/tag/v2.28.1)
 * Update node-exporter from v1.1.2 to [v1.2.0](https://github.com/prometheus/node_exporter/releases/tag/v1.2.0)
 * Update Grafana from v8.0.3 to [v8.0.6](https://github.com/grafana/grafana/releases/tag/v8.0.6)
+
+### Known Issues
+
+* Cilium with recent Fedora CoreOS will have networking issues ([fedora-coreos#881](https://github.com/coreos/fedora-coreos-tracker/issues/881)) (fixed in v1.21.4)
 
 ## v1.21.2
 
@@ -60,7 +64,7 @@ Notable changes between versions.
 
 ### Known Issues
 
-* Cilium with recent Fedora CoreOS will have networking issues ([fedora-coreos#881](https://github.com/coreos/fedora-coreos-tracker/issues/881))
+* Cilium with recent Fedora CoreOS will have networking issues ([fedora-coreos#881](https://github.com/coreos/fedora-coreos-tracker/issues/881)) (fixed in v1.21.4)
 
 ## v1.21.1
 
