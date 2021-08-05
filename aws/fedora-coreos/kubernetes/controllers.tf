@@ -62,7 +62,6 @@ data "template_file" "controller-configs" {
 
   vars = {
     # Cannot use cyclic dependencies on controllers or their DNS records
-    etcd_arch   = var.arch == "arm64" ? "-arm64" : ""
     etcd_name   = "etcd${count.index}"
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
