@@ -36,7 +36,7 @@ Add custom initial worker node labels to default workers or worker pool nodes to
 
     ```tf
     module "yavin" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.3"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.22.0"
 
       # Google Cloud
       cluster_name  = "yavin"
@@ -57,7 +57,7 @@ Add custom initial worker node labels to default workers or worker pool nodes to
 
     ```tf
     module "yavin-pool" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.21.3"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.22.0"
 
       # Google Cloud
       cluster_name = "yavin"
@@ -89,7 +89,7 @@ Add custom initial taints on worker pool nodes to indicate a node is unique and 
 
     ```tf
     module "yavin" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.21.3"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.22.0"
 
       # Google Cloud
       cluster_name  = "yavin"
@@ -110,7 +110,7 @@ Add custom initial taints on worker pool nodes to indicate a node is unique and 
 
     ```tf
     module "yavin-pool" {
-      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.21.3"
+      source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes/workers?ref=v1.22.0"
 
       # Google Cloud
       cluster_name = "yavin"
