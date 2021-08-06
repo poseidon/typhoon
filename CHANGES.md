@@ -13,6 +13,11 @@ Notable changes between versions.
   * Rename Fedora CoreOS Config to Butane Config
   * Require any [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customizations to update to v1.4.0
 
+### Addons
+
+* Update node-exporter from v1.2.0 to [v1.2.1](https://github.com/prometheus/node_exporter/releases/tag/v1.2.1)
+* Update Grafana from v8.0.6 to [v8.1.0](https://github.com/grafana/grafana/releases/tag/v8.1.0)
+
 ## v1.21.3
 
 * Kubernetes [v1.21.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1213)
