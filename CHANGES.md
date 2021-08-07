@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.22.0
+
 * Kubernetes [v1.22.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1220)
 
 ### Fedora CoreOS
@@ -15,7 +17,8 @@ Notable changes between versions.
 
 ### Addons
 
-* Update node-exporter from v1.2.0 to [v1.2.1](https://github.com/prometheus/node_exporter/releases/tag/v1.2.1)
+* Update nginx-ingress from v0.47.0 to [v1.0.0-beta.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.0.0-beta.1)
+* Update node-exporter from v1.2.0 to [v1.2.2](https://github.com/prometheus/node_exporter/releases/tag/v1.2.2)
 * Update Grafana from v8.0.6 to [v8.1.0](https://github.com/grafana/grafana/releases/tag/v8.1.0)
 
 ## v1.21.3

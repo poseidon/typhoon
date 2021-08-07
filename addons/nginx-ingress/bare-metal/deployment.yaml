@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: nginx-ingress-controller
-          image: k8s.gcr.io/ingress-nginx/controller:v0.47.0
+          image: k8s.gcr.io/ingress-nginx/controller:v1.0.0-beta.1
           args:
             - /nginx-ingress-controller
             - --ingress-class=public
