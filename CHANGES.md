@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.22.0
 
 * Kubernetes [v1.22.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1220)
+* Update etcd from v3.4.16 to [v3.5.0](https://github.com/etcd-io/etcd/releases/tag/v3.5.0)
 * Switch `kube-controller-manager` and `kube-scheduler` to use secure port only
   * Update Prometheus config to discover endpoints and use a bearer token to scrape
 
