@@ -82,7 +82,7 @@ module "yavin" {
   dns_zone_name = "example-zone"
 
   # configuration
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # optional
   worker_count = 2
@@ -96,7 +96,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 ssh-add -L
 ```
 
@@ -186,7 +186,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | region | Google Cloud region | "us-central1" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Fedora CoreOS [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep fedora-coreos`.
 

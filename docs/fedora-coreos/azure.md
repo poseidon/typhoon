@@ -96,7 +96,7 @@ module "ramius" {
 
   # configuration
   os_image           = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-31.20200323.3.2"
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # optional
   worker_count    = 2
@@ -111,7 +111,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 ssh-add -L
 ```
 
@@ -201,7 +201,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/f
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
 | os_image | Fedora CoreOS image for instances | "/subscriptions/..../custom-image" |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 !!! tip
     Regions are shown in [docs](https://azure.microsoft.com/en-us/global-infrastructure/regions/) or with `az account list-locations --output table`.

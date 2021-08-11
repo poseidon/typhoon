@@ -29,7 +29,7 @@ module "gravitas" {
   dns_zone_id  = "Z3PAABBCFAKEC0"
 
   # configuration
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # optional
   arch         = "arm64"
@@ -68,7 +68,7 @@ Create a hybrid/mixed arch cluster by defining an AWS cluster. Then define a [wo
       dns_zone_id  = "Z3PAABBCFAKEC0"
 
       # configuration
-      ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+      ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
       # optional
       networking   = "cilium"

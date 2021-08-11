@@ -82,7 +82,7 @@ The AWS internal `workers` module supports a number of [variables](https://githu
 | subnet_ids | Must be set to `subnet_ids` output by cluster | module.cluster.subnet_ids |
 | security_groups | Must be set to `worker_security_groups` output by cluster | module.cluster.worker_security_groups |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 #### Optional
 
@@ -182,7 +182,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | security_group_id | Must be set to `security_group_id` output by cluster | module.cluster.security_group_id |
 | backend_address_pool_id | Must be set to `backend_address_pool_id` output by cluster | module.cluster.backend_address_pool_id |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 #### Optional
 
@@ -283,7 +283,7 @@ The Google Cloud internal `workers` module supports a number of [variables](http
 | network | Must be set to `network_name` output by cluster | module.cluster.network_name |
 | kubeconfig | Must be set to `kubeconfig` output by cluster | module.cluster.kubeconfig |
 | os_image | Container Linux image for compute instances | "uploaded-flatcar-image" |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 Check the list of regions [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`.
 

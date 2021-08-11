@@ -67,7 +67,7 @@ module "yavin" {
   dns_zone_name = "example-zone"
 
   # configuration
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # optional
   worker_count = 2

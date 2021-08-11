@@ -164,7 +164,7 @@ module "mercury" {
 
   # configuration
   k8s_domain_name    = "node1.example.com"
-  ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # machines
   controllers = [{
@@ -194,7 +194,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 ssh-add -L
 ```
 
@@ -323,7 +323,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | os_stream | Fedora CoreOS release stream | "stable" |
 | os_version | Fedora CoreOS version to PXE and install | "32.20201104.3.0" |
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
-| ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3Nz..." |
+| ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3Nz..." |
 | controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |
 | workers | List of worker machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node2", mac="52:54:00:b2:2f:86", domain="node2.example.com"}, {name="node3", mac="52:54:00:c3:61:77", domain="node3.example.com"}]` |
 

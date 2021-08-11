@@ -104,7 +104,7 @@ Reference the [variables docs](#variables) or the [variables.tf](https://github.
 Initial bootstrapping requires `bootstrap.service` be started on one controller node. Terraform uses `ssh-agent` to automate this step. Add your SSH private key to `ssh-agent`.
 
 ```sh
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_ed25519
 ssh-add -L
 ```
 
@@ -214,7 +214,7 @@ resource "digitalocean_domain" "zone-for-clusters" {
 
 #### SSH Fingerprints
 
-DigitalOcean droplets are created with your SSH public key "fingerprint" (i.e. MD5 hash) to allow access. If your SSH public key is at `~/.ssh/id_rsa`, find the fingerprint with,
+DigitalOcean droplets are created with your SSH public key "fingerprint" (i.e. MD5 hash) to allow access. If your SSH public key is at `~/.ssh/id_ed25519.pub`, find the fingerprint with,
 
 ```bash
 ssh-keygen -E md5 -lf ~/.ssh/id_ed25519.pub | awk '{print $2}'
