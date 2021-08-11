@@ -1,11 +1,9 @@
-# Allow Prometheus to scrape service endpoints
+# Allow Prometheus to discover service endpoints
 apiVersion: v1
 kind: Service
 metadata:
   name: kube-scheduler
   namespace: kube-system
-  annotations:
-    prometheus.io/scrape: 'true'
 spec:
   type: ClusterIP
   clusterIP: None
@@ -14,5 +12,5 @@ spec:
   ports:
     - name: metrics
       protocol: TCP
-      port: 10251
-      targetPort: 10251
+      port: 10259
+      targetPort: 10259

@@ -55,7 +55,7 @@ resource "google_compute_firewall" "internal-kube-metrics" {
 
   allow {
     protocol = "tcp"
-    ports    = [10251, 10252]
+    ports    = [10257, 10259]
   }
 
   source_tags = ["${var.cluster_name}-worker"]

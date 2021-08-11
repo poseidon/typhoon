@@ -116,7 +116,7 @@ resource "digitalocean_firewall" "controllers" {
   # kube-scheduler metrics, kube-controller-manager metrics
   inbound_rule {
     protocol    = "tcp"
-    port_range  = "10251-10252"
+    port_range  = "10257-10259"
     source_tags = [digitalocean_tag.workers.name]
   }
 }

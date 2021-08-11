@@ -7,6 +7,8 @@ Notable changes between versions.
 ## v1.22.0
 
 * Kubernetes [v1.22.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1220)
+* Switch `kube-controller-manager` and `kube-scheduler` to use secure port only
+  * Update Prometheus config to discover endpoints and use a bearer token to scrape
 
 ### Fedora CoreOS
 

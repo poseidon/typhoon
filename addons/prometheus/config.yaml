@@ -72,6 +72,48 @@ data:
         regex: apiserver_request_duration_seconds_count;.+
         action: drop
 
+    # Scrape config for kube-controller-manager endpoints.
+    #
+    # kube-controller-manager service endpoints can be discovered by using the
+    # `endpoints` role and relabelling to only keep only endpoints associated with
+    # kube-system/kube-controller-manager and the `https` port.
+    - job_name: 'kube-controller-manager'
+      kubernetes_sd_configs:
+      - role: endpoints
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: kube-system;kube-controller-manager;metrics
+      - replacement: kube-controller-manager
+        action: replace
+        target_label: job
+
+    # Scrape config for kube-scheduler endpoints.
+    #
+    # kube-scheduler service endpoints can be discovered by using the `endpoints`
+    # role and relabelling to only keep only endpoints associated with
+    # kube-system/kube-scheduler and the `https` port.
+    - job_name: 'kube-scheduler'
+      kubernetes_sd_configs:
+      - role: endpoints
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: kube-system;kube-scheduler;metrics
+      - replacement: kube-scheduler
+        action: replace
+        target_label: job
+
     # Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore
     # metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).
     - job_name: 'kubelet'

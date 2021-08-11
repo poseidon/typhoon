@@ -201,8 +201,8 @@ resource "aws_security_group_rule" "controller-scheduler-metrics" {
 
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = 10251
-  to_port                  = 10251
+  from_port                = 10259
+  to_port                  = 10259
   source_security_group_id = aws_security_group.worker.id
 }
 
@@ -212,8 +212,8 @@ resource "aws_security_group_rule" "controller-manager-metrics" {
 
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = 10252
-  to_port                  = 10252
+  from_port                = 10257
+  to_port                  = 10257
   source_security_group_id = aws_security_group.worker.id
 }
 

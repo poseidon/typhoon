@@ -95,7 +95,7 @@ resource "azurerm_network_security_rule" "controller-kube-metrics" {
   direction                   = "Inbound"
   protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "10251-10252"
+  destination_port_range      = "10257-10259"
   source_address_prefix       = azurerm_subnet.worker.address_prefix
   destination_address_prefix  = azurerm_subnet.controller.address_prefix
 }
