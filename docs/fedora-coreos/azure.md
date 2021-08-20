@@ -1,6 +1,6 @@
 # Azure
 
-In this tutorial, we'll create a Kubernetes v1.22.0 cluster on Azure with Fedora CoreOS.
+In this tutorial, we'll create a Kubernetes v1.22.1 cluster on Azure with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a resource group, virtual network, subnets, security groups, controller availability set, worker scale set, load balancer, and TLS assets.
 
@@ -86,7 +86,7 @@ Define a Kubernetes cluster using the module `azure/fedora-coreos/kubernetes`.
 
 ```tf
 module "ramius" {
-  source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes?ref=v1.22.0"
+  source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes?ref=v1.22.1"
 
   # Azure
   cluster_name   = "ramius"
@@ -161,9 +161,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/ramius-config
 $ kubectl get nodes
 NAME                  STATUS  ROLES   AGE  VERSION
-ramius-controller-0   Ready   <none>  24m  v1.22.0
-ramius-worker-000001  Ready   <none>  25m  v1.22.0
-ramius-worker-000002  Ready   <none>  24m  v1.22.0
+ramius-controller-0   Ready   <none>  24m  v1.22.1
+ramius-worker-000001  Ready   <none>  25m  v1.22.1
+ramius-worker-000002  Ready   <none>  24m  v1.22.1
 ```
 
 List the pods.

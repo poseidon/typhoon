@@ -11,7 +11,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
-* Kubernetes v1.22.0 (upstream)
+* Kubernetes v1.22.1 (upstream)
 * Single or multi-master, [Calico](https://www.projectcalico.org/) or [Cilium](https://github.com/cilium/cilium) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/), SELinux enforcing
 * Advanced features like [worker pools](https://typhoon.psdn.io/advanced/worker-pools/), [preemptible](https://typhoon.psdn.io/flatcar-linux/google-cloud/#preemption) workers, and [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) customization
@@ -58,7 +58,7 @@ Define a Kubernetes cluster by using the Terraform module for your chosen platfo
 
 ```tf
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.22.0"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.22.1"
 
   # Google Cloud
   cluster_name  = "yavin"
@@ -97,9 +97,9 @@ In 4-8 minutes (varies by platform), the cluster will be ready. This Google Clou
 $ export KUBECONFIG=/home/user/.kube/configs/yavin-config
 $ kubectl get nodes
 NAME                                       ROLES    STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.22.0
-yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.22.0
-yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.22.0
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.22.1
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.22.1
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.22.1
 ```
 
 List the pods.

@@ -57,7 +57,7 @@ systemd:
         After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.1
         EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -119,7 +119,7 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.1
         ExecStart=/usr/bin/docker run \
             -v /etc/kubernetes/pki:/etc/kubernetes/pki:ro \
             -v /opt/bootstrap/assets:/assets:ro \

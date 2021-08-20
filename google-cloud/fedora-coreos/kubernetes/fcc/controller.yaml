@@ -51,7 +51,7 @@ systemd:
         Description=Kubelet (System Container)
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.22.1
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -117,7 +117,7 @@ systemd:
             --volume /opt/bootstrap/assets:/assets:ro,Z \
             --volume /opt/bootstrap/apply:/apply:ro,Z \
             --entrypoint=/apply \
-            quay.io/poseidon/kubelet:v1.22.0
+            quay.io/poseidon/kubelet:v1.22.1
         ExecStartPost=/bin/touch /opt/bootstrap/bootstrap.done
         ExecStartPost=-/usr/bin/podman stop bootstrap
 storage:

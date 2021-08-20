@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.22.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1221)
+* Update Calico from v3.19.1 to [v3.20.0](https://github.com/projectcalico/calico/releases/tag/v3.20.0)
+
 ## v1.22.0
 
 * Kubernetes [v1.22.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1220)
