@@ -4,8 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.22.1
+
 * Kubernetes [v1.22.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1221)
 * Update Calico from v3.19.1 to [v3.20.0](https://github.com/projectcalico/calico/releases/tag/v3.20.0)
+
+### Addons
+
+* Update nginx-ingress from v1.0.0-beta.1 to [v1.0.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.0.0)
+* Update Prometheus from v2.28.1 to [v2.29.1](https://github.com/prometheus/prometheus/releases/tag/v2.29.1)
+* Update Grafana from v8.1.1 to [v8.1.2](https://github.com/grafana/grafana/releases/tag/v8.1.2)
 
 ## v1.22.0
 
