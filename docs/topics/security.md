@@ -62,9 +62,9 @@ The Kubelet image is published to Quay.io and Dockerhub.
 Two tag styles indicate the build strategy used.
 
 * Typhoon internal infra publishes single and multi-arch images (e.g. `v1.18.4`, `v1.18.4-amd64`, `v1.18.4-arm64`, `v1.18.4-2-g23228e6-amd64`, `v1.18.4-2-g23228e6-arm64`)
-* Quay and Dockerhub automated builds publish verifiable images (e.g. `build-SHA` on Quay, `build-TAG` on Dockerhub)
+* Quay automated builds publish verifiable images (e.g. `build-SHA` on Quay)
 
-The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay/Dockerhub (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#system-images).
+The Typhoon-built Kubelet image is used as the official image. Automated builds provide an alternative image for those preferring to trust images built by Quay (albeit lacking multi-arch). To use the fallback registry or an alternative tag, see [customization](/advanced/customization/#system-images).
 
 ### flannel-cni
 
