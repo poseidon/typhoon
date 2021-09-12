@@ -6,10 +6,6 @@ Typhoon provides a Terraform Module for each supported operating system and plat
 
 Formats rise and evolve. Typhoon may choose to adapt the format over time (with lots of forewarning). However, the authors' have built several Kubernetes "distros" before and learned from mistakes - Terraform modules are the right format for now.
 
-## Get Help
-
-Ask questions on the IRC #typhoon channel on [freenode.net](http://freenode.net/).
-
 ## Security Issues
 
 If you find security issues, please see [security disclosures](/topics/security/#disclosures).
