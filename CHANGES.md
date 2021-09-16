@@ -4,6 +4,20 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.22.2
+
+* Kubernetes [v1.22.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1222)
+* Fix access to ClusterIP services with Cilium ([#276](https://github.com/poseidon/terraform-render-bootstrap/pull/276))
+
+### Fedora CoreOS
+
+* Use Fedora CoreOS ARM64 AMIs ([#1038](https://github.com/poseidon/typhoon/pull/1038))
+
+### Addons
+
+* Update Prometheus from v2.29.1 to [v2.29.2](https://github.com/prometheus/prometheus/releases/tag/v2.29.2)
+* Update kube-state-metrics from v2.1.1 to [v2.2.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.2.0)
+
 ## v1.22.1
 
 * Kubernetes [v1.22.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1221)
