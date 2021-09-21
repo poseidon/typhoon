@@ -7,6 +7,8 @@ Notable changes between versions.
 ## v1.22.2
 
 * Kubernetes [v1.22.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1222)
+* Update Cilium from v1.10.3 to [v1.10.4](https://github.com/cilium/cilium/releases/tag/v1.10.4)
+* Update Calico from v3.20.0 to [v3.20.1](https://github.com/projectcalico/calico/releases/tag/v3.20.1)
 * Fix access to ClusterIP services with Cilium ([#276](https://github.com/poseidon/terraform-render-bootstrap/pull/276))
 
 ### Fedora CoreOS
