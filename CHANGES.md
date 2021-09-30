@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Bare-Metal
+
+* Require Terraform provider `poseidon/matchbox` v0.5+
+
 ### Addons
 
 * Update nginx-ingress from v1.0.0 to [v1.0.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.0.1)

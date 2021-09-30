@@ -13,7 +13,7 @@ terraform {
 
     matchbox = {
       source  = "poseidon/matchbox"
-      version = "~> 0.4.1"
+      version = "~> 0.5.0"
     }
   }
 }
