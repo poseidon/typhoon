@@ -222,6 +222,7 @@ storage:
           ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
           ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
           ETCD_PEER_CLIENT_CERT_AUTH=true
+    - path: /etc/fedora-coreos/iptables-legacy.stamp
 passwd:
   users:
     - name: core

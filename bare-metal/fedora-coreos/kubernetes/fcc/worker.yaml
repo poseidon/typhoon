@@ -120,6 +120,7 @@ storage:
           DefaultCPUAccounting=yes
           DefaultMemoryAccounting=yes
           DefaultBlockIOAccounting=yes
+    - path: /etc/fedora-coreos/iptables-legacy.stamp
 passwd:
   users:
     - name: core
