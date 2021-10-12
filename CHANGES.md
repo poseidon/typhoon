@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.20.1 to [v3.20.2](https://github.com/projectcalico/calico/releases/tag/v3.20.2)
+* Use Calico's iptables legacy vs nft auto-detection
+
 ### Bare-Metal
 
 * Require Terraform provider `poseidon/matchbox` v0.5+
