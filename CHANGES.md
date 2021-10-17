@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.5.0 to [v3.5.1](https://github.com/etcd-io/etcd/releases/tag/v3.5.1)
 * Update Cilium from v1.10.4 to [v1.10.5](https://github.com/cilium/cilium/releases/tag/v1.10.5)
 * Update Calico from v3.20.1 to [v3.20.2](https://github.com/projectcalico/calico/releases/tag/v3.20.2)
 * Use Calico's iptables legacy vs nft auto-detection
