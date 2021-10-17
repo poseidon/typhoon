@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.10.4 to [v1.10.5](https://github.com/cilium/cilium/releases/tag/v1.10.5)
 * Update Calico from v3.20.1 to [v3.20.2](https://github.com/projectcalico/calico/releases/tag/v3.20.2)
 * Use Calico's iptables legacy vs nft auto-detection
 
