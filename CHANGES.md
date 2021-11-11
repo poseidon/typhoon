@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Allow use of Terraform provider `google` [v4.0+](https://github.com/hashicorp/terraform-provider-google/releases/tag/v4.0.0)
+
 ### Addons
 
 * Update Prometheus from v2.30.3 to [v2.31.1](https://github.com/prometheus/prometheus/releases/tag/v2.31.1)
