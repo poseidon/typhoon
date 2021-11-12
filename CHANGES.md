@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.20.2 to [v3.21.0](https://github.com/projectcalico/calico/releases/tag/v3.21.0)
+* Update flannel from v0.14.0 to [v0.15.0](https://github.com/flannel-io/flannel/releases/tag/v0.15.0)
+
+### Google
+
 * Allow use of Terraform provider `google` [v4.0+](https://github.com/hashicorp/terraform-provider-google/releases/tag/v4.0.0)
 
 ### Addons
@@ -17,7 +22,7 @@ Notable changes between versions.
 * Update etcd from v3.5.0 to [v3.5.1](https://github.com/etcd-io/etcd/releases/tag/v3.5.1)
 * Update Cilium from v1.10.4 to [v1.10.5](https://github.com/cilium/cilium/releases/tag/v1.10.5)
 * Update Calico from v3.20.1 to [v3.20.2](https://github.com/projectcalico/calico/releases/tag/v3.20.2)
-* Use Calico's iptables legacy vs nft auto-detection
+  * Use Calico's iptables legacy vs nft auto-detection
 * Update flannel from v0.13.0 to v0.14.0
 * Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
 
