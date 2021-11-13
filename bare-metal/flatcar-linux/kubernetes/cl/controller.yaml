@@ -81,8 +81,7 @@ systemd:
           -v /usr/lib/os-release:/etc/os-release:ro \
           -v /lib/modules:/lib/modules:ro \
           -v /run:/run \
-          -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-          -v /sys/fs/cgroup/systemd:/sys/fs/cgroup/systemd \
+          -v /sys/fs/cgroup:/sys/fs/cgroup \
           -v /var/lib/calico:/var/lib/calico:ro \
           -v /var/lib/docker:/var/lib/docker \
           -v /var/lib/kubelet:/var/lib/kubelet:rshared \
@@ -93,6 +92,7 @@ systemd:
           --authentication-token-webhook \
           --authorization-mode=Webhook \
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
+          --cgroup-driver=systemd \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \

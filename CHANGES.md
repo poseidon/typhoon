@@ -11,6 +11,11 @@ Notable changes between versions.
 
 * Allow use of Terraform provider `google` [v4.0+](https://github.com/hashicorp/terraform-provider-google/releases/tag/v4.0.0)
 
+### Flatcar Linux
+
+* Change Kubelet mounts for cgroups v2 ([#1064](https://github.com/poseidon/typhoon/pull/1064))
+* Update cgroup driver from cgroupfs to systemd (Flatcar Linux changed default) ([#1064](https://github.com/poseidon/typhoon/pull/1064))
+
 ### Addons
 
 * Update Prometheus from v2.30.3 to [v2.31.1](https://github.com/prometheus/prometheus/releases/tag/v2.31.1)
