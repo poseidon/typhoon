@@ -4,9 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.22.4
+
+* Kubernetes [v1.22.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1224)
 * Update CoreDNS from v1.8.4 to [v1.8.6](https://github.com/poseidon/terraform-render-bootstrap/pull/284)
 * Update Calico from v3.20.2 to [v3.21.0](https://github.com/projectcalico/calico/releases/tag/v3.21.0)
-* Update flannel from v0.14.0 to [v0.15.0](https://github.com/flannel-io/flannel/releases/tag/v0.15.0)
+* Update flannel from v0.14.0 to [v0.15.1](https://github.com/flannel-io/flannel/releases/tag/v0.15.1)
 
 ### Google
 
