@@ -1,4 +1,3 @@
-
 data "aws_ami" "fedora-coreos" {
   most_recent = true
   owners      = ["125523088429"]
@@ -19,14 +18,11 @@ data "aws_ami" "fedora-coreos" {
   }
 }
 
-# Experimental Fedora CoreOS arm64 / aarch64 AMIs from Poseidon
-# WARNING: These AMIs will be removed when Fedora CoreOS publishes arm64 AMIs
-# and may be removed for any reason before then as well. Do not use.
 data "aws_ami" "fedora-coreos-arm" {
   count = var.arch == "arm64" ? 1 : 0
 
   most_recent = true
-  owners      = ["099663496933"]
+  owners      = ["125523088429"]
 
   filter {
     name   = "architecture"
@@ -39,8 +35,7 @@ data "aws_ami" "fedora-coreos-arm" {
   }
 
   filter {
-    name   = "name"
-    values = ["fedora-coreos-*"]
+    name   = "description"
+    values = ["Fedora CoreOS ${var.os_stream} *"]
   }
 }
-
