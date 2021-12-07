@@ -4,6 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+### AWS
+
+* Change controller node default `disk_iops` to 3000 [#1073](https://github.com/poseidon/typhoon/pull/1073)
+
+### Fedora CoreOS
+
+* Fix Fedora ARM64 workers to official Fedora CoreOS AMIs [#1072](https://github.com/poseidon/typhoon/pull/1072)
+  * Should have been changed alongside controller AMIs in [#1038](https://github.com/poseidon/typhoon/pull/1038)
+  * Old Posidon built ARM64 AMIs have been deleted
+
 ## v1.22.4
 
 * Kubernetes [v1.22.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1224)
