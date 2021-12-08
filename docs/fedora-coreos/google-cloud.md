@@ -52,11 +52,11 @@ terraform {
   required_providers {
     ct = {
       source  = "poseidon/ct"
-      version = "0.9.0"
+      version = "0.9.1"
     }
     google = {
       source = "hashicorp/google"
-      version = "3.75.0"
+      version = "4.3.0"
     }
   }
 }
