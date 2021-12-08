@@ -66,8 +66,8 @@ variable "disk_type" {
 
 variable "disk_iops" {
   type        = number
-  description = "IOPS of the EBS volume (e.g. 100)"
-  default     = 0
+  description = "IOPS of the EBS volume (e.g. 3000)"
+  default     = 3000
 }
 
 variable "worker_price" {
