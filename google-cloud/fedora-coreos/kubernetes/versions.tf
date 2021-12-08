@@ -5,7 +5,7 @@ terraform {
   required_providers {
     google   = ">= 2.19, < 5.0"
     template = "~> 2.2"
-    null     = "~> 3.1"
+    null     = ">= 2.1"
 
     ct = {
       source  = "poseidon/ct"
