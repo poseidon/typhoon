@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
+* Normalize CA certs mounts in static Pods and kube-proxy
 * With Calico, add missing `caliconodestatuses` CRD ([#289](https://github.com/poseidon/terraform-render-bootstrap/pull/289))
 
 ### AWS
