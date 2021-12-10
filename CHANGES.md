@@ -7,6 +7,7 @@ Notable changes between versions.
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
 * Normalize CA certs mounts in static Pods and kube-proxy
 * With Calico, add missing `caliconodestatuses` CRD ([#289](https://github.com/poseidon/terraform-render-bootstrap/pull/289))
+* Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
 
 ### AWS
 
@@ -50,7 +51,6 @@ Notable changes between versions.
 * Update Calico from v3.20.1 to [v3.20.2](https://github.com/projectcalico/calico/releases/tag/v3.20.2)
   * Use Calico's iptables legacy vs nft auto-detection
 * Update flannel from v0.13.0 to v0.14.0
-* Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
 
 ### Bare-Metal
 

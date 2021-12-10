@@ -146,8 +146,8 @@ variable "enable_reporting" {
 
 variable "enable_aggregation" {
   type        = bool
-  description = "Enable the Kubernetes Aggregation Layer (defaults to false)"
-  default     = false
+  description = "Enable the Kubernetes Aggregation Layer"
+  default     = true
 }
 
 # unofficial, undocumented, unsupported
