@@ -21,6 +21,13 @@ Notable changes between versions.
   * Should have been changed alongside controller AMIs in ([#1038](https://github.com/poseidon/typhoon/pull/1038))
   * Old Posidon built ARM64 AMIs have been deleted
 
+### Addons
+
+* Update nginx-ingress from v1.0.5 to [v1.1.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.0)
+* Update kube-state-metrics from v2.2.4 to [v2.3.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.3.0)
+* Update node-exporter from v1.3.0 to [v1.3.1](https://github.com/prometheus/node_exporter/releases/tag/v1.3.1)
+* Update Grafana from v8.2.4 to [v8.3.2](https://github.com/grafana/grafana/releases/tag/v8.3.2)
+
 ## v1.22.4
 
 * Kubernetes [v1.22.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md#v1224)
