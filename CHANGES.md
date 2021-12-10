@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
 * Normalize CA certs mounts in static Pods and kube-proxy
+* Set Kubelet resolver config to `/run/systemd/resolve/resolv.conf`
 * With Calico, add missing `caliconodestatuses` CRD ([#289](https://github.com/poseidon/terraform-render-bootstrap/pull/289))
 * Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
 

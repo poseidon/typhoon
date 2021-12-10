@@ -79,6 +79,7 @@ systemd:
           --pod-manifest-path=/etc/kubernetes/manifests \
           --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \
           --read-only-port=0 \
+          --resolv-conf=/run/systemd/resolve/resolv.conf \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStart=docker logs -f kubelet

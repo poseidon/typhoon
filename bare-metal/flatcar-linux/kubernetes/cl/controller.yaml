@@ -103,6 +103,7 @@ systemd:
           --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --read-only-port=0 \
+          --resolv-conf=/run/systemd/resolve/resolv.conf \
           --register-with-taints=node-role.kubernetes.io/controller=:NoSchedule \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
