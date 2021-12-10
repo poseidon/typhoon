@@ -15,24 +15,26 @@ Together, they diversify Typhoon to support a range of container technologies.
 ## Host Properties
 
 | Property          | Flatcar Linux | Fedora CoreOS |
-|-------------------|---------------------------------|---------------|
-| Kernel            | ~5.10.x | ~5.12.x |
-| systemd           | 247 | 248 |
+|-------------------|---------------|---------------|
+| Kernel            | ~5.10.x       | ~5.14.x       |
+| systemd           | 247           | 249           |
+| Username          | core          | core          |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
-| Container Engine  | docker 19.3.15  | docker 20.10.6 |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
-| logging driver    | json-file | journald |
-| cgroup driver     | cgroupfs (except Flatcar edge) | systemd  |
-| Networking        | systemd-networkd | NetworkManager |
-| Username          | core      | core |
+| logging driver    | json-file     | journald      |
+| cgroup driver     | systemd       | systemd       |
+| cgroup version    | v2            | v2            |
+| Networking        | systemd-networkd | NetworkManager   |
+| Resolver          | systemd-resolved | systemd-resolved |
 
 ## Kubernetes Properties
 
 | Property          | Flatcar Linux | Fedora CoreOS |
-|-------------------|-----------------|---------------|
+|-------------------|---------------|---------------|
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
 | control plane     | static pods   | static pods   |
+| Container Runtime | docker 20.10  | docker 20.10  |
 | kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
 | control plane images | upstream images | upstream images |
 | on-host etcd      | docker    | podman |
