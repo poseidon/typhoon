@@ -44,7 +44,7 @@ resource "matchbox_profile" "controllers" {
 
   kernel = local.kernel
   initrd = local.initrd
-  args = concat(local.args, var.kernel_args)
+  args   = concat(local.args, var.kernel_args)
 
   raw_ignition = data.ct_config.controller-ignitions.*.rendered[count.index]
 }
@@ -78,7 +78,7 @@ resource "matchbox_profile" "workers" {
 
   kernel = local.kernel
   initrd = local.initrd
-  args = concat(local.args, var.kernel_args)
+  args   = concat(local.args, var.kernel_args)
 
   raw_ignition = data.ct_config.worker-ignitions.*.rendered[count.index]
 }

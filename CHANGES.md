@@ -5,21 +5,26 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
-* Normalize CA certs mounts in static Pods and kube-proxy
-* Set Kubelet resolver config to `/run/systemd/resolve/resolv.conf`
-* Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
-* Update Cilium from v1.10.5 to [v1.11.0](https://github.com/cilium/cilium/releases/tag/v1.11.0)
+* Normalize CA cert mounts in static Pods and kube-proxy ([#1078](https://github.com/poseidon/typhoon/pull/1078))
+* Set Kubelet resolver config to `/run/systemd/resolve/resolv.conf` ([#1082](https://github.com/poseidon/typhoon/pull/1082))
+* Update Cilium from v1.10.5 to [v1.11.0](https://github.com/cilium/cilium/releases/tag/v1.11.0) ([#1083](https://github.com/poseidon/typhoon/pull/1083))
 * With Calico, add missing `caliconodestatuses` CRD ([#289](https://github.com/poseidon/terraform-render-bootstrap/pull/289))
+* Change `enable_aggregation` default to true ([#279](https://github.com/poseidon/terraform-render-bootstrap/pull/279))
+* Remove deprecated `--port` from `kube-scheduler` ([#1078](https://github.com/poseidon/typhoon/pull/1078))
 
 ### AWS
 
 * Change controller node default `disk_iops` to 3000 ([#1073](https://github.com/poseidon/typhoon/pull/1073))
 
+### Azure
+
+* Fix warning about deprecated `backend_address_pool_id`
+
 ### Fedora CoreOS
 
 * Fix Fedora ARM64 workers to official Fedora CoreOS AMIs ([#1072](https://github.com/poseidon/typhoon/pull/1072))
   * Should have been changed alongside controller AMIs in ([#1038](https://github.com/poseidon/typhoon/pull/1038))
-  * Old Posidon built ARM64 AMIs have been deleted
+  * Old Poseidon built ARM64 AMIs have been deleted
 
 ### Addons
 
@@ -27,6 +32,10 @@ Notable changes between versions.
 * Update kube-state-metrics from v2.2.4 to [v2.3.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.3.0)
 * Update node-exporter from v1.3.0 to [v1.3.1](https://github.com/prometheus/node_exporter/releases/tag/v1.3.1)
 * Update Grafana from v8.2.4 to [v8.3.2](https://github.com/grafana/grafana/releases/tag/v8.3.2)
+
+### Known Issues
+
+* Calico does not yet support Kubernetes v1.23.0 ([calico#5011](https://github.com/projectcalico/calico/issues/5011)), use `flannel` or `cilium`
 
 ## v1.22.4
 
