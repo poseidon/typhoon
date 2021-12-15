@@ -18,7 +18,7 @@ Notable changes between versions.
 
 ### Azure
 
-* Fix warning about deprecated `backend_address_pool_id`
+* Fix warning about deprecated `backend_address_pool_id` ([#1086](https://github.com/poseidon/typhoon/pull/1086))
 
 ### Fedora CoreOS
 
@@ -29,13 +29,14 @@ Notable changes between versions.
 ### Addons
 
 * Update nginx-ingress from v1.0.5 to [v1.1.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.0)
+* Update Prometheus from v2.31.1 to [v2.32.0](https://github.com/prometheus/prometheus/releases/tag/v2.32.0)
 * Update kube-state-metrics from v2.2.4 to [v2.3.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.3.0)
 * Update node-exporter from v1.3.0 to [v1.3.1](https://github.com/prometheus/node_exporter/releases/tag/v1.3.1)
-* Update Grafana from v8.2.4 to [v8.3.2](https://github.com/grafana/grafana/releases/tag/v8.3.2)
+* Update Grafana from v8.2.4 to [v8.3.3](https://github.com/grafana/grafana/releases/tag/v8.3.3)
 
 ### Known Issues
 
-* Calico does not yet support Kubernetes v1.23.0 ([calico#5011](https://github.com/projectcalico/calico/issues/5011)), use `flannel` or `cilium`
+* Calico does not yet support Kubernetes v1.23.0, use `flannel` or `cilium` ([calico#5011](https://github.com/projectcalico/calico/issues/5011))
 
 ## v1.22.4
 
