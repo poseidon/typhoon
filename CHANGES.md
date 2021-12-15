@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+### Flatcar Linux
+
+* Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1087](https://github.com/poseidon/typhoon/pull/1087))
+
+## v1.23.0
+
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
 * Normalize CA cert mounts in static Pods and kube-proxy ([#1078](https://github.com/poseidon/typhoon/pull/1078))
 * Set Kubelet resolver config to `/run/systemd/resolve/resolv.conf` ([#1082](https://github.com/poseidon/typhoon/pull/1082))

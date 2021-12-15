@@ -58,7 +58,7 @@ systemd:
           -v /run:/run \
           -v /sys/fs/cgroup:/sys/fs/cgroup \
           -v /var/lib/calico:/var/lib/calico:ro \
-          -v /var/lib/docker:/var/lib/docker \
+          -v /var/lib/containerd:/var/lib/containerd \
           -v /var/lib/kubelet:/var/lib/kubelet:rshared \
           -v /var/log:/var/log \
           -v /opt/cni/bin:/opt/cni/bin \
@@ -68,6 +68,8 @@ systemd:
           --authorization-mode=Webhook \
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --cgroup-driver=systemd \
+          --container-runtime=remote \
+          --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
