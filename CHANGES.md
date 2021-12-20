@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.23.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1231)
+
 ### Flatcar Linux
 
 * Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1087](https://github.com/poseidon/typhoon/pull/1087))
