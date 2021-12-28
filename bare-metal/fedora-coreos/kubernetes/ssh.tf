@@ -28,17 +28,17 @@ resource "null_resource" "copy-controller-secrets" {
 
   provisioner "file" {
     content     = module.bootstrap.kubeconfig-kubelet
-    destination = "$HOME/kubeconfig"
+    destination = "/home/core/kubeconfig"
   }
 
   provisioner "file" {
     content     = join("\n", local.assets_bundle)
-    destination = "$HOME/assets"
+    destination = "/home/core/assets"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+      "sudo mv /home/core/kubeconfig /etc/kubernetes/kubeconfig",
       "sudo touch /etc/kubernetes",
       "sudo /opt/bootstrap/layout",
     ]
@@ -65,12 +65,12 @@ resource "null_resource" "copy-worker-secrets" {
 
   provisioner "file" {
     content     = module.bootstrap.kubeconfig-kubelet
-    destination = "$HOME/kubeconfig"
+    destination = "/home/core/kubeconfig"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo mv $HOME/kubeconfig /etc/kubernetes/kubeconfig",
+      "sudo mv /home/core/kubeconfig /etc/kubernetes/kubeconfig",
       "sudo touch /etc/kubernetes",
     ]
   }

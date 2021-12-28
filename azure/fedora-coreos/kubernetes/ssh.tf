@@ -25,7 +25,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   provisioner "file" {
     content     = join("\n", local.assets_bundle)
-    destination = "$HOME/assets"
+    destination = "/home/core/assets"
   }
 
   provisioner "remote-exec" {

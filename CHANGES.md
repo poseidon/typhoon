@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.23.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1231)
+* Workaround Terraform v1.1 regression in `file` provisioner ([#1093](https://github.com/poseidon/typhoon/pull/1093))
 
 ### Flatcar Linux
 
