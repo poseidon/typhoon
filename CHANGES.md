@@ -14,6 +14,8 @@ Notable changes between versions.
 ### Addons
 
 * Configure Prometheus to allow a custom scrape query parameter ([#1095](https://github.com/poseidon/typhoon/pull/1095))
+* Configure Prometheus to probe Kubernetes Ingress via `blackbox-exporter` ([#1096](https://github.com/poseidon/typhoon/pull/1096))
+* Fix Prometheus Service probes to use `blackbox-exporter`, not `blackbox` ([#1096](https://github.com/poseidon/typhoon/pull/1096))
 
 ## v1.23.0
 
