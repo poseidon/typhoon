@@ -11,6 +11,10 @@ Notable changes between versions.
 
 * Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1087](https://github.com/poseidon/typhoon/pull/1087))
 
+### Addons
+
+* Configure Prometheus to allow a custom scrape query parameter ([#1095](https://github.com/poseidon/typhoon/pull/1095))
+
 ## v1.23.0
 
 * Kubernetes [v1.23.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1230)
