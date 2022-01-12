@@ -29,7 +29,7 @@ systemd:
         LimitNOFILE=40000
         [Install]
         WantedBy=multi-user.target
-    - name: docker.service
+    - name: containerd.service
       enabled: true
     - name: wait-for-dns.service
       enabled: true
@@ -69,7 +69,7 @@ systemd:
           --volume /run:/run \
           --volume /sys/fs/cgroup:/sys/fs/cgroup \
           --volume /var/lib/calico:/var/lib/calico:ro \
-          --volume /var/lib/docker:/var/lib/docker \
+          --volume /var/lib/containerd:/var/lib/containerd \
           --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
           --volume /var/log:/var/log \
           --volume /var/run/lock:/var/run/lock:z \
@@ -81,6 +81,8 @@ systemd:
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --cgroup-driver=systemd \
           --cgroups-per-qos=true \
+          --container-runtime=remote \
+          --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
           --enforce-node-allocatable=pods \
           --client-ca-file=/etc/kubernetes/ca.crt \
           --cluster_dns=${cluster_dns_service_ip} \
@@ -224,6 +226,25 @@ storage:
           ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
           ETCD_PEER_CLIENT_CERT_AUTH=true
     - path: /etc/fedora-coreos/iptables-legacy.stamp
+    - path: /etc/containerd/config.toml
+      overwrite: true
+      contents:
+        inline: |
+          version = 2
+          root = "/var/lib/containerd"
+          state = "/run/containerd"
+          subreaper = true
+          oom_score = -999
+          [grpc]
+          address = "/run/containerd/containerd.sock"
+          uid = 0
+          gid = 0
+          [plugins."io.containerd.grpc.v1.cri"]
+          enable_selinux = true
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+          SystemdCgroup = true
 passwd:
   users:
     - name: core
