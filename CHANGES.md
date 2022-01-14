@@ -8,6 +8,15 @@ Notable changes between versions.
 
 * Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1101](https://github.com/poseidon/typhoon/pull/1101))
 
+### Flatcar Linux
+
+#### AWS
+
+* Add experimental Flatcar Linux ARM64 support
+  * Add `arch` variable to AWS `kubernetes` and `workers` modules
+  * Allow arm64 full-cluster or mixed/hybrid cluster with arm64 workers
+  * Requires `flannel` or `cilium` CNI provider
+
 ## v1.23.1
 
 * Kubernetes [v1.23.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1231)

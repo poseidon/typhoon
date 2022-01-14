@@ -1,12 +1,9 @@
 # ARM64
 
-!!! warning
-    ARM64 support is experimental
-
-Typhoon has experimental support for ARM64 with Fedora CoreOS on AWS. Full clusters can be created with ARM64 controller and worker nodes. Or worker pools of ARM64 nodes can be attached to an AMD64 cluster to create a hybrid/mixed architecture cluster.
+Typhoon has experimental support for ARM64 on AWS, with Fedora CoreOS or Flatcar Linux. Clusters can be created with ARM64 controller and worker nodes. Or worker pools of ARM64 nodes can be attached to an AMD64 cluster to create a hybrid/mixed architecture cluster.
 
 !!! note
-    Currently, CNI networking must be set to flannel or Cilium.
+    Currently, CNI networking must be set to `flannel` or `cilium`.
 
 ## Cluster
 
@@ -35,14 +32,14 @@ module "gravitas" {
 }
 ```
 
-Verify the cluster has only arm64 (`aarch64`) nodes.
+Verify the cluster has only arm64 (`aarch64`) nodes. For Flatcar Linux, describe nodes.
 
 ```
 $ kubectl get nodes -o wide
-NAME             STATUS   ROLES    AGE    VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                          KERNEL-VERSION            CONTAINER-RUNTIME
-ip-10-0-12-178   Ready    <none>   101s   v1.23.1   10.0.12.178   <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-18-93    Ready    <none>   102s   v1.23.1   10.0.18.93    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
-ip-10-0-90-10    Ready    <none>   104s   v1.23.1   10.0.90.10    <none>        Fedora CoreOS 32.20201104.dev.0   5.8.17-200.fc32.aarch64   docker://19.3.11
+NAME             STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                        KERNEL-VERSION            CONTAINER-RUNTIME
+ip-10-0-21-119   Ready    <none>   77s   v1.23.1   10.0.21.119   <none>        Fedora CoreOS 35.20211215.3.0   5.15.7-200.fc35.aarch64   containerd://1.5.8
+ip-10-0-32-166   Ready    <none>   80s   v1.23.1   10.0.32.166   <none>        Fedora CoreOS 35.20211215.3.0   5.15.7-200.fc35.aarch64   containerd://1.5.8
+ip-10-0-5-79     Ready    <none>   77s   v1.23.1   10.0.5.79     <none>        Fedora CoreOS 35.20211215.3.0   5.15.7-200.fc35.aarch64   containerd://1.5.8
 ```
 
 ## Hybrid

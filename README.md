@@ -45,6 +45,10 @@ Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/
 | DigitalOcean | Flatcar Linux  | [digital-ocean/flatcar-linux/kubernetes](digital-ocean/flatcar-linux/kubernetes) | beta |
 | Google Cloud  | Flatcar Linux  | [google-cloud/flatcar-linux/kubernetes](google-cloud/flatcar-linux/kubernetes) | beta |
 
+| Platform      | Operating System | Terraform Module | Status |
+|---------------|------------------|------------------|--------|
+| AWS           | Flatcar Linux (ARM64) | [aws/flatcar-linux/kubernetes](aws/flatcar-linux/kubernetes) | alpha |
+
 ## Documentation
 
 * [Docs](https://typhoon.psdn.io)
