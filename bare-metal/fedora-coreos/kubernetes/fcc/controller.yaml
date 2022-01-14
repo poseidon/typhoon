@@ -31,6 +31,8 @@ systemd:
         WantedBy=multi-user.target
     - name: containerd.service
       enabled: true
+    - name: docker.service
+      mask: true
     - name: wait-for-dns.service
       enabled: true
       contents: |

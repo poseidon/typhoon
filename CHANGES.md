@@ -7,12 +7,13 @@ Notable changes between versions.
 ### Fedora CoreOS
 
 * Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1101](https://github.com/poseidon/typhoon/pull/1101))
+* Mask `docker.service` to prevent it from being socket activated ([#1105](https://github.com/poseidon/typhoon/pull/1105))
 
 ### Flatcar Linux
 
 #### AWS
 
-* Add experimental Flatcar Linux ARM64 support ([#1102](https://github.com/poseidon/typhoon/pull/1102))
+* Add experimental Flatcar Linux ARM64 support ([docs](https://typhoon.psdn.io/advanced/arm64/), [#1102](https://github.com/poseidon/typhoon/pull/1102))
   * Add `arch` variable to AWS `kubernetes` and `workers` modules
   * Allow arm64 full-cluster or mixed/hybrid cluster with arm64 workers
   * Requires `flannel` or `cilium` CNI provider
