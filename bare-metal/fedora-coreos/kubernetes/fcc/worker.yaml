@@ -65,7 +65,6 @@ systemd:
           --healthz-port=0 \
           --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
-          --network-plugin=cni \
           --node-labels=node.kubernetes.io/node \
           %{~ for label in compact(split(",", node_labels)) ~}
           --node-labels=${label} \

@@ -95,7 +95,6 @@ systemd:
           --cluster_domain=${cluster_domain_suffix} \
           --healthz-port=0 \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
-          --network-plugin=cni \
           --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
           --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \

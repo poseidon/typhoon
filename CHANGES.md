@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Remove Kubelet flag `--network-plugin`. Unused since `docker-shim` isn't used ([#1106](https://github.com/poseidon/typhoon/pull/1106))
+
 ### Fedora CoreOS
 
 * Switch Kubernetes Container Runtime from `docker` to `containerd` ([#1101](https://github.com/poseidon/typhoon/pull/1101))
