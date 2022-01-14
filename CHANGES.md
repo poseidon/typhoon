@@ -12,7 +12,7 @@ Notable changes between versions.
 
 #### AWS
 
-* Add experimental Flatcar Linux ARM64 support
+* Add experimental Flatcar Linux ARM64 support ([#1102](https://github.com/poseidon/typhoon/pull/1102))
   * Add `arch` variable to AWS `kubernetes` and `workers` modules
   * Allow arm64 full-cluster or mixed/hybrid cluster with arm64 workers
   * Requires `flannel` or `cilium` CNI provider
