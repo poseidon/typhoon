@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.23.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1232)
 * Remove Kubelet flag `--network-plugin`. Unused since `docker-shim` isn't used ([#1106](https://github.com/poseidon/typhoon/pull/1106))
 
 ### Fedora CoreOS
