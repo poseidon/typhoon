@@ -25,6 +25,11 @@ Notable changes between versions.
 
 * Upgrade DigitalOcean Terraform provider to [v2.x](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs) ([#1109](https://github.com/poseidon/typhoon/pull/1109))
 
+### Addons
+
+* Update nginx-ingress from v1.1.0 to [v1.1.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.1)
+* Update Grafana from v8.3.3 to [v8.3.4](https://github.com/grafana/grafana/releases/tag/v8.3.4)
+
 ## v1.23.1
 
 * Kubernetes [v1.23.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1231)
