@@ -37,7 +37,6 @@ resource "digitalocean_droplet" "workers" {
   size  = var.worker_type
 
   # network
-  private_networking = true
   vpc_uuid           = digitalocean_vpc.network.id
   # TODO: Only official DigitalOcean images support IPv6
   ipv6 = false

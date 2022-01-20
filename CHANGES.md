@@ -21,6 +21,10 @@ Notable changes between versions.
   * Allow arm64 full-cluster or mixed/hybrid cluster with arm64 workers
   * Requires `flannel` or `cilium` CNI provider
 
+### DigitalOcean
+
+* Upgrade DigitalOcean Terraform provider to [v2.x](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs) ([#1109](https://github.com/poseidon/typhoon/pull/1109))
+
 ## v1.23.1
 
 * Kubernetes [v1.23.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1231)

@@ -46,7 +46,6 @@ resource "digitalocean_droplet" "controllers" {
   size  = var.controller_type
 
   # network
-  private_networking = true
   vpc_uuid           = digitalocean_vpc.network.id
   # TODO: Only official DigitalOcean images support IPv6
   ipv6 = false
