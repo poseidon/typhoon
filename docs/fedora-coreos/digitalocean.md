@@ -55,7 +55,7 @@ terraform {
     }
     digitalocean = {
       source = "digitalocean/digitalocean"
-      version = "1.22.1"
+      version = "2.17.0"
     }
   }
 }
