@@ -34,7 +34,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
 | control plane     | static pods   | static pods   |
-| Container Runtime | docker 20.10  | docker 20.10  |
+| Container Runtime | containerd 1.5.8 | containerd 1.5.8 |
 | kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
 | control plane images | upstream images | upstream images |
 | on-host etcd      | docker    | podman |

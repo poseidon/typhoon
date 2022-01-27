@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+## V1.23.3
+
+* Kubernetes [v1.23.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1233)
+
+## v1.23.2
+
 * Kubernetes [v1.23.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1232)
 * Remove Kubelet flag `--network-plugin`. Unused since `docker-shim` isn't used ([#1106](https://github.com/poseidon/typhoon/pull/1106))
 
