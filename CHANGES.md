@@ -8,6 +8,14 @@ Notable changes between versions.
 
 * Kubernetes [v1.23.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1233)
 
+### Flatcar Linux
+
+#### Google Cloud
+
+* Switch to using official Kinvolk Flatcar Linux images
+* Promote Typhoon on Flatcar Linux / Google Cloud to stable
+* Change `os_image` to `flatcar-stable`, `flatcar-beta`, or `flatcar-alpha` (**action required**)
+
 ## v1.23.2
 
 * Kubernetes [v1.23.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1232)

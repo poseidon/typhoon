@@ -67,25 +67,6 @@ Additional configuration options are described in the `google` provider [docs](h
 !!! tip
     Regions are listed in [docs](https://cloud.google.com/compute/docs/regions-zones/regions-zones) or with `gcloud compute regions list`. A project may contain multiple clusters across different regions.
 
-### Flatcar Linux Images
-
-Flatcar Linux publishes Google Cloud images, but does not yet upload them. Google Cloud allows [custom boot images](https://cloud.google.com/compute/docs/images/import-existing-image) to be uploaded to a bucket and imported into your project.
-
-[Download](https://www.flatcar-linux.org/releases/) the Flatcar Linux GCE gzipped tarball and upload it to a Google Cloud storage bucket.
-
-```
-gsutil list
-gsutil cp flatcar_production_gce.tar.gz gs://BUCKET
-```
-
-Create a Compute Engine image from the file.
-
-```
-gcloud compute images create flatcar-linux-2303-4-0 --source-uri gs://BUCKET_NAME/flatcar_production_gce.tar.gz
-```
-
-Set the [os_image](#variables) in the next step.
-
 ## Cluster
 
 Define a Kubernetes cluster using the module `google-cloud/flatcar-linux/kubernetes`.
@@ -101,7 +82,6 @@ module "yavin" {
   dns_zone_name = "example-zone"
 
   # configuration
-  os_image           = "flatcar-linux-2303-4-0"
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # optional
@@ -206,7 +186,6 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/google-
 | region | Google Cloud region | "us-central1" |
 | dns_zone | Google Cloud DNS zone | "google-cloud.example.com" |
 | dns_zone_name | Google Cloud DNS zone name | "example-zone" |
-| os_image | Container Linux image for compute instances | "flatcar-linux-2303-4-0" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-rsa AAAAB3NZ..." |
 
 Check the list of valid [regions](https://cloud.google.com/compute/docs/regions-zones/regions-zones) and list Container Linux [images](https://cloud.google.com/compute/docs/images) with `gcloud compute images list | grep coreos`.
@@ -236,6 +215,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "n1-standard-1" | See below |
 | worker_type | Machine type for workers | "n1-standard-1" | See below |
+| os_image | Flatcar Linux image for compute instances | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | disk_size | Size of the disk in GB | 30 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |

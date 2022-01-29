@@ -43,7 +43,7 @@ Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/
 | Azure         | Flatcar Linux    | [azure/flatcar-linux/kubernetes](flatcar-linux/azure.md) | alpha |
 | Bare-Metal    | Flatcar Linux    | [bare-metal/flatcar-linux/kubernetes](flatcar-linux/bare-metal.md) | stable |
 | DigitalOcean | Flatcar Linux  | [digital-ocean/flatcar-linux/kubernetes](flatcar-linux/digitalocean.md) | beta |
-| Google Cloud  | Flatcar Linux  | [google-cloud/flatcar-linux/kubernetes](flatcar-linux/google-cloud.md) | beta |
+| Google Cloud  | Flatcar Linux  | [google-cloud/flatcar-linux/kubernetes](flatcar-linux/google-cloud.md) | stable |
 
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|

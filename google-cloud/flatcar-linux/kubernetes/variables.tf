@@ -48,7 +48,13 @@ variable "worker_type" {
 
 variable "os_image" {
   type        = string
-  description = "Flatcar Linux image for compute instances (e.g. custom-image)"
+  description = "Flatcar Linux image for compute instances (flatcar-stable, flatcar-beta, flatcar-alpha)"
+  default     = "flatcar-stable"
+
+  validation {
+    condition     = contains(["flatcar-stable", "flatcar-beta", "flatcar-alpha"], var.os_image)
+    error_message = "The os_image must be flatcar-stable, flatcar-beta, or flatcar-alpha."
+  }
 }
 
 variable "disk_size" {

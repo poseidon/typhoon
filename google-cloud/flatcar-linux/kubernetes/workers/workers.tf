@@ -43,7 +43,7 @@ resource "google_compute_instance_template" "worker" {
   disk {
     auto_delete  = true
     boot         = true
-    source_image = var.os_image
+    source_image = data.google_compute_image.flatcar-linux.self_link
     disk_size_gb = var.disk_size
   }
 

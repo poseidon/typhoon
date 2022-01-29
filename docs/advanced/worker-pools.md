@@ -246,7 +246,7 @@ Create a cluster following the Google Cloud [tutorial](../flatcar-linux/google-c
       # optional
       worker_count = 2
       machine_type = "n1-standard-16"
-      os_image     = "flatcar-linux-2303-4-0"    # custom
+      os_image     = "flatcar-stable"
       preemptible  = true
     }
     ```
