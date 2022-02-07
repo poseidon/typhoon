@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.5.1 to [v3.5.2](https://github.com/etcd-io/etcd/releases/tag/v3.5.2)
 * Change default CNI `networking` provider from `calico` to `cilium` ([#1114](https://github.com/poseidon/typhoon/pull/1114))
 
 ## V1.23.3
