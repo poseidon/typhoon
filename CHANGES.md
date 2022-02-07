@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Change default CNI `networking` provider from `calico` to `cilium` ([#1114](https://github.com/poseidon/typhoon/pull/1114))
+
 ## V1.23.3
 
 * Kubernetes [v1.23.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1233)

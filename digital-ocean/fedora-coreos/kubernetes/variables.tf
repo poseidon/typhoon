@@ -67,8 +67,8 @@ variable "ssh_fingerprints" {
 
 variable "networking" {
   type        = string
-  description = "Choice of networking provider (flannel or calico)"
-  default     = "calico"
+  description = "Choice of networking provider (flannel, calico, or cilium)"
+  default     = "cilium"
 }
 
 variable "pod_cidr" {
