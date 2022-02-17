@@ -26,6 +26,7 @@ spec:
           image: k8s.gcr.io/ingress-nginx/controller:v1.1.1
           args:
             - /nginx-ingress-controller
+            - --controller-class=k8s.io/public
             - --ingress-class=public
           # use downward API
           env:
