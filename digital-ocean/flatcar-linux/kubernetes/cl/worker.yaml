@@ -37,7 +37,7 @@ systemd:
         After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.23.3
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.23.4
         EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
@@ -98,7 +98,7 @@ systemd:
         [Unit]
         Description=Delete Kubernetes node on shutdown
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.23.3
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.23.4
         Type=oneshot
         RemainAfterExit=true
         ExecStart=/bin/true
