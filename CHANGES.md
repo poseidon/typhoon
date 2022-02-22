@@ -19,7 +19,6 @@ Notable changes between versions.
 * Align nginx-ingress `--controller-class` with `IngressClass`
   * Watch only `public` IngressClass objects, better [example](https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/)
 * Update Prometheus from v2.32.1 to [v2.33.3](https://github.com/prometheus/prometheus/releases/tag/v2.33.3)
-* Update kube-state-metrics from v2.3.0 to [v2.4.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.4.0)
 * Update Grafana from v8.3.6 to [v8.4.1](https://github.com/grafana/grafana/releases/tag/v8.4.1)
 
 ## V1.23.3
