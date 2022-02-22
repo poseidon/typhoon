@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.23.4
+
 * Kubernetes [v1.23.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1234)
 * Update etcd from v3.5.1 to [v3.5.2](https://github.com/etcd-io/etcd/releases/tag/v3.5.2)
 * Change default CNI `networking` provider from `calico` to `cilium` ([#1114](https://github.com/poseidon/typhoon/pull/1114))
@@ -17,7 +19,8 @@ Notable changes between versions.
 * Align nginx-ingress `--controller-class` with `IngressClass`
   * Watch only `public` IngressClass objects, better [example](https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/)
 * Update Prometheus from v2.32.1 to [v2.33.3](https://github.com/prometheus/prometheus/releases/tag/v2.33.3)
-* Update Grafana from v8.3.4 to [v8.3.6](https://github.com/grafana/grafana/releases/tag/v8.3.6)
+* Update kube-state-metrics from v2.3.0 to [v2.4.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.4.0)
+* Update Grafana from v8.3.6 to [v8.4.1](https://github.com/grafana/grafana/releases/tag/v8.4.1)
 
 ## V1.23.3
 
