@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.11.1 to [v1.11.2](https://github.com/cilium/cilium/releases/tag/v1.11.2)
+
 ## v1.23.4
 
 * Kubernetes [v1.23.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1234)
@@ -36,6 +38,7 @@ Notable changes between versions.
 ## v1.23.2
 
 * Kubernetes [v1.23.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1232)
+* Update Cilium from v1.11.0 to [v1.11.1](https://github.com/cilium/cilium/releases/tag/v1.11.1)
 * Remove Kubelet flag `--network-plugin`. Unused since `docker-shim` isn't used ([#1106](https://github.com/poseidon/typhoon/pull/1106))
 
 ### Fedora CoreOS
