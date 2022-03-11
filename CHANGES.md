@@ -6,7 +6,11 @@ Notable changes between versions.
 
 * Update Cilium from v1.11.1 to [v1.11.2](https://github.com/cilium/cilium/releases/tag/v1.11.2)
 * Update Calico from v3.21.2 to [v3.22.1](https://github.com/projectcalico/calico/releases/tag/v3.22.1)
-  * Should fix [calico#5011](https://github.com/projectcalico/calico/issues/5011)
+  * Fix [calico#5011](https://github.com/projectcalico/calico/issues/5011), broken since v1.23.0
+
+### Addons
+
+* Update nginx-ingress from v1.1.1 to [v1.1.2](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.2)
 
 ## v1.23.4
 
