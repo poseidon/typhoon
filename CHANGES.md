@@ -13,6 +13,7 @@ Notable changes between versions.
 
 ### Addons
 
+* Refresh Prometheus rules and Grafana dashboards ([#1136](https://github.com/poseidon/typhoon/pull/1136))
 * Update nginx-ingress from v1.1.1 to [v1.1.2](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.2)
 * Update Prometheus from v2.33.3 to [v2.33.5](https://github.com/prometheus/prometheus/releases/tag/v2.33.5)
 * Update Grafana from v8.4.1 to [v8.4.3](https://github.com/grafana/grafana/releases/tag/v8.4.3)

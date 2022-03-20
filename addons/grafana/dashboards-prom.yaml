@@ -1536,11 +1536,11 @@ data:
             "includeAll": true,
             "label": null,
             "multi": false,
-            "name": "instance",
+            "name": "cluster",
             "options": [
 
             ],
-            "query": "label_values(prometheus_build_info, instance)",
+            "query": "label_values(kube_pod_container_info{image=~\".*prometheus.*\"}, cluster)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -1571,11 +1571,11 @@ data:
             "includeAll": true,
             "label": null,
             "multi": false,
-            "name": "cluster",
+            "name": "instance",
             "options": [
 
             ],
-            "query": "label_values(kube_pod_container_info{image=~\".*prometheus.*\"}, cluster)",
+            "query": "label_values(prometheus_build_info{cluster=~\"$cluster\"}, instance)",
             "refresh": 2,
             "regex": "",
             "sort": 0,
@@ -1850,7 +1850,7 @@ data:
               "title": "Prometheus Stats",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -1949,7 +1949,7 @@ data:
               "title": "Target Sync",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2035,7 +2035,7 @@ data:
               "title": "Targets",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2133,7 +2133,7 @@ data:
               "title": "Average Scrape Interval Duration",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2203,6 +2203,14 @@ data:
               "steppedLine": false,
               "targets": [
                 {
+                  "expr": "sum by (job) (rate(prometheus_target_scrapes_exceeded_body_size_limit_total[1m]))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "exceeded body size limit: {{job}}",
+                  "legendLink": null,
+                  "step": 10
+                },
+                {
                   "expr": "sum by (job) (rate(prometheus_target_scrapes_exceeded_sample_limit_total[1m]))",
                   "format": "time_series",
                   "intervalFactor": 2,
@@ -2243,7 +2251,7 @@ data:
               "title": "Scrape failures",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2329,7 +2337,7 @@ data:
               "title": "Appended Samples",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2427,7 +2435,7 @@ data:
               "title": "Head Series",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2513,7 +2521,7 @@ data:
               "title": "Head Chunks",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2611,7 +2619,7 @@ data:
               "title": "Query Rate",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2697,7 +2705,7 @@ data:
               "title": "Stage Duration",
               "tooltip": {
                 "shared": true,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2751,7 +2759,7 @@ data:
               "value": "default"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [
 
@@ -2762,7 +2770,7 @@ data:
             "type": "datasource"
           },
           {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
               "selected": true,
               "text": "All",
@@ -2777,7 +2785,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(prometheus_build_info, job)",
+            "query": "label_values(prometheus_build_info{job=\"prometheus\"}, job)",
             "refresh": 1,
             "regex": "",
             "sort": 2,
@@ -2790,7 +2798,7 @@ data:
             "useTags": false
           },
           {
-            "allValue": null,
+            "allValue": ".+",
             "current": {
               "selected": true,
               "text": "All",
@@ -2805,7 +2813,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(prometheus_build_info, instance)",
+            "query": "label_values(prometheus_build_info{job=~\"$job\"}, instance)",
             "refresh": 1,
             "regex": "",
             "sort": 2,

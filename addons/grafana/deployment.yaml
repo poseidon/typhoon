@@ -69,6 +69,8 @@ spec:
               mountPath: /etc/grafana/dashboards/k8s-resources-1
             - name: dashboards-k8s-resources-2
               mountPath: /etc/grafana/dashboards/k8s-resources-2
+            - name: dashboards-k8s-network
+              mountPath: /etc/grafana/dashboards/k8s-network
             - name: dashboards-coredns
               mountPath: /etc/grafana/dashboards/coredns
             - name: dashboards-nginx-ingress
@@ -101,6 +103,9 @@ spec:
         - name: dashboards-k8s-resources-1
           configMap:
             name: grafana-dashboards-k8s-resources-1
+        - name: dashboards-k8s-network
+          configMap:
+            name: grafana-dashboards-k8s-network
         - name: dashboards-k8s-resources-2
           configMap:
             name: grafana-dashboards-k8s-resources-2

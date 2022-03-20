@@ -30,11 +30,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 1,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -75,7 +78,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", cluster=\"$cluster\"}) by (container)",
+                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"$namespace\", pod=\"$pod\", cluster=\"$cluster\"}) by (container)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{container}}",
@@ -83,7 +86,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"})\n",
+                  "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "requests",
@@ -91,7 +94,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"})\n",
+                  "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "limits",
@@ -107,7 +110,7 @@ data:
               "title": "CPU Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -161,11 +164,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 2,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": true,
                 "max": true,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -189,7 +195,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container) /sum(increase(container_cpu_cfs_periods_total{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", cluster=\"$cluster\"}[5m])) by (container)",
+                  "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{job=\"kubernetes-cadvisor\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval])) by (container) /sum(increase(container_cpu_cfs_periods_total{job=\"kubernetes-cadvisor\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", cluster=\"$cluster\"}[$__rate_interval])) by (container)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{container}}",
@@ -212,7 +218,7 @@ data:
               "title": "CPU Throttling",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -266,11 +272,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 3,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -431,7 +440,7 @@ data:
               ],
               "targets": [
                 {
-                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\"}) by (container)",
+                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -440,7 +449,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -449,7 +458,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container) / sum(kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container) / sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -458,7 +467,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -467,7 +476,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container) / sum(kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container) / sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -484,7 +493,7 @@ data:
               "title": "CPU Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -539,11 +548,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 4,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -565,7 +577,7 @@ data:
                   "dashes": true,
                   "fill": 0,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 },
@@ -575,7 +587,7 @@ data:
                   "dashes": true,
                   "fill": 0,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 }
@@ -586,7 +598,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", image!=\"\"}) by (container)",
+                  "expr": "sum(container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{container}}",
@@ -594,7 +606,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"})\n",
+                  "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", resource=\"memory\"}\n)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "requests",
@@ -602,7 +614,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"})\n",
+                  "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", resource=\"memory\"}\n)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "limits",
@@ -615,10 +627,10 @@ data:
               ],
               "timeFrom": null,
               "timeShift": null,
-              "title": "Memory Usage",
+              "title": "Memory Usage (WSS)",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -672,11 +684,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 5,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -706,7 +721,7 @@ data:
                   "type": "hidden"
                 },
                 {
-                  "alias": "Memory Usage",
+                  "alias": "Memory Usage (WSS)",
                   "colorMode": null,
                   "colors": [
 
@@ -894,7 +909,7 @@ data:
               ],
               "targets": [
                 {
-                  "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\", container!=\"\", image!=\"\"}) by (container)",
+                  "expr": "sum(container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -903,7 +918,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -912,7 +927,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", image!=\"\"}) by (container) / sum(kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_requests{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -921,7 +936,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\"}) by (container)",
+                  "expr": "sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -930,7 +945,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container) / sum(kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
+                  "expr": "sum(container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container!=\"\", image!=\"\"}) by (container) / sum(cluster:namespace:pod_memory:active:kube_pod_container_resource_limits{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -939,7 +954,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(container_memory_rss{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                  "expr": "sum(container_memory_rss{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -948,7 +963,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(container_memory_cache{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                  "expr": "sum(container_memory_cache{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -957,7 +972,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(container_memory_swap{cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
+                  "expr": "sum(container_memory_swap{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\", container != \"\", container != \"POD\"}) by (container)",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -974,7 +989,7 @@ data:
               "title": "Memory Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -1031,10 +1046,12 @@ data:
               "id": 6,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1053,12 +1070,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_receive_bytes_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1074,7 +1091,7 @@ data:
               "title": "Receive Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1105,19 +1122,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -1130,10 +1135,12 @@ data:
               "id": 7,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1152,12 +1159,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_transmit_bytes_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1173,7 +1180,7 @@ data:
               "title": "Transmit Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1210,7 +1217,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Bandwidth",
           "titleSize": "h6"
         },
         {
@@ -1229,10 +1236,12 @@ data:
               "id": 8,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1251,12 +1260,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_receive_packets_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1272,7 +1281,7 @@ data:
               "title": "Rate of Received Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1287,7 +1296,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -1303,19 +1312,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -1328,10 +1325,12 @@ data:
               "id": 9,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1350,12 +1349,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_transmit_packets_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1371,7 +1370,7 @@ data:
               "title": "Rate of Transmitted Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1386,7 +1385,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -1408,7 +1407,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Rate of Packets",
           "titleSize": "h6"
         },
         {
@@ -1427,10 +1426,12 @@ data:
               "id": 10,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1449,12 +1450,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_receive_packets_dropped_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1470,7 +1471,7 @@ data:
               "title": "Rate of Received Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1485,7 +1486,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -1501,19 +1502,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -1526,10 +1515,12 @@ data:
               "id": 11,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1548,12 +1539,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(irate(container_network_transmit_packets_dropped_total{namespace=~\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
+                  "expr": "sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])) by (pod)",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1569,7 +1560,214 @@ data:
               "title": "Rate of Transmitted Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
+                "value_type": "individual"
+              },
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": [
+
+                ]
+              },
+              "yaxes": [
+                {
+                  "format": "pps",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": 0,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ]
+            }
+          ],
+          "repeat": null,
+          "repeatIteration": null,
+          "repeatRowId": null,
+          "showTitle": true,
+          "title": "Rate of Packets Dropped",
+          "titleSize": "h6"
+        },
+        {
+          "collapse": false,
+          "height": "250px",
+          "panels": [
+            {
+              "aliasColors": {
+
+              },
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "decimals": -1,
+              "fill": 10,
+              "id": 12,
+              "interval": "1m",
+              "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": true,
+                "show": true,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 0,
+              "links": [
+
+              ],
+              "nullPointMode": "null as zero",
+              "percentage": false,
+              "pointradius": 5,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [
+
+              ],
+              "spaceLength": 10,
+              "span": 6,
+              "stack": true,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "ceil(sum by(pod) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "Reads",
+                  "legendLink": null,
+                  "step": 10
+                },
+                {
+                  "expr": "ceil(sum by(pod) (rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\",namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval])))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "Writes",
+                  "legendLink": null,
+                  "step": 10
+                }
+              ],
+              "thresholds": [
+
+              ],
+              "timeFrom": null,
+              "timeShift": null,
+              "title": "IOPS",
+              "tooltip": {
+                "shared": false,
+                "sort": 2,
+                "value_type": "individual"
+              },
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": [
+
+                ]
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": 0,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ]
+            },
+            {
+              "aliasColors": {
+
+              },
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 10,
+              "id": 13,
+              "interval": "1m",
+              "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": true,
+                "show": true,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 0,
+              "links": [
+
+              ],
+              "nullPointMode": "null as zero",
+              "percentage": false,
+              "pointradius": 5,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [
+
+              ],
+              "spaceLength": 10,
+              "span": 6,
+              "stack": true,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by(pod) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "Reads",
+                  "legendLink": null,
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(pod) (rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=~\"$pod\"}[$__rate_interval]))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "Writes",
+                  "legendLink": null,
+                  "step": 10
+                }
+              ],
+              "thresholds": [
+
+              ],
+              "timeFrom": null,
+              "timeShift": null,
+              "title": "ThroughPut",
+              "tooltip": {
+                "shared": false,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1606,7 +1804,506 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Storage IO - Distribution(Pod - Read & Writes)",
+          "titleSize": "h6"
+        },
+        {
+          "collapse": false,
+          "height": "250px",
+          "panels": [
+            {
+              "aliasColors": {
+
+              },
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "decimals": -1,
+              "fill": 10,
+              "id": 14,
+              "interval": "1m",
+              "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": true,
+                "show": true,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 0,
+              "links": [
+
+              ],
+              "nullPointMode": "null as zero",
+              "percentage": false,
+              "pointradius": 5,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [
+
+              ],
+              "spaceLength": 10,
+              "span": 6,
+              "stack": true,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "ceil(sum by(container) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval])))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "{{container}}",
+                  "legendLink": null,
+                  "step": 10
+                }
+              ],
+              "thresholds": [
+
+              ],
+              "timeFrom": null,
+              "timeShift": null,
+              "title": "IOPS(Reads+Writes)",
+              "tooltip": {
+                "shared": false,
+                "sort": 2,
+                "value_type": "individual"
+              },
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": [
+
+                ]
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": 0,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ]
+            },
+            {
+              "aliasColors": {
+
+              },
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 10,
+              "id": 15,
+              "interval": "1m",
+              "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": true,
+                "show": true,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 0,
+              "links": [
+
+              ],
+              "nullPointMode": "null as zero",
+              "percentage": false,
+              "pointradius": 5,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [
+
+              ],
+              "spaceLength": 10,
+              "span": 6,
+              "stack": true,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "time_series",
+                  "intervalFactor": 2,
+                  "legendFormat": "{{container}}",
+                  "legendLink": null,
+                  "step": 10
+                }
+              ],
+              "thresholds": [
+
+              ],
+              "timeFrom": null,
+              "timeShift": null,
+              "title": "ThroughPut(Read+Write)",
+              "tooltip": {
+                "shared": false,
+                "sort": 2,
+                "value_type": "individual"
+              },
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": [
+
+                ]
+              },
+              "yaxes": [
+                {
+                  "format": "Bps",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": 0,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ]
+            }
+          ],
+          "repeat": null,
+          "repeatIteration": null,
+          "repeatRowId": null,
+          "showTitle": true,
+          "title": "Storage IO - Distribution(Containers)",
+          "titleSize": "h6"
+        },
+        {
+          "collapse": false,
+          "height": "250px",
+          "panels": [
+            {
+              "aliasColors": {
+
+              },
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 1,
+              "id": 16,
+              "interval": "1m",
+              "legend": {
+                "alignAsTable": true,
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "rightSide": true,
+                "show": true,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "links": [
+
+              ],
+              "nullPointMode": "null as zero",
+              "percentage": false,
+              "pointradius": 5,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [
+
+              ],
+              "sort": {
+                "col": 4,
+                "desc": true
+              },
+              "spaceLength": 10,
+              "span": 12,
+              "stack": false,
+              "steppedLine": false,
+              "styles": [
+                {
+                  "alias": "Time",
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "pattern": "Time",
+                  "type": "hidden"
+                },
+                {
+                  "alias": "IOPS(Reads)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": -1,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #A",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "short"
+                },
+                {
+                  "alias": "IOPS(Writes)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": -1,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #B",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "short"
+                },
+                {
+                  "alias": "IOPS(Reads + Writes)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": -1,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #C",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "short"
+                },
+                {
+                  "alias": "Throughput(Read)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": 2,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #D",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "Bps"
+                },
+                {
+                  "alias": "Throughput(Write)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": 2,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #E",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "Bps"
+                },
+                {
+                  "alias": "Throughput(Read + Write)",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": 2,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "Value #F",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "Bps"
+                },
+                {
+                  "alias": "Container",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": 2,
+                  "link": false,
+                  "linkTargetBlank": false,
+                  "linkTooltip": "Drill down",
+                  "linkUrl": "",
+                  "pattern": "container",
+                  "thresholds": [
+
+                  ],
+                  "type": "number",
+                  "unit": "short"
+                },
+                {
+                  "alias": "",
+                  "colorMode": null,
+                  "colors": [
+
+                  ],
+                  "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                  "decimals": 2,
+                  "pattern": "/.*/",
+                  "thresholds": [
+
+                  ],
+                  "type": "string",
+                  "unit": "short"
+                }
+              ],
+              "targets": [
+                {
+                  "expr": "sum by(container) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "A",
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(container) (rate(container_fs_writes_total{job=\"kubernetes-cadvisor\",device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "B",
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(container) (rate(container_fs_reads_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]) + rate(container_fs_writes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "C",
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "D",
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(container) (rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "E",
+                  "step": 10
+                },
+                {
+                  "expr": "sum by(container) (rate(container_fs_reads_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]) + rate(container_fs_writes_bytes_total{job=\"kubernetes-cadvisor\", device=~\"mmcblk.p.+|nvme.+|rbd.+|sd.+|vd.+|xvd.+|dm-.+|dasd.+\", container!=\"\", cluster=\"$cluster\", namespace=\"$namespace\", pod=\"$pod\"}[$__rate_interval]))",
+                  "format": "table",
+                  "instant": true,
+                  "intervalFactor": 2,
+                  "legendFormat": "",
+                  "refId": "F",
+                  "step": 10
+                }
+              ],
+              "thresholds": [
+
+              ],
+              "timeFrom": null,
+              "timeShift": null,
+              "title": "Current Storage IO",
+              "tooltip": {
+                "shared": false,
+                "sort": 2,
+                "value_type": "individual"
+              },
+              "transform": "table",
+              "type": "table",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": [
+
+                ]
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": 0,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ]
+            }
+          ],
+          "repeat": null,
+          "repeatIteration": null,
+          "repeatRowId": null,
+          "showTitle": true,
+          "title": "Storage IO - Distribution",
           "titleSize": "h6"
         }
       ],
@@ -1623,7 +2320,7 @@ data:
               "value": "default"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [
 
@@ -1648,8 +2345,8 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info, cluster)",
-            "refresh": 1,
+            "query": "label_values(up{job=\"kube-state-metrics\"}, cluster)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -1675,8 +2372,8 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
-            "refresh": 1,
+            "query": "label_values(kube_namespace_status_phase{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -1702,7 +2399,7 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info{cluster=\"$cluster\", namespace=\"$namespace\"}, pod)",
+            "query": "label_values(kube_pod_info{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, pod)",
             "refresh": 2,
             "regex": "",
             "sort": 1,
@@ -1780,11 +2477,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 1,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -1808,7 +2508,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -1824,7 +2524,7 @@ data:
               "title": "CPU Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -1878,11 +2578,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 2,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2017,7 +2720,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down",
-                  "linkUrl": "./d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
+                  "linkUrl": "/d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
                   "pattern": "pod",
                   "thresholds": [
 
@@ -2043,7 +2746,7 @@ data:
               ],
               "targets": [
                 {
-                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2052,7 +2755,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2061,7 +2764,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2070,7 +2773,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2079,7 +2782,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2096,7 +2799,7 @@ data:
               "title": "CPU Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -2151,11 +2854,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 3,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2195,7 +2901,7 @@ data:
               "title": "Memory Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2249,11 +2955,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 4,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2388,7 +3097,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down",
-                  "linkUrl": "./d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
+                  "linkUrl": "/d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
                   "pattern": "pod",
                   "thresholds": [
 
@@ -2423,7 +3132,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2432,7 +3141,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2441,7 +3150,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2450,7 +3159,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n/sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\", workload_type=\"$type\"}\n) by (pod)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2467,7 +3176,7 @@ data:
               "title": "Memory Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -2524,10 +3233,12 @@ data:
               "id": 5,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2681,7 +3392,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down",
-                  "linkUrl": "./d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
+                  "linkUrl": "/d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-pod=$__cell",
                   "pattern": "pod",
                   "thresholds": [
 
@@ -2707,7 +3418,7 @@ data:
               ],
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2716,7 +3427,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2725,7 +3436,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2734,7 +3445,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2743,7 +3454,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2752,7 +3463,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -2769,7 +3480,7 @@ data:
               "title": "Current Network Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -2807,7 +3518,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Current Network Usage",
           "titleSize": "h6"
         },
         {
@@ -2824,11 +3535,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 6,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2847,12 +3561,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -2868,7 +3582,7 @@ data:
               "title": "Receive Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -2899,19 +3613,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -2922,11 +3624,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 7,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -2945,12 +3650,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -2966,7 +3671,7 @@ data:
               "title": "Transmit Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3003,7 +3708,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Bandwidth",
           "titleSize": "h6"
         },
         {
@@ -3020,11 +3725,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 8,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3043,12 +3751,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(avg(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(avg(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3064,7 +3772,7 @@ data:
               "title": "Average Container Bandwidth by Pod: Received",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3095,19 +3803,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -3118,11 +3814,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 9,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3141,12 +3840,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(avg(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(avg(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3162,7 +3861,7 @@ data:
               "title": "Average Container Bandwidth by Pod: Transmitted",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3199,7 +3898,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Average Container Bandwidth by Pod",
           "titleSize": "h6"
         },
         {
@@ -3216,11 +3915,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 10,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3239,12 +3941,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3260,7 +3962,7 @@ data:
               "title": "Rate of Received Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3275,7 +3977,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -3291,19 +3993,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -3314,11 +4004,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 11,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3337,12 +4030,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3358,7 +4051,7 @@ data:
               "title": "Rate of Transmitted Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3373,7 +4066,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -3395,7 +4088,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Rate of Packets",
           "titleSize": "h6"
         },
         {
@@ -3412,11 +4105,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 12,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3435,12 +4131,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3456,7 +4152,7 @@ data:
               "title": "Rate of Received Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3471,7 +4167,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -3487,19 +4183,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -3510,11 +4194,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 13,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3533,12 +4220,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\"$workload\", workload_type=\"$type\"}) by (pod))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{pod}}",
@@ -3554,7 +4241,7 @@ data:
               "title": "Rate of Transmitted Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3569,7 +4256,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -3591,7 +4278,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Rate of Packets Dropped",
           "titleSize": "h6"
         }
       ],
@@ -3608,7 +4295,7 @@ data:
               "value": "default"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [
 
@@ -3633,8 +4320,8 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info, cluster)",
-            "refresh": 1,
+            "query": "label_values(up{job=\"kube-state-metrics\"}, cluster)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -3660,35 +4347,8 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
-            "refresh": 1,
-            "regex": "",
-            "sort": 1,
-            "tagValuesQuery": "",
-            "tags": [
-
-            ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
-          },
-          {
-            "allValue": null,
-            "current": {
-              "text": "",
-              "value": ""
-            },
-            "datasource": "$datasource",
-            "hide": 0,
-            "includeAll": false,
-            "label": null,
-            "multi": false,
-            "name": "workload",
-            "options": [
-
-            ],
-            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\"}, workload)",
-            "refresh": 1,
+            "query": "label_values(kube_namespace_status_phase{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -3714,8 +4374,35 @@ data:
             "options": [
 
             ],
-            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=\"$workload\"}, workload_type)",
-            "refresh": 1,
+            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\"}, workload_type)",
+            "refresh": 2,
+            "regex": "",
+            "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [
+
+            ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "allValue": null,
+            "current": {
+              "text": "",
+              "value": ""
+            },
+            "datasource": "$datasource",
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "workload",
+            "options": [
+
+            ],
+            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}, workload)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -3792,11 +4479,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 1,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -3817,8 +4507,9 @@ data:
                   "color": "#F2495C",
                   "dashes": true,
                   "fill": 0,
+                  "hiddenSeries": true,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 },
@@ -3827,8 +4518,9 @@ data:
                   "color": "#FF9830",
                   "dashes": true,
                   "fill": 0,
+                  "hiddenSeries": true,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 }
@@ -3839,7 +4531,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}} - {{workload_type}}",
@@ -3871,7 +4563,7 @@ data:
               "title": "CPU Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -3925,11 +4617,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 2,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -4083,7 +4778,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down",
-                  "linkUrl": "./d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$__cell_2",
+                  "linkUrl": "/d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$__cell_2",
                   "pattern": "workload",
                   "thresholds": [
 
@@ -4137,7 +4832,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4146,7 +4841,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4155,7 +4850,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_requests_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4164,7 +4859,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4173,7 +4868,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_limits_cpu_cores{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4190,7 +4885,7 @@ data:
               "title": "CPU Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -4245,11 +4940,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 3,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -4270,8 +4968,9 @@ data:
                   "color": "#F2495C",
                   "dashes": true,
                   "fill": 0,
+                  "hiddenSeries": true,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 },
@@ -4280,8 +4979,9 @@ data:
                   "color": "#FF9830",
                   "dashes": true,
                   "fill": 0,
+                  "hiddenSeries": true,
                   "hideTooltip": true,
-                  "legend": false,
+                  "legend": true,
                   "linewidth": 2,
                   "stack": false
                 }
@@ -4292,7 +4992,7 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}} - {{workload_type}}",
@@ -4324,7 +5024,7 @@ data:
               "title": "Memory Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -4378,11 +5078,14 @@ data:
               "datasource": "$datasource",
               "fill": 1,
               "id": 4,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -4536,7 +5239,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down",
-                  "linkUrl": "./d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$__cell_2",
+                  "linkUrl": "/d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$__cell_2",
                   "pattern": "workload",
                   "thresholds": [
 
@@ -4590,7 +5293,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4599,7 +5302,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4608,7 +5311,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_requests_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4617,7 +5320,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n  kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4626,7 +5329,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "sum(\n    container_memory_working_set_bytes{cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_limits_memory_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+                  "expr": "sum(\n    container_memory_working_set_bytes{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\", container!=\"\", image!=\"\"}\n  * on(namespace,pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4643,7 +5346,7 @@ data:
               "title": "Memory Quota",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -4700,10 +5403,12 @@ data:
               "id": 5,
               "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -4857,7 +5562,7 @@ data:
                   "link": true,
                   "linkTargetBlank": false,
                   "linkTooltip": "Drill down to pods",
-                  "linkUrl": "./d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$type",
+                  "linkUrl": "/d/a164a7f0339f99e89cea5cb47e9be617/k8s-resources-workload?var-datasource=$datasource&var-cluster=$cluster&var-namespace=$namespace&var-workload=$__cell&var-type=$type",
                   "pattern": "workload",
                   "thresholds": [
 
@@ -4902,7 +5607,7 @@ data:
               ],
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4911,7 +5616,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4920,7 +5625,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4929,7 +5634,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4938,7 +5643,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4947,7 +5652,7 @@ data:
                   "step": 10
                 },
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "table",
                   "instant": true,
                   "intervalFactor": 2,
@@ -4964,7 +5669,7 @@ data:
               "title": "Current Network Usage",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "transform": "table",
@@ -5002,7 +5707,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Current Network Usage",
           "titleSize": "h6"
         },
         {
@@ -5019,11 +5724,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 6,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5042,12 +5750,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5063,7 +5771,7 @@ data:
               "title": "Receive Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5094,19 +5802,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -5117,11 +5813,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 7,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5140,12 +5839,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5161,7 +5860,7 @@ data:
               "title": "Transmit Bandwidth",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5198,7 +5897,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Bandwidth",
           "titleSize": "h6"
         },
         {
@@ -5215,11 +5914,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 8,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5238,12 +5940,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(avg(irate(container_network_receive_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(avg(irate(container_network_receive_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5259,7 +5961,7 @@ data:
               "title": "Average Container Bandwidth by Workload: Received",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5290,19 +5992,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -5313,11 +6003,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 9,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5336,12 +6029,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(avg(irate(container_network_transmit_bytes_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(avg(irate(container_network_transmit_bytes_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5357,7 +6050,7 @@ data:
               "title": "Average Container Bandwidth by Workload: Transmitted",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5394,7 +6087,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Average Container Bandwidth by Workload",
           "titleSize": "h6"
         },
         {
@@ -5411,11 +6104,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 10,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5434,12 +6130,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5455,7 +6151,7 @@ data:
               "title": "Rate of Received Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5470,7 +6166,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -5486,19 +6182,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -5509,11 +6193,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 11,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5532,12 +6219,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5553,7 +6240,7 @@ data:
               "title": "Rate of Transmitted Packets",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5568,7 +6255,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -5590,7 +6277,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Rate of Packets",
           "titleSize": "h6"
         },
         {
@@ -5607,11 +6294,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 12,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5630,12 +6320,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_receive_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5651,7 +6341,7 @@ data:
               "title": "Rate of Received Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5666,7 +6356,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -5682,19 +6372,7 @@ data:
                   "show": false
                 }
               ]
-            }
-          ],
-          "repeat": null,
-          "repeatIteration": null,
-          "repeatRowId": null,
-          "showTitle": true,
-          "title": "Network",
-          "titleSize": "h6"
-        },
-        {
-          "collapse": false,
-          "height": "250px",
-          "panels": [
+            },
             {
               "aliasColors": {
 
@@ -5705,11 +6383,14 @@ data:
               "datasource": "$datasource",
               "fill": 10,
               "id": 13,
+              "interval": "1m",
               "legend": {
+                "alignAsTable": true,
                 "avg": false,
                 "current": false,
                 "max": false,
                 "min": false,
+                "rightSide": true,
                 "show": true,
                 "total": false,
                 "values": false
@@ -5728,12 +6409,12 @@ data:
 
               ],
               "spaceLength": 10,
-              "span": 12,
+              "span": 6,
               "stack": true,
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{cluster=\"$cluster\", namespace=~\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=~\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
+                  "expr": "(sum(irate(container_network_transmit_packets_dropped_total{job=\"kubernetes-cadvisor\", cluster=\"$cluster\", namespace=\"$namespace\"}[$__rate_interval])\n* on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\", workload_type=\"$type\"}) by (workload))\n",
                   "format": "time_series",
                   "intervalFactor": 2,
                   "legendFormat": "{{workload}}",
@@ -5749,7 +6430,7 @@ data:
               "title": "Rate of Transmitted Packets Dropped",
               "tooltip": {
                 "shared": false,
-                "sort": 0,
+                "sort": 2,
                 "value_type": "individual"
               },
               "type": "graph",
@@ -5764,7 +6445,7 @@ data:
               },
               "yaxes": [
                 {
-                  "format": "Bps",
+                  "format": "pps",
                   "label": null,
                   "logBase": 1,
                   "max": null,
@@ -5786,7 +6467,7 @@ data:
           "repeatIteration": null,
           "repeatRowId": null,
           "showTitle": true,
-          "title": "Network",
+          "title": "Rate of Packets Dropped",
           "titleSize": "h6"
         }
       ],
@@ -5803,7 +6484,7 @@ data:
               "value": "default"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [
 
@@ -5812,38 +6493,6 @@ data:
             "refresh": 1,
             "regex": "",
             "type": "datasource"
-          },
-          {
-            "allValue": null,
-            "auto": false,
-            "auto_count": 30,
-            "auto_min": "10s",
-            "current": {
-              "text": "deployment",
-              "value": "deployment"
-            },
-            "datasource": "$datasource",
-            "definition": "label_values(namespace_workload_pod:kube_pod_owner:relabel{namespace=~\"$namespace\", workload=~\".+\"}, workload_type)",
-            "hide": 0,
-            "includeAll": false,
-            "label": null,
-            "multi": false,
-            "name": "type",
-            "options": [
-
-            ],
-            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{namespace=~\"$namespace\", workload=~\".+\"}, workload_type)",
-            "refresh": 1,
-            "regex": "",
-            "skipUrlSync": false,
-            "sort": 0,
-            "tagValuesQuery": "",
-            "tags": [
-
-            ],
-            "tagsQuery": "",
-            "type": "query",
-            "useTags": false
           },
           {
             "allValue": null,
@@ -5860,8 +6509,8 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info, cluster)",
-            "refresh": 1,
+            "query": "label_values(up{job=\"kube-state-metrics\"}, cluster)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
             "tagValuesQuery": "",
@@ -5887,10 +6536,42 @@ data:
             "options": [
 
             ],
-            "query": "label_values(kube_pod_info{cluster=\"$cluster\"}, namespace)",
-            "refresh": 1,
+            "query": "label_values(kube_pod_info{job=\"kube-state-metrics\", cluster=\"$cluster\"}, namespace)",
+            "refresh": 2,
             "regex": "",
             "sort": 1,
+            "tagValuesQuery": "",
+            "tags": [
+
+            ],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          },
+          {
+            "allValue": null,
+            "auto": false,
+            "auto_count": 30,
+            "auto_min": "10s",
+            "current": {
+              "text": "deployment",
+              "value": "deployment"
+            },
+            "datasource": "$datasource",
+            "definition": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\"}, workload_type)",
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "type",
+            "options": [
+
+            ],
+            "query": "label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload=~\".+\"}, workload_type)",
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
             "tagValuesQuery": "",
             "tags": [
 

@@ -15,13 +15,13 @@ data:
       },
       "editable": false,
       "gnetId": null,
-      "graphTooltip": 0,
+      "graphTooltip": 1,
       "hideControls": false,
       "id": null,
       "links": [
 
       ],
-      "refresh": "",
+      "refresh": "30s",
       "rows": [
         {
           "collapse": false,
@@ -73,9 +73,8 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "(\n  (1 - rate(node_cpu_seconds_total{job=\"node-exporter\", mode=\"idle\", instance=\"$instance\"}[$__interval]))\n/ ignoring(cpu) group_left\n  count without (cpu)( node_cpu_seconds_total{job=\"node-exporter\", mode=\"idle\", instance=\"$instance\"})\n)\n",
+                  "expr": "(\n  (1 - sum without (mode) (rate(node_cpu_seconds_total{job=\"node-exporter\", mode=~\"idle|iowait|steal\", instance=\"$instance\"}[$__rate_interval])))\n/ ignoring(cpu) group_left\n  count without (cpu, mode) (node_cpu_seconds_total{job=\"node-exporter\", mode=\"idle\", instance=\"$instance\"})\n)\n",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 5,
                   "legendFormat": "{{cpu}}",
                   "refId": "A"
@@ -509,25 +508,22 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "rate(node_disk_read_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__interval])",
+                  "expr": "rate(node_disk_read_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__rate_interval])",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 2,
                   "legendFormat": "{{device}} read",
                   "refId": "A"
                 },
                 {
-                  "expr": "rate(node_disk_written_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__interval])",
+                  "expr": "rate(node_disk_written_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__rate_interval])",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 2,
                   "legendFormat": "{{device}} written",
                   "refId": "B"
                 },
                 {
-                  "expr": "rate(node_disk_io_time_seconds_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__interval])",
+                  "expr": "rate(node_disk_io_time_seconds_total{job=\"node-exporter\", instance=\"$instance\", device!~\"dm.*\"}[$__rate_interval])",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 2,
                   "legendFormat": "{{device}} io time",
                   "refId": "C"
@@ -739,9 +735,8 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "rate(node_network_receive_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!=\"lo\"}[$__interval])",
+                  "expr": "rate(node_network_receive_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!=\"lo\"}[$__rate_interval])",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 2,
                   "legendFormat": "{{device}}",
                   "refId": "A"
@@ -833,9 +828,8 @@ data:
               "steppedLine": false,
               "targets": [
                 {
-                  "expr": "rate(node_network_transmit_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!=\"lo\"}[$__interval])",
+                  "expr": "rate(node_network_transmit_bytes_total{job=\"node-exporter\", instance=\"$instance\", device!=\"lo\"}[$__rate_interval])",
                   "format": "time_series",
-                  "interval": "1m",
                   "intervalFactor": 2,
                   "legendFormat": "{{device}}",
                   "refId": "A"
@@ -894,17 +888,17 @@ data:
       "schemaVersion": 14,
       "style": "dark",
       "tags": [
-
+        "node-exporter-mixin"
       ],
       "templating": {
         "list": [
           {
             "current": {
-              "text": "Prometheus",
-              "value": "Prometheus"
+              "text": "default",
+              "value": "default"
             },
             "hide": 0,
-            "label": null,
+            "label": "Data Source",
             "name": "datasource",
             "options": [
 
@@ -972,7 +966,7 @@ data:
         ]
       },
       "timezone": "",
-      "title": "Nodes",
+      "title": "Node Exporter / Nodes",
       "uid": "fa49a4706d07a042595b664c87fb33ea",
       "version": 0
     }
