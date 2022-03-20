@@ -16,8 +16,8 @@ Together, they diversify Typhoon to support a range of container technologies.
 
 | Property          | Flatcar Linux | Fedora CoreOS |
 |-------------------|---------------|---------------|
-| Kernel            | ~5.10.x       | ~5.14.x       |
-| systemd           | 247           | 249           |
+| Kernel            | ~5.10.x       | ~5.16.x       |
+| systemd           | 249           | 249           |
 | Username          | core          | core          |
 | Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
@@ -34,7 +34,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 | single-master     | all platforms | all platforms |
 | multi-master      | all platforms | all platforms |
 | control plane     | static pods   | static pods   |
-| Container Runtime | containerd 1.5.8 | containerd 1.5.8 |
+| Container Runtime | containerd 1.5.9 | containerd 1.6.0 |
 | kubelet image     | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary | kubelet [image](https://github.com/poseidon/kubelet) with upstream binary |
 | control plane images | upstream images | upstream images |
 | on-host etcd      | docker    | podman |
