@@ -41,4 +41,3 @@ resource "azurerm_subnet_network_security_group_association" "worker" {
   subnet_id                 = azurerm_subnet.worker.id
   network_security_group_id = azurerm_network_security_group.worker.id
 }
-

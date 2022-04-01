@@ -53,16 +53,16 @@ Add firewall rules to the worker security group.
 resource "azurerm_network_security_rule" "some-app" {
   resource_group_name = "${module.ramius.resource_group_name}"
 
-  name                        = "some-app"
-  network_security_group_name = module.ramius.worker_security_group_name
-  priority                    = "3001"
-  access                      = "Allow"
-  direction                   = "Inbound"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "30333"
-  source_address_prefix       = "*"
-  destination_address_prefix  = module.ramius.worker_address_prefix
+  name                         = "some-app"
+  network_security_group_name  = module.ramius.worker_security_group_name
+  priority                     = "3001"
+  access                       = "Allow"
+  direction                    = "Inbound"
+  protocol                     = "Tcp"
+  source_port_range            = "*"
+  destination_port_range       = "30333"
+  source_address_prefix        = "*"
+  destination_address_prefixes = module.ramius.worker_address_prefixes
 }
 ```
 

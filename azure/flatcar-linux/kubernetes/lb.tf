@@ -53,8 +53,6 @@ resource "azurerm_lb" "cluster" {
 }
 
 resource "azurerm_lb_rule" "apiserver" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name                           = "apiserver"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "apiserver"
@@ -67,8 +65,6 @@ resource "azurerm_lb_rule" "apiserver" {
 }
 
 resource "azurerm_lb_rule" "ingress-http" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name                           = "ingress-http"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "ingress"
@@ -82,8 +78,6 @@ resource "azurerm_lb_rule" "ingress-http" {
 }
 
 resource "azurerm_lb_rule" "ingress-https" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name                           = "ingress-https"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "ingress"
@@ -98,8 +92,6 @@ resource "azurerm_lb_rule" "ingress-https" {
 
 # Worker outbound TCP/UDP SNAT
 resource "azurerm_lb_outbound_rule" "worker-outbound" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name            = "worker"
   loadbalancer_id = azurerm_lb.cluster.id
   frontend_ip_configuration {
@@ -126,8 +118,6 @@ resource "azurerm_lb_backend_address_pool" "worker" {
 
 # TCP health check for apiserver
 resource "azurerm_lb_probe" "apiserver" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name            = "apiserver"
   loadbalancer_id = azurerm_lb.cluster.id
   protocol        = "Tcp"
@@ -141,8 +131,6 @@ resource "azurerm_lb_probe" "apiserver" {
 
 # HTTP health check for ingress
 resource "azurerm_lb_probe" "ingress" {
-  resource_group_name = azurerm_resource_group.cluster.name
-
   name            = "ingress"
   loadbalancer_id = azurerm_lb.cluster.id
   protocol        = "Http"

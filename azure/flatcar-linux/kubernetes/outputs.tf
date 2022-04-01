@@ -43,9 +43,9 @@ output "worker_security_group_name" {
   value = azurerm_network_security_group.worker.name
 }
 
-output "worker_address_prefix" {
-  description = "Worker network subnet CIDR address (for source/destination)"
-  value       = azurerm_subnet.worker.address_prefix
+output "worker_address_prefixes" {
+  description = "Worker network subnet CIDR addresses (for source/destination)"
+  value       = azurerm_subnet.worker.address_prefixes
 }
 
 # Outputs for custom load balancing

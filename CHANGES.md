@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Allow upgrading Azure Terraform provider to v3.x ([#1144](https://github.com/poseidon/typhoon/pull/1144))
+* Rename `worker_address_prefix` output to `worker_address_prefixes`
+
 ## v1.23.5
 
 * Kubernetes [v1.23.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1235)
