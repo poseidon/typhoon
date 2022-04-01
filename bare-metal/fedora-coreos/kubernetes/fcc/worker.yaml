@@ -40,6 +40,7 @@ systemd:
           --volume /etc/cni/net.d:/etc/cni/net.d:ro,z \
           --volume /etc/kubernetes:/etc/kubernetes:ro,z \
           --volume /usr/lib/os-release:/etc/os-release:ro \
+          --volume /etc/machine-id:/etc/machine-id:ro \
           --volume /lib/modules:/lib/modules:ro \
           --volume /run:/run \
           --volume /sys/fs/cgroup:/sys/fs/cgroup \
