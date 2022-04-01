@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.11.2 to [v1.11.3](https://github.com/cilium/cilium/releases/tag/v1.11.3)
+
 ### Azure
 
 * Allow upgrading Azure Terraform provider to v3.x ([#1144](https://github.com/poseidon/typhoon/pull/1144))
