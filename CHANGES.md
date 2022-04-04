@@ -11,6 +11,12 @@ Notable changes between versions.
 * Allow upgrading Azure Terraform provider to v3.x ([#1144](https://github.com/poseidon/typhoon/pull/1144))
 * Rename `worker_address_prefix` output to `worker_address_prefixes`
 
+### Addons
+
+* Update nginx-ingress from v1.1.2 to [v1.1.3](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.3)
+* Update Prometheus from v2.33.5 to [v2.34.0](https://github.com/prometheus/prometheus/releases/tag/v2.34.0)
+* Update Grafana from v8.4.4 to [v8.4.5](https://github.com/grafana/grafana/releases/tag/v8.4.5)
+
 ## v1.23.5
 
 * Kubernetes [v1.23.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1235)
