@@ -4,7 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.11.2 to [v1.11.3](https://github.com/cilium/cilium/releases/tag/v1.11.3)
+* Update Cilium from v1.11.2 to [v1.11.4](https://github.com/cilium/cilium/releases/tag/v1.11.4)
+* Update Calico from v3.22.1 to [v3.22.2](https://github.com/projectcalico/calico/releases/tag/v3.22.2)
 
 ### Azure
 
