@@ -4,7 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.23.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md#v1236)
 * Update Cilium from v1.11.2 to [v1.11.4](https://github.com/cilium/cilium/releases/tag/v1.11.4)
+* Rename Cilium DaemonSet from `cilium-agent` to `cilium` to match Cilium CLI tools ([#303](https://github.com/poseidon/terraform-render-bootstrap/pull/303))
 * Update Calico from v3.22.1 to [v3.22.2](https://github.com/projectcalico/calico/releases/tag/v3.22.2)
 
 ### Azure
@@ -14,7 +16,7 @@ Notable changes between versions.
 
 ### Google Cloud
 
-* Fix issue on Flatcar Linux with controller nodes not ignoring os image changes
+* Fix issue on Flatcar Linux with controller nodes not ignoring os image changes ([#1149](https://github.com/poseidon/typhoon/pull/1149))
   * Nodes will auto-update, Terraform should not attempt to delete/recreate them
 
 ### Addons
