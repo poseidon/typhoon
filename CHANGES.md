@@ -8,6 +8,7 @@ Notable changes between versions.
 * Update Cilium from v1.11.2 to [v1.11.4](https://github.com/cilium/cilium/releases/tag/v1.11.4)
 * Rename Cilium DaemonSet from `cilium-agent` to `cilium` to match Cilium CLI tools ([#303](https://github.com/poseidon/terraform-render-bootstrap/pull/303))
 * Update Calico from v3.22.1 to [v3.22.2](https://github.com/projectcalico/calico/releases/tag/v3.22.2)
+* Remove deprecated use of `key_algorithm` in `hashicorp/tls` resources
 
 ### Azure
 
