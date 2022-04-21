@@ -12,6 +12,11 @@ Notable changes between versions.
 * Allow upgrading Azure Terraform provider to v3.x ([#1144](https://github.com/poseidon/typhoon/pull/1144))
 * Rename `worker_address_prefix` output to `worker_address_prefixes`
 
+### Google Cloud
+
+* Fix issue on Flatcar Linux with controller nodes not ignoring os image changes
+  * Nodes will auto-update, Terraform should not attempt to delete/recreate them
+
 ### Addons
 
 * Update nginx-ingress from v1.1.2 to [v1.1.3](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.1.3)
