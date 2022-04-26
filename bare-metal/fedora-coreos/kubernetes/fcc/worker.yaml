@@ -44,6 +44,8 @@ systemd:
           --volume /lib/modules:/lib/modules:ro \
           --volume /run:/run \
           --volume /sys/fs/cgroup:/sys/fs/cgroup \
+          --volume /etc/selinux:/etc/selinux \
+          --volume /sys/fs/selinux:/sys/fs/selinux \
           --volume /var/lib/calico:/var/lib/calico:ro \
           --volume /var/lib/containerd:/var/lib/containerd \
           --volume /var/lib/kubelet:/var/lib/kubelet:rshared,z \
