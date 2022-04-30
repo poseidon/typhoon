@@ -1,6 +1,6 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
-  name = "${var.name}-worker ${aws_launch_configuration.worker.name}"
+  name = "${var.name}-worker ${aws_launch_template.worker.name}"
 
   # count
   desired_capacity          = var.worker_count
@@ -13,7 +13,10 @@ resource "aws_autoscaling_group" "workers" {
   vpc_zone_identifier = var.subnet_ids
 
   # template
-  launch_configuration = aws_launch_configuration.worker.name
+  launch_template {
+      id      = aws_launch_template.worker.id
+      version = "$Latest"
+    }
 
   # target groups to which instances should be added
   target_group_arns = flatten([
@@ -38,34 +41,71 @@ resource "aws_autoscaling_group" "workers" {
     value               = "${var.name}-worker"
     propagate_at_launch = true
   }
+
 }
 
-# Worker template
-resource "aws_launch_configuration" "worker" {
+resource "aws_launch_template" "worker" {
   image_id          = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
   instance_type     = var.instance_type
-  spot_price        = var.spot_price > 0 ? var.spot_price : null
-  enable_monitoring = false
 
-  user_data = data.ct_config.worker-ignition.rendered
+  user_data = base64encode(data.ct_config.worker-ignition.rendered)
 
-  # storage
-  root_block_device {
-    volume_type = var.disk_type
-    volume_size = var.disk_size
-    iops        = var.disk_iops
-    encrypted   = true
+  monitoring {
+    enabled = false
+  }
+
+  dynamic "instance_market_options" {
+
+    for_each = var.spot_price == 0 ? toset([]) : toset([1])
+
+    content {
+      market_type = "spot"
+      spot_options {
+        instance_interruption_behavior = "terminate"
+        max_price                      = var.spot_price
+        spot_instance_type             = "one-time"
+      }
+    }
+  } 
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_type = var.disk_type
+      volume_size = var.disk_size
+      iops        = var.disk_iops
+      encrypted   = true
+    }
   }
 
   # network
-  security_groups = var.security_groups
+  vpc_security_group_ids = var.security_groups
 
   lifecycle {
     // Override the default destroy and replace update behavior
     create_before_destroy = true
     ignore_changes        = [image_id]
   }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = merge(
+      data.aws_default_tags.current.tags,
+    { Name = "${var.name}-worker" })
+  }
+
+  tag_specifications {
+    resource_type = "volume"
+
+    tags = merge(
+      data.aws_default_tags.current.tags,
+    { Name = "${var.name}-worker" })
+  }
 }
+
+data "aws_default_tags" "current" {}
 
 # Worker Ignition config
 data "ct_config" "worker-ignition" {
