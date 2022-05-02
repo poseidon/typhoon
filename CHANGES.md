@@ -12,7 +12,7 @@ Notable changes between versions.
 
 * Update nginx-ingress from v1.1.3 to [v1.2.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.2.0)
 * Update Prometheus from v2.34.0 to [v2.35.0](https://github.com/prometheus/prometheus/releases/tag/v2.35.0)
-* Update Grafana from v8.4.5 to [v8.5.0](https://github.com/grafana/grafana/releases/tag/v8.5.0)
+* Update Grafana from v8.4.5 to [v8.5.1](https://github.com/grafana/grafana/releases/tag/v8.5.1)
 
 ## v1.23.6
 
