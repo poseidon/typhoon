@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.24.0
+
+* Kubernetes [v1.24.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1240)
 * Update etcd from v3.5.2 to [v3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
 * Add Kubelet mounts to enable relabeling workload volumes ([#1152](https://github.com/poseidon/typhoon/pull/1152))
   * StorageClass no longer require explicit SELinux mount contexts
