@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.24.1
 
 * Kubernetes [v1.24.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1241)
+* Update Cilium from v1.11.4 to [v1.11.5](https://github.com/cilium/cilium/releases/tag/v1.11.5)
 
 ### Addons
 
