@@ -58,7 +58,8 @@ resource "aws_launch_configuration" "worker" {
   }
 
   # network
-  security_groups = var.security_groups
+  associate_public_ip_address = true
+  security_groups             = var.security_groups
 
   lifecycle {
     // Override the default destroy and replace update behavior
