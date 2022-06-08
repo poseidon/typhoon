@@ -1,9 +1,24 @@
-# Network Load Balancer DNS Record
+# Network Load Balancer DNS A Record
 resource "aws_route53_record" "apiserver" {
   zone_id = var.dns_zone_id
 
   name = format("%s.%s.", var.cluster_name, var.dns_zone)
   type = "A"
+
+  # AWS recommends their special "alias" records for NLBs
+  alias {
+    name                   = aws_lb.nlb.dns_name
+    zone_id                = aws_lb.nlb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+# Network Load Balancer DNS AAAA Record
+resource "aws_route53_record" "apiserver_aaaa" {
+  zone_id = var.dns_zone_id
+
+  name = format("%s.%s.", var.cluster_name, var.dns_zone)
+  type = "AAAA"
 
   # AWS recommends their special "alias" records for NLBs
   alias {
