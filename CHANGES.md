@@ -4,6 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.24.2
+
+* Kubernetes [v1.24.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1242)
+
+### Addons
+
+* Update Prometheus from v2.36.0 to [v2.36.1](https://github.com/prometheus/prometheus/releases/tag/v2.36.1)
+* Update Grafana from v8.5.3 to [v8.5.6](https://github.com/grafana/grafana/releases/tag/v8.5.6)
+* Update kube-state-metrics from v2.4.2 to [v2.5.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.5.0)
+
 ## v1.24.1
 
 * Kubernetes [v1.24.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1241)
