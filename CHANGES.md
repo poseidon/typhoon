@@ -7,6 +7,8 @@ Notable changes between versions.
 ## v1.24.2
 
 * Kubernetes [v1.24.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1242)
+* Update Cilium from v1.11.5 to [v1.11.6](https://github.com/cilium/cilium/releases/tag/v1.11.6)
+* Update Calico from v3.22.2 to [v3.23.1](https://github.com/projectcalico/calico/releases/tag/v3.23.1)
 
 ### Addons
 
