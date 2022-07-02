@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+### Addons
+
+* Update Prometheus from v2.36.1 to [v2.36.2](https://github.com/prometheus/prometheus/releases/tag/v2.36.2)
+* Update Grafana from v8.5.6 to [v9.0.2](https://github.com/grafana/grafana/releases/tag/v9.0.2)
+
 ## v1.24.2
 
 * Kubernetes [v1.24.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1242)
