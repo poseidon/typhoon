@@ -10,6 +10,7 @@ rules:
       - configmaps
       - pods
       - secrets
+      - endpoints
     verbs:
       - get
   - apiGroups:
@@ -32,8 +33,10 @@ rules:
     verbs:
       - create
   - apiGroups:
-      - ""
+      - "coordination.k8s.io"
     resources:
-      - endpoints
+      - leases
     verbs:
+      - create
       - get
+      - update

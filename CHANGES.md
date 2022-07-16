@@ -4,10 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.24.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1243)
+
 ### Addons
 
-* Update Prometheus from v2.36.1 to [v2.36.2](https://github.com/prometheus/prometheus/releases/tag/v2.36.2)
-* Update Grafana from v8.5.6 to [v9.0.2](https://github.com/grafana/grafana/releases/tag/v9.0.2)
+* Update ingress-nginx from v1.2.1 to [v1.3.0](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.3.0)
+* Update Prometheus from v2.36.1 to [v2.37.0](https://github.com/prometheus/prometheus/releases/tag/v2.37.0)
+* Update Grafana from v8.5.6 to [v9.0.3](https://github.com/grafana/grafana/releases/tag/v9.0.3)
 
 ## v1.24.2
 
@@ -34,7 +37,7 @@ Notable changes between versions.
 
 * Update Prometheus from v2.35.0 to [v2.36.0](https://github.com/prometheus/prometheus/releases/tag/v2.36.0)
 * Update Grafana from v8.5.1 to [v8.5.3](https://github.com/grafana/grafana/releases/tag/v8.5.3)
-* Update nginx-ingress from v1.2.1 to [v1.2.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.2.1)
+* Update nginx-ingress from v1.2.0 to [v1.2.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.2.1)
 
 ## v1.24.0
 
