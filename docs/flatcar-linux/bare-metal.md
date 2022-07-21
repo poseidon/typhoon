@@ -269,10 +269,10 @@ To watch the bootstrap process in detail, SSH to the first controller and journa
 ```
 $ ssh core@node1.example.com
 $ journalctl -f -u bootstrap
-rkt[1750]: The connection to the server cluster.example.com:6443 was refused - did you specify the right host or port?
-rkt[1750]: Waiting for static pod control plane
+The connection to the server cluster.example.com:6443 was refused - did you specify the right host or port?
+Waiting for static pod control plane
 ...
-rkt[1750]: serviceaccount/calico-node unchanged
+serviceaccount/calico-node unchanged
 systemd[1]: Started Kubernetes control plane.
 ```
 

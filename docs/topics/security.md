@@ -81,6 +81,31 @@ Typhoon publishes Terraform providers to the Terraform Registry, GPG signed by 0
 | ct       | [github](https://github.com/poseidon/terraform-provider-ct) | [poseidon/ct](https://registry.terraform.io/providers/poseidon/ct/latest) |
 | matchbox | [github](https://github.com/poseidon/terraform-provider-matchbox) | [poseidon/matchbox](https://registry.terraform.io/providers/poseidon/matchbox/latest) |
 
+## kube-system
+
+| Name           | user   | hostNet | privileged |
+|----------------|--------|---------|------------|
+| kube-apiserver | nobody | true    | false      |
+| kube-controller-manager | nobody | true | false |
+| kube-scheduler | nobody | true    | false      |
+| coredns        | NA     | false   | false      |
+| kube-proxy     | root   | true    | true       |
+| cilium         | root   | true    | true       |
+| calico         | root   | true    | true       |
+| flannel        | root   | true    | true       |
+
+
+| Name                    | priorityClassName |
+|-------------------------|-------------------|
+| kube-apiserver          | system-cluster-critical |
+| kube-controller-manager | system-cluster-critical |
+| kube-scheduler          | system-cluster-critical |
+| coredns                 | system-cluster-critical |
+| kube-proxy              | system-node-critical |
+| cilium                  | system-node-critical |
+| calico                  | system-node-critical |
+| flannel                 | system-node-critical |
+
 ## Disclosures
 
 If you find security issues, please email `security@psdn.io`. If the issue lies in upstream Kubernetes, please inform upstream Kubernetes as well.

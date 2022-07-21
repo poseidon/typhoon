@@ -9,8 +9,8 @@ Typhoon supports [Fedora CoreOS](https://getfedora.org/coreos/) and [Flatcar Lin
 
 Together, they diversify Typhoon to support a range of container technologies.
 
-* Fedora CoreOS: rpm-ostree, podman, moby
-* Flatcar Linux: Gentoo core, rkt-fly, docker
+* Fedora CoreOS: rpm-ostree, podman, containerd
+* Flatcar Linux: Gentoo core, docker, containerd
 
 ## Host Properties
 
