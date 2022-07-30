@@ -18,8 +18,6 @@ resource "matchbox_profile" "flatcar-install" {
     "initrd=flatcar_production_pxe_image.cpio.gz",
     "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
     "flatcar.first_boot=yes",
-    "console=tty0",
-    "console=ttyS0",
     var.kernel_args,
   ])
 
@@ -42,8 +40,6 @@ resource "matchbox_profile" "cached-flatcar-install" {
     "initrd=flatcar_production_pxe_image.cpio.gz",
     "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
     "flatcar.first_boot=yes",
-    "console=tty0",
-    "console=ttyS0",
     var.kernel_args,
   ])
 
