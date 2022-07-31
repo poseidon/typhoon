@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
+
+## v1.24.3
+
 * Kubernetes [v1.24.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1243)
 * Update Cilium from v1.11.6 to [v1.11.7](https://github.com/cilium/cilium/releases/tag/v1.11.7)
 
