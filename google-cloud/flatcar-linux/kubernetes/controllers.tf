@@ -69,7 +69,7 @@ resource "google_compute_instance" "controllers" {
 # Flatcar Linux controllers
 data "ct_config" "controllers" {
   count = var.controller_count
-  content = templatefile("${path.module}/cl/controller.yaml", {
+  content = templatefile("${path.module}/butane/controller.yaml", {
     # Cannot use cyclic dependencies on controllers or their DNS records
     etcd_name   = "etcd${count.index}"
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"

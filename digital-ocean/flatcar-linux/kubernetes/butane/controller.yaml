@@ -1,4 +1,5 @@
----
+variant: flatcar
+version: 1.0.0
 systemd:
   units:
     - name: etcd-member.service
@@ -58,12 +59,15 @@ systemd:
     - name: kubelet.service
       contents: |
         [Unit]
-        Description=Kubelet (System Container)
+        Description=Kubelet(System Container)
         Requires=docker.service
         After=docker.service
+        Requires=coreos-metadata.service
+        After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.24.3
+        EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -99,7 +103,7 @@ systemd:
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
           --healthz-port=0 \
-          --hostname-override=${domain_name} \
+          --hostname-override=$${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
@@ -139,21 +143,12 @@ systemd:
 storage:
   directories:
     - path: /var/lib/etcd
-      filesystem: root
       mode: 0700
       overwrite: true
     - path: /etc/kubernetes
-      filesystem: root
       mode: 0755
   files:
-    - path: /etc/hostname
-      filesystem: root
-      mode: 0644
-      contents:
-        inline:
-          ${domain_name}
     - path: /opt/bootstrap/layout
-      filesystem: root
       mode: 0544
       contents:
         inline: |
@@ -176,7 +171,6 @@ storage:
           mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
     - path: /opt/bootstrap/apply
-      filesystem: root
       mode: 0544
       contents:
         inline: |
@@ -191,20 +185,18 @@ storage:
              sleep 5
           done
     - path: /etc/sysctl.d/max-user-watches.conf
-      filesystem: root
       mode: 0644
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
     - path: /etc/etcd/etcd.env
-      filesystem: root
       mode: 0644
       contents:
           inline: |
             ETCD_NAME=${etcd_name}
             ETCD_DATA_DIR=/var/lib/etcd
-            ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379
-            ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380
+            ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379
+            ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380
             ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
             ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
             ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381
@@ -218,8 +210,3 @@ storage:
             ETCD_PEER_CERT_FILE=/etc/ssl/certs/etcd/peer.crt
             ETCD_PEER_KEY_FILE=/etc/ssl/certs/etcd/peer.key
             ETCD_PEER_CLIENT_CERT_AUTH=true
-passwd:
-  users:
-    - name: core
-      ssh_authorized_keys:
-        - ${ssh_authorized_key}

@@ -69,7 +69,7 @@ resource "aws_launch_configuration" "worker" {
 
 # Flatcar Linux worker
 data "ct_config" "worker" {
-  content = templatefile("${path.module}/cl/worker.yaml", {
+  content = templatefile("${path.module}/butane/worker.yaml", {
     kubeconfig             = indent(10, var.kubeconfig)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)

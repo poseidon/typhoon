@@ -1,4 +1,5 @@
----
+variant: flatcar
+version: 1.0.0
 systemd:
   units:
     - name: installer.service
@@ -25,12 +26,11 @@ systemd:
 storage:
   files:
     - path: /opt/installer
-      filesystem: root
       mode: 0500
       contents:
         inline: |
           #!/bin/bash -ex
-          curl --retry 10 "${ignition_endpoint}?{{.request.raw_query}}&os=installed" -o ignition.json
+          curl --retry 10 "${ignition_endpoint}?mac=${mac}&os=installed" -o ignition.json
           flatcar-install \
             -d ${install_disk} \
             -C ${os_channel} \

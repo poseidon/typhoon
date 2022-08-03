@@ -43,7 +43,7 @@ resource "matchbox_profile" "controllers" {
 
 # Fedora CoreOS controllers
 data "ct_config" "controllers" {
-  count = var.controller_count
+  count = length(var.controllers)
   content = templatefile("${path.module}/fcc/controller.yaml", {
     domain_name            = var.controllers.*.domain[count.index]
     etcd_name              = var.controllers.*.name[count.index]

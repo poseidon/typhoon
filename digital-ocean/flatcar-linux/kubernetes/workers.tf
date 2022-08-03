@@ -58,7 +58,7 @@ resource "digitalocean_tag" "workers" {
 
 # Flatcar Linux worker
 data "ct_config" "worker" {
-  content = templatefile("${path.module}/cl/worker.yaml", {
+  content = templatefile("${path.module}/butane/worker.yaml", {
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
   })

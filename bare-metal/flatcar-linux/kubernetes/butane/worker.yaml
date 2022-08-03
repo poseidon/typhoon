@@ -1,10 +1,20 @@
----
+variant: flatcar
+version: 1.0.0
 systemd:
   units:
     - name: docker.service
       enabled: true
     - name: locksmithd.service
       mask: true
+    - name: kubelet.path
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
     - name: wait-for-dns.service
       enabled: true
       contents: |
@@ -19,7 +29,6 @@ systemd:
         [Install]
         RequiredBy=kubelet.service
     - name: kubelet.service
-      enabled: true
       contents: |
         [Unit]
         Description=Kubelet
@@ -66,12 +75,13 @@ systemd:
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
           --healthz-port=0 \
+          --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           --node-labels=node.kubernetes.io/node \
-          %{~ for label in split(",", node_labels) ~}
+          %{~ for label in compact(split(",", node_labels)) ~}
           --node-labels=${label} \
           %{~ endfor ~}
-          %{~ for taint in split(",", node_taints) ~}
+          %{~ for taint in compact(split(",", node_taints)) ~}
           --register-with-taints=${taint} \
           %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
@@ -86,29 +96,18 @@ systemd:
         RestartSec=5
         [Install]
         WantedBy=multi-user.target
-    - name: delete-node.service
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Delete Kubernetes node on shutdown
-        [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.24.3
-        Type=oneshot
-        RemainAfterExit=true
-        ExecStart=/bin/true
-        ExecStop=/bin/bash -c '/usr/bin/docker run -v /var/lib/kubelet:/var/lib/kubelet:ro --entrypoint /usr/local/bin/kubectl $${KUBELET_IMAGE} --kubeconfig=/var/lib/kubelet/kubeconfig delete node $HOSTNAME'
-        [Install]
-        WantedBy=multi-user.target
+
 storage:
+  directories:
+    - path: /etc/kubernetes
+      mode: 0755
   files:
-    - path: /etc/kubernetes/kubeconfig
-      filesystem: root
+    - path: /etc/hostname
       mode: 0644
       contents:
-        inline: |
-          ${kubeconfig}
+        inline:
+          ${domain_name}
     - path: /etc/sysctl.d/max-user-watches.conf
-      filesystem: root
       mode: 0644
       contents:
         inline: |
@@ -117,4 +116,5 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - "${ssh_authorized_key}"
+        - ${ssh_authorized_key}
+

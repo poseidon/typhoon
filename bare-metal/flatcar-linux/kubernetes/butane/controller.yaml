@@ -1,4 +1,5 @@
----
+variant: flatcar
+version: 1.0.0
 systemd:
   units:
     - name: etcd-member.service
@@ -32,6 +33,15 @@ systemd:
       enabled: true
     - name: locksmithd.service
       mask: true
+    - name: kubelet.path
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Watch for kubeconfig
+        [Path]
+        PathExists=/etc/kubernetes/kubeconfig
+        [Install]
+        WantedBy=multi-user.target
     - name: wait-for-dns.service
       enabled: true
       contents: |
@@ -47,7 +57,6 @@ systemd:
         RequiredBy=kubelet.service
         RequiredBy=etcd-member.service
     - name: kubelet.service
-      enabled: true
       contents: |
         [Unit]
         Description=Kubelet (System Container)
@@ -91,12 +100,13 @@ systemd:
           --cluster_dns=${cluster_dns_service_ip} \
           --cluster_domain=${cluster_domain_suffix} \
           --healthz-port=0 \
+          --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           --node-labels=node.kubernetes.io/controller="true" \
           --pod-manifest-path=/etc/kubernetes/manifests \
-          --register-with-taints=node-role.kubernetes.io/controller=:NoSchedule \
           --read-only-port=0 \
           --resolv-conf=/run/systemd/resolve/resolv.conf \
+          --register-with-taints=node-role.kubernetes.io/controller=:NoSchedule \
           --rotate-certificates \
           --volume-plugin-dir=/var/lib/kubelet/volumeplugins
         ExecStart=docker logs -f kubelet
@@ -130,18 +140,17 @@ systemd:
 storage:
   directories:
     - path: /var/lib/etcd
-      filesystem: root
       mode: 0700
       overwrite: true
+    - path: /etc/kubernetes
+      mode: 0755
   files:
-    - path: /etc/kubernetes/kubeconfig
-      filesystem: root
+    - path: /etc/hostname
       mode: 0644
       contents:
-        inline: |
-          ${kubeconfig}
+        inline:
+          ${domain_name}
     - path: /opt/bootstrap/layout
-      filesystem: root
       mode: 0544
       contents:
         inline: |
@@ -164,7 +173,6 @@ storage:
           mv manifests-networking/* /opt/bootstrap/assets/manifests/
           rm -rf assets auth static-manifests tls manifests-networking
     - path: /opt/bootstrap/apply
-      filesystem: root
       mode: 0544
       contents:
         inline: |
@@ -179,20 +187,18 @@ storage:
              sleep 5
           done
     - path: /etc/sysctl.d/max-user-watches.conf
-      filesystem: root
       mode: 0644
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
     - path: /etc/etcd/etcd.env
-      filesystem: root
       mode: 0644
       contents:
           inline: |
             ETCD_NAME=${etcd_name}
             ETCD_DATA_DIR=/var/lib/etcd
-            ETCD_ADVERTISE_CLIENT_URLS=https://${etcd_domain}:2379
-            ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${etcd_domain}:2380
+            ETCD_ADVERTISE_CLIENT_URLS=https://${domain_name}:2379
+            ETCD_INITIAL_ADVERTISE_PEER_URLS=https://${domain_name}:2380
             ETCD_LISTEN_CLIENT_URLS=https://0.0.0.0:2379
             ETCD_LISTEN_PEER_URLS=https://0.0.0.0:2380
             ETCD_LISTEN_METRICS_URLS=http://0.0.0.0:2381
@@ -210,4 +216,4 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        - "${ssh_authorized_key}"
+        - ${ssh_authorized_key}

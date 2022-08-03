@@ -7,6 +7,20 @@ Notable changes between versions.
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
 * Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider ([#1194](https://github.com/poseidon/typhoon/pull/1194))
 
+### Flatcar Linux
+
+* Migrate Flatcar Linux from Ignition spec v2.3.0 to v3.3.0 (**action required**)
+  * Flatcar Linux 3185.0.0+ [supports](https://flatcar-linux.org/docs/latest/provisioning/ignition/specification/#ignition-v3) Ignition v3.x specs (which are rendered from Butane Configs, like Fedora CoreOS)
+  * `poseidon/ct` v0.11.0 [supports](https://github.com/poseidon/terraform-provider-ct/pull/131) the `flatcar` Butane Config variant
+  * Require poseidon v0.11+ and Flatcar Linux 3185.0.0+
+* Modify any Flatcar Linux snippets to use the [Butane Config](https://coreos.github.io/butane/config-flatcar-v1_0/) format (**action required**):
+
+```tf
+variant: flatcar
+version: 1.0.0
+...
+```
+
 ### Google
 
 * Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))

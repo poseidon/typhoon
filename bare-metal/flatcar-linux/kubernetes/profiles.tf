@@ -21,7 +21,7 @@ resource "matchbox_profile" "flatcar-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = data.template_file.install-configs.*.rendered[count.index]
+  raw_ignition = data.ct_config.install.*.rendered[count.index]
 }
 
 // Flatcar Linux Install profile (from matchbox /assets cache)
@@ -43,41 +43,40 @@ resource "matchbox_profile" "cached-flatcar-install" {
     var.kernel_args,
   ])
 
-  container_linux_config = data.template_file.cached-install-configs.*.rendered[count.index]
+  raw_ignition = data.ct_config.cached-install.*.rendered[count.index]
 }
 
-data "template_file" "install-configs" {
+# Flatcar Linux install
+data "ct_config" "install" {
   count = length(var.controllers) + length(var.workers)
-
-  template = file("${path.module}/cl/install.yaml")
-
-  vars = {
+  content = templatefile("${path.module}/butane/install.yaml", {
     os_channel         = local.channel
     os_version         = var.os_version
     ignition_endpoint  = format("%s/ignition", var.matchbox_http_endpoint)
+    mac                = concat(var.controllers.*.mac, var.workers.*.mac)[count.index]
     install_disk       = var.install_disk
     ssh_authorized_key = var.ssh_authorized_key
     # only cached profile adds -b baseurl
     baseurl_flag = ""
-  }
+  })
+  strict = true
 }
 
-data "template_file" "cached-install-configs" {
+# Flatcar Linux cached install
+data "ct_config" "cached-install" {
   count = length(var.controllers) + length(var.workers)
-
-  template = file("${path.module}/cl/install.yaml")
-
-  vars = {
+  content = templatefile("${path.module}/butane/install.yaml", {
     os_channel         = local.channel
     os_version         = var.os_version
     ignition_endpoint  = format("%s/ignition", var.matchbox_http_endpoint)
+    mac                = concat(var.controllers.*.mac, var.workers.*.mac)[count.index]
     install_disk       = var.install_disk
     ssh_authorized_key = var.ssh_authorized_key
     # profile uses -b baseurl to install from matchbox cache
     baseurl_flag = "-b ${var.matchbox_http_endpoint}/assets/flatcar"
-  }
+  })
+  strict = true
 }
-
 
 // Kubernetes Controller profiles
 resource "matchbox_profile" "controllers" {
@@ -88,8 +87,8 @@ resource "matchbox_profile" "controllers" {
 
 # Flatcar Linux controllers
 data "ct_config" "controllers" {
-  count = var.controller_count
-  content = templatefile("${path.module}/cl/controller.yaml", {
+  count = length(var.controllers)
+  content = templatefile("${path.module}/butane/controller.yaml", {
     domain_name            = var.controllers.*.domain[count.index]
     etcd_name              = var.controllers.*.name[count.index]
     etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
@@ -111,7 +110,7 @@ resource "matchbox_profile" "workers" {
 # Flatcar Linux workers
 data "ct_config" "workers" {
   count = length(var.workers)
-  content = templatefile("${path.module}/cl/worker.yaml", {
+  content = templatefile("${path.module}/butane/worker.yaml", {
     domain_name            = var.workers.*.domain[count.index]
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix

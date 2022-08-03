@@ -1,4 +1,5 @@
----
+variant: flatcar
+version: 1.0.0
 systemd:
   units:
     - name: docker.service
@@ -25,12 +26,9 @@ systemd:
         Description=Kubelet
         Requires=docker.service
         After=docker.service
-        Requires=coreos-metadata.service
-        After=coreos-metadata.service
         Wants=rpc-statd.service
         [Service]
         Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.24.3
-        EnvironmentFile=/run/metadata/coreos
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -78,7 +76,6 @@ systemd:
           --register-with-taints=${taint} \
           %{~ endfor ~}
           --pod-manifest-path=/etc/kubernetes/manifests \
-          --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \
           --read-only-port=0 \
           --resolv-conf=/run/systemd/resolve/resolv.conf \
           --rotate-certificates \
@@ -106,13 +103,11 @@ systemd:
 storage:
   files:
     - path: /etc/kubernetes/kubeconfig
-      filesystem: root
       mode: 0644
       contents:
         inline: |
           ${kubeconfig}
     - path: /etc/sysctl.d/max-user-watches.conf
-      filesystem: root
       mode: 0644
       contents:
         inline: |
