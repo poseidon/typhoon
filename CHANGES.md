@@ -5,7 +5,11 @@ Notable changes between versions.
 ## Latest
 
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
-* Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider
+* Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider ([#1194](https://github.com/poseidon/typhoon/pull/1194))
+
+### Google
+
+* Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))
 
 ## v1.24.3
 

@@ -4,7 +4,7 @@ module "bootstrap" {
 
   cluster_name          = var.cluster_name
   api_servers           = [format("%s.%s", var.cluster_name, var.dns_zone)]
-  etcd_servers          = google_dns_record_set.etcds.*.name
+  etcd_servers          = [for fqdn in google_dns_record_set.etcds.*.name : trimsuffix(fqdn, ".")]
   networking            = var.networking
   network_mtu           = 1440
   pod_cidr              = var.pod_cidr
