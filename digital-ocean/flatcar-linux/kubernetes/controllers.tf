@@ -46,11 +46,11 @@ resource "digitalocean_droplet" "controllers" {
   size  = var.controller_type
 
   # network
-  vpc_uuid           = digitalocean_vpc.network.id
+  vpc_uuid = digitalocean_vpc.network.id
   # TODO: Only official DigitalOcean images support IPv6
   ipv6 = false
 
-  user_data = data.ct_config.controller-ignitions.*.rendered[count.index]
+  user_data = data.ct_config.controllers.*.rendered[count.index]
   ssh_keys  = var.ssh_fingerprints
 
   tags = [
@@ -67,39 +67,20 @@ resource "digitalocean_tag" "controllers" {
   name = "${var.cluster_name}-controller"
 }
 
-# Controller Ignition configs
-data "ct_config" "controller-ignitions" {
-  count    = var.controller_count
-  content  = data.template_file.controller-configs.*.rendered[count.index]
-  strict   = true
-  snippets = var.controller_snippets
-}
-
-# Controller Container Linux configs
-data "template_file" "controller-configs" {
+# Flatcar Linux controllers
+data "ct_config" "controllers" {
   count = var.controller_count
-
-  template = file("${path.module}/cl/controller.yaml")
-
-  vars = {
+  content = templatefile("${path.module}/cl/controller.yaml", {
     # Cannot use cyclic dependencies on controllers or their DNS records
     etcd_name   = "etcd${count.index}"
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
-    etcd_initial_cluster   = join(",", data.template_file.etcds.*.rendered)
+    etcd_initial_cluster = join(",", [
+      for i in range(var.controller_count) : "etcd${i}=https://${var.cluster_name}-etcd${i}.${var.dns_zone}:2380"
+    ])
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
-  }
+  })
+  strict   = true
+  snippets = var.controller_snippets
 }
-
-data "template_file" "etcds" {
-  count    = var.controller_count
-  template = "etcd$${index}=https://$${cluster_name}-etcd$${index}.$${dns_zone}:2380"
-
-  vars = {
-    index        = count.index
-    cluster_name = var.cluster_name
-    dns_zone     = var.dns_zone
-  }
-}
-

@@ -35,7 +35,7 @@ resource "azurerm_linux_virtual_machine" "controllers" {
   availability_set_id = azurerm_availability_set.controllers.id
 
   size        = var.controller_type
-  custom_data = base64encode(data.ct_config.controller-ignitions.*.rendered[count.index])
+  custom_data = base64encode(data.ct_config.controllers.*.rendered[count.index])
 
   # storage
   source_image_id = var.os_image
@@ -111,41 +111,22 @@ resource "azurerm_network_interface_backend_address_pool_association" "controlle
   backend_address_pool_id = azurerm_lb_backend_address_pool.controller.id
 }
 
-# Controller Ignition configs
-data "ct_config" "controller-ignitions" {
-  count    = var.controller_count
-  content  = data.template_file.controller-configs.*.rendered[count.index]
-  strict   = true
-  snippets = var.controller_snippets
-}
-
-# Controller Fedora CoreOS configs
-data "template_file" "controller-configs" {
+# Fedora CoreOS controllers
+data "ct_config" "controllers" {
   count = var.controller_count
-
-  template = file("${path.module}/fcc/controller.yaml")
-
-  vars = {
+  content = templatefile("${path.module}/fcc/controller.yaml", {
     # Cannot use cyclic dependencies on controllers or their DNS records
     etcd_name   = "etcd${count.index}"
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
     # etcd0=https://cluster-etcd0.example.com,etcd1=https://cluster-etcd1.example.com,...
-    etcd_initial_cluster   = join(",", data.template_file.etcds.*.rendered)
+    etcd_initial_cluster = join(",", [
+      for i in range(var.controller_count) : "etcd${i}=https://${var.cluster_name}-etcd${i}.${var.dns_zone}:2380"
+    ])
     kubeconfig             = indent(10, module.bootstrap.kubeconfig-kubelet)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
-  }
+  })
+  strict   = true
+  snippets = var.controller_snippets
 }
-
-data "template_file" "etcds" {
-  count    = var.controller_count
-  template = "etcd$${index}=https://$${cluster_name}-etcd$${index}.$${dns_zone}:2380"
-
-  vars = {
-    index        = count.index
-    cluster_name = var.cluster_name
-    dns_zone     = var.dns_zone
-  }
-}
-

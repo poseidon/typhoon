@@ -32,7 +32,7 @@ resource "google_compute_instance_template" "worker" {
   machine_type = var.machine_type
 
   metadata = {
-    user-data = data.ct_config.worker-ignition.rendered
+    user-data = data.ct_config.worker.rendered
   }
 
   scheduling {
@@ -69,24 +69,16 @@ resource "google_compute_instance_template" "worker" {
   }
 }
 
-# Worker Ignition config
-data "ct_config" "worker-ignition" {
-  content  = data.template_file.worker-config.rendered
-  strict   = true
-  snippets = var.snippets
-}
-
-# Worker Container Linux config
-data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml")
-
-  vars = {
+# Flatcar Linux worker
+data "ct_config" "worker" {
+  content = templatefile("${path.module}/cl/worker.yaml", {
     kubeconfig             = indent(10, var.kubeconfig)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
     node_taints            = join(",", var.node_taints)
-  }
+  })
+  strict   = true
+  snippets = var.snippets
 }
-

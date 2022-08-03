@@ -14,7 +14,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   # instance name prefix for instances in the set
   computer_name_prefix   = "${var.name}-worker"
   single_placement_group = false
-  custom_data            = base64encode(data.ct_config.worker-ignition.rendered)
+  custom_data            = base64encode(data.ct_config.worker.rendered)
 
   # storage
   os_disk {
@@ -88,24 +88,16 @@ resource "azurerm_monitor_autoscale_setting" "workers" {
   }
 }
 
-# Worker Ignition configs
-data "ct_config" "worker-ignition" {
-  content  = data.template_file.worker-config.rendered
-  strict   = true
-  snippets = var.snippets
-}
-
-# Worker Container Linux configs
-data "template_file" "worker-config" {
-  template = file("${path.module}/cl/worker.yaml")
-
-  vars = {
+# Flatcar Linux worker
+data "ct_config" "worker" {
+  content = templatefile("${path.module}/cl/worker.yaml", {
     kubeconfig             = indent(10, var.kubeconfig)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
     node_taints            = join(",", var.node_taints)
-  }
+  })
+  strict   = true
+  snippets = var.snippets
 }
-

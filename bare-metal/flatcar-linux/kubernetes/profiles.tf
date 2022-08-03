@@ -83,56 +83,42 @@ data "template_file" "cached-install-configs" {
 resource "matchbox_profile" "controllers" {
   count        = length(var.controllers)
   name         = format("%s-controller-%s", var.cluster_name, var.controllers.*.name[count.index])
-  raw_ignition = data.ct_config.controller-ignitions.*.rendered[count.index]
+  raw_ignition = data.ct_config.controllers.*.rendered[count.index]
 }
 
-data "ct_config" "controller-ignitions" {
-  count    = length(var.controllers)
-  content  = data.template_file.controller-configs.*.rendered[count.index]
-  strict   = true
-  snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])
-}
-
-data "template_file" "controller-configs" {
-  count = length(var.controllers)
-
-  template = file("${path.module}/cl/controller.yaml")
-
-  vars = {
+# Flatcar Linux controllers
+data "ct_config" "controllers" {
+  count = var.controller_count
+  content = templatefile("${path.module}/cl/controller.yaml", {
     domain_name            = var.controllers.*.domain[count.index]
     etcd_name              = var.controllers.*.name[count.index]
     etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
-  }
+  })
+  strict   = true
+  snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])
 }
 
 // Kubernetes Worker profiles
 resource "matchbox_profile" "workers" {
   count        = length(var.workers)
   name         = format("%s-worker-%s", var.cluster_name, var.workers.*.name[count.index])
-  raw_ignition = data.ct_config.worker-ignitions.*.rendered[count.index]
+  raw_ignition = data.ct_config.workers.*.rendered[count.index]
 }
 
-data "ct_config" "worker-ignitions" {
-  count    = length(var.workers)
-  content  = data.template_file.worker-configs.*.rendered[count.index]
-  strict   = true
-  snippets = lookup(var.snippets, var.workers.*.name[count.index], [])
-}
-
-data "template_file" "worker-configs" {
+# Flatcar Linux workers
+data "ct_config" "workers" {
   count = length(var.workers)
-
-  template = file("${path.module}/cl/worker.yaml")
-
-  vars = {
+  content = templatefile("${path.module}/cl/worker.yaml", {
     domain_name            = var.workers.*.domain[count.index]
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
     node_labels            = join(",", lookup(var.worker_node_labels, var.workers.*.name[count.index], []))
     node_taints            = join(",", lookup(var.worker_node_taints, var.workers.*.name[count.index], []))
-  }
+  })
+  strict   = true
+  snippets = lookup(var.snippets, var.workers.*.name[count.index], [])
 }

@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
+* Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider
 
 ## v1.24.3
 

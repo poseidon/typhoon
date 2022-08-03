@@ -47,7 +47,7 @@ resource "aws_launch_configuration" "worker" {
   spot_price        = var.spot_price > 0 ? var.spot_price : null
   enable_monitoring = false
 
-  user_data = data.ct_config.worker-ignition.rendered
+  user_data = data.ct_config.worker.rendered
 
   # storage
   root_block_device {
@@ -67,24 +67,16 @@ resource "aws_launch_configuration" "worker" {
   }
 }
 
-# Worker Ignition config
-data "ct_config" "worker-ignition" {
-  content  = data.template_file.worker-config.rendered
-  strict   = true
-  snippets = var.snippets
-}
-
-# Worker Fedora CoreOS config
-data "template_file" "worker-config" {
-  template = file("${path.module}/fcc/worker.yaml")
-
-  vars = {
+# Fedora CoreOS worker
+data "ct_config" "worker" {
+  content = templatefile("${path.module}/fcc/worker.yaml", {
     kubeconfig             = indent(10, var.kubeconfig)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
     node_taints            = join(",", var.node_taints)
-  }
+  })
+  strict   = true
+  snippets = var.snippets
 }
-
