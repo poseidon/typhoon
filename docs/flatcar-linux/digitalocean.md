@@ -63,13 +63,13 @@ terraform {
 
 ### Flatcar Linux Images
 
-Flatcar Linux publishes DigitalOcean images, but does not yet upload them. DigitalOcean allows [custom images](https://blog.digitalocean.com/custom-images/) to be uploaded via URLor file.
+Flatcar Linux publishes DigitalOcean images, but does not yet upload them. DigitalOcean allows [custom images](https://blog.digitalocean.com/custom-images/) to be uploaded via a URL or file.
 
-[Download](https://www.flatcar-linux.org/releases/) the Flatcar Linux DigitalOcean bin image. Rename the image with the channel and version (to refer to these images over time) and [upload](https://cloud.digitalocean.com/images/custom_images) it as a custom image.
+Choose a Flatcar Linux [release](https://www.flatcar-linux.org/releases/) from Flatcar's file [server](https://stable.release.flatcar-linux.net/amd64-usr/). Copy the URL to the `flatcar_production_digitalocean_image.bin.bz2`, import it into DigitalOcean, and name it as a custom image. Add a data reference to the image in Terraform:
 
 ```tf
-data "digitalocean_image" "flatcar-stable-2303-4-0" {
-  name = "flatcar-stable-2303.4.0.bin.bz2"
+data "digitalocean_image" "flatcar-stable-3227-2-0" {
+  name = "flatcar-stable-3227.2.0.bin.bz2"
 }
 ```
 

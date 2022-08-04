@@ -12,9 +12,11 @@ Clusters are kept to a minimal Kubernetes control plane by offering components l
 
 ## Hosts
 
-Typhoon uses the [Ignition](https://github.com/coreos/ignition) system of Fedora CoreOS and Flatcar Linux to immutably declare a system via first-boot disk provisioning. Fedora CoreOS uses a [Butane Config](https://coreos.github.io/butane/specs/) and Flatcar Linux uses a [Container Linux Config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md) (CLC). These define disk partitions, filesystems, systemd units, dropins, config files, mount units, raid arrays, and users.
+### Background
 
-Controller and worker instances form a minimal and secure Kubernetes cluster on each platform. Typhoon provides the **snippets** feature to accept Butane or Container Linux Configs to validate and additively merge into instance declarations. This allows advanced host customization and experimentation.
+Typhoon uses the [Ignition](https://github.com/coreos/ignition) system of Fedora CoreOS and Flatcar Linux to immutably declare a system via first-boot disk provisioning. Human-friendly [Butane Configs](https://coreos.github.io/butane/specs/) define disk partitions, filesystems, systemd units, dropins, config files, mount units, raid arrays, users, and more before being converted to Ignition.
+
+Controller and worker instances form a minimal and secure Kubernetes cluster on each platform. Typhoon provides the **snippets** feature to accept custom Butane Configs that are merged with instance declarations. This allows advanced host customization and experimentation.
 
 !!! note
     Snippets cannot be used to modify an already existing instance, the antithesis of immutable provisioning. Ignition fully declares a system on first boot only.
@@ -25,127 +27,104 @@ Controller and worker instances form a minimal and secure Kubernetes cluster on 
 !!! danger
     Edits to snippets for controller instances can (correctly) cause Terraform to observe a diff (if not otherwise suppressed) and propose destroying and recreating controller(s). Recognize that this is destructive since controllers run etcd and are stateful. See [blue/green](/topics/maintenance/#upgrades) clusters.
 
-### Fedora CoreOS
-
-!!! note
-    Fedora CoreOS snippets require `terraform-provider-ct` v0.5+
+### Usage
 
 Define a Butane Config ([docs](https://coreos.github.io/butane/specs/), [config](https://github.com/coreos/butane/blob/main/docs/config-fcos-v1_4.md)) in version control near your Terraform workspace directory (e.g. perhaps in a `snippets` subdirectory). You may organize snippets into multiple files, if desired.
 
-For example, ensure an `/opt/hello` file is created with permissions 0644.
+For example, ensure an `/opt/hello` file is created with permissions 0644 before boot.
 
-```yaml
-# custom-files
-variant: fcos
-version: 1.4.0
-storage:
-  files:
-    - path: /opt/hello
-      contents:
-        inline: |
-          Hello World
-      mode: 0644
-```
+=== "Fedora CoreOS"
 
-Reference the FCC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/fedora-coreos/aws/#cluster) or [Google Cloud](/fedora-coreos/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
+    ```yaml
+    # custom-files.yaml
+    variant: fcos
+    version: 1.4.0
+    storage:
+      files:
+        - path: /opt/hello
+          contents:
+            inline: |
+              Hello World
+          mode: 0644
+    ```
 
-```tf
-module "nemo" {
-  ...
+=== "Flatcar Linux"
 
-  controller_count        = 1
-  worker_count            = 2
-  controller_snippets = [
-    file("./custom-files"),
-    file("./custom-units"),
-  ]
-  worker_snippets = [
-    file("./custom-files"),
-    file("./custom-units")",
-  ]
-  ...
-}
-```
+    ```yaml
+    # custom-files.yaml
+    variant: flatcar
+    version: 1.0.0
+    storage:
+      files:
+        - path: /opt/hello
+          contents:
+            inline: |
+              Hello World
+          mode: 0644
+    ```
 
-On [Bare-Metal](/fedora-coreos/bare-metal/#cluster), different FCCs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
+Or ensure a systemd unit `hello.service` is created.
 
-```tf
-module "mercury" {
-  ...
-  snippets = {
-    "node2" = [file("./units/hello.yaml")]
-    "node3" = [
-      file("./units/world.yaml"),
-      file("./units/hello.yaml"),
-    ]
-  }
-  ...
-}
-```
+=== "Fedora CoreOS"
 
-### Flatcar Linux
-
-Define a Container Linux Config (CLC) ([config](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/configuration.md), [examples](https://github.com/coreos/container-linux-config-transpiler/blob/master/doc/examples.md)) in version control near your Terraform workspace directory (e.g. perhaps in a `snippets` subdirectory). You may organize snippets into multiple files, if desired.
-
-For example, ensure an `/opt/hello` file is created with permissions 0644.
-
-```yaml
-# custom-files
-storage:
-  files:
-    - path: /opt/hello
-      filesystem: root
-      contents:
-        inline: |
-          Hello World
-      mode: 0644
-```
-
-Or ensure a systemd unit `hello.service` is created and a dropin `50-etcd-cluster.conf` is added for `etcd-member.service`.
-
-```yaml
-# custom-units
-systemd:
-  units:
-    - name: hello.service
-      enable: true
-      contents: |
-        [Unit]
-        Description=Hello World
-        [Service]
-        Type=oneshot
-        ExecStart=/usr/bin/echo Hello World!
-        [Install]
-        WantedBy=multi-user.target
-    - name: etcd-member.service
-      enable: true
-      dropins:
-        - name: 50-etcd-cluster.conf
+    ```yaml
+    # custom-units.yaml
+    variant: fcos
+    version: 1.4.0
+    systemd:
+      units:
+        - name: hello.service
+          enabled: true
           contents: |
-            Environment="ETCD_LOG_PACKAGE_LEVELS=etcdserver=WARNING,security=DEBUG"
-```
+            [Unit]
+            Description=Hello World
+            [Service]
+            Type=oneshot
+            ExecStart=/usr/bin/echo Hello World!
+            [Install]
+            WantedBy=multi-user.target
+    ```
 
-Reference the CLC contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/flatcar-linux/aws/#cluster), [Azure](/flatcar-linux/azure/#cluster), [DigitalOcean](/flatcar-linux/digital-ocean/#cluster), or [Google Cloud](/flatcar-linux/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
+=== "Flatcar Linux"
+
+    ```yaml
+    # custom-units.yaml
+    variant: flatcar
+    version: 1.0.0
+    systemd:
+      units:
+        - name: hello.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Hello World
+            [Service]
+            Type=oneshot
+            ExecStart=/usr/bin/echo Hello World!
+            [Install]
+            WantedBy=multi-user.target
+    ```
+
+Reference the Butane contents by location (e.g. `file("./custom-units.yaml")`). On [AWS](/fedora-coreos/aws/#cluster), [Azure](/fedora-coreos/azure/#cluster), [DigitalOcean](/fedora-coreos/digital-ocean/#cluster), or [Google Cloud](/fedora-coreos/google-cloud/#cluster) extend the `controller_snippets` or `worker_snippets` list variables.
+
 
 ```tf
 module "nemo" {
   ...
-
-  controller_count        = 1
   worker_count            = 2
   controller_snippets = [
-    file("./custom-files"),
-    file("./custom-units"),
+    file("./custom-files.yaml"),
+    file("./custom-units.yaml"),
   ]
   worker_snippets = [
-    file("./custom-files"),
-    file("./custom-units")",
+    file("./custom-files.yaml"),
+    file("./custom-units.yaml")",
   ]
   ...
 }
 ```
 
-On [Bare-Metal](/flatcar-linux/bare-metal/#cluster), different CLCs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
+On [Bare-Metal](/fedora-coreos/bare-metal/#cluster), different Butane configs may be used for each node (since hardware may be heterogeneous). Extend the `snippets` map variable by mapping a controller or worker name key to a list of snippets.
 
 ```tf
 module "mercury" {

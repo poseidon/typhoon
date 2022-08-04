@@ -64,18 +64,18 @@ Additional configuration options are described in the `azurerm` provider [docs](
 
 Fedora CoreOS publishes images for Azure, but does not yet upload them. Azure allows custom images to be uploaded to a storage account bucket and imported.
 
-[Download](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) a Fedora CoreOS Azure VHD image and upload it to an Azure storage account container (i.e. bucket) via the UI (quite slow).
+[Download](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) a Fedora CoreOS Azure VHD image, decompress it, and upload it to an Azure storage account container (i.e. bucket) via the UI (quite slow).
 
 ```
-xz -d fedora-coreos-31.20200323.3.2-azure.x86_64.vhd.xz
+xz -d fedora-coreos-36.20220716.3.1-azure.x86_64.vhd.xz
 ```
 
 Create an Azure disk (note disk ID) and create an Azure image from it (note image ID).
 
 ```
-az disk create --name fedora-coreos-31.20200323.3.2 -g GROUP --source https://BUCKET.blob.core.windows.net/fedora-coreos/fedora-coreos-31.20200323.3.2-azure.x86_64.vhd
+az disk create --name fedora-coreos-36.20220716.3.1 -g GROUP --source https://BUCKET.blob.core.windows.net/fedora-coreos/fedora-coreos-36.20220716.3.1-azure.x86_64.vhd
 
-az image create --name fedora-coreos-31.20200323.3.2 -g GROUP --os-type=linux --source /subscriptions/some/path/providers/Microsoft.Compute/disks/fedora-coreos-31.20200323.3.2
+az image create --name fedora-coreos-36.20220716.3.1 -g GROUP --os-type=linux --source /subscriptions/some/path/providers/Microsoft.Compute/disks/fedora-coreos-36.20220716.3.1
 ```
 
 Set the [os_image](#variables) in the next step.
@@ -95,7 +95,7 @@ module "ramius" {
   dns_zone_group = "example-group"
 
   # configuration
-  os_image           = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-31.20200323.3.2"
+  os_image           = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-36.20220716.3.1"
   ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 
   # optional

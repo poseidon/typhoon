@@ -19,7 +19,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 | Kernel            | ~5.10.x       | ~5.16.x       |
 | systemd           | 249           | 249           |
 | Username          | core          | core          |
-| Ignition system   | Ignition v2.x spec | Ignition v3.x spec |
+| Ignition system   | Ignition v3.x spec | Ignition v3.x spec |
 | storage driver    | overlay2 (extfs)  | overlay2 (xfs) |
 | logging driver    | json-file     | journald      |
 | cgroup driver     | systemd       | systemd       |
