@@ -25,6 +25,10 @@ version: 1.0.0
 
 * Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))
 
+### Addons
+
+* Update Grafana from v9.0.3 to [v9.0.5](https://github.com/grafana/grafana/releases/tag/v9.0.5)
+
 ## v1.24.3
 
 * Kubernetes [v1.24.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1243)

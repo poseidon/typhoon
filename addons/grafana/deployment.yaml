@@ -24,7 +24,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: grafana
-          image: docker.io/grafana/grafana:9.0.3
+          image: docker.io/grafana/grafana:9.0.5
           env:
             - name: GF_PATHS_CONFIG
               value: "/etc/grafana/custom.ini"
@@ -32,15 +32,22 @@ spec:
             - name: http
               containerPort: 8080
           livenessProbe:
-            httpGet:
-              path: /metrics
+            tcpSocket:
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 5
+            successThreshold: 1
           readinessProbe:
             httpGet:
-              path: /api/health
+              scheme: HTTP
+              path: /robots.txt
               port: 8080
             initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
           resources:
             requests:
               cpu: 100m
