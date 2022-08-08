@@ -22,6 +22,8 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
         seccompProfile:
           type: RuntimeDefault
       hostNetwork: true
@@ -33,8 +35,6 @@ spec:
           - --path.procfs=/host/proc
           - --path.sysfs=/host/sys
           - --path.rootfs=/host/root
-          - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+)($|/)
-          - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
         ports:
           - name: metrics
             containerPort: 9100
@@ -46,6 +46,9 @@ spec:
           limits:
             cpu: 200m
             memory: 100Mi
+        securityContext:
+          seLinuxOptions:
+            type: spc_t
         volumeMounts:
           - name: proc
             mountPath: /host/proc
@@ -55,9 +58,12 @@ spec:
             readOnly: true
           - name: root
             mountPath: /host/root
+            mountPropagation: HostToContainer
             readOnly: true
       tolerations:
-        - key: node-role.kubernetes.io/master
+        - key: node-role.kubernetes.io/controller
+          operator: Exists
+        - key: node-role.kubernetes.io/control-plane
           operator: Exists
         - key: node.kubernetes.io/not-ready
           operator: Exists
