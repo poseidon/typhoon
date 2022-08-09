@@ -1,6 +1,6 @@
 # Workers AutoScaling Group
 resource "aws_autoscaling_group" "workers" {
-  name = "${var.name}-worker ${aws_launch_configuration.worker.name}"
+  name = "${var.name}-worker"
 
   # count
   desired_capacity          = var.worker_count
@@ -42,7 +42,8 @@ resource "aws_autoscaling_group" "workers" {
 
 # Worker template
 resource "aws_launch_configuration" "worker" {
-  image_id          = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
+  name_prefix       = "${var.name}-worker"
+  image_id          = local.ami_id
   instance_type     = var.instance_type
   spot_price        = var.spot_price > 0 ? var.spot_price : null
   enable_monitoring = false

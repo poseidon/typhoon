@@ -1,3 +1,7 @@
+locals {
+  ami_id = var.arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
+}
+
 data "aws_ami" "fedora-coreos" {
   most_recent = true
   owners      = ["125523088429"]

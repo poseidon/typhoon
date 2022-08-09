@@ -28,6 +28,11 @@ version: 1.0.0
 ...
 ```
 
+### AWS
+
+* Rename worker autoscaling group `${cluster_name}-worker`
+* Rename launch configuration `${cluster_name}-worker`
+
 ### Google
 
 * Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))
