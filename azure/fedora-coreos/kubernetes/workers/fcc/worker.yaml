@@ -131,7 +131,6 @@ storage:
           DefaultCPUAccounting=yes
           DefaultMemoryAccounting=yes
           DefaultBlockIOAccounting=yes
-    - path: /etc/fedora-coreos/iptables-legacy.stamp
     - path: /etc/containerd/config.toml
       overwrite: true
       contents:

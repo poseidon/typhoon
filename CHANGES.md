@@ -8,6 +8,12 @@ Notable changes between versions.
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
 * Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider ([#1194](https://github.com/poseidon/typhoon/pull/1194))
 
+### Fedora CoreOS
+
+* Remove ineffective `/etc/fedora-coreos/iptables-legacy.stamp` ([#1201](https://github.com/poseidon/typhoon/pull/1201))
+  * Typhoon already uses iptables v1.8.7 (nf_tables) since F36
+  * Staying on legacy iptables required a file in `/etc/coreos`
+
 ### Flatcar Linux
 
 * Migrate Flatcar Linux from Ignition spec v2.3.0 to v3.3.0 (**action required**)
