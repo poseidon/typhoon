@@ -44,7 +44,7 @@ resource "matchbox_profile" "controllers" {
 # Fedora CoreOS controllers
 data "ct_config" "controllers" {
   count = length(var.controllers)
-  content = templatefile("${path.module}/fcc/controller.yaml", {
+  content = templatefile("${path.module}/butane/controller.yaml", {
     domain_name            = var.controllers.*.domain[count.index]
     etcd_name              = var.controllers.*.name[count.index]
     etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
@@ -71,7 +71,7 @@ resource "matchbox_profile" "workers" {
 # Fedora CoreOS workers
 data "ct_config" "workers" {
   count = length(var.workers)
-  content = templatefile("${path.module}/fcc/worker.yaml", {
+  content = templatefile("${path.module}/butane/worker.yaml", {
     domain_name            = var.workers.*.domain[count.index]
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix

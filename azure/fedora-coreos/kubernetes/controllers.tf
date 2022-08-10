@@ -114,7 +114,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "controlle
 # Fedora CoreOS controllers
 data "ct_config" "controllers" {
   count = var.controller_count
-  content = templatefile("${path.module}/fcc/controller.yaml", {
+  content = templatefile("${path.module}/butane/controller.yaml", {
     # Cannot use cyclic dependencies on controllers or their DNS records
     etcd_name   = "etcd${count.index}"
     etcd_domain = "${var.cluster_name}-etcd${count.index}.${var.dns_zone}"
