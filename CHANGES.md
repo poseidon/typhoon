@@ -39,7 +39,7 @@ version: 1.0.0
 
 ### Addons
 
-* Update Grafana from v9.0.3 to [v9.0.6](https://github.com/grafana/grafana/releases/tag/v9.0.6)
+* Update Grafana from v9.0.3 to [v9.0.7](https://github.com/grafana/grafana/releases/tag/v9.0.7)
 
 ## v1.24.3
 
