@@ -1,6 +1,6 @@
 # Managed instance group of workers
 resource "google_compute_region_instance_group_manager" "workers" {
-  name        = "${var.name}-worker-group"
+  name        = "${var.name}-worker"
   description = "Compute instance group of ${var.name} workers"
 
   # instance name prefix for instances in the group
@@ -9,6 +9,16 @@ resource "google_compute_region_instance_group_manager" "workers" {
   version {
     name              = "default"
     instance_template = google_compute_instance_template.worker.self_link
+  }
+
+  # Roll out MIG instance template changes by replacing instances.
+  # - Surge to create new instances, then delete old instances.
+  # - Replace ensures new Ignition is picked up
+  update_policy {
+    type                  = "PROACTIVE"
+    max_surge_fixed       = 3
+    max_unavailable_fixed = 0
+    minimal_action        = "REPLACE"
   }
 
   target_size  = var.worker_count
@@ -23,6 +33,27 @@ resource "google_compute_region_instance_group_manager" "workers" {
     name = "https"
     port = "443"
   }
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.worker.id
+    initial_delay_sec = 120
+  }
+}
+
+# Health check for worker Kubelet
+resource "google_compute_health_check" "worker" {
+  name        = "${var.name}-kubelet-health"
+  description = "Health check for worker Kubelet"
+
+  timeout_sec        = 20
+  check_interval_sec = 30
+
+  healthy_threshold   = 1
+  unhealthy_threshold = 6
+
+  ssl_health_check {
+    port = "10250"
+  }
 }
 
 # Worker instance template
@@ -36,8 +67,11 @@ resource "google_compute_instance_template" "worker" {
   }
 
   scheduling {
-    automatic_restart = var.preemptible ? false : true
-    preemptible       = var.preemptible
+    provisioning_model = var.preemptible ? "SPOT" : "STANDARD"
+    preemptible        = var.preemptible
+    automatic_restart  = var.preemptible ? false : true
+    # Spot instances with termination action DELETE cannot be used with MIGs
+    instance_termination_action = var.preemptible ? "STOP" : null
   }
 
   disk {
@@ -49,10 +83,8 @@ resource "google_compute_instance_template" "worker" {
 
   network_interface {
     network = var.network
-
     # Ephemeral external IP
-    access_config {
-    }
+    access_config {}
   }
 
   can_ip_forward = true
@@ -64,6 +96,9 @@ resource "google_compute_instance_template" "worker" {
   }
 
   lifecycle {
+    ignore_changes = [
+      disk[0].source_image
+    ]
     # To update an Instance Template, Terraform should replace the existing resource
     create_before_destroy = true
   }

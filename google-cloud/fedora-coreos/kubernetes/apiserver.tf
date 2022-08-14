@@ -75,10 +75,10 @@ resource "google_compute_instance_group" "controllers" {
   )
 }
 
-# TCP health check for apiserver
+# Health check for kube-apiserver
 resource "google_compute_health_check" "apiserver" {
-  name        = "${var.cluster_name}-apiserver-tcp-health"
-  description = "TCP health check for kube-apiserver"
+  name        = "${var.cluster_name}-apiserver-health"
+  description = "Health check for kube-apiserver"
 
   timeout_sec        = 5
   check_interval_sec = 5
@@ -86,7 +86,7 @@ resource "google_compute_health_check" "apiserver" {
   healthy_threshold   = 1
   unhealthy_threshold = 3
 
-  tcp_health_check {
+  ssl_health_check {
     port = "6443"
   }
 }

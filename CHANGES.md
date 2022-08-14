@@ -32,11 +32,23 @@ version: 1.0.0
 
 ### AWS
 
-* Rename worker autoscaling group `${cluster_name}-worker`
-* Rename launch configuration `${cluster_name}-worker`
+* Rename worker autoscaling group `${cluster_name}-worker` ([#1202](https://github.com/poseidon/typhoon/pull/1202))
+  * Rename launch configuration `${cluster_name}-worker` instead of a random id
 
 ### Google
 
+* [Roll](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) instance template changes to worker managed instance groups ([#1207](https://github.com/poseidon/typhoon/pull/1207)) (**important**)
+  * Changes to worker instance templates roll out by gradually replacing instances
+  * Automatic rollouts create surge instances, wait for Kubelet health checks, then delete old instances (0 unavailable instances)
+  * Changing `worker_type`, `disk_size`, `preemptible`, or Butane `worker_snippets` on existing worker nodes will replace instances
+  * New AMIs or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
+  * Previously, new instance templates were made in the same way, but not applied to instances unless manually replaced
+* Add health checks to worker managed instance groups (i.e. "autohealing") ([#1207](https://github.com/poseidon/typhoon/pull/1207))
+  * Use SSL health checks to probe the Kubelet every 30s
+  * Replace worker nodes that fail the health check 6 times (3min)
+* Name `kube-apiserver` and `kubelet` health checks consistently ([#1207](https://github.com/poseidon/typhoon/pull/1207))
+  * Use name `${cluster_name}-apiserver-health` and `${cluster_name}-kubelet-health`
+* Rename managed instance group from `${cluster_name}-worker-group` to `${cluster_name}-worker` ([#1207](https://github.com/poseidon/typhoon/pull/1207))
 * Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))
 
 ### Addons
