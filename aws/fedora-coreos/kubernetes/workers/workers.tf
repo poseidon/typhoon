@@ -22,6 +22,14 @@ resource "aws_autoscaling_group" "workers" {
     var.target_groups,
   ])
 
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      instance_warmup        = 120
+      min_healthy_percentage = 90
+    }
+  }
+
   lifecycle {
     # override the default destroy and replace update behavior
     create_before_destroy = true

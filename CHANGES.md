@@ -32,6 +32,12 @@ version: 1.0.0
 
 ### AWS
 
+* [Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) instances in autoscaling group when launch configuration changes
+  * Changes to worker launch configurations start an autoscaling group instance refresh to replace instances
+  * Instance refresh creates surge instances, waits for a warm-up period, then deletes old instances
+  * Changing `worker_type`, `disk_*`, `worker_price`, `worker_target_groups`, or Butane `worker_snippets` on existing worker nodes will replace instances
+  * New AMIs or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
+  * Previously, new launch configurations were made in the same way, but not applied to instances unless manually replaced
 * Rename worker autoscaling group `${cluster_name}-worker` ([#1202](https://github.com/poseidon/typhoon/pull/1202))
   * Rename launch configuration `${cluster_name}-worker` instead of a random id
 
