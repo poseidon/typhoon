@@ -5,7 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update CoreDNS from v1.8.6 to [v1.9.3](https://github.com/poseidon/terraform-render-bootstrap/pull/318)
-* Update Cilium from v1.11.7 to [v1.12.0](https://github.com/cilium/cilium/releases/tag/v1.12.0)
+* Update Cilium from v1.11.7 to [v1.12.1](https://github.com/cilium/cilium/releases/tag/v1.12.1)
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
 * Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` ([#1206](https://github.com/poseidon/typhoon/pull/1206))
 * Remove use of deprecated Terraform [template](https://registry.terraform.io/providers/hashicorp/template) provider ([#1194](https://github.com/poseidon/typhoon/pull/1194))
