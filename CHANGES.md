@@ -21,7 +21,7 @@ Notable changes between versions.
 
 ### Flatcar Linux
 
-* Migrate Flatcar Linux from Ignition spec v2.3.0 to v3.3.0 (**action required**)
+* Migrate Flatcar Linux from Ignition spec v2.3.0 to v3.3.0 ([#1196](https://github.com/poseidon/typhoon/pull/1196)) (**action required**)
   * Flatcar Linux 3185.0.0+ [supports](https://flatcar-linux.org/docs/latest/provisioning/ignition/specification/#ignition-v3) Ignition v3.x specs (which are rendered from Butane Configs, like Fedora CoreOS)
   * `poseidon/ct` v0.11.0 [supports](https://github.com/poseidon/terraform-provider-ct/pull/131) the `flatcar` Butane Config variant
   * Require poseidon v0.11+ and Flatcar Linux 3185.0.0+
@@ -35,8 +35,8 @@ version: 1.0.0
 
 ### AWS
 
-* [Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) instances in autoscaling group when launch configuration changes
-  * Changes to worker launch configurations start an autoscaling group instance refresh to replace instances
+* [Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) instances in autoscaling group when launch configuration changes ([#1208](https://github.com/poseidon/typhoon/pull/1208)) (**important**)
+  * Worker launch configuration changes start an autoscaling group instance refresh to replace instances
   * Instance refresh creates surge instances, waits for a warm-up period, then deletes old instances
   * Changing `worker_type`, `disk_*`, `worker_price`, `worker_target_groups`, or Butane `worker_snippets` on existing worker nodes will replace instances
   * New AMIs or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
@@ -47,16 +47,16 @@ version: 1.0.0
 ### Google
 
 * [Roll](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) instance template changes to worker managed instance groups ([#1207](https://github.com/poseidon/typhoon/pull/1207)) (**important**)
-  * Changes to worker instance templates roll out by gradually replacing instances
+  * Worker instance template changes roll out by gradually replacing instances
   * Automatic rollouts create surge instances, wait for Kubelet health checks, then delete old instances (0 unavailable instances)
-  * Changing `worker_type`, `disk_size`, `preemptible`, or Butane `worker_snippets` on existing worker nodes will replace instances
+  * Changing `worker_type`, `disk_size`, `worker_preemptible`, or Butane `worker_snippets` on existing worker nodes will replace instances
   * New AMIs or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
   * Previously, new instance templates were made in the same way, but not applied to instances unless manually replaced
 * Add health checks to worker managed instance groups (i.e. "autohealing") ([#1207](https://github.com/poseidon/typhoon/pull/1207))
-  * Use SSL health checks to probe the Kubelet every 30s
+  * Use health checks to probe kube-proxy every 30s
   * Replace worker nodes that fail the health check 6 times (3min)
-* Name `kube-apiserver` and `kubelet` health checks consistently ([#1207](https://github.com/poseidon/typhoon/pull/1207))
-  * Use name `${cluster_name}-apiserver-health` and `${cluster_name}-kubelet-health`
+* Name `kube-apiserver` and `worker` health checks consistently ([#1207](https://github.com/poseidon/typhoon/pull/1207))
+  * Use name `${cluster_name}-apiserver-health` and `${cluster_name}-worker-health`
 * Rename managed instance group from `${cluster_name}-worker-group` to `${cluster_name}-worker` ([#1207](https://github.com/poseidon/typhoon/pull/1207))
 * Fix bug provisioning clusters with multiple controller nodes ([#1195](https://github.com/poseidon/typhoon/pull/1195))
 

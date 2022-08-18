@@ -36,14 +36,14 @@ resource "google_compute_region_instance_group_manager" "workers" {
 
   auto_healing_policies {
     health_check      = google_compute_health_check.worker.id
-    initial_delay_sec = 120
+    initial_delay_sec = 300
   }
 }
 
 # Health check for worker Kubelet
 resource "google_compute_health_check" "worker" {
-  name        = "${var.name}-kubelet-health"
-  description = "Health check for worker Kubelet"
+  name        = "${var.name}-worker-health"
+  description = "Health check for worker node"
 
   timeout_sec        = 20
   check_interval_sec = 30
@@ -51,8 +51,9 @@ resource "google_compute_health_check" "worker" {
   healthy_threshold   = 1
   unhealthy_threshold = 6
 
-  ssl_health_check {
-    port = "10250"
+  http_health_check {
+    port         = "10256"
+    request_path = "/healthz"
   }
 }
 

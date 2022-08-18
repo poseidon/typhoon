@@ -196,13 +196,13 @@ resource "google_compute_firewall" "allow-ingress" {
   target_tags   = ["${var.cluster_name}-worker"]
 }
 
-resource "google_compute_firewall" "google-kubelet-health-checks" {
-  name    = "${var.cluster_name}-kubelet-health"
+resource "google_compute_firewall" "google-worker-health-checks" {
+  name    = "${var.cluster_name}-worker-health"
   network = google_compute_network.network.name
 
   allow {
     protocol = "tcp"
-    ports    = [10250]
+    ports    = [10256]
   }
 
   # https://cloud.google.com/compute/docs/instance-groups/autohealing-instances-in-migs
