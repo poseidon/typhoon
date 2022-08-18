@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.24.4
+
+* Kubernetes [v1.24.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1244)
 * Update CoreDNS from v1.8.6 to [v1.9.3](https://github.com/poseidon/terraform-render-bootstrap/pull/318)
 * Update Cilium from v1.11.7 to [v1.12.1](https://github.com/cilium/cilium/releases/tag/v1.12.1)
 * Update Calico from v3.23.1 to [v3.23.3](https://github.com/projectcalico/calico/releases/tag/v3.23.3)
@@ -13,8 +16,8 @@ Notable changes between versions.
 ### Fedora CoreOS
 
 * Remove ineffective `/etc/fedora-coreos/iptables-legacy.stamp` ([#1201](https://github.com/poseidon/typhoon/pull/1201))
-  * Typhoon already uses iptables v1.8.7 (nf_tables) since F36
-  * Staying on legacy iptables required a file in `/etc/coreos`
+  * Typhoon already uses iptables v1.8.7 (nf_tables) since FCOS 36
+  * Staying on legacy iptables required a file in `/etc/coreos` instead
 
 ### Flatcar Linux
 
