@@ -24,8 +24,8 @@ Notable changes between versions.
 * Migrate Flatcar Linux from Ignition spec v2.3.0 to v3.3.0 ([#1196](https://github.com/poseidon/typhoon/pull/1196)) (**action required**)
   * Flatcar Linux 3185.0.0+ [supports](https://flatcar-linux.org/docs/latest/provisioning/ignition/specification/#ignition-v3) Ignition v3.x specs (which are rendered from Butane Configs, like Fedora CoreOS)
   * `poseidon/ct` v0.11.0 [supports](https://github.com/poseidon/terraform-provider-ct/pull/131) the `flatcar` Butane Config variant
-  * Require poseidon v0.11+ and Flatcar Linux 3185.0.0+
-* Modify any Flatcar Linux snippets to use the [Butane Config](https://coreos.github.io/butane/config-flatcar-v1_0/) format (**action required**):
+  * Require poseidon/ct v0.11+ and Flatcar Linux 3185.0.0+
+* Please modify any Flatcar Linux snippets to use the [Butane Config](https://coreos.github.io/butane/config-flatcar-v1_0/) format (**action required**)
 
 ```tf
 variant: flatcar
@@ -48,7 +48,7 @@ version: 1.0.0
 
 * [Roll](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) instance template changes to worker managed instance groups ([#1207](https://github.com/poseidon/typhoon/pull/1207)) ([docs](https://typhoon.psdn.io/topics/maintenance/#node-configuration-updates), **important**)
   * Worker instance template changes roll out by gradually replacing instances
-  * Automatic rollouts create surge instances, wait for Kubelet health checks, then delete old instances (0 unavailable instances)
+  * Automatic rollouts create surge instances, wait for health checks, then delete old instances (0 unavailable instances)
   * Changing `worker_type`, `disk_size`, `worker_preemptible`, or Butane `worker_snippets` on existing worker nodes will replace instances
   * New compute images or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
   * Previously, new instance templates were made in the same way, but not applied to instances unless manually replaced

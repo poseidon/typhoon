@@ -147,7 +147,7 @@ Typhoon supports multi-controller clusters, so it is possible to upgrade a clust
 
 ## Node Configuration Updates
 
-Typhoon worker instance groups (default workers and [worker pools](../advanced/worker-pools.md)) on AWS and Google Cloud gradually rolling replace worker instances when their configuration is altered.
+Typhoon worker instance groups (default workers and [worker pools](../advanced/worker-pools.md)) on AWS and Google Cloud gradually rolling replace worker instances when configuration changes are applied.
 
 ### AWS
 
