@@ -35,7 +35,7 @@ version: 1.0.0
 
 ### AWS
 
-* [Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) instances in autoscaling group when launch configuration changes ([#1208](https://github.com/poseidon/typhoon/pull/1208)) (**important**)
+* [Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) instances in autoscaling group when launch configuration changes ([#1208](https://github.com/poseidon/typhoon/pull/1208)) ([docs](https://typhoon.psdn.io/topics/maintenance/#node-configuration-updates), **important**)
   * Worker launch configuration changes start an autoscaling group instance refresh to replace instances
   * Instance refresh creates surge instances, waits for a warm-up period, then deletes old instances
   * Changing `worker_type`, `disk_*`, `worker_price`, `worker_target_groups`, or Butane `worker_snippets` on existing worker nodes will replace instances
@@ -46,11 +46,11 @@ version: 1.0.0
 
 ### Google
 
-* [Roll](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) instance template changes to worker managed instance groups ([#1207](https://github.com/poseidon/typhoon/pull/1207)) (**important**)
+* [Roll](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) instance template changes to worker managed instance groups ([#1207](https://github.com/poseidon/typhoon/pull/1207)) ([docs](https://typhoon.psdn.io/topics/maintenance/#node-configuration-updates), **important**)
   * Worker instance template changes roll out by gradually replacing instances
   * Automatic rollouts create surge instances, wait for Kubelet health checks, then delete old instances (0 unavailable instances)
   * Changing `worker_type`, `disk_size`, `worker_preemptible`, or Butane `worker_snippets` on existing worker nodes will replace instances
-  * New AMIs or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
+  * New compute images or changing `os_stream` will be ignored, to allow Fedora CoreOS or Flatcar Linux to keep themselves updated
   * Previously, new instance templates were made in the same way, but not applied to instances unless manually replaced
 * Add health checks to worker managed instance groups (i.e. "autohealing") ([#1207](https://github.com/poseidon/typhoon/pull/1207))
   * Use health checks to probe kube-proxy every 30s

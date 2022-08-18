@@ -73,7 +73,7 @@ Define a Kubernetes cluster using the module `google-cloud/fedora-coreos/kuberne
 
 ```tf
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=development-sha"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.24.4"
 
   # Google Cloud
   cluster_name  = "yavin"

@@ -23,9 +23,27 @@ module "mercury" {
 }
 ```
 
-Master is updated regularly, so it is recommended to [pin](https://www.terraform.io/docs/modules/sources.html) modules to a [release tag](https://github.com/poseidon/typhoon/releases) or [commit](https://github.com/poseidon/typhoon/commits/master) hash. Pinning ensures `terraform get --update` only fetches the desired version.
+Main is updated regularly, so it is recommended to [pin](https://www.terraform.io/docs/modules/sources.html) modules to a [release tag](https://github.com/poseidon/typhoon/releases) or [commit](https://github.com/poseidon/typhoon/commits/main) hash. Pinning ensures `terraform get --update` only fetches the desired version.
 
-## Upgrades
+## Terraform Versions
+
+Typhoon modules support Terraform v0.13.x and higher. Poseidon publishes [providers](/topics/security/#terraform-providers) to the Terraform Provider Registry for automatic install via `terraform init`.
+
+| Typhoon Release   | Terraform version   |
+|-------------------|---------------------|
+| v1.21.2 - ?       | v0.13.x, v0.14.4+, v0.15.x, v1.0.x |
+| v1.21.1 - v1.21.1 | v0.13.x, v0.14.4+, v0.15.x |
+| v1.20.2 - v1.21.0 | v0.13.x, v0.14.4+   |
+| v1.20.0 - v1.20.2 | v0.13.x             |
+| v1.18.8 - v1.19.4 | v0.12.26+, v0.13.x  |
+| v1.15.0 - v1.18.8 | v0.12.x             |
+| v1.10.3 - v1.15.0 | v0.11.x             |
+| v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
+| v1.7.3 - v1.9.1   | v0.10.x             |
+| v1.6.4 - v1.7.2   | v0.9.x              |
+
+
+## Cluster Upgrades
 
 Typhoon recommends upgrading clusters using a blue-green replacement strategy and migrating workloads.
 
@@ -127,9 +145,99 @@ Typhoon supports multi-controller clusters, so it is possible to upgrade a clust
 !!! warning
     Typhoon does not support or document node replacement as an upgrade strategy. It limits Typhoon's ability to make infrastructure and architectural changes between tagged releases.
 
-### Upgrade terraform-provider-ct
+## Node Configuration Updates
 
-The [terraform-provider-ct](https://github.com/poseidon/terraform-provider-ct) plugin parses, validates, and converts Fedora CoreOS or Flatcar Linux Configs into Ignition user-data for provisioning instances. Since Typhoon v1.12.2+, the plugin can be updated in-place so that on apply, only workers will be replaced.
+Typhoon worker instance groups (default workers and [worker pools](../advanced/worker-pools.md)) on AWS and Google Cloud gradually rolling replace worker instances when their configuration is altered.
+
+### AWS
+
+On AWS, worker instances belong to an auto-scaling group. When an auto-scaling group's launch configuration changes, an AWS [Instance Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) gradually replaces worker instances.
+
+Instance refresh creates surge instances, waits for a warm-up period, then deletes old instances.
+
+```diff
+module "tempest" {
+  source = "git::https://github.com/poseidon/typhoon//aws/VARIANT/kubernetes?ref=VERSION"
+
+  # AWS
+  cluster_name = "tempest"
+  ...
+
+  # optional
+  worker_count = 2
+- worker_type  = "t3.small"
++ worker_type  = "t3a.small"
+
+  # change from on-demand to spot
++ worker_price = "0.0309"
+
+  # default is 30GB
++ disk_size = 50
+
+  # change worker snippets
++ worker_snippets = [
++   file("butane/feature.yaml"),
++ ]
+}
+```
+
+Applying edits to most worker fields will start an instance refresh:
+
+* `worker_type`
+* `disk_*`
+* `worker_price` (i.e. spot)
+* `worker_target_groups`
+* `worker_snippets`
+
+However, changing `os_stream`/`os_channel` or new AMIs becoming available will NOT change the launch configuration or trigger an Instance Refresh. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
+
+!!! note
+    Before Typhoon v1.24.4, worker nodes only used new launch configurations when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+
+### Google Cloud
+
+On Google Cloud, worker instances belong to a [managed instance group](https://cloud.google.com/compute/docs/instance-groups#managed_instance_groups). When a group's launch template changes, a [rolling update](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) gradually replaces worker instances.
+
+The rolling update creates surge instances, waits for instances to be healthy, then deletes old instances.
+
+```diff
+module "yavin" {
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/VARIANT/kubernetes?ref=VERSION"
+
+  # Google Cloud
+  cluster_name  = "yavin"
+  ...
+
+  # optional
+  worker_count = 2
++ worker_type = "n2-standard-2"
++ worker_preemptible = true
+
+  # default is 30GB
++ disk_size = 50
+
+  # change worker snippets
++ worker_snippets = [
++   file("butane/feature.yaml"),
++ ]
+}
+```
+
+Applying edits to most worker fields will start an instance refresh:
+
+* `worker_type`
+* `disk_*`
+* `worker_preemptible` (i.e. spot)
+* `worker_snippets`
+
+However, changing `os_stream`/`os_channel` or new compute images becoming available will NOT change the launch template or update instances. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
+
+!!! note
+    Before Typhoon v1.24.4, worker nodes only used new launch templates when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+
+## Upgrade poseidon/ct
+
+The [poseidon/ct](https://github.com/poseidon/terraform-provider-ct) Terraform provider plugin parses, validates, and converts Butane Configs to Ignition user-data for provisioning instances. Since Typhoon v1.12.2+, the plugin can be updated in-place so that on apply, only workers will be replaced.
 
 Update the version of the `ct` plugin in each Terraform working directory. Typhoon clusters managed in the working directory **must** be v1.12.2 or higher.
 
@@ -140,8 +248,8 @@ terraform {
   required_providers {
     ct = {
       source  = "poseidon/ct"
--     version = "0.8.0"
-+     version = "0.9.0"
+-     version = "0.10.0"
++     version = "0.11.0"
     }
     ...
   }
@@ -155,11 +263,11 @@ terraform init
 terraform plan
 ```
 
-Apply the change. Worker nodes' user-data will be changed and workers will be replaced. Rollout happens slightly differently on each platform:
+Apply the change. If worker nodes' user-data is changed and workers will be replaced. Rollout happens slightly differently on each platform:
 
 #### AWS
 
-AWS creates a new worker ASG, then removes the old ASG. New workers join the cluster and old workers disappear. `terraform apply` will hang during this process.
+See AWS node [config updates](#aws).
 
 #### Azure
 
@@ -187,24 +295,4 @@ Expect downtime.
 
 #### Google Cloud
 
-Google Cloud creates a new worker template and edits the worker instance group instantly. Manually terminate workers and replacement workers will use the user-data.
-
-## Terraform Versions
-
-Terraform [v0.13](https://www.hashicorp.com/blog/announcing-hashicorp-terraform-0-13) introduced major changes to the provider plugin system. Terraform `init` can automatically install both `hashicorp` and `poseidon` provider plugins, eliminating the need to manually install plugin binaries.
-
-Typhoon modules have been updated for v0.13.x. Poseidon publishes [providers](/topics/security/#terraform-providers) to the Terraform Provider Registry for usage with v0.13+.
-
-| Typhoon Release   | Terraform version   |
-|-------------------|---------------------|
-| v1.21.2 - ?       | v0.13.x, v0.14.4+, v0.15.x, v1.0.x |
-| v1.21.1 - v1.21.1 | v0.13.x, v0.14.4+, v0.15.x |
-| v1.20.2 - v1.21.0 | v0.13.x, v0.14.4+   |
-| v1.20.0 - v1.20.2 | v0.13.x             |
-| v1.18.8 - v1.19.4 | v0.12.26+, v0.13.x  |
-| v1.15.0 - v1.18.8 | v0.12.x             |
-| v1.10.3 - v1.15.0 | v0.11.x             |
-| v1.9.2 - v1.10.2  | v0.10.4+ or v0.11.x |
-| v1.7.3 - v1.9.1   | v0.10.x             |
-| v1.6.4 - v1.7.2   | v0.9.x              |
-
+See Google Cloud node [config updates](#google-cloud).
