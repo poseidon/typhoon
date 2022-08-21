@@ -62,7 +62,8 @@ version: 1.0.0
 
 ### Addons
 
-* Update Grafana from v9.0.3 to [v9.0.7](https://github.com/grafana/grafana/releases/tag/v9.0.7)
+* Update Prometheus from v2.37.0 to [v2.38.0](https://github.com/prometheus/prometheus/releases/tag/v2.38.0)
+* Update Grafana from v9.0.3 to [v9.1.0](https://github.com/grafana/grafana/releases/tag/v9.1.0)
 
 ## v1.24.3
 
