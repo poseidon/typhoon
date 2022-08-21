@@ -112,7 +112,7 @@ Plan the resources to be created.
 
 ```sh
 $ terraform plan
-Plan: 64 to add, 0 to change, 0 to destroy.
+Plan: 78 to add, 0 to change, 0 to destroy.
 ```
 
 Apply the changes to create the cluster.
@@ -125,7 +125,7 @@ module.yavin.null_resource.bootstrap: Still creating... (5m30s elapsed)
 module.yavin.null_resource.bootstrap: Still creating... (5m40s elapsed)
 module.yavin.null_resource.bootstrap: Creation complete (ID: 5768638456220583358)
 
-Apply complete! Resources: 62 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 78 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes, the Kubernetes cluster will be ready.

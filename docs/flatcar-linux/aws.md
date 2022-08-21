@@ -111,7 +111,7 @@ Plan the resources to be created.
 
 ```sh
 $ terraform plan
-Plan: 80 to add, 0 to change, 0 to destroy.
+Plan: 109 to add, 0 to change, 0 to destroy.
 ```
 
 Apply the changes to create the cluster.
@@ -123,7 +123,7 @@ module.tempest.null_resource.bootstrap: Still creating... (4m50s elapsed)
 module.tempest.null_resource.bootstrap: Still creating... (5m0s elapsed)
 module.tempest.null_resource.bootstrap: Creation complete after 11m8s (ID: 3961816482286168143)
 
-Apply complete! Resources: 98 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 109 added, 0 changed, 0 destroyed.
 ```
 
 In 4-8 minutes, the Kubernetes cluster will be ready.
