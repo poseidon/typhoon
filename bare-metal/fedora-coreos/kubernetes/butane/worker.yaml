@@ -109,6 +109,8 @@ storage:
             - ${cluster_dns_service_ip}
           clusterDomain: ${cluster_domain_suffix}
           healthzPort: 0
+          featureGates:
+            LocalStorageCapacityIsolationFSQuotaMonitoring: false
           rotateCertificates: true
           staticPodPath: /etc/kubernetes/manifests
           readOnlyPort: 0
