@@ -67,25 +67,12 @@ systemd:
           -v /var/log:/var/log \
           -v /opt/cni/bin:/opt/cni/bin \
           $${KUBELET_IMAGE} \
-          --anonymous-auth=false \
-          --authentication-token-webhook \
-          --authorization-mode=Webhook \
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
-          --cgroup-driver=systemd \
-          --container-runtime=remote \
+          --config=/etc/kubernetes/kubelet.yaml \
           --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
-          --client-ca-file=/etc/kubernetes/ca.crt \
-          --cluster_dns=${cluster_dns_service_ip} \
-          --cluster_domain=${cluster_domain_suffix} \
-          --healthz-port=0 \
           --hostname-override=$${COREOS_DIGITALOCEAN_IPV4_PRIVATE_0} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
-          --node-labels=node.kubernetes.io/node \
-          --pod-manifest-path=/etc/kubernetes/manifests \
-          --read-only-port=0 \
-          --resolv-conf=/run/systemd/resolve/resolv.conf \
-          --rotate-certificates \
-          --volume-plugin-dir=/var/lib/kubelet/volumeplugins
+          --node-labels=node.kubernetes.io/node
         ExecStart=docker logs -f kubelet
         ExecStop=docker stop kubelet
         ExecStopPost=docker rm kubelet
@@ -111,6 +98,31 @@ storage:
     - path: /etc/kubernetes
       mode: 0755
   files:
+    - path: /etc/kubernetes/kubelet.yaml
+      mode: 0644
+      contents:
+        inline: |
+          apiVersion: kubelet.config.k8s.io/v1beta1
+          kind: KubeletConfiguration
+          authentication:
+            anonymous:
+              enabled: false
+            webhook:
+              enabled: true
+            x509:
+              clientCAFile: /etc/kubernetes/ca.crt
+          authorization:
+            mode: Webhook
+          cgroupDriver: systemd
+          clusterDNS:
+            - ${cluster_dns_service_ip}
+          clusterDomain: ${cluster_domain_suffix}
+          healthzPort: 0
+          rotateCertificates: true
+          staticPodPath: /etc/kubernetes/manifests
+          readOnlyPort: 0
+          resolvConf: /run/systemd/resolve/resolv.conf
+          volumePluginDir: /var/lib/kubelet/volumeplugins
     - path: /etc/sysctl.d/max-user-watches.conf
       mode: 0644
       contents:
