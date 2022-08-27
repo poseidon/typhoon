@@ -4,6 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.25.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1250)
+  * Disable LocalStorageCapacityIsolationFSQuotaMonitoring feature gate ([#1220](https://github.com/poseidon/typhoon/pull/1220))
+
+### Fedora CoreOS
+
+* Change Podman `log-driver` from `journald` to `k8s-file` ([#1221](https://github.com/poseidon/typhoon/pull/1221))
+  * Fix `etcd-member` and Kubelet systemd service log lines appearing twice in journal logs
+
 ## v1.24.4
 
 * Kubernetes [v1.24.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md#v1244)
