@@ -159,6 +159,8 @@ storage:
           featureGates:
             LocalStorageCapacityIsolationFSQuotaMonitoring: false
           rotateCertificates: true
+          shutdownGracePeriod: 45s
+          shutdownGracePeriodCriticalPods: 30s
           staticPodPath: /etc/kubernetes/manifests
           readOnlyPort: 0
           resolvConf: /run/systemd/resolve/resolv.conf
@@ -199,6 +201,11 @@ storage:
              echo "Retry applying manifests"
              sleep 5
           done
+    - path: /etc/systemd/logind.conf.d/inhibitors.conf
+      contents:
+        inline: |
+          [Login]
+          InhibitDelayMaxSec=45s
     - path: /etc/sysctl.d/max-user-watches.conf
       contents:
         inline: |

@@ -6,6 +6,12 @@ Notable changes between versions.
 
 * Kubernetes [v1.25.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1250)
   * Disable LocalStorageCapacityIsolationFSQuotaMonitoring feature gate ([#1220](https://github.com/poseidon/typhoon/pull/1220))
+* Migrate most Kubelet flags to KubeletConfiguration file ([#1219](https://github.com/poseidon/typhoon/pull/1219))
+* Configure Kubelet Graceful Node Shutdown ([#1222](https://github.com/poseidon/typhoon/pull/1222))
+  * Allow up to 30s for critical pods to gracefully shutdown on node shutdown
+  * Allow up to 15s for regular pods to gracefully shutdown on node shutdown
+  * Mark node NotReady promptly on node shutdown
+  * Lengthen systemd inhibitor lock max delay from 5s to 45s
 
 ### Fedora CoreOS
 
