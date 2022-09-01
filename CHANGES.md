@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+### Addons
+
+* Update kube-state-metrics from v2.5.0 to [v2.6.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.6.0)
+* Update Grafana from v9.1.0 to [v9.1.2](https://github.com/grafana/grafana/releases/tag/v9.1.2)
+
 ## v1.25.0
 
 * Kubernetes [v1.25.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1250)
