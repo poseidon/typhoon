@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.25.0
+
 * Kubernetes [v1.25.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1250)
   * Disable LocalStorageCapacityIsolationFSQuotaMonitoring feature gate ([#1220](https://github.com/poseidon/typhoon/pull/1220), fixes [kubernetes#112081](https://github.com/kubernetes/kubernetes/issues/112081))
   * Add workaround to revert adding "search ." to containers' `/etc/resolv.conf` ([#1224](https://github.com/poseidon/typhoon/pull/1224), fixes [kubernetes#112135](https://github.com/kubernetes/kubernetes/issues/112135))
