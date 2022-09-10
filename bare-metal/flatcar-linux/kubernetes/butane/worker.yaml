@@ -118,8 +118,6 @@ storage:
           featureGates:
             LocalStorageCapacityIsolationFSQuotaMonitoring: false
           rotateCertificates: true
-          shutdownGracePeriod: 45s
-          shutdownGracePeriodCriticalPods: 30s
           staticPodPath: /etc/kubernetes/manifests
           readOnlyPort: 0
           resolvConf: /run/systemd/resolve/resolv.conf

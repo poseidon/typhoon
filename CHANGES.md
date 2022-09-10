@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Revert Kubelet Graceful Node Shutdown on worker nodes ([#1227](https://github.com/poseidon/typhoon/pull/1227))
+  * Fix issue where non-critical pods are left in Error/Completed state on node shutdown
+
 ### Addons
 
 * Update kube-state-metrics from v2.5.0 to [v2.6.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.6.0)
