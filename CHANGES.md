@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.25.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1251)
 * Update Calico from v3.23.3 to [v3.24.1](https://github.com/projectcalico/calico/releases/tag/v3.24.1)
 * Revert Kubelet Graceful Node Shutdown on worker nodes ([#1227](https://github.com/poseidon/typhoon/pull/1227))
   * Fix issue where non-critical pods are left in Error/Completed state on node shutdown
