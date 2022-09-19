@@ -157,8 +157,6 @@ storage:
             - ${cluster_dns_service_ip}
           clusterDomain: ${cluster_domain_suffix}
           healthzPort: 0
-          featureGates:
-            LocalStorageCapacityIsolationFSQuotaMonitoring: false
           rotateCertificates: true
           shutdownGracePeriod: 45s
           shutdownGracePeriodCriticalPods: 30s

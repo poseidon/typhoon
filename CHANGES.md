@@ -10,6 +10,8 @@ Notable changes between versions.
 * Update Calico from v3.23.3 to [v3.24.1](https://github.com/projectcalico/calico/releases/tag/v3.24.1)
 * Revert Kubelet Graceful Node Shutdown on worker nodes ([#1227](https://github.com/poseidon/typhoon/pull/1227))
   * Fix issue where non-critical pods are left in Error/Completed state on node shutdown
+* Remove feature flag disable workaround for [kubernetes/kubernetes#112081](https://github.com/kubernetes/kubernetes/issues/112081)
+  * Kubernetes [reverted](https://github.com/kubernetes/kubernetes/pull/112078) `LocalStorageCapacityIsolationFSQuotaMonitoring` back to alpha
 
 ### Addons
 
