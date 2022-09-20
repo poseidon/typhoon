@@ -20,7 +20,8 @@ Notable changes between versions.
 ### Addons
 
 * Update kube-state-metrics from v2.5.0 to [v2.6.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.6.0)
-* Update Grafana from v9.1.0 to [v9.1.2](https://github.com/grafana/grafana/releases/tag/v9.1.2)
+* Update ingress-nginx from v1.3.0 to [v1.3.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.3.1)
+* Update Grafana from v9.1.0 to [v9.1.6](https://github.com/grafana/grafana/releases/tag/v9.1.6)
 
 ## v1.25.0
 
