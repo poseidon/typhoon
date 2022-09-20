@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.25.1
+
 * Kubernetes [v1.25.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1251)
 * Update etcd from v3.5.4 to [v3.5.5](https://github.com/etcd-io/etcd/releases/tag/v3.5.5)
 * Update Cilium from v1.12.1 to [v1.12.2](https://github.com/cilium/cilium/releases/tag/v1.12.2)
@@ -12,6 +14,8 @@ Notable changes between versions.
   * Fix issue where non-critical pods are left in Error/Completed state on node shutdown
 * Remove feature flag disable workaround for [kubernetes/kubernetes#112081](https://github.com/kubernetes/kubernetes/issues/112081)
   * Kubernetes [reverted](https://github.com/kubernetes/kubernetes/pull/112078) `LocalStorageCapacityIsolationFSQuotaMonitoring` back to alpha
+* Remove workaround for preventing `search .` propagation in [kubernetes/kubernetes#112135](https://github.com/kubernetes/kubernetes/issues/112135)
+  * Upstream Kubernetes [fix](https://github.com/kubernetes/kubernetes/pull/112157)
 
 ### Addons
 
