@@ -5,10 +5,12 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.25.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1252)
+* Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons
 
 ### Addons
 
 * Update Prometheus from v2.38.0 to [v2.39.1](https://github.com/prometheus/prometheus/releases/tag/v2.39.1)
+* Update Grafana from v9.1.6 to [v9.1.7](https://github.com/grafana/grafana/releases/tag/v9.1.7)
 
 ## v1.25.1
 
