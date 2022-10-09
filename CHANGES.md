@@ -6,6 +6,10 @@ Notable changes between versions.
 
 * Kubernetes [v1.25.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1252)
 
+### Addons
+
+* Update Prometheus from v2.38.0 to [v2.39.1](https://github.com/prometheus/prometheus/releases/tag/v2.39.1)
+
 ## v1.25.1
 
 * Kubernetes [v1.25.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1251)
