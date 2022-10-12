@@ -1,9 +1,6 @@
 # ARM64
 
-Typhoon has experimental support for ARM64 on AWS, with Fedora CoreOS or Flatcar Linux. Clusters can be created with ARM64 controller and worker nodes. Or worker pools of ARM64 nodes can be attached to an AMD64 cluster to create a hybrid/mixed architecture cluster.
-
-!!! note
-    Currently, CNI networking must be set to `flannel` or `cilium`.
+Typhoon supports ARM64 on AWS, with Fedora CoreOS or Flatcar Linux. Clusters can be created with ARM64 controller and worker nodes. Or worker pools of ARM64 nodes can be attached to an AMD64 cluster to create a hybrid/mixed architecture cluster.
 
 ## Cluster
 
@@ -177,4 +174,3 @@ ip-10-0-22-79...           Ready    <none>   111m   v1.25.2   10.0.22.79    <non
 ip-10-0-24-130             Ready    <none>   111m   v1.25.2   10.0.24.130   <none>        Fedora CoreOS 35.20211215.3.0                        5.15.7-200.fc35.x86_64    containerd://1.5.8
 ip-10-0-39-19              Ready    <none>   111m   v1.25.2   10.0.39.19    <none>        Fedora CoreOS 35.20211215.3.0                        5.15.7-200.fc35.x86_64    containerd://1.5.8
 ```
-
