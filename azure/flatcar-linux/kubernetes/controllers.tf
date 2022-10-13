@@ -53,16 +53,16 @@ resource "azurerm_linux_virtual_machine" "controllers" {
 
   # Flatcar Container Linux
   source_image_reference {
-    publisher = "Kinvolk"
+    publisher = "kinvolk"
     offer     = "flatcar-container-linux-free"
-    sku       = local.channel
+    sku       = "${local.channel}-gen2"
     version   = "latest"
   }
 
   plan {
-    name      = local.channel
     publisher = "kinvolk"
     product   = "flatcar-container-linux-free"
+    name      = "${local.channel}-gen2"
   }
 
   # network

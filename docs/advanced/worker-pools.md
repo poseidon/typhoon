@@ -189,7 +189,7 @@ The Azure internal `workers` module supports a number of [variables](https://git
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
 | worker_count | Number of instances | 1 | 3 |
-| vm_type | Machine type for instances | "Standard_DS1_v2" | See below |
+| vm_type | Machine type for instances | "Standard_D2as_v5" | See below |
 | os_image | Channel for a Container Linux derivative | "flatcar-stable" | flatcar-stable, flatcar-beta, flatcar-alpha |
 | priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | "Regular" | "Spot" |
 | snippets | Container Linux Config snippets | [] | [examples](/advanced/customization/) |

@@ -7,6 +7,16 @@ Notable changes between versions.
 * Kubernetes [v1.25.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1252)
 * Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons
 
+### Flatcar Linux
+
+* Switch from Azure Hypervisor gen1 to gen2 (**action required**) ([#1248](https://github.com/poseidon/typhoon/pull/1248))
+  * Run `az vm image terms accept --publish kinvolk --offer flatcar-container-linux-free --plan stable-gen2`
+* Change default Azure `worker_type` from [`Standard_DS1_v2`](https://learn.microsoft.com/en-us/azure/virtual-machines/dv2-dsv2-series#dsv2-series) to [`Standard_D2as_v5`](https://learn.microsoft.com/en-us/azure/virtual-machines/dasv5-dadsv5-series#dasv5-series) ([#1248](https://github.com/poseidon/typhoon/pull/1248))
+  * Get 2 VCPU, 7 GiB, 12500Mbps (vs 1 VCPU, 3.5GiB, 750 Mbps)
+  * Small increase in pay-as-you-go price ($53.29 -> $62.78)
+  * Small increase in spot price ($5.64/mo -> $7.37/mo)
+  * Change from Intel to AMD EPYC (`D2as_v5` cheaper than `D2s_v5`)
+
 ### Addons
 
 * Update Prometheus from v2.38.0 to [v2.39.1](https://github.com/prometheus/prometheus/releases/tag/v2.39.1)
