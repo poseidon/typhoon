@@ -100,6 +100,17 @@ variable "node_taints" {
   default     = []
 }
 
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+
+  validation {
+    condition     = var.arch == "amd64" || var.arch == "arm64"
+    error_message = "The arch must be amd64 or arm64."
+  }
+}
+
 # unofficial, undocumented, unsupported
 
 variable "cluster_domain_suffix" {

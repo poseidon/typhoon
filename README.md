@@ -50,6 +50,7 @@ Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/
 | Platform      | Operating System | Terraform Module | Status |
 |---------------|------------------|------------------|--------|
 | AWS           | Flatcar Linux (ARM64) | [aws/flatcar-linux/kubernetes](aws/flatcar-linux/kubernetes) | alpha |
+| Azure         | Flatcar Linux (ARM64) | [azure/flatcar-linux/kubernetes](azure/flatcar-linux/kubernetes) | alpha |
 
 ## Documentation
 

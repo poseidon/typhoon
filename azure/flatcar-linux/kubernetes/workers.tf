@@ -21,4 +21,5 @@ module "workers" {
   cluster_domain_suffix = var.cluster_domain_suffix
   snippets              = var.worker_snippets
   node_labels           = var.worker_node_labels
+  arch                  = var.arch
 }
