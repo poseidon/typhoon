@@ -1,6 +1,8 @@
 locals {
   # flatcar-stable -> Flatcar Linux Stable
-  channel = split("-", var.os_image)[1]
+  channel      = split("-", var.os_image)[1]
+  offer_suffix = var.arch == "arm64" ? "corevm" : "free"
+  urn          = var.arch == "arm64" ? local.channel : "${local.channel}-gen2"
 }
 
 # Workers scale set
@@ -25,15 +27,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   # Flatcar Container Linux
   source_image_reference {
     publisher = "kinvolk"
-    offer     = "flatcar-container-linux-free"
-    sku       = "${local.channel}-gen2"
+    offer     = "flatcar-container-linux-${local.offer_suffix}"
+    sku       = local.urn
     version   = "latest"
   }
 
-  plan {
-    publisher = "kinvolk"
-    product   = "flatcar-container-linux-free"
-    name      = "${local.channel}-gen2"
+  dynamic "plan" {
+    for_each = var.arch == "arm64" ? [] : [1]
+    content {
+      publisher = "kinvolk"
+      product   = "flatcar-container-linux-${local.offer_suffix}"
+      name      = local.urn
+    }
   }
 
   # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too

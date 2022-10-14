@@ -17,9 +17,9 @@ Notable changes between versions.
 
 ### Flatcar Linux
 
+* Add Flatcar Linux ARM64 support on Azure ([docs](https://typhoon.psdn.io/advanced/arm64/), [#1251](https://github.com/poseidon/typhoon/pull/1251))
 * Switch from Azure Hypervisor gen1 to gen2 (**action required**) ([#1248](https://github.com/poseidon/typhoon/pull/1248))
   * Run `az vm image terms accept --publish kinvolk --offer flatcar-container-linux-free --plan stable-gen2`
-
 
 ### Addons
 

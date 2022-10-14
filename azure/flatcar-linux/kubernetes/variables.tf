@@ -133,6 +133,17 @@ variable "worker_node_labels" {
   default     = []
 }
 
+variable "arch" {
+  type        = string
+  description = "Container architecture (amd64 or arm64)"
+  default     = "amd64"
+
+  validation {
+    condition     = var.arch == "amd64" || var.arch == "arm64"
+    error_message = "The arch must be amd64 or arm64."
+  }
+}
+
 variable "daemonset_tolerations" {
   type        = list(string)
   description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"
