@@ -240,7 +240,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
 | worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
-| worker_type | Machine type for workers | "Standard_DS1_v2" | See below |
+| worker_type | Machine type for workers | "Standard_D2as_v5" | See below |
 | disk_size | Size of the disk in GB | 30 | 100 |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_snippets | Controller Butane snippets | [] | [example](/advanced/customization/#usage) |

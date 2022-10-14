@@ -43,7 +43,7 @@ variable "controller_type" {
 variable "worker_type" {
   type        = string
   description = "Machine type for workers (see `az vm list-skus --location centralus`)"
-  default     = "Standard_DS1_v2"
+  default     = "Standard_D2as_v5"
 }
 
 variable "os_image" {

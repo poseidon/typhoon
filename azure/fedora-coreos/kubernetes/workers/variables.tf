@@ -41,7 +41,7 @@ variable "worker_count" {
 variable "vm_type" {
   type        = string
   description = "Machine type for instances (see `az vm list-skus --location centralus`)"
-  default     = "Standard_DS1_v2"
+  default     = "Standard_D2as_v5"
 }
 
 variable "os_image" {
