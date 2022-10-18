@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Kubernetes [v1.25.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1253)
 * Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons
+* Update Cilium from v1.12.2 to [v1.12.3](https://github.com/cilium/cilium/releases/tag/v1.12.3)
 
 ### Azure
 
