@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Calico from v3.24.1 to [v3.24.2](https://github.com/projectcalico/calico/releases/tag/v3.24.2)
+
 ### Fedora CoreOS
 
 * Remove unused `Wants=network.target` from `etcd-member.service` ([#1254](https://github.com/poseidon/typhoon/pull/1254))
