@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+### Fedora CoreOS
+
+* Remove unused `Wants=network.target` from `etcd-member.service` ([#1254](https://github.com/poseidon/typhoon/pull/1254))
+
+## v1.25.3
+
 * Kubernetes [v1.25.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1253)
 * Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons ([#1246](https://github.com/poseidon/typhoon/pull/1246))
 * Update Cilium from v1.12.2 to [v1.12.3](https://github.com/cilium/cilium/releases/tag/v1.12.3) ([#1253](https://github.com/poseidon/typhoon/pull/1253))
