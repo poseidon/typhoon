@@ -80,19 +80,6 @@ systemd:
         RestartSec=5
         [Install]
         WantedBy=multi-user.target
-    - name: delete-node.service
-      enabled: true
-      contents: |
-        [Unit]
-        Description=Delete Kubernetes node on shutdown
-        [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.25.3
-        Type=oneshot
-        RemainAfterExit=true
-        ExecStart=/bin/true
-        ExecStop=/bin/bash -c '/usr/bin/docker run -v /var/lib/kubelet:/var/lib/kubelet:ro --entrypoint /usr/local/bin/kubectl $${KUBELET_IMAGE} --kubeconfig=/var/lib/kubelet/kubeconfig delete node $HOSTNAME'
-        [Install]
-        WantedBy=multi-user.target
 storage:
   directories:
     - path: /etc/kubernetes

@@ -8,6 +8,10 @@ Notable changes between versions.
 
 * Remove unused `Wants=network.target` from `etcd-member.service` ([#1254](https://github.com/poseidon/typhoon/pull/1254))
 
+### Cloud
+
+* Remove defunct `delete-node.service` from worker node configurations ([#1256](https://github.com/poseidon/typhoon/pull/1256))
+
 ## v1.25.3
 
 * Kubernetes [v1.25.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1253)
