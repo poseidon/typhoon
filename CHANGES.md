@@ -5,8 +5,8 @@ Notable changes between versions.
 ## Latest
 
 * Kubernetes [v1.25.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1253)
-* Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons
-* Update Cilium from v1.12.2 to [v1.12.3](https://github.com/cilium/cilium/releases/tag/v1.12.3)
+* Switch Kubernetes registry from `k8s.gcr.io` to `registry.k8s.io` for addons ([#1246](https://github.com/poseidon/typhoon/pull/1246))
+* Update Cilium from v1.12.2 to [v1.12.3](https://github.com/cilium/cilium/releases/tag/v1.12.3) ([#1253](https://github.com/poseidon/typhoon/pull/1253))
 
 ### Azure
 
@@ -21,6 +21,11 @@ Notable changes between versions.
 * Add Flatcar Linux ARM64 support on Azure ([docs](https://typhoon.psdn.io/advanced/arm64/), [#1251](https://github.com/poseidon/typhoon/pull/1251))
 * Switch from Azure Hypervisor gen1 to gen2 (**action required**) ([#1248](https://github.com/poseidon/typhoon/pull/1248))
   * Run `az vm image terms accept --publish kinvolk --offer flatcar-container-linux-free --plan stable-gen2`
+
+### Docs
+
+* Remove old docs note about not supporting ARM64 with Calico
+  * Typhoon supports ARM64 with `cilium`, `calico`, and `flannel`
 
 ### Addons
 
