@@ -4,7 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Calico from v3.24.1 to [v3.24.2](https://github.com/projectcalico/calico/releases/tag/v3.24.2)
+* Update Calico from v3.24.1 to [v3.24.3](https://github.com/projectcalico/calico/releases/tag/v3.24.3)
+* Allow Kubelet kubeconfig to drain nodes, if desired
 
 ### Fedora CoreOS
 
