@@ -6,6 +6,7 @@ Notable changes between versions.
 
 * Update Calico from v3.24.1 to [v3.24.3](https://github.com/projectcalico/calico/releases/tag/v3.24.3)
 * Allow Kubelet kubeconfig to drain nodes, if desired
+* Re-enable Kubelet Graceful Node Shutdown ([#1261](https://github.com/poseidon/typhoon/pull/1261))
 
 ### Fedora CoreOS
 

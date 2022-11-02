@@ -116,6 +116,8 @@ storage:
           clusterDomain: ${cluster_domain_suffix}
           healthzPort: 0
           rotateCertificates: true
+          shutdownGracePeriod: 45s
+          shutdownGracePeriodCriticalPods: 30s
           staticPodPath: /etc/kubernetes/manifests
           readOnlyPort: 0
           resolvConf: /run/systemd/resolve/resolv.conf
