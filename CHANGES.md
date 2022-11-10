@@ -9,6 +9,9 @@ Notable changes between versions.
 * Allow Kubelet kubeconfig to drain nodes, if desired
 * Re-enable Kubelet Graceful Node Shutdown ([#1261](https://github.com/poseidon/typhoon/pull/1261))
   * Introduce companion project [poseidon/scuttle](https://github.com/poseidon/scuttle)
+* Link to new Mastodon account for release announcements
+  * [@typhoon@fosstodon.org](https://fosstodon.org/@typhoon)
+  * [@poseidon@fosstodon.org](https://fosstodon.org/@poseidon)
 
 ### Fedora CoreOS
 
