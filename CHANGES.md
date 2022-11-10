@@ -4,9 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Calico from v3.24.1 to [v3.24.3](https://github.com/projectcalico/calico/releases/tag/v3.24.3)
+* Kubernetes [v1.25.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1254)
+* Update Calico from v3.24.1 to [v3.24.5](https://github.com/projectcalico/calico/releases/tag/v3.24.5)
 * Allow Kubelet kubeconfig to drain nodes, if desired
 * Re-enable Kubelet Graceful Node Shutdown ([#1261](https://github.com/poseidon/typhoon/pull/1261))
+  * Introduce companion project [poseidon/scuttle](https://github.com/poseidon/scuttle)
 
 ### Fedora CoreOS
 
@@ -15,6 +17,11 @@ Notable changes between versions.
 ### Cloud
 
 * Remove defunct `delete-node.service` from worker node configurations ([#1256](https://github.com/poseidon/typhoon/pull/1256))
+
+### Addons
+
+* Update Prometheus from v2.39.1 to [v2.40.1](https://github.com/prometheus/prometheus/releases/tag/v2.40.1)
+* Update Grafana from v9.1.7 to [v9.2.4](https://github.com/grafana/grafana/releases/tag/v9.2.4)
 
 ## v1.25.3
 
