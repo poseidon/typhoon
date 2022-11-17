@@ -4,9 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.25.4
+
 * Kubernetes [v1.25.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1254)
 * Update Calico from v3.24.1 to [v3.24.5](https://github.com/projectcalico/calico/releases/tag/v3.24.5)
-* Allow Kubelet kubeconfig to drain nodes, if desired
+* Allow Kubelet kubeconfig to drain nodes, if desired ([#330](https://github.com/poseidon/terraform-render-bootstrap/pull/330))
 * Re-enable Kubelet Graceful Node Shutdown ([#1261](https://github.com/poseidon/typhoon/pull/1261))
   * Introduce companion project [poseidon/scuttle](https://github.com/poseidon/scuttle)
 * Link to new Mastodon account for release announcements
