@@ -8,6 +8,11 @@ Notable changes between versions.
 * Update Cilium from v1.12.3 to [v1.12.4](https://github.com/cilium/cilium/releases/tag/v1.12.4)
 * Update flannel from v0.15.1 to [v0.20.1](https://github.com/flannel-io/flannel/releases/tag/v0.20.1)
 
+### Addons
+
+* Update Prometheus from v2.40.1 to [v2.40.2](https://github.com/prometheus/prometheus/releases/tag/v2.40.2)
+* Update Grafana from v9.2.4 to [v9.2.6](https://github.com/grafana/grafana/releases/tag/v9.2.6)
+
 ## v1.25.4
 
 * Kubernetes [v1.25.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.25.md#v1254)
