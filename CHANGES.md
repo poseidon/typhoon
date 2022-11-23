@@ -4,6 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.5.5 to [v3.5.6](https://github.com/etcd-io/etcd/releases/tag/v3.5.6)
 * Update Cilium from v1.12.3 to [v1.12.4](https://github.com/cilium/cilium/releases/tag/v1.12.4)
 
 ## v1.25.4
