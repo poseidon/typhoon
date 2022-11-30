@@ -13,7 +13,10 @@ resource "aws_autoscaling_group" "workers" {
   vpc_zone_identifier = var.subnet_ids
 
   # template
-  launch_configuration = aws_launch_configuration.worker.name
+  launch_template {
+    id      = aws_launch_template.worker.id
+    version = aws_launch_template.worker.latest_version
+  }
 
   # target groups to which instances should be added
   target_group_arns = flatten([
@@ -49,25 +52,42 @@ resource "aws_autoscaling_group" "workers" {
 }
 
 # Worker template
-resource "aws_launch_configuration" "worker" {
-  name_prefix       = "${var.name}-worker"
-  image_id          = local.ami_id
-  instance_type     = var.instance_type
-  spot_price        = var.spot_price > 0 ? var.spot_price : null
-  enable_monitoring = false
+resource "aws_launch_template" "worker" {
+  name_prefix   = "${var.name}-worker"
+  image_id      = local.ami_id
+  instance_type = var.instance_type
+  monitoring {
+    enabled = false
+  }
 
-  user_data = data.ct_config.worker.rendered
+  user_data = sensitive(base64encode(data.ct_config.worker.rendered))
 
   # storage
-  root_block_device {
-    volume_type = var.disk_type
-    volume_size = var.disk_size
-    iops        = var.disk_iops
-    encrypted   = true
+  ebs_optimized = true
+  block_device_mappings {
+    device_name = "/dev/xvda"
+    ebs {
+      volume_type           = var.disk_type
+      volume_size           = var.disk_size
+      iops                  = var.disk_iops
+      encrypted             = true
+      delete_on_termination = true
+    }
   }
 
   # network
-  security_groups = var.security_groups
+  vpc_security_group_ids = var.security_groups
+
+  # spot
+  dynamic "instance_market_options" {
+    for_each = var.spot_price > 0 ? [1] : []
+    content {
+      market_type = "spot"
+      spot_options {
+        max_price = var.spot_price
+      }
+    }
+  }
 
   lifecycle {
     // Override the default destroy and replace update behavior
