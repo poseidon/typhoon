@@ -159,5 +159,12 @@ Poseidon's Github [Sponsors](https://github.com/sponsors/poseidon) support the i
     <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
 </a>
 <br>
+<br>
+
+<a href="https://deploy.equinix.com/">
+  <img src="https://storage.googleapis.com/poseidon/equinix.png" width="201px">
+</a>
+<br>
+<br>
 
 If you'd like your company here, please contact dghubble at psdn.io.

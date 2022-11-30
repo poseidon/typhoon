@@ -10,7 +10,7 @@ Notable changes between versions.
 
 ### AWS
 
-* Migrate AWS launch configurations to launch templates
+* Migrate AWS launch configurations to launch templates ([#1275](https://github.com/poseidon/typhoon/pull/1275))
   * Starting Dec 31, 2022 AWS won't add new instance types/families to launch configurations
 
 ### Addons
