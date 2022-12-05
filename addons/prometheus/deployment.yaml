@@ -21,7 +21,7 @@ spec:
       serviceAccountName: prometheus
       containers:
         - name: prometheus
-          image: quay.io/prometheus/prometheus:v2.40.2
+          image: quay.io/prometheus/prometheus:v2.40.5
           args:
             - --web.listen-address=0.0.0.0:9090
             - --config.file=/etc/prometheus/prometheus.yaml

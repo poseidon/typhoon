@@ -15,8 +15,11 @@ Notable changes between versions.
 
 ### Addons
 
-* Update Prometheus from v2.40.1 to [v2.40.2](https://github.com/prometheus/prometheus/releases/tag/v2.40.2)
-* Update Grafana from v9.2.4 to [v9.2.6](https://github.com/grafana/grafana/releases/tag/v9.2.6)
+* Update ingress-nginx from v1.3.1 to [v1.5.1](https://github.com/kubernetes/ingress-nginx/releases/tag/controller-v1.5.1)
+* Update Prometheus from v2.40.1 to [v2.40.5](https://github.com/prometheus/prometheus/releases/tag/v2.40.5)
+* Update node-exporter from v1.3.1 to [v1.5.0](https://github.com/prometheus/node_exporter/releases/tag/v1.5.0)
+* Update kube-state-metrics from v2.6.0 to [v2.7.0](https://github.com/kubernetes/kube-state-metrics/releases/tag/v2.7.0)
+* Update Grafana from v9.2.4 to [v9.3.1](https://github.com/grafana/grafana/releases/tag/v9.3.1)
 
 ## v1.25.4
 
