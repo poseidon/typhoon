@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.26.0
+
+* Kubernetes [v1.26.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md#v1260)
 * Update etcd from v3.5.5 to [v3.5.6](https://github.com/etcd-io/etcd/releases/tag/v3.5.6)
 * Update Cilium from v1.12.3 to [v1.12.4](https://github.com/cilium/cilium/releases/tag/v1.12.4)
 * Update flannel from v0.15.1 to [v0.20.2](https://github.com/flannel-io/flannel/releases/tag/v0.20.2)
