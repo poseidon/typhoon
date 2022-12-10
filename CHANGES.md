@@ -10,6 +10,8 @@ Notable changes between versions.
 * Update etcd from v3.5.5 to [v3.5.6](https://github.com/etcd-io/etcd/releases/tag/v3.5.6)
 * Update Cilium from v1.12.3 to [v1.12.4](https://github.com/cilium/cilium/releases/tag/v1.12.4)
 * Update flannel from v0.15.1 to [v0.20.2](https://github.com/flannel-io/flannel/releases/tag/v0.20.2)
+* Reminder: Modules are no longer published to the [Terraform Module Registry](https://registry.terraform.io/search/modules?q=poseidon) ([#1282](https://github.com/poseidon/typhoon/pull/1282))
+  * See [#1282](https://github.com/poseidon/typhoon/pull/1282) and [v1.25.4](https://github.com/poseidon/typhoon/releases/tag/v1.25.4) for details
 
 ### AWS
 
@@ -34,6 +36,11 @@ Notable changes between versions.
 * Link to new Mastodon account for release announcements
   * [@typhoon@fosstodon.org](https://fosstodon.org/@typhoon)
   * [@poseidon@fosstodon.org](https://fosstodon.org/@poseidon)
+* Deprecate publishing to the [Terraform Module Registry](https://registry.terraform.io/search/modules?q=poseidon)
+  * Typhoon docs have always shown using Git-based module sources, not the Terraform Module Registry
+  * Module usage should be `source = "git::https://github.com/poseidon/typhoon/...` not `source = poseidon/kubernetes/...`
+  * Terraform's Module Registry requires subtree mirroring typhoon to special terraform-platform-kubernetes repos, only supports release versions (no commit SHAs or forks), only ever contained Flatcar Linux modules (not Fedora CoreOS) for historical reasons
+  * Note, this does not affect Terraform Providers like `poseidon/matchbox` or `poseidon/ct`, the registry works well for providers
 
 ### Fedora CoreOS
 
