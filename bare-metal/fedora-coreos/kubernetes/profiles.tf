@@ -7,7 +7,6 @@ locals {
   remote_args = [
     "initrd=main",
     "coreos.live.rootfs_url=https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-rootfs.x86_64.img",
-    "coreos.inst.install_dev=${var.install_disk}",
     "coreos.inst.ignition_url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
   ]
 
@@ -19,7 +18,6 @@ locals {
   cached_args = [
     "initrd=main",
     "coreos.live.rootfs_url=${var.matchbox_http_endpoint}/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-rootfs.x86_64.img",
-    "coreos.inst.install_dev=${var.install_disk}",
     "coreos.inst.ignition_url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
   ]
 
@@ -36,7 +34,7 @@ resource "matchbox_profile" "controllers" {
 
   kernel = local.kernel
   initrd = local.initrd
-  args   = concat(local.args, var.kernel_args)
+  args   = concat(local.args, ["coreos.inst.install_dev=${var.controllers.*.install_disk[count.index]}"], var.kernel_args)
 
   raw_ignition = data.ct_config.controllers.*.rendered[count.index]
 }
@@ -63,7 +61,7 @@ resource "matchbox_profile" "workers" {
 
   kernel = local.kernel
   initrd = local.initrd
-  args   = concat(local.args, var.kernel_args)
+  args   = concat(local.args, ["coreos.inst.install_dev=${var.workers.*.install_disk[count.index]}"], var.kernel_args)
 
   raw_ignition = data.ct_config.workers.*.rendered[count.index]
 }
