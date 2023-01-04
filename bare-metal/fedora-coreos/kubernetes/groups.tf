@@ -2,21 +2,21 @@
 
 resource "matchbox_group" "controller" {
   count   = length(var.controllers)
-  name    = format("%s-%s", var.cluster_name, var.controllers.*.name[count.index])
-  profile = matchbox_profile.controllers.*.name[count.index]
+  name    = format("%s-%s", var.cluster_name, var.controllers[count.index].name)
+  profile = matchbox_profile.controllers[count.index].name
 
   selector = {
-    mac = var.controllers.*.mac[count.index]
+    mac = var.controllers[count.index].mac
   }
 }
 
 resource "matchbox_group" "worker" {
   count   = length(var.workers)
-  name    = format("%s-%s", var.cluster_name, var.workers.*.name[count.index])
-  profile = matchbox_profile.workers.*.name[count.index]
+  name    = format("%s-%s", var.cluster_name, var.workers[count.index].name)
+  profile = matchbox_profile.workers[count.index].name
 
   selector = {
-    mac = var.workers.*.mac[count.index]
+    mac = var.workers[count.index].mac
   }
 }
 

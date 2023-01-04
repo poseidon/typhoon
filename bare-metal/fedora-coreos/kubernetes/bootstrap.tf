@@ -4,7 +4,7 @@ module "bootstrap" {
 
   cluster_name                    = var.cluster_name
   api_servers                     = [var.k8s_domain_name]
-  etcd_servers                    = var.controllers.*.domain
+  etcd_servers                    = var.controllers[*].domain
   networking                      = var.networking
   network_mtu                     = var.network_mtu
   network_ip_autodetection_method = var.network_ip_autodetection_method

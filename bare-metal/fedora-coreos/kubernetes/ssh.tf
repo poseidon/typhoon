@@ -21,7 +21,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   connection {
     type    = "ssh"
-    host    = var.controllers.*.domain[count.index]
+    host    = var.controllers[count.index].domain
     user    = "core"
     timeout = "60m"
   }
@@ -58,7 +58,7 @@ resource "null_resource" "copy-worker-secrets" {
 
   connection {
     type    = "ssh"
-    host    = var.workers.*.domain[count.index]
+    host    = var.workers[count.index].domain
     user    = "core"
     timeout = "60m"
   }

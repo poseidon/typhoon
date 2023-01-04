@@ -30,53 +30,53 @@ locals {
 // Fedora CoreOS controller profile
 resource "matchbox_profile" "controllers" {
   count = length(var.controllers)
-  name  = format("%s-controller-%s", var.cluster_name, var.controllers.*.name[count.index])
+  name  = format("%s-controller-%s", var.cluster_name, var.controllers[count.index].name)
 
   kernel = local.kernel
   initrd = local.initrd
-  args   = concat(local.args, ["coreos.inst.install_dev=${var.controllers.*.install_disk[count.index]}"], var.kernel_args)
+  args   = concat(local.args, ["coreos.inst.install_dev=${var.controllers[count.index].install_disk}"], var.kernel_args)
 
-  raw_ignition = data.ct_config.controllers.*.rendered[count.index]
+  raw_ignition = data.ct_config.controllers[count.index].rendered
 }
 
 # Fedora CoreOS controllers
 data "ct_config" "controllers" {
   count = length(var.controllers)
   content = templatefile("${path.module}/butane/controller.yaml", {
-    domain_name            = var.controllers.*.domain[count.index]
-    etcd_name              = var.controllers.*.name[count.index]
-    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
+    domain_name            = var.controllers[count.index].domain
+    etcd_name              = var.controllers[count.index].name
+    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers[*].name, var.controllers[*].domain))
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
   })
   strict   = true
-  snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])
+  snippets = lookup(var.snippets, var.controllers[count.index].name, [])
 }
 
 // Fedora CoreOS worker profile
 resource "matchbox_profile" "workers" {
   count = length(var.workers)
-  name  = format("%s-worker-%s", var.cluster_name, var.workers.*.name[count.index])
+  name  = format("%s-worker-%s", var.cluster_name, var.workers[count.index].name)
 
   kernel = local.kernel
   initrd = local.initrd
-  args   = concat(local.args, ["coreos.inst.install_dev=${var.workers.*.install_disk[count.index]}"], var.kernel_args)
+  args   = concat(local.args, ["coreos.inst.install_dev=${var.workers[count.index].install_disk}"], var.kernel_args)
 
-  raw_ignition = data.ct_config.workers.*.rendered[count.index]
+  raw_ignition = data.ct_config.workers[count.index].rendered
 }
 
 # Fedora CoreOS workers
 data "ct_config" "workers" {
   count = length(var.workers)
   content = templatefile("${path.module}/butane/worker.yaml", {
-    domain_name            = var.workers.*.domain[count.index]
+    domain_name            = var.workers[count.index].domain
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
-    node_labels            = join(",", lookup(var.worker_node_labels, var.workers.*.name[count.index], []))
-    node_taints            = join(",", lookup(var.worker_node_taints, var.workers.*.name[count.index], []))
+    node_labels            = join(",", lookup(var.worker_node_labels, var.workers[count.index].name, []))
+    node_taints            = join(",", lookup(var.worker_node_taints, var.workers[count.index].name, []))
   })
   strict   = true
-  snippets = lookup(var.snippets, var.workers.*.name[count.index], [])
+  snippets = lookup(var.snippets, var.workers[count.index].name, [])
 }
