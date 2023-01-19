@@ -25,7 +25,7 @@ systemd:
         Description=Kubelet (System Container)
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.1
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin

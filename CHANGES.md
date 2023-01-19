@@ -4,7 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.26.1
+
+* Kubernetes [v1.26.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md#v1261)
 * Update Cilium from v1.12.4 to [v1.12.5](https://github.com/cilium/cilium/releases/tag/v1.12.5)
+* Update CoreDNS from v1.9.3 to [v1.9.4](https://github.com/poseidon/terraform-render-bootstrap/pull/341)
 
 ## v1.26.0
 

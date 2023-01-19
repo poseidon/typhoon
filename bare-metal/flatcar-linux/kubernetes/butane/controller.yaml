@@ -64,7 +64,7 @@ systemd:
         After=docker.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.1
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
@@ -114,7 +114,7 @@ systemd:
         Type=oneshot
         RemainAfterExit=true
         WorkingDirectory=/opt/bootstrap
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.0
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.26.1
         ExecStart=/usr/bin/docker run \
             -v /etc/kubernetes/pki:/etc/kubernetes/pki:ro \
             -v /opt/bootstrap/assets:/assets:ro \
