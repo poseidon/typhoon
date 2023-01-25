@@ -16,7 +16,6 @@ resource "null_resource" "copy-controller-secrets" {
   depends_on = [
     matchbox_group.install,
     matchbox_group.controller,
-    matchbox_group.worker,
     module.bootstrap,
   ]
 
@@ -45,37 +44,6 @@ resource "null_resource" "copy-controller-secrets" {
   }
 }
 
-# Secure copy kubeconfig to all workers. Activates kubelet.service
-resource "null_resource" "copy-worker-secrets" {
-  count = length(var.workers)
-
-  # Without depends_on, remote-exec could start and wait for machines before
-  # matchbox groups are written, causing a deadlock.
-  depends_on = [
-    matchbox_group.install,
-    matchbox_group.controller,
-    matchbox_group.worker,
-  ]
-
-  connection {
-    type    = "ssh"
-    host    = var.workers.*.domain[count.index]
-    user    = "core"
-    timeout = "60m"
-  }
-
-  provisioner "file" {
-    content     = module.bootstrap.kubeconfig-kubelet
-    destination = "/home/core/kubeconfig"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo mv /home/core/kubeconfig /etc/kubernetes/kubeconfig",
-    ]
-  }
-}
-
 # Connect to a controller to perform one-time cluster bootstrap.
 resource "null_resource" "bootstrap" {
   # Without depends_on, this remote-exec may start before the kubeconfig copy.
@@ -83,7 +51,6 @@ resource "null_resource" "bootstrap" {
   # while no Kubelets are running.
   depends_on = [
     null_resource.copy-controller-secrets,
-    null_resource.copy-worker-secrets,
   ]
 
   connection {
@@ -99,4 +66,3 @@ resource "null_resource" "bootstrap" {
     ]
   }
 }
-

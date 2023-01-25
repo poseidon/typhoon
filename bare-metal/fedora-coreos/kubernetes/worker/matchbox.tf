@@ -28,40 +28,36 @@ locals {
   args   = var.cached_install ? local.cached_args : local.remote_args
 }
 
-# Match a controller to a profile by MAC
-resource "matchbox_group" "controller" {
-  count   = length(var.controllers)
-  name    = format("%s-%s", var.cluster_name, var.controllers.*.name[count.index])
-  profile = matchbox_profile.controllers.*.name[count.index]
-
+// Match a worker to a profile by MAC
+resource "matchbox_group" "worker" {
+  name    = format("%s-%s", var.cluster_name, var.name)
+  profile = matchbox_profile.worker.name
   selector = {
-    mac = var.controllers.*.mac[count.index]
+    mac = var.mac
   }
 }
 
-// Fedora CoreOS controller profile
-resource "matchbox_profile" "controllers" {
-  count = length(var.controllers)
-  name  = format("%s-controller-%s", var.cluster_name, var.controllers.*.name[count.index])
-
+// Fedora CoreOS worker profile
+resource "matchbox_profile" "worker" {
+  name   = format("%s-worker-%s", var.cluster_name, var.name)
   kernel = local.kernel
   initrd = local.initrd
   args   = concat(local.args, var.kernel_args)
 
-  raw_ignition = data.ct_config.controllers.*.rendered[count.index]
+  raw_ignition = data.ct_config.worker.rendered
 }
 
-# Fedora CoreOS controllers
-data "ct_config" "controllers" {
-  count = length(var.controllers)
-  content = templatefile("${path.module}/butane/controller.yaml", {
-    domain_name            = var.controllers.*.domain[count.index]
-    etcd_name              = var.controllers.*.name[count.index]
-    etcd_initial_cluster   = join(",", formatlist("%s=https://%s:2380", var.controllers.*.name, var.controllers.*.domain))
-    cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
-    cluster_domain_suffix  = var.cluster_domain_suffix
+# Fedora CoreOS workers
+data "ct_config" "worker" {
+  content = templatefile("${path.module}/butane/worker.yaml", {
+    domain_name            = var.domain
     ssh_authorized_key     = var.ssh_authorized_key
+    cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
+    cluster_domain_suffix  = var.cluster_domain_suffix
+    node_labels            = join(",", var.node_labels)
+    node_taints            = join(",", var.node_taints)
   })
   strict   = true
-  snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])
+  snippets = var.snippets
 }
+

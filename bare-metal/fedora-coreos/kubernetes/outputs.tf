@@ -3,6 +3,13 @@ output "kubeconfig-admin" {
   sensitive = true
 }
 
+# Outputs for workers
+
+output "kubeconfig" {
+  value     = module.bootstrap.kubeconfig-kubelet
+  sensitive = true
+}
+
 # Outputs for debug
 
 output "assets_dist" {

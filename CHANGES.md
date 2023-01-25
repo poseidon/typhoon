@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Bare-Metal
+
+* Add a `worker` module to allow customizing individual worker nodes ([#1295](https://github.com/poseidon/typhoon/pull/1295))
+
 ## v1.26.1
 
 * Kubernetes [v1.26.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md#v1261)
