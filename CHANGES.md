@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update Cilium from v1.12.5 to [v1.12.6](https://github.com/cilium/cilium/releases/tag/v1.12.6)
+
 ### Bare-Metal
 
 * Add a `worker` module to allow customizing individual worker nodes ([#1295](https://github.com/poseidon/typhoon/pull/1295))
