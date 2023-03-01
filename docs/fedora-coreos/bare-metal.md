@@ -187,6 +187,36 @@ module "mercury" {
 }
 ```
 
+Workers with similar features can be defined inline using the `workers` field as shown above. It's also possible to define discrete workers that attach to the cluster. Discrete workers are more advanced, but more verbose.
+
+```tf
+module "mercury-node1" {
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes/worker?ref=v1.26.2"
+
+  # bare-metal
+  cluster_name = "mercury"
+  matchbox_http_endpoint  = "http://matchbox.example.com"
+  os_stream               = "stable"
+  os_version              = "32.20201104.3.0"
+
+  # configuration
+  name               = "node2"
+  mac                = "52:54:00:b2:2f:86"
+  domain             = "node2.example.com"
+  kubeconfig         = module.mercury.kubeconfig
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
+
+  # optional
+  snippets       = []
+  node_labels    = []
+  node_tains     = []
+  install_disk   = "/dev/vda"
+  cached_install = false
+}
+
+...
+```
+
 Reference the [variables docs](#variables) or the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-metal/fedora-coreos/kubernetes/variables.tf) source.
 
 ## ssh-agent
@@ -325,12 +355,12 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | k8s_domain_name | FQDN resolving to the controller(s) nodes. Workers and kubectl will communicate with this endpoint | "myk8s.example.com" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3Nz..." |
 | controllers | List of controller machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node1", mac="52:54:00:a1:9c:ae", domain="node1.example.com"}]` |
-| workers | List of worker machine detail objects (unique name, identifying MAC address, FQDN) | `[{name="node2", mac="52:54:00:b2:2f:86", domain="node2.example.com"}, {name="node3", mac="52:54:00:c3:61:77", domain="node3.example.com"}]` |
 
 ### Optional
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
+| workers | List of worker machine detail objects (unique name, identifying MAC address, FQDN) | [] | `[{name="node2", mac="52:54:00:b2:2f:86", domain="node2.example.com"}, {name="node3", mac="52:54:00:c3:61:77", domain="node3.example.com"}]` |
 | cached_install | PXE boot and install from the Matchbox `/assets` cache. Admin MUST have downloaded Fedora CoreOS images into the cache | false | true |
 | install_disk | Disk device where Fedora CoreOS should be installed | "sda" (not "/dev/sda" like Container Linux) | "sdb" |
 | networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
