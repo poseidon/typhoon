@@ -55,6 +55,7 @@ data "ct_config" "install" {
     mac                = concat(var.controllers.*.mac, var.workers.*.mac)[count.index]
     install_disk       = var.install_disk
     ssh_authorized_key = var.ssh_authorized_key
+    oem_type           = var.oem_type
     # only cached profile adds -b baseurl
     baseurl_flag = var.cached_install ? "-b ${var.matchbox_http_endpoint}/assets/flatcar" : ""
   })

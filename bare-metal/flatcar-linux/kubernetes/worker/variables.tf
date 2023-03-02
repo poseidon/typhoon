@@ -98,6 +98,12 @@ variable "kernel_args" {
   default     = []
 }
 
+variable "oem_type" {
+  type        = string
+  default     = ""
+  description = "An OEM type to install with flatcar-install."
+}
+
 # unofficial, undocumented, unsupported
 
 variable "service_cidr" {
