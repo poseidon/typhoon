@@ -156,6 +156,17 @@ variable "enable_aggregation" {
   default     = true
 }
 
+variable "oem_type" {
+  type        = string
+  description = <<EOD
+An OEM type to install with flatcar-install. Find available types by looking for Flatcar image files
+ending in `image.bin.bz2`. The OEM identifier is contained in the filename.
+E.g., `flatcar_production_vmware_raw_image.bin.bz2` leads to `vmware_raw`.
+See: https://www.flatcar.org/docs/latest/installing/bare-metal/installing-to-disk/#choose-a-channel
+EOD
+  default     = ""
+}
+
 # unofficial, undocumented, unsupported
 
 variable "cluster_domain_suffix" {

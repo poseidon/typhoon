@@ -28,5 +28,6 @@ module "workers" {
   cached_install    = var.cached_install
   install_disk      = var.install_disk
   kernel_args       = var.kernel_args
+  oem_type          = var.oem_type
 }
 

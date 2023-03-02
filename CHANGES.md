@@ -18,6 +18,7 @@ Notable changes between versions.
 ### Bare-Metal
 
 * Add a `worker` module to allow customizing individual worker nodes ([#1295](https://github.com/poseidon/typhoon/pull/1295))
+* Expose `-o OEM` parameter of `flatcar-install` script ([#1302](https://github.com/poseidon/typhoon/pull/1302))
 
 ### Known Issues
 
