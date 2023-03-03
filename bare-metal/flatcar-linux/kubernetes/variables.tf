@@ -73,6 +73,20 @@ variable "worker_node_taints" {
   default     = {}
 }
 
+variable "worker_bind_devices" {
+  type        = list(object({
+    source = string
+    target = string
+  }))
+  description = <<EOD
+  List of devices to bind on kubelet container for direct storage usage
+  [
+    { source = "/dev/sdb", target = "/dev/sdb" },
+    { source = "/dev/sdc", target = "/dev/sdc" }
+  ]
+  EOD
+}
+
 # configuration
 
 variable "k8s_domain_name" {

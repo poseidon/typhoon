@@ -77,6 +77,9 @@ systemd:
           --register-with-taints=${taint} \
           %{~ endfor ~}
           --node-labels=node.kubernetes.io/node
+          %{~ for device in compact(split(",", node_devices)) ~}
+          --device=${device.source}:${device.target}
+          %{~ endfor ~}
         ExecStart=docker logs -f kubelet
         ExecStop=docker stop kubelet
         ExecStopPost=docker rm kubelet

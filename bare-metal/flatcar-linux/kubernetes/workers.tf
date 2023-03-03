@@ -22,6 +22,7 @@ module "workers" {
   node_labels           = lookup(var.worker_node_labels, var.workers[count.index].name, [])
   node_taints           = lookup(var.worker_node_taints, var.workers[count.index].name, [])
   snippets              = lookup(var.snippets, var.workers[count.index].name, [])
+  node_devices          = lookup(var.worker_bind_devices, var.workers[count.index].name, [])
 
   # optional
   download_protocol = var.download_protocol
