@@ -98,6 +98,12 @@ variable "kernel_args" {
   default     = []
 }
 
+variable "extra_selectors" {
+  type        = map(string)
+  description = "Additional identifying fields"
+  default     = {}
+}
+
 # unofficial, undocumented, unsupported
 
 variable "service_cidr" {

@@ -8,7 +8,7 @@ locals {
   ]
   args = flatten([
     "initrd=flatcar_production_pxe_image.cpio.gz",
-    "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
+    "flatcar.config.url=${var.matchbox_http_endpoint}/ignition?${concat([for key, value in var.extra_selectors : "${urlencode(key)}=${urlencode(value)}&"])}mac=$${mac:hexhyp}",
     "flatcar.first_boot=yes",
     var.kernel_args,
   ])
@@ -26,8 +26,9 @@ locals {
 resource "matchbox_group" "install" {
   name    = format("install-%s", var.name)
   profile = matchbox_profile.install.name
-  selector = {
-    mac = var.mac
+  selector = { 
+    mac             = var.mac
+    extra_selectors = concat([for key, value in var.extra_selectors : "${urlencode(key)}=${urlencode(value)}&"])
   }
 }
 
@@ -48,6 +49,7 @@ data "ct_config" "install" {
     os_version         = var.os_version
     ignition_endpoint  = format("%s/ignition", var.matchbox_http_endpoint)
     mac                = var.mac
+    extra_selectors    = concat([for key, value in var.extra_selectors : "${urlencode(key)}=${urlencode(value)}&"])
     install_disk       = var.install_disk
     ssh_authorized_key = var.ssh_authorized_key
     # only cached profile adds -b baseurl
@@ -61,8 +63,9 @@ resource "matchbox_group" "worker" {
   name    = format("%s-%s", var.cluster_name, var.name)
   profile = matchbox_profile.worker.name
   selector = {
-    mac = var.mac
-    os  = "installed"
+    mac             = var.mac
+    extra_selectors = concat([for key, value in var.extra_selectors : "${urlencode(key)}=${urlencode(value)}&"])
+    os              = "installed"
   }
 }
 

@@ -30,7 +30,7 @@ storage:
       contents:
         inline: |
           #!/bin/bash -ex
-          curl --retry 10 "${ignition_endpoint}?mac=${mac}&os=installed" -o ignition.json
+          curl --retry 10 "${ignition_endpoint}?${extra_selectors}mac=${mac}&os=installed" -o ignition.json
           flatcar-install \
             -d ${install_disk} \
             -C ${os_channel} \

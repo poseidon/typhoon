@@ -32,10 +32,11 @@ variable "controllers" {
     name   = string
     mac    = string
     domain = string
+    extra_selectors = optional(map(string), {})
   }))
   description = <<EOD
-List of controller machine details (unique name, identifying MAC address, FQDN)
-[{ name = "node1", mac = "52:54:00:a1:9c:ae", domain = "node1.example.com"}]
+List of controller machine details (unique name, identifying MAC address, FQDN, other identifiying fields (for example, CPU architecture or UUID))
+[{ name = "node1", mac = "52:54:00:a1:9c:ae", domain = "node1.example.com", {"uuid":"123e4567-e89b-12d3-a456-426614174000"}}]
 EOD
 }
 
@@ -44,12 +45,13 @@ variable "workers" {
     name   = string
     mac    = string
     domain = string
+    extra_selectors = optional(map(string), {})
   }))
   description = <<EOD
-List of worker machine details (unique name, identifying MAC address, FQDN)
+List of worker machine details (unique name, identifying MAC address, FQDN, other identifiying fields (for example, CPU architecture or UUID))
 [
-  { name = "node2", mac = "52:54:00:b2:2f:86", domain = "node2.example.com"},
-  { name = "node3", mac = "52:54:00:c3:61:77", domain = "node3.example.com"}
+  { name = "node2", mac = "52:54:00:b2:2f:86", domain = "node2.example.com", {"uuid":"123e4567-e89b-12d3-a456-426614174051"}},
+  { name = "node3", mac = "52:54:00:c3:61:77", domain = "node3.example.com", {"uuid":"123e4567-e89b-12d3-a456-426614174083"}}
 ]
 EOD
   default     = []
