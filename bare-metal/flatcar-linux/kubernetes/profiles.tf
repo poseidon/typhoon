@@ -19,6 +19,13 @@ locals {
 
   kernel = var.cached_install ? local.cached_kernel : local.remote_kernel
   initrd = var.cached_install ? local.cached_initrd : local.remote_initrd
+  
+  # format assets for distribution
+  asset_bundle = [
+    # header with the unpack location
+    for key, value in module.bootstrap.assets_dist :
+    format("##### %s\n%s", key, value)
+  ]
 }
 
 # Match controllers to install profiles by MAC
@@ -89,6 +96,9 @@ data "ct_config" "controllers" {
     cluster_dns_service_ip = module.bootstrap.cluster_dns_service_ip
     cluster_domain_suffix  = var.cluster_domain_suffix
     ssh_authorized_key     = var.ssh_authorized_key
+    assets_file            = var.provision_secrets_with_ignition ? (join("\n", local.asset_bundle)) : ""
+    kubeconfig             = var.provision_secrets_with_ignition ? (module.bootstrap.kubeconfig-kubelet) : ""
+    bootstrap_layout       = var.provision_secrets_with_ignition ? ("sudo /opt/bootstrap/layout && sudo systemctl start bootstrap") : ""
   })
   strict   = true
   snippets = lookup(var.snippets, var.controllers.*.name[count.index], [])

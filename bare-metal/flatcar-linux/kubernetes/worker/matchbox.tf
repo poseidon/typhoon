@@ -81,6 +81,7 @@ data "ct_config" "worker" {
     cluster_domain_suffix  = var.cluster_domain_suffix
     node_labels            = join(",", var.node_labels)
     node_taints            = join(",", var.node_taints)
+    kubeconfig             = var.provision_secrets_with_ignition ? (var.kubeconfig) : "" 
   })
   strict   = true
   snippets = var.snippets

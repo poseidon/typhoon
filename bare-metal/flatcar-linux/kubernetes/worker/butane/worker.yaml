@@ -132,6 +132,11 @@ storage:
       contents:
         inline: |
           fs.inotify.max_user_watches=16184
+    - path: /etc/kubernetes/kubeconfig
+      mode: 0644
+      contents:
+        inline:
+          ${kubeconfig}
 passwd:
   users:
     - name: core

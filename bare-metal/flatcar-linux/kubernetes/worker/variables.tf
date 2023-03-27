@@ -98,6 +98,12 @@ variable "kernel_args" {
   default     = []
 }
 
+variable "provision_secrets_with_ignition" {
+  type        = bool
+  description = "Enable the SSH service to move files and certificates"
+  default     = false
+}
+
 # unofficial, undocumented, unsupported
 
 variable "service_cidr" {
