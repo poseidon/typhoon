@@ -98,6 +98,12 @@ variable "kernel_args" {
   default     = []
 }
 
+variable "os_architecture" {
+  type        = string
+  description = "CPU architecture of the node"
+  default     = "amd64"
+}
+
 # unofficial, undocumented, unsupported
 
 variable "service_cidr" {

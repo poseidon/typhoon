@@ -156,6 +156,12 @@ variable "enable_aggregation" {
   default     = true
 }
 
+variable "os_architecture" {
+  type        = string
+  description = "CPU architecture of the node"
+  default     = "amd64"
+}
+
 # unofficial, undocumented, unsupported
 
 variable "cluster_domain_suffix" {
