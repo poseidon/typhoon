@@ -9,6 +9,10 @@ Notable changes between versions.
 * Kubernetes [v1.26.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md#v1263)
 * Update Cilium from v1.12.6 to [v1.13.1](https://github.com/cilium/cilium/releases/tag/v1.13.1)
 
+### Bare-Metal
+
+* Add `oem_type` variable for Flatcar Linux ([#1302](https://github.com/poseidon/typhoon/pull/1302))
+
 ## v1.26.2
 
 * Kubernetes [v1.26.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.26.md#v1262)
@@ -18,7 +22,6 @@ Notable changes between versions.
 ### Bare-Metal
 
 * Add a `worker` module to allow customizing individual worker nodes ([#1295](https://github.com/poseidon/typhoon/pull/1295))
-* Expose `-o OEM` parameter of `flatcar-install` script ([#1302](https://github.com/poseidon/typhoon/pull/1302))
 
 ### Known Issues
 
