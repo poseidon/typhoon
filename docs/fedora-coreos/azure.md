@@ -48,11 +48,11 @@ terraform {
   required_providers {
     ct = {
       source  = "poseidon/ct"
-      version = "0.11.0"
+      version = "0.13.0"
     }
     azurerm = {
       source = "hashicorp/azurerm"
-      version = "3.23.0"
+      version = "3.50.0"
     }
   }
 }

@@ -6,7 +6,7 @@ Declare a Zincati `fleet_lock` strategy when provisioning Fedora CoreOS nodes vi
 
 ```yaml
 variant: fcos
-version: 1.1.0
+version: 1.5.0
 storage:
   files:
     - path: /etc/zincati/config.d/55-update-strategy.toml

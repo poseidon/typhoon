@@ -7,7 +7,7 @@ terraform {
     null   = ">= 2.1"
     ct = {
       source  = "poseidon/ct"
-      version = "~> 0.9"
+      version = "~> 0.13"
     }
   }
 }

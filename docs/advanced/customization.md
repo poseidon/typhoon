@@ -38,7 +38,7 @@ For example, ensure an `/opt/hello` file is created with permissions 0644 before
     ```yaml
     # custom-files.yaml
     variant: fcos
-    version: 1.4.0
+    version: 1.5.0
     storage:
       files:
         - path: /opt/hello
@@ -70,7 +70,7 @@ Or ensure a systemd unit `hello.service` is created.
     ```yaml
     # custom-units.yaml
     variant: fcos
-    version: 1.4.0
+    version: 1.5.0
     systemd:
       units:
         - name: hello.service
@@ -164,7 +164,7 @@ To set an alternative etcd image or Kubelet image, use a snippet to set a system
     ```yaml
     # kubelet-image-override.yaml
     variant: fcos           <- remove for Flatcar Linux
-    version: 1.4.0          <- remove for Flatcar Linux
+    version: 1.5.0          <- remove for Flatcar Linux
     systemd:
       units:
         - name: kubelet.service
@@ -180,7 +180,7 @@ To set an alternative etcd image or Kubelet image, use a snippet to set a system
     ```yaml
     # etcd-image-override.yaml
     variant: fcos           <- remove for Flatcar Linux
-    version: 1.4.0          <- remove for Flatcar Linux
+    version: 1.5.0          <- remove for Flatcar Linux
     systemd:
       units:
         - name: etcd-member.service

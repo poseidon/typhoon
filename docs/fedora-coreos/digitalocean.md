@@ -51,11 +51,11 @@ terraform {
   required_providers {
     ct = {
       source  = "poseidon/ct"
-      version = "0.11.0"
+      version = "0.13.0"
     }
     digitalocean = {
       source = "digitalocean/digitalocean"
-      version = "2.22.3"
+      version = "2.27.1"
     }
   }
 }

@@ -4,6 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+### Fedora CoreOS
+
+* Update Butane Config version from v1.4.0 to v1.5.0
+  * Require any custom Butane [snippets](https://typhoon.psdn.io/advanced/customization/#hosts) update to v1.5.0
+* Require Fedora CoreOS `37.20230303.3.0` or newer (with ignition v2.15)
+* Require poseidon/ct v0.13+ (**action required**)
+
 ## v1.27.1
 
 * Kubernetes [v1.27.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.27.md#v1271)
