@@ -4,8 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.27.1
+
 * Kubernetes [v1.27.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.27.md#v1271)
 * Update etcd from v3.5.7 to [v3.5.8](https://github.com/etcd-io/etcd/releases/tag/v3.5.8)
+* Update Cilium from v1.13.1 to [v1.13.2](https://github.com/cilium/cilium/releases/tag/v1.13.2)
 * Update Calico from v3.25.0 to [v3.25.1](https://github.com/projectcalico/calico/releases/tag/v3.25.1)
 
 ## v1.26.3
