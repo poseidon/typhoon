@@ -35,7 +35,7 @@ storage:
             -d ${install_disk} \
             -C ${os_channel} \
             -V ${os_version} \
-            -o ${oem_type} \
+            ${oem_flag} \
             ${baseurl_flag} \
             -i ignition.json
           udevadm settle
