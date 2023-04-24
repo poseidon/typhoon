@@ -36,7 +36,7 @@ resource "matchbox_profile" "install" {
   name   = format("%s-install-%s", var.cluster_name, var.name)
   kernel = local.kernel
   initrd = local.initrd
-  args   = concat(local.args, var.kernel_args)
+  args   = local.args
 
   raw_ignition = data.ct_config.install.rendered
 }
