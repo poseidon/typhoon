@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.27.2
+
+* Kubernetes [v1.27.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.27.md#v1272)
+
 ### Fedora CoreOS
 
 * Update Butane Config version from v1.4.0 to v1.5.0
