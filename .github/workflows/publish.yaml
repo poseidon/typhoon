@@ -1,0 +1,30 @@
+name: publish
+on:
+  push:
+    branches:
+      - release-docs
+permissions:
+  contents: write
+jobs:
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repo to GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Install Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      # Install PyPI packages
+      - name: Dependencies
+        run: pip install -r requirements.txt
+
+      # Push to GitHub Pages
+      - name: Push Docs
+        run: |
+          mkdocs gh-deploy --force
