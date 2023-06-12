@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.5.7 to [v3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
+
 ### Azure
 
 * Enable boot diagnostics for controller and worker VMs ([#1351](https://github.com/poseidon/typhoon/pull/1351))
