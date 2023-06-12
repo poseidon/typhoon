@@ -5,6 +5,11 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.5.7 to [v3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
+* Update Cilium from v1.13.2 to [v1.13.3](https://github.com/cilium/cilium/releases/tag/v1.13.3)
+* Update flannel from v0.21.2 to [v0.22.0](https://github.com/flannel-io/flannel/releases/tag/v0.22.0)
+
+### AWS
+
 * Allow upgrading AWS Terraform provider to v5.x ([#1353](https://github.com/poseidon/typhoon/pull/1353))
 
 ### Azure
