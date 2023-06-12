@@ -17,6 +17,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   computer_name_prefix   = "${var.name}-worker"
   single_placement_group = false
   custom_data            = base64encode(data.ct_config.worker.rendered)
+  boot_diagnostics {
+    # defaults to a managed storage account
+  }
 
   # storage
   os_disk {
@@ -69,6 +72,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   # eviction policy may only be set when priority is Spot
   priority        = var.priority
   eviction_policy = var.priority == "Spot" ? "Delete" : null
+  termination_notification {
+    enabled = true
+  }
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.

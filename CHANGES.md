@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Enable boot diagnostics for controller and worker VMs ([#1351](https://github.com/poseidon/typhoon/pull/1351))
+
 ## v1.27.2
 
 * Kubernetes [v1.27.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.27.md#v1272)

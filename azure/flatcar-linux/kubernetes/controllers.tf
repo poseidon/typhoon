@@ -44,6 +44,9 @@ resource "azurerm_linux_virtual_machine" "controllers" {
 
   size        = var.controller_type
   custom_data = base64encode(data.ct_config.controllers.*.rendered[count.index])
+  boot_diagnostics {
+    # defaults to a managed storage account
+  }
 
   # storage
   os_disk {
@@ -72,7 +75,7 @@ resource "azurerm_linux_virtual_machine" "controllers" {
 
   # network
   network_interface_ids = [
-    azurerm_network_interface.controllers.*.id[count.index]
+    azurerm_network_interface.controllers[count.index].id
   ]
 
   # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
