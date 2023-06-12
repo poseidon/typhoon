@@ -3,7 +3,7 @@
 terraform {
   required_version = ">= 0.13.0, < 2.0.0"
   required_providers {
-    aws = ">= 2.23, <= 5.0"
+    aws = ">= 2.23, <= 6.0"
     ct = {
       source  = "poseidon/ct"
       version = "~> 0.11"

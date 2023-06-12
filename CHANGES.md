@@ -5,6 +5,7 @@ Notable changes between versions.
 ## Latest
 
 * Update etcd from v3.5.7 to [v3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
+* Allow upgrading AWS Terraform provider to v5.x ([#1353](https://github.com/poseidon/typhoon/pull/1353))
 
 ### Azure
 
