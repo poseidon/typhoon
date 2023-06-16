@@ -4,8 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.27.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.27.md#v1273)
 * Update etcd from v3.5.7 to [v3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
-* Update Cilium from v1.13.2 to [v1.13.3](https://github.com/cilium/cilium/releases/tag/v1.13.3)
+* Update Cilium from v1.13.2 to [v1.13.4](https://github.com/cilium/cilium/releases/tag/v1.13.4)
 * Update flannel from v0.21.2 to [v0.22.0](https://github.com/flannel-io/flannel/releases/tag/v0.22.0)
 
 ### AWS
