@@ -194,7 +194,7 @@ Workers with similar features can be defined inline using the `workers` field as
 
 ```tf
 module "mercury-node1" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/fedora-coreos/kubernetes/worker?ref=v1.27.4"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes/worker?ref=v1.27.4"
 
   # bare-metal
   cluster_name = "mercury"
@@ -206,13 +206,13 @@ module "mercury-node1" {
   name               = "node2"
   mac                = "52:54:00:b2:2f:86"
   domain             = "node2.example.com"
-  kubeconfig         = module.mercury.kubeconfig
+  kubeconfig         = module.mercury.kubeconfig-admin
   ssh_authorized_key = "ssh-rsa AAAAB3Nz..."
 
   # optional
   snippets       = []
   node_labels    = []
-  node_tains     = []
+  node_taints    = []
   install_disk   = "/dev/vda"
   cached_install = false
 }
