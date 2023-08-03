@@ -60,7 +60,7 @@ data "ct_config" "install" {
     baseurl_flag = var.cached_install ? "-b ${var.matchbox_http_endpoint}/assets/flatcar" : ""
   })
   strict = true
-  install_snippets = lookup(var.install_snippets, var.controllers.*.name[count.index], [])
+  snippets = lookup(var.install_snippets, var.controllers.*.name[count.index], [])
 }
 
 # Match each controller by MAC
