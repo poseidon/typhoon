@@ -55,6 +55,7 @@ data "ct_config" "install" {
     baseurl_flag = var.cached_install ? "-b ${var.matchbox_http_endpoint}/assets/flatcar" : ""
   })
   strict = true
+  snippets = var.install_snippets
 }
 
 # Match a worker to a profile by MAC

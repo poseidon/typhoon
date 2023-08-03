@@ -60,6 +60,12 @@ variable "snippets" {
   default     = []
 }
 
+variable "install_snippets" {
+  type        = list(string)
+  description = "List of Butane snippets to run with the install command"
+  default     = []
+}
+
 variable "node_labels" {
   type        = list(string)
   description = "List of initial node labels"

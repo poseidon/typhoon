@@ -61,6 +61,12 @@ variable "snippets" {
   default     = {}
 }
 
+variable "install_snippets" {
+  type        = map(list(string))
+  description = "Map from machine names to lists of Container Linux Config snippets to run during install phase"
+  default     = {}
+}
+
 variable "worker_node_labels" {
   type        = map(list(string))
   description = "Map from worker names to lists of initial node labels"
