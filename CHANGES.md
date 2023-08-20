@@ -4,8 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.13.4 to [v1.14.0](https://github.com/cilium/cilium/releases/tag/v1.14.0)
-* Update flannel from v0.22.0 to [v0.22.1](https://github.com/flannel-io/flannel/releases/tag/v0.22.1)
+* Kubernetes [v1.28.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1280)
+* Update Cilium from v1.13.4 to [v1.14.1](https://github.com/cilium/cilium/releases/tag/v1.14.1)
+* Update flannel from v0.22.0 to [v0.22.2](https://github.com/flannel-io/flannel/releases/tag/v0.22.2)
 
 ## v1.27.4
 
