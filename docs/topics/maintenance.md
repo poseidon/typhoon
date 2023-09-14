@@ -13,12 +13,12 @@ Typhoon provides tagged releases to allow clusters to be versioned using ordinar
 
 ```
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.28.1"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.28.2"
   ...
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.28.1"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.28.2"
   ...
 }
 ```
@@ -192,7 +192,7 @@ Applying edits to most worker fields will start an instance refresh:
 However, changing `os_stream`/`os_channel` or new AMIs becoming available will NOT change the launch configuration or trigger an Instance Refresh. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
 
 !!! note
-    Before Typhoon v1.28.1, worker nodes only used new launch configurations when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+    Before Typhoon v1.28.2, worker nodes only used new launch configurations when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
 
 ### Google Cloud
 
@@ -233,7 +233,7 @@ Applying edits to most worker fields will start an instance refresh:
 However, changing `os_stream`/`os_channel` or new compute images becoming available will NOT change the launch template or update instances. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
 
 !!! note
-    Before Typhoon v1.28.1, worker nodes only used new launch templates when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+    Before Typhoon v1.28.2, worker nodes only used new launch templates when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
 
 ## Upgrade poseidon/ct
 
