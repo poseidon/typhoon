@@ -1,6 +1,6 @@
 # Kubernetes assets (kubeconfig, manifests)
 module "bootstrap" {
-  source = "git::https://github.com/poseidon/terraform-render-bootstrap.git?ref=e3ffe4a5d5143ffe3ceb903f565b8d2f5cfc809e"
+  source = "git::https://github.com/poseidon/terraform-render-bootstrap.git?ref=19b59cc66f281a16fd488f9a36ab2bdac80b7952"
 
   cluster_name = var.cluster_name
   api_servers  = [format("%s.%s", var.cluster_name, var.dns_zone)]
