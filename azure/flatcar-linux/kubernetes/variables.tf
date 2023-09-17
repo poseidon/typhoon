@@ -88,6 +88,12 @@ variable "ssh_authorized_key" {
   description = "SSH public key for user 'core'"
 }
 
+variable "azure_authorized_key" {
+  type        = string
+  description = "Optionally, pass a dummy RSA key to satisfy Azure validations (then use an ed25519 key set above)"
+  default     = ""
+}
+
 variable "networking" {
   type        = string
   description = "Choice of networking provider (flannel, calico, or cilium)"

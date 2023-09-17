@@ -3,6 +3,8 @@ locals {
   channel      = split("-", var.os_image)[1]
   offer_suffix = var.arch == "arm64" ? "corevm" : "free"
   urn          = var.arch == "arm64" ? local.channel : "${local.channel}-gen2"
+
+  azure_authorized_key = var.azure_authorized_key == "" ? var.ssh_authorized_key : var.azure_authorized_key
 }
 
 # Workers scale set
@@ -48,7 +50,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   admin_username = "core"
   admin_ssh_key {
     username   = "core"
-    public_key = var.ssh_authorized_key
+    public_key = local.azure_authorized_key
   }
 
   # network

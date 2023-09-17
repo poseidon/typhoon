@@ -1,3 +1,11 @@
+locals {
+  # Typhoon ssh_authorized_key supports RSA or a newer formats (e.g. ed25519).
+  # However, Azure requires an older RSA key to pass validations. To use a
+  # newer key format, pass a dummy RSA key as the azure_authorized_key and
+  # delete the associated private key so it's never used.
+  azure_authorized_key = var.azure_authorized_key == "" ? var.ssh_authorized_key : var.azure_authorized_key
+}
+
 # Discrete DNS records for each controller's private IPv4 for etcd usage
 resource "azurerm_dns_a_record" "etcds" {
   count               = var.controller_count
@@ -55,7 +63,7 @@ resource "azurerm_linux_virtual_machine" "controllers" {
   admin_username = "core"
   admin_ssh_key {
     username   = "core"
-    public_key = var.ssh_authorized_key
+    public_key = local.azure_authorized_key
   }
 
   lifecycle {

@@ -9,6 +9,12 @@ Notable changes between versions.
 * Kubernetes [v1.28.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1282)
 * Update Cilium from v1.14.1 to [v1.14.2](https://github.com/cilium/cilium/releases/tag/v1.14.2)
 
+### Azure
+
+* Add optional `azure_authorized_key` variable
+  * Azure obtusely inspects public keys, requires RSA keys, and forbids more secure key formats (e.g. ed25519)
+  * Allow passing a dummy RSA key via `azure_authorized_key` (delete the private key) to satisfy Azure validations, then the usual `ssh_authorized_key` variable can new newer formats (e.g. ed25519)
+
 ## v1.28.1
 
 * Kubernetes [v1.28.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1281)

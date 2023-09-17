@@ -1,3 +1,7 @@
+locals {
+  azure_authorized_key = var.azure_authorized_key == "" ? var.ssh_authorized_key : var.azure_authorized_key
+}
+
 # Workers scale set
 resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   resource_group_name = var.resource_group_name
@@ -22,7 +26,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   admin_username = "core"
   admin_ssh_key {
     username   = "core"
-    public_key = var.ssh_authorized_key
+    public_key = var.azure_authorized_key
   }
 
   # network

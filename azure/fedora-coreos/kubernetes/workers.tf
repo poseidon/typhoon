@@ -17,6 +17,7 @@ module "workers" {
   # configuration
   kubeconfig            = module.bootstrap.kubeconfig-kubelet
   ssh_authorized_key    = var.ssh_authorized_key
+  azure_authorized_key  = var.azure_authorized_key
   service_cidr          = var.service_cidr
   cluster_domain_suffix = var.cluster_domain_suffix
   snippets              = var.worker_snippets
