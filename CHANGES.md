@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.28.3
 
 * Kubernetes [v1.28.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1283)
+* Workaround problems in Cilium v1.14's partial `kube-proxy` implementation ([#365](https://github.com/poseidon/terraform-render-bootstrap/pull/365))
 
 ## v1.28.2
 
