@@ -7,8 +7,9 @@ Notable changes between versions.
 ## v1.28.3
 
 * Kubernetes [v1.28.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1283)
-* Workaround problems in Cilium v1.14's partial `kube-proxy` implementation ([#365](https://github.com/poseidon/terraform-render-bootstrap/pull/365))
+* Update etcd from v3.5.9 to [v3.5.10](https://github.com/etcd-io/etcd/releases/tag/v3.5.10)
 * Update Cilium from v1.14.2 to [v1.14.3](https://github.com/cilium/cilium/releases/tag/v1.14.3)
+* Workaround problems in Cilium v1.14's partial `kube-proxy` implementation ([#365](https://github.com/poseidon/terraform-render-bootstrap/pull/365))
 * Update Calico from v3.26.1 to [v3.26.3](https://github.com/projectcalico/calico/releases/tag/v3.26.3)
 
 ## v1.28.2
