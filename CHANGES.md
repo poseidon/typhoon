@@ -4,6 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.29.0
+
+* Kubernetes [v1.29.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1290)
+
+### Known Issues
+
+* Calico and Fedora CoreOS cannot be used together currently ([calico#8372](https://github.com/projectcalico/calico/issues/8372))
+
 ## v1.28.4
 
 * Kubernetes [v1.28.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.28.md#v1284)
