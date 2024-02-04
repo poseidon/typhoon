@@ -78,6 +78,11 @@ resource "aws_launch_template" "worker" {
   # network
   vpc_security_group_ids = var.security_groups
 
+  # metadata
+  metadata_options {
+    http_tokens = "optional"
+  }
+
   # spot
   dynamic "instance_market_options" {
     for_each = var.spot_price > 0 ? [1] : []
