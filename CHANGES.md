@@ -4,6 +4,14 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.29.1
+
+* Kubernetes [v1.29.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1291)
+
+### AWS
+
+* Continue to support AWS IMDSv1 ([#1412](https://github.com/poseidon/typhoon/pull/1412))
+
 ## v1.29.0
 
 * Kubernetes [v1.29.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1290)
