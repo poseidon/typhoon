@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.29.2
+
+* Kubernetes [v1.29.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292)
+* Update flannel from v0.22.2 to [v0.24.2](https://github.com/flannel-io/flannel/releases/tag/v0.24.2)
+
 ## v1.29.1
 
 * Kubernetes [v1.29.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1291)
@@ -11,6 +16,10 @@ Notable changes between versions.
 ### AWS
 
 * Continue to support AWS IMDSv1 ([#1412](https://github.com/poseidon/typhoon/pull/1412))
+
+### Known Issues
+
+* Calico and Fedora CoreOS cannot be used together currently ([calico#8372](https://github.com/projectcalico/calico/issues/8372))
 
 ## v1.29.0
 
