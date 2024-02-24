@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.29.2
 
 * Kubernetes [v1.29.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292)
+* Update Cilium from v1.14.3 to [v1.15.1](https://github.com/cilium/cilium/releases/tag/v1.15.1)
 * Update flannel from v0.22.2 to [v0.24.2](https://github.com/flannel-io/flannel/releases/tag/v0.24.2)
 * Allow CNI `networking` to be set to "none" to skip bootstrapping flannel, Calico, or Cilium ([#1419](https://github.com/poseidon/typhoon/pull/1419))
 
