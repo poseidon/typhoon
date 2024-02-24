@@ -1,4 +1,9 @@
-# Typhoon [![Release](https://img.shields.io/github/v/release/poseidon/typhoon)](https://github.com/poseidon/typhoon/releases) [![Stars](https://img.shields.io/github/stars/poseidon/typhoon)](https://github.com/poseidon/typhoon/stargazers) [![Sponsors](https://img.shields.io/github/sponsors/poseidon?logo=github)](https://github.com/sponsors/poseidon) [![Mastodon](https://img.shields.io/badge/follow-news-6364ff?logo=mastodon)](https://fosstodon.org/@typhoon)
+# Typhoon
+
+[![Release](https://img.shields.io/github/v/release/poseidon/typhoon?style=flat-square)](https://github.com/poseidon/typhoon/releases)
+[![Stars](https://img.shields.io/github/stars/poseidon/typhoon?style=flat-square)](https://github.com/poseidon/typhoon/stargazers)
+[![Sponsors](https://img.shields.io/github/sponsors/poseidon?logo=github&style=flat-square)](https://github.com/sponsors/poseidon)
+[![Mastodon](https://img.shields.io/badge/follow-news-6364ff?logo=mastodon&style=flat-square)](https://fosstodon.org/@typhoon)
 
 <img align="right" src="https://storage.googleapis.com/poseidon/typhoon-logo.png">
 
