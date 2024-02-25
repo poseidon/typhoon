@@ -8,6 +8,8 @@ Notable changes between versions.
 
 * Kubernetes [v1.29.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292)
 * Update Cilium from v1.14.3 to [v1.15.1](https://github.com/cilium/cilium/releases/tag/v1.15.1)
+* Update Calico from v3.26.3 to [v3.27.2](https://github.com/projectcalico/calico/releases/tag/v3.27.2)
+  * Fix upstream incompatibility with Fedora CoreOS ([calico#8372](https://github.com/projectcalico/calico/issues/8372))
 * Update flannel from v0.22.2 to [v0.24.2](https://github.com/flannel-io/flannel/releases/tag/v0.24.2)
 * Add an `install_container_networking` variable (default `true`)
   * When `true`, the chosen container `networking` provider is installed during cluster bootstrap
