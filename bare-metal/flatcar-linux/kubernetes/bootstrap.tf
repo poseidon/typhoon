@@ -5,7 +5,7 @@ module "bootstrap" {
   cluster_name                    = var.cluster_name
   api_servers                     = [var.k8s_domain_name]
   etcd_servers                    = var.controllers.*.domain
-  networking                      = var.networking
+  networking                      = var.install_container_networking ? var.networking : "none"
   network_mtu                     = var.network_mtu
   network_ip_autodetection_method = var.network_ip_autodetection_method
   pod_cidr                        = var.pod_cidr

@@ -94,6 +94,12 @@ variable "networking" {
   default     = "cilium"
 }
 
+variable "install_container_networking" {
+  type        = bool
+  description = "Install the chosen networking provider during cluster bootstrap (use false to self-manage)"
+  default     = true
+}
+
 variable "pod_cidr" {
   type        = string
   description = "CIDR IPv4 range to assign Kubernetes pods"

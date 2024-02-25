@@ -107,6 +107,12 @@ variable "networking" {
   default     = "cilium"
 }
 
+variable "install_container_networking" {
+  type        = bool
+  description = "Install the chosen networking provider during cluster bootstrap (use false to self-manage)"
+  default     = true
+}
+
 variable "network_mtu" {
   type        = number
   description = "CNI interface MTU (applies to calico only). Use 8981 if using instances types with Jumbo frames."

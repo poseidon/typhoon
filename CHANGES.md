@@ -9,7 +9,13 @@ Notable changes between versions.
 * Kubernetes [v1.29.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292)
 * Update Cilium from v1.14.3 to [v1.15.1](https://github.com/cilium/cilium/releases/tag/v1.15.1)
 * Update flannel from v0.22.2 to [v0.24.2](https://github.com/flannel-io/flannel/releases/tag/v0.24.2)
-* Allow CNI `networking` to be set to "none" to skip bootstrapping flannel, Calico, or Cilium ([#1419](https://github.com/poseidon/typhoon/pull/1419))
+* Add an `install_container_networking` variable (default `true`)
+  * When `true`, the chosen container `networking` provider is installed during cluster bootstrap
+  * Set `false` to self-manage the container networking provider. This allows flannel, Calico, or Cilium
+  to be managed via Terraform (like any other Kubernetes resources). Nodes will be NotReady until you
+  apply the self-managed container networking provider. This may become the default in future.
+  * Continue to set `networking` to one of the three supported container networking providers. Most
+  require custom firewall / security policies be present across nodes so they have some infra tie-ins.
 
 ## v1.29.1
 

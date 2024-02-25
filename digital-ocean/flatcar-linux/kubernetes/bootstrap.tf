@@ -6,8 +6,7 @@ module "bootstrap" {
   api_servers  = [format("%s.%s", var.cluster_name, var.dns_zone)]
   etcd_servers = digitalocean_record.etcds.*.fqdn
 
-  networking = var.networking
-
+  networking = var.install_container_networking ? var.networking : "none"
   # only effective with Calico networking
   network_encapsulation = "vxlan"
   network_mtu           = "1450"
