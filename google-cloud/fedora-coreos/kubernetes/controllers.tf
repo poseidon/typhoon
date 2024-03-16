@@ -33,6 +33,7 @@ resource "google_compute_instance" "controllers" {
   # use a zone in the region and wrap around (e.g. controllers > zones)
   zone         = element(local.zones, count.index)
   machine_type = var.controller_type
+  allow_stopping_for_update = true
 
   metadata = {
     user-data = data.ct_config.controllers.*.rendered[count.index]
