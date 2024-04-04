@@ -4,12 +4,20 @@ Notable changes between versions.
 
 ## Latest
 
+* Update etcd from v3.5.12 to [v3.5.13](https://github.com/etcd-io/etcd/releases/tag/v3.5.13)
+* Update Cilium from v1.15.2 to [v1.15.3](https://github.com/cilium/cilium/releases/tag/v1.15.3)
+* Update Calico from v3.27.2 to [v3.27.3](https://github.com/projectcalico/calico/releases/tag/v3.27.3)
+
+## v1.29.3
+
+* Kubernetes [v1.29.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1293)
 * Update Cilium from v1.15.1 to [v1.15.2](https://github.com/cilium/cilium/releases/tag/v1.15.2)
 * Update flannel from v0.24.2 to [v0.24.4](https://github.com/flannel-io/flannel/releases/tag/v0.24.4)
 
 ## v1.29.2
 
 * Kubernetes [v1.29.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292)
+* Update etcd from v3.5.10 to [v3.5.12](https://github.com/etcd-io/etcd/releases/tag/v3.5.12)
 * Update Cilium from v1.14.3 to [v1.15.1](https://github.com/cilium/cilium/releases/tag/v1.15.1)
 * Update Calico from v3.26.3 to [v3.27.2](https://github.com/projectcalico/calico/releases/tag/v3.27.2)
   * Fix upstream incompatibility with Fedora CoreOS ([calico#8372](https://github.com/projectcalico/calico/issues/8372))
