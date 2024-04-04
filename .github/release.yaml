@@ -1,0 +1,12 @@
+changelog:
+  categories:
+    - title: Contributions
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - dependencies
+          - no-release-note
+    - title: Dependencies
+      labels:
+        - dependencies
