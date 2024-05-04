@@ -6,7 +6,7 @@ terraform {
     google = ">= 2.19"
     ct = {
       source  = "poseidon/ct"
-      version = "~> 0.11"
+      version = "~> 0.13"
     }
   }
 }
