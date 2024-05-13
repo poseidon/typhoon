@@ -55,9 +55,9 @@ resource "google_compute_instance" "controllers" {
     }
   }
 
-  can_ip_forward = true
+  can_ip_forward            = true
   allow_stopping_for_update = true
-  tags           = ["${var.cluster_name}-controller"]
+  tags                      = ["${var.cluster_name}-controller"]
 
   lifecycle {
     ignore_changes = [

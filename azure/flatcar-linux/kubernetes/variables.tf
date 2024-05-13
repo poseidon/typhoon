@@ -169,3 +169,16 @@ variable "cluster_domain_suffix" {
   description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
   default     = "cluster.local"
 }
+
+variable "components" {
+  description = "Configure pre-installed cluster components"
+  # Component configs are passed through to terraform-render-bootstrap,
+  # which handles type enforcement and defines defaults
+  # https://github.com/poseidon/terraform-render-bootstrap/blob/main/variables.tf#L95
+  type = object({
+    enable     = optional(bool)
+    coredns    = optional(map(any))
+    kube_proxy = optional(map(any))
+  })
+  default = null
+}

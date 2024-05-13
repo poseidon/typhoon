@@ -31,8 +31,8 @@ resource "google_compute_instance" "controllers" {
 
   name = "${var.cluster_name}-controller-${count.index}"
   # use a zone in the region and wrap around (e.g. controllers > zones)
-  zone         = element(local.zones, count.index)
-  machine_type = var.controller_type
+  zone                      = element(local.zones, count.index)
+  machine_type              = var.controller_type
   allow_stopping_for_update = true
 
   metadata = {

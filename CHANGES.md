@@ -28,7 +28,7 @@ Notable changes between versions.
 * Update Calico from v3.26.3 to [v3.27.2](https://github.com/projectcalico/calico/releases/tag/v3.27.2)
   * Fix upstream incompatibility with Fedora CoreOS ([calico#8372](https://github.com/projectcalico/calico/issues/8372))
 * Update flannel from v0.22.2 to [v0.24.2](https://github.com/flannel-io/flannel/releases/tag/v0.24.2)
-* Add an `install_container_networking` variable (default `true`)
+* Add an `install_container_networking` variable (default `true`) ([#1421](https://github.com/poseidon/typhoon/pull/1421))
   * When `true`, the chosen container `networking` provider is installed during cluster bootstrap
   * Set `false` to self-manage the container networking provider. This allows flannel, Calico, or Cilium
   to be managed via Terraform (like any other Kubernetes resources). Nodes will be NotReady until you

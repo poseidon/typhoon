@@ -147,3 +147,16 @@ variable "daemonset_tolerations" {
   description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"
   default     = []
 }
+
+variable "components" {
+  description = "Configure pre-installed cluster components"
+  # Component configs are passed through to terraform-render-bootstrap,
+  # which handles type enforcement and defines defaults
+  # https://github.com/poseidon/terraform-render-bootstrap/blob/main/variables.tf#L95
+  type = object({
+    enable     = optional(bool)
+    coredns    = optional(map(any))
+    kube_proxy = optional(map(any))
+  })
+  default = null
+}
