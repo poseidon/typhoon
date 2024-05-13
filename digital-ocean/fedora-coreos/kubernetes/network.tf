@@ -32,6 +32,13 @@ resource "digitalocean_firewall" "rules" {
     source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
   }
 
+  # Cilium metrics
+  inbound_rule {
+    protocol    = "tcp"
+    port_range  = "9962-9965"
+    source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
+  }
+
   # IANA vxlan (flannel, calico)
   inbound_rule {
     protocol    = "udp"

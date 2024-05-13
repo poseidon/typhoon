@@ -112,13 +112,14 @@ resource "google_compute_firewall" "internal-vxlan" {
   target_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]
 }
 
-# Cilium VXLAN
-resource "google_compute_firewall" "internal-linux-vxlan" {
+# Cilium
+resource "google_compute_firewall" "internal-cilium" {
   count = var.networking == "cilium" ? 1 : 0
 
-  name    = "${var.cluster_name}-linux-vxlan"
+  name    = "${var.cluster_name}-cilium"
   network = google_compute_network.network.name
 
+  # vxlan
   allow {
     protocol = "udp"
     ports    = [8472]
@@ -128,10 +129,15 @@ resource "google_compute_firewall" "internal-linux-vxlan" {
   allow {
     protocol = "icmp"
   }
-
   allow {
     protocol = "tcp"
     ports    = [4240]
+  }
+
+  # metrics
+  allow {
+    protocol = "tcp"
+    ports    = [9962, 9963, 9964, 9965]
   }
 
   source_tags = ["${var.cluster_name}-controller", "${var.cluster_name}-worker"]

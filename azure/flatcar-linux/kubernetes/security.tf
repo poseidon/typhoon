@@ -121,12 +121,28 @@ resource "azurerm_network_security_rule" "controller-cilium-health" {
 
   name                         = "allow-cilium-health"
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2019"
+  priority                     = "2018"
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "4240"
+  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
+  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+}
+
+resource "azurerm_network_security_rule" "controller-cilium-metrics" {
+  resource_group_name = azurerm_resource_group.cluster.name
+  count               = var.networking == "cilium" ? 1 : 0
+
+  name                         = "allow-cilium-metrics"
+  network_security_group_name  = azurerm_network_security_group.controller.name
+  priority                     = "2019"
+  access                       = "Allow"
+  direction                    = "Inbound"
+  protocol                     = "Tcp"
+  source_port_range            = "*"
+  destination_port_range       = "9962-9965"
   source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
   destination_address_prefixes = azurerm_subnet.controller.address_prefixes
 }
@@ -303,12 +319,28 @@ resource "azurerm_network_security_rule" "worker-cilium-health" {
 
   name                         = "allow-cilium-health"
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2014"
+  priority                     = "2013"
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "4240"
+  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
+  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+}
+
+resource "azurerm_network_security_rule" "worker-cilium-metrics" {
+  resource_group_name = azurerm_resource_group.cluster.name
+  count               = var.networking == "cilium" ? 1 : 0
+
+  name                         = "allow-cilium-metrics"
+  network_security_group_name  = azurerm_network_security_group.worker.name
+  priority                     = "2014"
+  access                       = "Allow"
+  direction                    = "Inbound"
+  protocol                     = "Tcp"
+  source_port_range            = "*"
+  destination_port_range       = "9962-9965"
   source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
   destination_address_prefixes = azurerm_subnet.worker.address_prefixes
 }
