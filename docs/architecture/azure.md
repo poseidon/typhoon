@@ -51,7 +51,7 @@ Add firewall rules to the worker security group.
 
 ```tf
 resource "azurerm_network_security_rule" "some-app" {
-  resource_group_name = "${module.ramius.resource_group_name}"
+  resource_group_name = module.ramius.resource_group_name
 
   name                         = "some-app"
   network_security_group_name  = module.ramius.worker_security_group_name

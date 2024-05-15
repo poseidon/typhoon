@@ -39,8 +39,19 @@ output "kubeconfig" {
 
 # Outputs for custom firewalling
 
+output "controller_security_group_name" {
+  description = "Network Security Group for controller nodes"
+  value       = azurerm_network_security_group.controller.name
+}
+
 output "worker_security_group_name" {
-  value = azurerm_network_security_group.worker.name
+  description = "Network Security Group for worker nodes"
+  value       = azurerm_network_security_group.worker.name
+}
+
+output "controller_address_prefixes" {
+  description = "Controller network subnet CIDR addresses (for source/destination)"
+  value       = azurerm_subnet.controller.address_prefixes
 }
 
 output "worker_address_prefixes" {
