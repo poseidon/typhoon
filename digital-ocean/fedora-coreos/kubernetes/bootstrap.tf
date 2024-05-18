@@ -1,12 +1,12 @@
 # Kubernetes assets (kubeconfig, manifests)
 module "bootstrap" {
-  source = "git::https://github.com/poseidon/terraform-render-bootstrap.git?ref=452bcf379d94f5d479c1dee281fd479872271415"
+  source = "git::https://github.com/poseidon/terraform-render-bootstrap.git?ref=a54fe54d9895f5dd51332b79533143f52792090f"
 
   cluster_name = var.cluster_name
   api_servers  = [format("%s.%s", var.cluster_name, var.dns_zone)]
   etcd_servers = digitalocean_record.etcds.*.fqdn
 
-  networking = var.install_container_networking ? var.networking : "none"
+  networking = var.networking
   # only effective with Calico networking
   network_encapsulation = "vxlan"
   network_mtu           = "1450"

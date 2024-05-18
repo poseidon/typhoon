@@ -100,12 +100,6 @@ variable "networking" {
   default     = "cilium"
 }
 
-variable "install_container_networking" {
-  type        = bool
-  description = "Install the chosen networking provider during cluster bootstrap (use false to self-manage)"
-  default     = true
-}
-
 variable "host_cidr" {
   type        = string
   description = "CIDR IPv4 range to assign to instances"
@@ -179,6 +173,9 @@ variable "components" {
     enable     = optional(bool)
     coredns    = optional(map(any))
     kube_proxy = optional(map(any))
+    flannel    = optional(map(any))
+    calico     = optional(map(any))
+    cilium     = optional(map(any))
   })
   default = null
 }
