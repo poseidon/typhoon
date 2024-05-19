@@ -8,9 +8,10 @@ Notable changes between versions.
 
 * Kubernetes [v1.30.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1301)
 * Add firewall rules and security group rules for Cilium and Hubble metrics ([#1449](https://github.com/poseidon/typhoon/pull/1449))
-* Introduce `components` variabe to enable/disable/configure pre-installed components ([#1453](https://github.com/poseidon/typhoon/pull/1453))
 * Update Cilium from v1.15.3 to [v1.15.5](https://github.com/cilium/cilium/releases/tag/v1.15.5)
 * Update flannel from v0.24.4 to [v0.25.1](https://github.com/flannel-io/flannel/releases/tag/v0.25.1)
+* Introduce `components` variabe to enable/disable/configure pre-installed components ([#1453](https://github.com/poseidon/typhoon/pull/1453))
+* Add Terraform modules for `coredns`, `cilium`, and `flannel` components
 
 ### Azure
 
