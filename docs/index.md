@@ -19,7 +19,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 
 ## Modules
 
-Typhoon provides a Terraform Module for each supported operating system and platform.
+Typhoon provides a Terraform Module for defining a Kubernetes cluster on each supported operating system and platform.
 
 Typhoon is available for [Fedora CoreOS](https://getfedora.org/coreos/).
 
@@ -49,6 +49,14 @@ Typhoon is available for [Flatcar Linux](https://www.flatcar-linux.org/releases/
 |---------------|------------------|------------------|--------|
 | AWS           | Flatcar Linux (ARM64) | [aws/flatcar-linux/kubernetes](advanced/arm64.md) | alpha |
 | Azure         | Flatcar Linux (ARM64) | [azure/flatcar-linux/kubernetes](advanced/arm64.md) | alpha |
+
+Typhoon also provides Terraform Modules for optionally managing individual components applied onto clusters.
+
+| Name    | Terraform Module | Status |
+|---------|------------------|--------|
+| CoreDNS | [addons/coredns](addons/coredns) | beta |
+| Cilium  | [addons/cilium](addons/cilium) | beta |
+| flannel | [addons/flannel](addons/flannel) | beta |
 
 ## Documentation
 
