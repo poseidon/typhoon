@@ -10,6 +10,11 @@ output "ingress_static_ipv4" {
   description = "IPv4 address of the load balancer for distributing traffic to Ingress controllers"
 }
 
+output "ingress_static_ipv6" {
+  value       = azurerm_public_ip.ingress-ipv6.ip_address
+  description = "IPv6 address of the load balancer for distributing traffic to Ingress controllers"
+}
+
 # Outputs for worker pools
 
 output "region" {
@@ -51,12 +56,12 @@ output "worker_security_group_name" {
 
 output "controller_address_prefixes" {
   description = "Controller network subnet CIDR addresses (for source/destination)"
-  value       = azurerm_subnet.controller.address_prefixes
+  value       = local.controller_subnets
 }
 
 output "worker_address_prefixes" {
   description = "Worker network subnet CIDR addresses (for source/destination)"
-  value       = azurerm_subnet.worker.address_prefixes
+  value       = local.worker_subnets
 }
 
 # Outputs for custom load balancing
@@ -66,9 +71,12 @@ output "loadbalancer_id" {
   value       = azurerm_lb.cluster.id
 }
 
-output "backend_address_pool_id" {
-  description = "ID of the worker backend address pool"
-  value       = azurerm_lb_backend_address_pool.worker.id
+output "backend_address_pool_ids" {
+  description = "IDs of the worker backend address pools"
+  value = {
+    ipv4 = [azurerm_lb_backend_address_pool.worker-ipv4.id]
+    ipv6 = [azurerm_lb_backend_address_pool.worker-ipv6.id]
+  }
 }
 
 # Outputs for debug

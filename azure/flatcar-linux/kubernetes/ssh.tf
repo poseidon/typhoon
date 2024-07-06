@@ -18,7 +18,7 @@ resource "null_resource" "copy-controller-secrets" {
 
   connection {
     type    = "ssh"
-    host    = azurerm_public_ip.controllers.*.ip_address[count.index]
+    host    = azurerm_public_ip.controllers-ipv4[count.index].ip_address
     user    = "core"
     timeout = "15m"
   }
@@ -45,7 +45,7 @@ resource "null_resource" "bootstrap" {
 
   connection {
     type    = "ssh"
-    host    = azurerm_public_ip.controllers.*.ip_address[0]
+    host    = azurerm_public_ip.controllers-ipv4[0].ip_address
     user    = "core"
     timeout = "15m"
   }

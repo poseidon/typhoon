@@ -67,15 +67,15 @@ Fedora CoreOS publishes images for Azure, but does not yet upload them. Azure al
 [Download](https://getfedora.org/en/coreos/download?tab=cloud_operators&stream=stable) a Fedora CoreOS Azure VHD image, decompress it, and upload it to an Azure storage account container (i.e. bucket) via the UI (quite slow).
 
 ```
-xz -d fedora-coreos-36.20220716.3.1-azure.x86_64.vhd.xz
+xz -d fedora-coreos-40.20240616.3.0-azure.x86_64.vhd.xz
 ```
 
 Create an Azure disk (note disk ID) and create an Azure image from it (note image ID).
 
 ```
-az disk create --name fedora-coreos-36.20220716.3.1 -g GROUP --source https://BUCKET.blob.core.windows.net/fedora-coreos/fedora-coreos-36.20220716.3.1-azure.x86_64.vhd
+az disk create --name fedora-coreos-40.20240616.3.0 -g GROUP --source https://BUCKET.blob.core.windows.net/images/fedora-coreos-40.20240616.3.0-azure.x86_64.vhd
 
-az image create --name fedora-coreos-36.20220716.3.1 -g GROUP --os-type=linux --source /subscriptions/some/path/providers/Microsoft.Compute/disks/fedora-coreos-36.20220716.3.1
+az image create --name fedora-coreos-40.20240616.3.0 -g GROUP --os-type linux --source /subscriptions/some/path/Microsoft.Compute/disks/fedora-coreos-40.20240616.3.0
 ```
 
 Set the [os_image](#variables) in the next step.
@@ -100,7 +100,9 @@ module "ramius" {
 
   # optional
   worker_count    = 2
-  host_cidr       = "10.0.0.0/20"
+  network_cidr       = {
+    ipv4 = ["10.0.0.0/20"]
+  }
 }
 ```
 
@@ -246,7 +248,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | controller_snippets | Controller Butane snippets | [] | [example](/advanced/customization/#usage) |
 | worker_snippets | Worker Butane snippets | [] | [example](/advanced/customization/#usage) |
 | networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
-| host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
+| network_cidr | Virtual network CIDR ranges | { ipv4 = ["10.0.0.0/16"], ipv6 = [ULA, ...] } | { ipv4 = ["10.0.0.0/20"] } |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |

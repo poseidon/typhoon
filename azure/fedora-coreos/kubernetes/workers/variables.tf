@@ -25,9 +25,12 @@ variable "security_group_id" {
   description = "Must be set to the `worker_security_group_id` output by cluster"
 }
 
-variable "backend_address_pool_id" {
-  type        = string
-  description = "Must be set to the `worker_backend_address_pool_id` output by cluster"
+variable "backend_address_pool_ids" {
+  type = object({
+    ipv4 = list(string)
+    ipv6 = list(string)
+  })
+  description = "Must be set to the `backend_address_pool_ids` output by cluster"
 }
 
 # instances

@@ -100,10 +100,15 @@ variable "networking" {
   default     = "cilium"
 }
 
-variable "host_cidr" {
-  type        = string
-  description = "CIDR IPv4 range to assign to instances"
-  default     = "10.0.0.0/16"
+variable "network_cidr" {
+  type = object({
+    ipv4 = list(string)
+    ipv6 = optional(list(string), ["fd9a:0d2f:b7dc::/48"])
+  })
+  description = "Virtual network CIDR ranges"
+  default = {
+    ipv4 = ["10.0.0.0/16"]
+  }
 }
 
 variable "pod_cidr" {

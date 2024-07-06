@@ -37,7 +37,7 @@ resource "google_dns_record_set" "some-application" {
 
 ## Azure
 
-On Azure, a load balancer distributes traffic across a backend address pool of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
+On Azure, an Azure Load Balancer distributes IPv4/IPv6 traffic across backend address pools of worker nodes running an Ingress controller deployment. Security group rules allow traffic to ports 80 and 443. Health probes ensure only workers with a healthy Ingress controller receive traffic.
 
 Create the Ingress controller deployment, service, RBAC roles, RBAC bindings, and namespace.
 
@@ -53,10 +53,10 @@ app2.example.com -> 11.22.33.44
 app3.example.com -> 11.22.33.44
 ```
 
-Find the load balancer's IPv4 address with the Azure console or use the Typhoon module's output `ingress_static_ipv4`. For example, you might use Terraform to manage a Google Cloud DNS record:
+Find the load balancer's addresses with the Azure console or use the Typhoon module's outputs `ingress_static_ipv4` or `ingress_static_ipv6`. For example, you might use Terraform to manage a Google Cloud DNS record:
 
 ```tf
-resource "google_dns_record_set" "some-application" {
+resource "google_dns_record_set" "app-record-a" {
   # DNS zone name
   managed_zone = "example-zone"
 
@@ -65,6 +65,17 @@ resource "google_dns_record_set" "some-application" {
   type    = "A"
   ttl     = 300
   rrdatas = [module.ramius.ingress_static_ipv4]
+}
+
+resource "google_dns_record_set" "app-record-aaaa" {
+  # DNS zone name
+  managed_zone = "example-zone"
+
+  # DNS record
+  name    = "app.example.com."
+  type    = "AAAA"
+  ttl     = 300
+  rrdatas = [module.ramius.ingress_static_ipv6]
 }
 ```
 

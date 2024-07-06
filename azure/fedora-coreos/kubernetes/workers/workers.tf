@@ -4,29 +4,20 @@ locals {
 
 # Workers scale set
 resource "azurerm_linux_virtual_machine_scale_set" "workers" {
+  name                = "${var.name}-worker"
   resource_group_name = var.resource_group_name
-
-  name      = "${var.name}-worker"
-  location  = var.region
-  sku       = var.vm_type
-  instances = var.worker_count
+  location            = var.region
+  sku                 = var.vm_type
+  instances           = var.worker_count
   # instance name prefix for instances in the set
   computer_name_prefix   = "${var.name}-worker"
   single_placement_group = false
-  custom_data            = base64encode(data.ct_config.worker.rendered)
 
   # storage
   source_image_id = var.os_image
   os_disk {
     storage_account_type = "Standard_LRS"
     caching              = "ReadWrite"
-  }
-
-  # Azure requires setting admin_ssh_key, though Ignition custom_data handles it too
-  admin_username = "core"
-  admin_ssh_key {
-    username   = "core"
-    public_key = var.azure_authorized_key
   }
 
   # network
@@ -36,13 +27,33 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
     network_security_group_id = var.security_group_id
 
     ip_configuration {
-      name      = "ip0"
+      name      = "ipv4"
+      version   = "IPv4"
       primary   = true
       subnet_id = var.subnet_id
-
       # backend address pool to which the NIC should be added
-      load_balancer_backend_address_pool_ids = [var.backend_address_pool_id]
+      load_balancer_backend_address_pool_ids = var.backend_address_pool_ids.ipv4
     }
+    ip_configuration {
+      name      = "ipv6"
+      version   = "IPv6"
+      subnet_id = var.subnet_id
+      # backend address pool to which the NIC should be added
+      load_balancer_backend_address_pool_ids = var.backend_address_pool_ids.ipv6
+    }
+  }
+
+  # boot
+  custom_data = base64encode(data.ct_config.worker.rendered)
+  boot_diagnostics {
+    # defaults to a managed storage account
+  }
+
+  # Azure requires an RSA admin_ssh_key
+  admin_username = "core"
+  admin_ssh_key {
+    username   = "core"
+    public_key = local.azure_authorized_key
   }
 
   # lifecycle
@@ -50,22 +61,22 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   # eviction policy may only be set when priority is Spot
   priority        = var.priority
   eviction_policy = var.priority == "Spot" ? "Delete" : null
+  termination_notification {
+    enabled = true
+  }
 }
 
 # Scale up or down to maintain desired number, tolerating deallocations.
 resource "azurerm_monitor_autoscale_setting" "workers" {
+  name                = "${var.name}-maintain-desired"
   resource_group_name = var.resource_group_name
-
-  name     = "${var.name}-maintain-desired"
-  location = var.region
-
+  location            = var.region
   # autoscale
   enabled            = true
   target_resource_id = azurerm_linux_virtual_machine_scale_set.workers.id
 
   profile {
     name = "default"
-
     capacity {
       minimum = var.worker_count
       default = var.worker_count

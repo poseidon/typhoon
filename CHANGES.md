@@ -4,6 +4,38 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Configure the virtual network and subnets with IPv6 private address space
+  * Change `host_cidr` variable (string) to a `network_cidr` object with `ipv4` and `ipv6` fields that list CIDR strings. Leave the variable unset to use the defaults. (**breaking**)
+* Add support for dual-stack Kubernetes Ingress Load Balancing
+  * Add a public IPv6 frontend, 80/443 rules, and a worker-ipv6 backend pool
+  * Change the `controller_address_prefixes` output from a list of strings to an object with `ipv4` and `ipv6` fields. Most Azure resources can't accept a mix, so these are split out (**breaking**)
+  * Change the `worker_address_prefixes` output from a list of strings to an object with `ipv4` and `ipv6` fields. Most Azure resources can't accept a mix, so these are split out (**breaking**)
+  * Change the `backend_address_pool_id` output (and worker module input) from a string to an object with `ipv4` and `ipv6` fields that list ids (**breaking**)
+* Configure nodes to have outbound IPv6 internet connectivity (analogous to IPv4 SNAT)
+  * Configure controller nodes to have a public IPv6 address
+  * Configure worker nodes to use outbound rules and the load balancer for SNAT
+* Extend network security rules to allow IPv6 traffic, analogous to IPv4
+
+```diff
+module "cluster" {
+  ...
+  # optional
+- host_cidr = "10.0.0.0/16"
++ network_cidr = {
++   ipv4 = ["10.0.0.0/16"]
++ }
+}
+```
+
+## v1.30.2
+
+* Kubernetes [v1.30.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1302)
+* Update CoreDNS from v1.9.4 to v1.11.1
+* Update Cilium from v1.15.5 to [v1.15.6](https://github.com/cilium/cilium/releases/tag/v1.15.6)
+* Update flannel from v0.25.1 to [v0.25.4](https://github.com/flannel-io/flannel/releases/tag/v0.25.4)
+
 ## v1.30.1
 
 * Kubernetes [v1.30.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1301)

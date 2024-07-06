@@ -88,7 +88,9 @@ module "ramius" {
 
   # optional
   worker_count    = 2
-  host_cidr       = "10.0.0.0/20"
+  network_cidr    = {
+    ipv4 = ["10.0.0.0/20"]
+  }
 }
 ```
 
@@ -234,7 +236,7 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/#usage) |
 | networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
-| host_cidr | CIDR IPv4 range to assign to instances | "10.0.0.0/16" | "10.0.0.0/20" |
+| network_cidr | Virtual network CIDR ranges | { ipv4 = ["10.0.0.0/16"], ipv6 = [ULA, ...] } | { ipv4 = ["10.0.0.0/20"] } |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |

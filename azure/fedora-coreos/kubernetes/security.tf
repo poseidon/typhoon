@@ -1,214 +1,223 @@
 # Controller security group
 
 resource "azurerm_network_security_group" "controller" {
+  name                = "${var.cluster_name}-controller"
   resource_group_name = azurerm_resource_group.cluster.name
-
-  name     = "${var.cluster_name}-controller"
-  location = azurerm_resource_group.cluster.location
+  location            = azurerm_resource_group.cluster.location
 }
 
 resource "azurerm_network_security_rule" "controller-icmp" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-icmp"
+  name                         = "allow-icmp-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "1995"
+  priority                     = 1995 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Icmp"
   source_port_range            = "*"
   destination_port_range       = "*"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-ssh" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-ssh"
+  name                         = "allow-ssh-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2000"
+  priority                     = 2000 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "22"
   source_address_prefix        = "*"
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-etcd" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-etcd"
+  name                         = "allow-etcd-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2005"
+  priority                     = 2005 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "2379-2380"
-  source_address_prefixes      = azurerm_subnet.controller.address_prefixes
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.controller_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Allow Prometheus to scrape etcd metrics
 resource "azurerm_network_security_rule" "controller-etcd-metrics" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-etcd-metrics"
+  name                         = "allow-etcd-metrics-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2010"
+  priority                     = 2010 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "2381"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Allow Prometheus to scrape kube-proxy metrics
 resource "azurerm_network_security_rule" "controller-kube-proxy" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-kube-proxy-metrics"
+  name                         = "allow-kube-proxy-metrics-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2011"
+  priority                     = 2012 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "10249"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Allow Prometheus to scrape kube-scheduler and kube-controller-manager metrics
 resource "azurerm_network_security_rule" "controller-kube-metrics" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-kube-metrics"
+  name                         = "allow-kube-metrics-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2012"
+  priority                     = 2014 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "10257-10259"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-apiserver" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-apiserver"
+  name                         = "allow-apiserver-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2015"
+  priority                     = 2016 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "6443"
   source_address_prefix        = "*"
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-cilium-health" {
-  resource_group_name = azurerm_resource_group.cluster.name
-  count               = var.networking == "cilium" ? 1 : 0
+  for_each = var.networking == "cilium" ? local.controller_subnets : {}
 
-  name                         = "allow-cilium-health"
+  name                         = "allow-cilium-health-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2018"
+  priority                     = 2018 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "4240"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-cilium-metrics" {
-  resource_group_name = azurerm_resource_group.cluster.name
-  count               = var.networking == "cilium" ? 1 : 0
+  for_each = var.networking == "cilium" ? local.controller_subnets : {}
 
-  name                         = "allow-cilium-metrics"
+  name                         = "allow-cilium-metrics-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2019"
+  priority                     = 2035 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "9962-9965"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-vxlan" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-vxlan"
+  name                         = "allow-vxlan-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2020"
+  priority                     = 2020 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Udp"
   source_port_range            = "*"
   destination_port_range       = "4789"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "controller-linux-vxlan" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-linux-vxlan"
+  name                         = "allow-linux-vxlan-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2021"
+  priority                     = 2022 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Udp"
   source_port_range            = "*"
   destination_port_range       = "8472"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Allow Prometheus to scrape node-exporter daemonset
 resource "azurerm_network_security_rule" "controller-node-exporter" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                         = "allow-node-exporter"
+  name                         = "allow-node-exporter-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = "2025"
+  priority                     = 2025 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "9100"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Allow apiserver to access kubelet's for exec, log, port-forward
 resource "azurerm_network_security_rule" "controller-kubelet" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.controller_subnets
 
-  name                        = "allow-kubelet"
+  name                        = "allow-kubelet-${each.key}"
+  resource_group_name         = azurerm_resource_group.cluster.name
   network_security_group_name = azurerm_network_security_group.controller.name
-  priority                    = "2030"
+  priority                    = 2030 + (each.key == "ipv4" ? 0 : 1)
   access                      = "Allow"
   direction                   = "Inbound"
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "10250"
-
   # allow Prometheus to scrape kubelet metrics too
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.controller.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.controller_subnets[each.key]
 }
 
 # Override Azure AllowVNetInBound and AllowAzureLoadBalancerInBound
@@ -247,182 +256,189 @@ resource "azurerm_network_security_rule" "controller-deny-all" {
 # Worker security group
 
 resource "azurerm_network_security_group" "worker" {
+  name                = "${var.cluster_name}-worker"
   resource_group_name = azurerm_resource_group.cluster.name
-
-  name     = "${var.cluster_name}-worker"
-  location = azurerm_resource_group.cluster.location
+  location            = azurerm_resource_group.cluster.location
 }
 
 resource "azurerm_network_security_rule" "worker-icmp" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-icmp"
+  name                         = "allow-icmp-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "1995"
+  priority                     = 1995 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Icmp"
   source_port_range            = "*"
   destination_port_range       = "*"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-ssh" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-ssh"
+  name                         = "allow-ssh-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2000"
+  priority                     = 2000 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "22"
-  source_address_prefixes      = azurerm_subnet.controller.address_prefixes
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.controller_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-http" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-http"
+  name                         = "allow-http-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2005"
+  priority                     = 2005 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "80"
   source_address_prefix        = "*"
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-https" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-https"
+  name                         = "allow-https-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2010"
+  priority                     = 2010 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "443"
   source_address_prefix        = "*"
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-cilium-health" {
-  resource_group_name = azurerm_resource_group.cluster.name
-  count               = var.networking == "cilium" ? 1 : 0
+  for_each = var.networking == "cilium" ? local.worker_subnets : {}
 
-  name                         = "allow-cilium-health"
+  name                         = "allow-cilium-health-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2013"
+  priority                     = 2012 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "4240"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-cilium-metrics" {
-  resource_group_name = azurerm_resource_group.cluster.name
-  count               = var.networking == "cilium" ? 1 : 0
+  for_each = var.networking == "cilium" ? local.worker_subnets : {}
 
-  name                         = "allow-cilium-metrics"
+  name                         = "allow-cilium-metrics-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2014"
+  priority                     = 2014 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "9962-9965"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-vxlan" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-vxlan"
+  name                         = "allow-vxlan-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2015"
+  priority                     = 2016 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Udp"
   source_port_range            = "*"
   destination_port_range       = "4789"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 resource "azurerm_network_security_rule" "worker-linux-vxlan" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-linux-vxlan"
+  name                         = "allow-linux-vxlan-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2016"
+  priority                     = 2018 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Udp"
   source_port_range            = "*"
   destination_port_range       = "8472"
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 # Allow Prometheus to scrape node-exporter daemonset
 resource "azurerm_network_security_rule" "worker-node-exporter" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-node-exporter"
+  name                         = "allow-node-exporter-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2020"
+  priority                     = 2020 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "9100"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 # Allow Prometheus to scrape kube-proxy
 resource "azurerm_network_security_rule" "worker-kube-proxy" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                         = "allow-kube-proxy"
+  name                         = "allow-kube-proxy-${each.key}"
+  resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = "2024"
+  priority                     = 2024 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Tcp"
   source_port_range            = "*"
   destination_port_range       = "10249"
-  source_address_prefixes      = azurerm_subnet.worker.address_prefixes
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.worker_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 # Allow apiserver to access kubelet's for exec, log, port-forward
 resource "azurerm_network_security_rule" "worker-kubelet" {
-  resource_group_name = azurerm_resource_group.cluster.name
+  for_each = local.worker_subnets
 
-  name                        = "allow-kubelet"
+  name                        = "allow-kubelet-${each.key}"
+  resource_group_name         = azurerm_resource_group.cluster.name
   network_security_group_name = azurerm_network_security_group.worker.name
-  priority                    = "2025"
+  priority                    = 2026 + (each.key == "ipv4" ? 0 : 1)
   access                      = "Allow"
   direction                   = "Inbound"
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "10250"
-
   # allow Prometheus to scrape kubelet metrics too
-  source_address_prefixes      = concat(azurerm_subnet.controller.address_prefixes, azurerm_subnet.worker.address_prefixes)
-  destination_address_prefixes = azurerm_subnet.worker.address_prefixes
+  source_address_prefixes      = local.cluster_subnets[each.key]
+  destination_address_prefixes = local.worker_subnets[each.key]
 }
 
 # Override Azure AllowVNetInBound and AllowAzureLoadBalancerInBound
