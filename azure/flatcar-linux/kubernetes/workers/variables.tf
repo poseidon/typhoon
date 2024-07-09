@@ -58,6 +58,24 @@ variable "os_image" {
   }
 }
 
+variable "disk_type" {
+  type        = string
+  description = "Type of managed disk"
+  default     = "Standard_LRS"
+}
+
+variable "disk_size" {
+  type        = number
+  description = "Size of the managed disk in GB"
+  default     = 30
+}
+
+variable "ephemeral_disk" {
+  type        = bool
+  description = "Use ephemeral local disk instead of managed disk (requires vm_type with local storage)"
+  default     = false
+}
+
 variable "priority" {
   type        = string
   description = "Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be evicted at any time."

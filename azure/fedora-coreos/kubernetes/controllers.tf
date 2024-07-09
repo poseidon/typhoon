@@ -44,9 +44,9 @@ resource "azurerm_linux_virtual_machine" "controllers" {
   source_image_id = var.os_image
   os_disk {
     name                 = "${var.cluster_name}-controller-${count.index}"
+    storage_account_type = var.controller_disk_type
+    disk_size_gb         = var.controller_disk_size
     caching              = "None"
-    disk_size_gb         = var.disk_size
-    storage_account_type = "Premium_LRS"
   }
 
   # network

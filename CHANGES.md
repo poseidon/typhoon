@@ -18,6 +18,10 @@ Notable changes between versions.
   * Configure worker nodes to use outbound rules and the load balancer for SNAT
 * Extend network security rules to allow IPv6 traffic, analogous to IPv4
 * Rename `region` variable to `location` to align with Azure platform conventions ([#1469](https://github.com/poseidon/typhoon/pull/1469))
+* Change worker pools from uniform to flexible orchestration mode ([#1473](https://github.com/poseidon/typhoon/pull/1473))
+* Add options to allow workers nodes to use ephemeral local disks ([#1473](https://github.com/poseidon/typhoon/pull/1473))
+  * Add `controller_disk_type` and `controller_disk_size` variables
+  * Add `worker_disk_type`, `worker_disk_size`, and `worker_ephemeral_disk` variables
 * Reduce the number of public IPv4 addresses needed for the Azure load balancer ([#1470](https://github.com/poseidon/typhoon/pull/1470))
 
 ```diff
@@ -30,6 +34,10 @@ module "cluster" {
 + network_cidr = {
 +   ipv4 = ["10.0.0.0/16"]
 + }
+
+  # optional
++ controller_disk_type = "StandardSSD_LRS"
++ worker_ephemeral_disk = true
 }
 ```
 

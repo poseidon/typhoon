@@ -3,21 +3,29 @@ locals {
 }
 
 # Workers scale set
-resource "azurerm_linux_virtual_machine_scale_set" "workers" {
-  name                = "${var.name}-worker"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  sku                 = var.vm_type
-  instances           = var.worker_count
-  # instance name prefix for instances in the set
-  computer_name_prefix   = "${var.name}-worker"
-  single_placement_group = false
+resource "azurerm_orchestrated_virtual_machine_scale_set" "workers" {
+  name                        = "${var.name}-worker"
+  resource_group_name         = var.resource_group_name
+  location                    = var.location
+  platform_fault_domain_count = 1
+  sku_name                    = var.vm_type
+  instances                   = var.worker_count
 
   # storage
-  source_image_id = var.os_image
+  encryption_at_host_enabled = true
+  source_image_id            = var.os_image
   os_disk {
-    storage_account_type = "Standard_LRS"
-    caching              = "ReadWrite"
+    storage_account_type = var.disk_type
+    disk_size_gb         = var.disk_size
+    caching              = "ReadOnly"
+    # Optionally, use the ephemeral disk of the instance type (support varies)
+    dynamic "diff_disk_settings" {
+      for_each = var.ephemeral_disk ? [1] : []
+      content {
+        option    = "Local"
+        placement = "ResourceDisk"
+      }
+    }
   }
 
   # network
@@ -44,44 +52,29 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   }
 
   # boot
-  custom_data = base64encode(data.ct_config.worker.rendered)
+  user_data_base64 = base64encode(data.ct_config.worker.rendered)
   boot_diagnostics {
     # defaults to a managed storage account
   }
 
   # Azure requires an RSA admin_ssh_key
-  admin_username = "core"
-  admin_ssh_key {
-    username   = "core"
-    public_key = local.azure_authorized_key
+  os_profile {
+    linux_configuration {
+      admin_username = "core"
+      admin_ssh_key {
+        username   = "core"
+        public_key = local.azure_authorized_key
+      }
+      computer_name_prefix = "${var.name}-worker"
+    }
   }
 
   # lifecycle
-  upgrade_mode = "Manual"
   # eviction policy may only be set when priority is Spot
   priority        = var.priority
   eviction_policy = var.priority == "Spot" ? "Delete" : null
   termination_notification {
     enabled = true
-  }
-}
-
-# Scale up or down to maintain desired number, tolerating deallocations.
-resource "azurerm_monitor_autoscale_setting" "workers" {
-  name                = "${var.name}-maintain-desired"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  # autoscale
-  enabled            = true
-  target_resource_id = azurerm_linux_virtual_machine_scale_set.workers.id
-
-  profile {
-    name = "default"
-    capacity {
-      minimum = var.worker_count
-      default = var.worker_count
-      maximum = var.worker_count
-    }
   }
 }
 

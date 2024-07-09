@@ -22,15 +22,15 @@ variable "dns_zone_group" {
 
 # instances
 
+variable "os_image" {
+  type        = string
+  description = "Fedora CoreOS image for instances"
+}
+
+
 variable "controller_count" {
   type        = number
   description = "Number of controllers (i.e. masters)"
-  default     = 1
-}
-
-variable "worker_count" {
-  type        = number
-  description = "Number of workers"
   default     = 1
 }
 
@@ -40,21 +40,46 @@ variable "controller_type" {
   default     = "Standard_B2s"
 }
 
+variable "controller_disk_type" {
+  type        = string
+  description = "Type of managed disk for controller node(s)"
+  default     = "Premium_LRS"
+}
+
+variable "controller_disk_size" {
+  type        = number
+  description = "Size of the managed disk in GB for controller node(s)"
+  default     = 30
+}
+
+variable "worker_count" {
+  type        = number
+  description = "Number of workers"
+  default     = 1
+}
+
 variable "worker_type" {
   type        = string
   description = "Machine type for workers (see `az vm list-skus --location centralus`)"
   default     = "Standard_D2as_v5"
 }
 
-variable "os_image" {
+variable "worker_disk_type" {
   type        = string
-  description = "Fedora CoreOS image for instances"
+  description = "Type of managed disk for worker nodes"
+  default     = "Standard_LRS"
 }
 
-variable "disk_size" {
+variable "worker_disk_size" {
   type        = number
-  description = "Size of the disk in GB"
+  description = "Size of the managed disk in GB for worker nodes"
   default     = 30
+}
+
+variable "worker_ephemeral_disk" {
+  type        = bool
+  description = "Use ephemeral local disk instead of managed disk (requires vm_type with local storage)"
+  default     = false
 }
 
 variable "worker_priority" {
