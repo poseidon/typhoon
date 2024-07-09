@@ -17,7 +17,7 @@ output "ingress_static_ipv6" {
 
 # Outputs for worker pools
 
-output "region" {
+output "location" {
   value = azurerm_resource_group.cluster.location
 }
 

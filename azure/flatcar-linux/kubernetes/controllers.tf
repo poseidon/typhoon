@@ -32,7 +32,7 @@ resource "azurerm_dns_a_record" "etcds" {
 resource "azurerm_availability_set" "controllers" {
   name                         = "${var.cluster_name}-controllers"
   resource_group_name          = azurerm_resource_group.cluster.name
-  location                     = var.region
+  location                     = var.location
   platform_fault_domain_count  = 2
   platform_update_domain_count = 4
   managed                      = true
@@ -44,7 +44,7 @@ resource "azurerm_linux_virtual_machine" "controllers" {
 
   name                = "${var.cluster_name}-controller-${count.index}"
   resource_group_name = azurerm_resource_group.cluster.name
-  location            = var.region
+  location            = var.location
   availability_set_id = azurerm_availability_set.controllers.id
   size                = var.controller_type
 

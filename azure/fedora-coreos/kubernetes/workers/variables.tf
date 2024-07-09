@@ -5,9 +5,9 @@ variable "name" {
 
 # Azure
 
-variable "region" {
+variable "location" {
   type        = string
-  description = "Must be set to the Azure Region of cluster"
+  description = "Must be set to the Azure location of cluster"
 }
 
 variable "resource_group_name" {

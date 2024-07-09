@@ -5,9 +5,9 @@ variable "cluster_name" {
 
 # Azure
 
-variable "region" {
+variable "location" {
   type        = string
-  description = "Azure Region (e.g. centralus , see `az account list-locations --output table`)"
+  description = "Azure location (e.g. centralus , see `az account list-locations --output table`)"
 }
 
 variable "dns_zone" {

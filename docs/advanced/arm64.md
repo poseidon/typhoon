@@ -190,7 +190,7 @@ module "ramius" {
 
   # Azure
   cluster_name   = "ramius"
-  region         = "centralus"
+  location       = "centralus"
   dns_zone       = "azure.example.com"
   dns_zone_group = "example-group"
 
@@ -202,6 +202,5 @@ module "ramius" {
   controller_type = "Standard_D2pls_v5"
   worker_type     = "Standard_D2pls_v5"
   worker_count    = 2
-  host_cidr       = "10.0.0.0/20"
 }
 ```

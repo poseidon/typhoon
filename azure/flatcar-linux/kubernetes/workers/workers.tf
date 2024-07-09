@@ -11,7 +11,7 @@ locals {
 resource "azurerm_linux_virtual_machine_scale_set" "workers" {
   name                = "${var.name}-worker"
   resource_group_name = var.resource_group_name
-  location            = var.region
+  location            = var.location
   sku                 = var.vm_type
   instances           = var.worker_count
   # instance name prefix for instances in the set
@@ -91,7 +91,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "workers" {
 resource "azurerm_monitor_autoscale_setting" "workers" {
   name                = "${var.name}-maintain-desired"
   resource_group_name = var.resource_group_name
-  location            = var.region
+  location            = var.location
   # autoscale
   enabled            = true
   target_resource_id = azurerm_linux_virtual_machine_scale_set.workers.id

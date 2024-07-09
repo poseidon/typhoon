@@ -6,6 +6,7 @@ Notable changes between versions.
 
 ### Azure
 
+* Rename `region` variable to `location` to align with Azure platform conventions
 * Configure the virtual network and subnets with IPv6 private address space
   * Change `host_cidr` variable (string) to a `network_cidr` object with `ipv4` and `ipv6` fields that list CIDR strings. Leave the variable unset to use the defaults. (**breaking**)
 * Add support for dual-stack Kubernetes Ingress Load Balancing
@@ -21,6 +22,8 @@ Notable changes between versions.
 ```diff
 module "cluster" {
   ...
+- region = "centralus"
++ location = "centralus"
   # optional
 - host_cidr = "10.0.0.0/16"
 + network_cidr = {

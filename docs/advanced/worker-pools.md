@@ -114,7 +114,7 @@ Create a cluster following the Azure [tutorial](../flatcar-linux/azure.md#cluste
       source = "git::https://github.com/poseidon/typhoon//azure/fedora-coreos/kubernetes/workers?ref=v1.30.2"
 
       # Azure
-      region                   = module.ramius.region
+      location                 = module.ramius.location
       resource_group_name      = module.ramius.resource_group_name
       subnet_id                = module.ramius.subnet_id
       security_group_id        = module.ramius.security_group_id
@@ -140,7 +140,7 @@ Create a cluster following the Azure [tutorial](../flatcar-linux/azure.md#cluste
       source = "git::https://github.com/poseidon/typhoon//azure/flatcar-linux/kubernetes/workers?ref=v1.30.2"
 
       # Azure
-      region                   = module.ramius.region
+      location                 = module.ramius.location
       resource_group_name      = module.ramius.resource_group_name
       subnet_id                = module.ramius.subnet_id
       security_group_id        = module.ramius.security_group_id

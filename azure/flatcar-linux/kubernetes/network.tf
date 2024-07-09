@@ -19,7 +19,7 @@ locals {
 # Organize cluster into a resource group
 resource "azurerm_resource_group" "cluster" {
   name     = var.cluster_name
-  location = var.region
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "network" {

@@ -4,7 +4,7 @@ module "workers" {
 
   # Azure
   resource_group_name      = azurerm_resource_group.cluster.name
-  region                   = azurerm_resource_group.cluster.location
+  location                 = azurerm_resource_group.cluster.location
   subnet_id                = azurerm_subnet.worker.id
   security_group_id        = azurerm_network_security_group.worker.id
   backend_address_pool_ids = local.backend_address_pool_ids

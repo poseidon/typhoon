@@ -90,7 +90,7 @@ module "ramius" {
 
   # Azure
   cluster_name   = "ramius"
-  region         = "centralus"
+  location       = "centralus"
   dns_zone       = "azure.example.com"
   dns_zone_group = "example-group"
 
@@ -199,14 +199,14 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/azure/f
 | Name | Description | Example |
 |:-----|:------------|:--------|
 | cluster_name | Unique cluster name (prepended to dns_zone) | "ramius" |
-| region | Azure region | "centralus" |
+| location | Azure location | "centralus" |
 | dns_zone | Azure DNS zone | "azure.example.com" |
 | dns_zone_group | Resource group where the Azure DNS zone resides | "global" |
 | os_image | Fedora CoreOS image for instances | "/subscriptions/..../custom-image" |
 | ssh_authorized_key | SSH public key for user 'core' | "ssh-ed25519 AAAAB3NZ..." |
 
 !!! tip
-    Regions are shown in [docs](https://azure.microsoft.com/en-us/global-infrastructure/regions/) or with `az account list-locations --output table`.
+    Locations are shown in [docs](https://azure.microsoft.com/en-us/global-infrastructure/regions/) or with `az account list-locations --output table`.
 
 #### DNS Zone
 

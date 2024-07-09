@@ -17,7 +17,7 @@ resource "azurerm_dns_a_record" "apiserver" {
 resource "azurerm_public_ip" "apiserver-ipv4" {
   name                = "${var.cluster_name}-apiserver-ipv4"
   resource_group_name = azurerm_resource_group.cluster.name
-  location            = var.region
+  location            = var.location
   sku                 = "Standard"
   allocation_method   = "Static"
 }
@@ -26,7 +26,7 @@ resource "azurerm_public_ip" "apiserver-ipv4" {
 resource "azurerm_public_ip" "ingress-ipv4" {
   name                = "${var.cluster_name}-ingress-ipv4"
   resource_group_name = azurerm_resource_group.cluster.name
-  location            = var.region
+  location            = var.location
   ip_version          = "IPv4"
   sku                 = "Standard"
   allocation_method   = "Static"
@@ -36,7 +36,7 @@ resource "azurerm_public_ip" "ingress-ipv4" {
 resource "azurerm_public_ip" "ingress-ipv6" {
   name                = "${var.cluster_name}-ingress-ipv6"
   resource_group_name = azurerm_resource_group.cluster.name
-  location            = var.region
+  location            = var.location
   ip_version          = "IPv6"
   sku                 = "Standard"
   allocation_method   = "Static"
@@ -46,7 +46,7 @@ resource "azurerm_public_ip" "ingress-ipv6" {
 resource "azurerm_lb" "cluster" {
   name                = var.cluster_name
   resource_group_name = azurerm_resource_group.cluster.name
-  location            = var.region
+  location            = var.location
   sku                 = "Standard"
 
   frontend_ip_configuration {
