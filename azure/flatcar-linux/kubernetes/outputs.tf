@@ -6,12 +6,12 @@ output "kubeconfig-admin" {
 # Outputs for Kubernetes Ingress
 
 output "ingress_static_ipv4" {
-  value       = azurerm_public_ip.ingress-ipv4.ip_address
+  value       = azurerm_public_ip.frontend-ipv4.ip_address
   description = "IPv4 address of the load balancer for distributing traffic to Ingress controllers"
 }
 
 output "ingress_static_ipv6" {
-  value       = azurerm_public_ip.ingress-ipv6.ip_address
+  value       = azurerm_public_ip.frontend-ipv6.ip_address
   description = "IPv6 address of the load balancer for distributing traffic to Ingress controllers"
 }
 

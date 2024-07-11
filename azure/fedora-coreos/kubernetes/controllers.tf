@@ -8,16 +8,14 @@ locals {
 
 # Discrete DNS records for each controller's private IPv4 for etcd usage
 resource "azurerm_dns_a_record" "etcds" {
-  count               = var.controller_count
-  resource_group_name = var.dns_zone_group
+  count = var.controller_count
 
   # DNS Zone name where record should be created
-  zone_name = var.dns_zone
-
+  zone_name           = var.dns_zone
+  resource_group_name = var.dns_zone_group
   # DNS record
   name = format("%s-etcd%d", var.cluster_name, count.index)
   ttl  = 300
-
   # private IPv4 address for etcd
   records = [azurerm_network_interface.controllers[count.index].private_ip_address]
 }
@@ -135,12 +133,20 @@ resource "azurerm_network_interface_security_group_association" "controllers" {
 }
 
 # Associate controller network interface with controller backend address pool
-resource "azurerm_network_interface_backend_address_pool_association" "controllers" {
+resource "azurerm_network_interface_backend_address_pool_association" "controllers-ipv4" {
   count = var.controller_count
 
   network_interface_id    = azurerm_network_interface.controllers[count.index].id
   ip_configuration_name   = "ipv4"
-  backend_address_pool_id = azurerm_lb_backend_address_pool.controller.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.controller-ipv4.id
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "controllers-ipv6" {
+  count = var.controller_count
+
+  network_interface_id    = azurerm_network_interface.controllers[count.index].id
+  ip_configuration_name   = "ipv6"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.controller-ipv6.id
 }
 
 # Fedora CoreOS controllers

@@ -6,7 +6,6 @@ Notable changes between versions.
 
 ### Azure
 
-* Rename `region` variable to `location` to align with Azure platform conventions
 * Configure the virtual network and subnets with IPv6 private address space
   * Change `host_cidr` variable (string) to a `network_cidr` object with `ipv4` and `ipv6` fields that list CIDR strings. Leave the variable unset to use the defaults. (**breaking**)
 * Add support for dual-stack Kubernetes Ingress Load Balancing
@@ -18,6 +17,8 @@ Notable changes between versions.
   * Configure controller nodes to have a public IPv6 address
   * Configure worker nodes to use outbound rules and the load balancer for SNAT
 * Extend network security rules to allow IPv6 traffic, analogous to IPv4
+* Rename `region` variable to `location` to align with Azure platform conventions ([#1469](https://github.com/poseidon/typhoon/pull/1469))
+* Reduce the number of public IPv4 addresses needed for the Azure load balancer ([#1470](https://github.com/poseidon/typhoon/pull/1470))
 
 ```diff
 module "cluster" {
