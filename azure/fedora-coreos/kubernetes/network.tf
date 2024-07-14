@@ -1,14 +1,27 @@
+# Choose an IPv6 ULA subnet at random
+# https://datatracker.ietf.org/doc/html/rfc4193
+resource "random_id" "ula-netnum" {
+  byte_length = 5 # 40 bits
+}
+
 locals {
+  # fd00::/8 -> shift 40 -> 2^40 possible /48 subnets
+  ula-range = cidrsubnet("fd00::/8", 40, random_id.ula-netnum.dec)
+  network_cidr = {
+    ipv4 = var.network_cidr.ipv4
+    ipv6 = length(var.network_cidr.ipv6) > 0 ? var.network_cidr.ipv6 : [local.ula-range]
+  }
+
   # Subdivide the virtual network into subnets
   # - controllers use netnum 0
   # - workers use netnum 1
   controller_subnets = {
-    ipv4 = [for i, cidr in var.network_cidr.ipv4 : cidrsubnet(cidr, 1, 0)]
-    ipv6 = [for i, cidr in var.network_cidr.ipv6 : cidrsubnet(cidr, 16, 0)]
+    ipv4 = [for i, cidr in local.network_cidr.ipv4 : cidrsubnet(cidr, 1, 0)]
+    ipv6 = [for i, cidr in local.network_cidr.ipv6 : cidrsubnet(cidr, 16, 0)]
   }
   worker_subnets = {
-    ipv4 = [for i, cidr in var.network_cidr.ipv4 : cidrsubnet(cidr, 1, 1)]
-    ipv6 = [for i, cidr in var.network_cidr.ipv6 : cidrsubnet(cidr, 16, 1)]
+    ipv4 = [for i, cidr in local.network_cidr.ipv4 : cidrsubnet(cidr, 1, 1)]
+    ipv6 = [for i, cidr in local.network_cidr.ipv6 : cidrsubnet(cidr, 16, 1)]
   }
   cluster_subnets = {
     ipv4 = concat(local.controller_subnets.ipv4, local.worker_subnets.ipv4)
@@ -27,10 +40,9 @@ resource "azurerm_virtual_network" "network" {
   resource_group_name = azurerm_resource_group.cluster.name
   location            = azurerm_resource_group.cluster.location
   address_space = concat(
-    var.network_cidr.ipv4,
-    var.network_cidr.ipv6
+    local.network_cidr.ipv4,
+    local.network_cidr.ipv6
   )
-
 }
 
 # Subnets - separate subnets for controllers and workers because Azure

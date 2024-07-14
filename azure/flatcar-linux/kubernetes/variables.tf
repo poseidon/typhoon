@@ -127,7 +127,7 @@ variable "networking" {
 variable "network_cidr" {
   type = object({
     ipv4 = list(string)
-    ipv6 = optional(list(string), ["fd9a:0d2f:b7dc::/48"])
+    ipv6 = optional(list(string), [])
   })
   description = "Virtual network CIDR ranges"
   default = {
