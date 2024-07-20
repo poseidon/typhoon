@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.30.3
+
+* Kubernetes [v1.30.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1303)
+* Update Cilium from v1.15.6 to [v1.15.7](https://github.com/cilium/cilium/releases/tag/v1.15.7)
+* Update flannel from v0.25.4 to [v0.25.5](https://github.com/flannel-io/flannel/releases/tag/v0.25.5)
+
 ### Azure
 
 * Configure the virtual network and subnets with IPv6 private address space
