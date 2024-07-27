@@ -69,6 +69,12 @@ variable "spot_price" {
   default     = 0
 }
 
+variable "cpu_credits" {
+  type        = string
+  description = "CPU burst credits mode (if applicable)"
+  default     = null
+}
+
 variable "target_groups" {
   type        = list(string)
   description = "Additional target group ARNs to which instances should be added"

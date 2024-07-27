@@ -10,7 +10,10 @@ module "workers" {
   instance_type   = var.worker_type
   os_stream       = var.os_stream
   arch            = var.arch
-  disk_size       = var.disk_size
+  disk_type       = var.worker_disk_type
+  disk_size       = var.worker_disk_size
+  disk_iops       = var.worker_disk_iops
+  cpu_credits     = var.worker_cpu_credits
   spot_price      = var.worker_price
   target_groups   = var.worker_target_groups
 

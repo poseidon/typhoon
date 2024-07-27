@@ -10,6 +10,13 @@ Notable changes between versions.
 * Update Cilium from v1.15.6 to [v1.15.7](https://github.com/cilium/cilium/releases/tag/v1.15.7)
 * Update flannel from v0.25.4 to [v0.25.5](https://github.com/flannel-io/flannel/releases/tag/v0.25.5)
 
+### AWS
+
+* Add `controller_disk_type`, `controller_disk_size`, and `controller_disk_iops` variables
+* Add `worker_disk_type`, `worker_disk_size`, and `worker_disk_iops` variables and fix propagation to worker nodes
+* Remove `disk_type`, `disk_size`, and `disk_iops` variables
+* Add `controller_cpu_credits` and `worker_cpu_credits` variables to set CPU pricing mode for burstable instance types
+
 ### Azure
 
 * Configure the virtual network and subnets with IPv6 private address space

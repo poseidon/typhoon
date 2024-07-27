@@ -17,30 +17,6 @@ variable "dns_zone_id" {
 
 # instances
 
-variable "controller_count" {
-  type        = number
-  description = "Number of controllers (i.e. masters)"
-  default     = 1
-}
-
-variable "worker_count" {
-  type        = number
-  description = "Number of workers"
-  default     = 1
-}
-
-variable "controller_type" {
-  type        = string
-  description = "EC2 instance type for controllers"
-  default     = "t3.small"
-}
-
-variable "worker_type" {
-  type        = string
-  description = "EC2 instance type for workers"
-  default     = "t3.small"
-}
-
 variable "os_image" {
   type        = string
   description = "AMI channel for a Container Linux derivative (flatcar-stable, flatcar-beta, flatcar-alpha)"
@@ -52,22 +28,76 @@ variable "os_image" {
   }
 }
 
-variable "disk_size" {
+variable "controller_count" {
+  type        = number
+  description = "Number of controllers (i.e. masters)"
+  default     = 1
+}
+
+variable "controller_type" {
+  type        = string
+  description = "EC2 instance type for controllers"
+  default     = "t3.small"
+}
+
+variable "controller_disk_size" {
   type        = number
   description = "Size of the EBS volume in GB"
   default     = 30
 }
 
-variable "disk_type" {
+variable "controller_disk_type" {
   type        = string
   description = "Type of the EBS volume (e.g. standard, gp2, gp3, io1)"
   default     = "gp3"
 }
 
-variable "disk_iops" {
+variable "controller_disk_iops" {
   type        = number
   description = "IOPS of the EBS volume (e.g. 3000)"
   default     = 3000
+}
+
+variable "controller_cpu_credits" {
+  type        = string
+  description = "CPU credits mode (if using a burstable instance type)"
+  default     = null
+}
+
+variable "worker_count" {
+  type        = number
+  description = "Number of workers"
+  default     = 1
+}
+
+variable "worker_type" {
+  type        = string
+  description = "EC2 instance type for workers"
+  default     = "t3.small"
+}
+
+variable "worker_disk_size" {
+  type        = number
+  description = "Size of the EBS volume in GB"
+  default     = 30
+}
+
+variable "worker_disk_type" {
+  type        = string
+  description = "Type of the EBS volume (e.g. standard, gp2, gp3, io1)"
+  default     = "gp3"
+}
+
+variable "worker_disk_iops" {
+  type        = number
+  description = "IOPS of the EBS volume (e.g. 3000)"
+  default     = 3000
+}
+
+variable "worker_cpu_credits" {
+  type        = string
+  description = "CPU credits mode (if using a burstable instance type)"
+  default     = null
 }
 
 variable "worker_price" {
