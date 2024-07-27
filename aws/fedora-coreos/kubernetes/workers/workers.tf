@@ -94,6 +94,10 @@ resource "aws_launch_template" "worker" {
     }
   }
 
+  credit_specification {
+    cpu_credits = var.cpu_credits
+  }
+
   lifecycle {
     // Override the default destroy and replace update behavior
     create_before_destroy = true

@@ -28,9 +28,9 @@ resource "aws_instance" "controllers" {
 
   # storage
   root_block_device {
-    volume_type = var.disk_type
-    volume_size = var.disk_size
-    iops        = var.disk_iops
+    volume_type = var.controller_disk_type
+    volume_size = var.controller_disk_size
+    iops        = var.controller_disk_iops
     encrypted   = true
     tags        = {}
   }
@@ -39,6 +39,10 @@ resource "aws_instance" "controllers" {
   associate_public_ip_address = true
   subnet_id                   = element(aws_subnet.public.*.id, count.index)
   vpc_security_group_ids      = [aws_security_group.controller.id]
+
+  credit_specification {
+    cpu_credits = var.controller_cpu_credits
+  }
 
   lifecycle {
     ignore_changes = [
