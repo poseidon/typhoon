@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Allow controller and worker nodes to use different CPU architectures
+  * Add `controller_arch` and `worker_arch` variables
+  * Remove the `arch` variable
+
 ## v1.30.3
 
 * Kubernetes [v1.30.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1303)
@@ -19,17 +25,23 @@ Notable changes between versions.
   * Fix propagating settings to worker disks, previously ignored
 * Allow configuring CPU pricing model for burstable instance types ([#1482](https://github.com/poseidon/typhoon/pull/1482))
   * Add `controller_cpu_credits` and `worker_cpu_credits` variables (`standard` or `unlimited`)
+* Configure controller or worker instance architecture ([#1485](https://github.com/poseidon/typhoon/pull/1485))
+  * Add `controller_arch` and `worker_arch` variables (`amd64` or `arm64`)
+  * Remove `arch` variable
 
 ```diff
 module "cluster" {
   ...
+- arch      = "amd64"
 - disk_type = "gp3"
 - disk_size = 30
 - disk_iops = 3000
 
++ controller_arch        = "amd64"
 + controller_disk_size   = 15
-+ worker_disk_size       = 22
 + controller_cpu_credits = "standard"
++ worker_arch            = "amd64"
++ worker_disk_size       = 22
 + worker_cpu_credits     = "unlimited"
 }
 ```
@@ -53,6 +65,9 @@ module "cluster" {
   * Add `controller_disk_type` and `controller_disk_size` variables
   * Add `worker_disk_type`, `worker_disk_size`, and `worker_ephemeral_disk` variables
 * Reduce the number of public IPv4 addresses needed for the Azure load balancer ([#1470](https://github.com/poseidon/typhoon/pull/1470))
+* Configure controller or worker instance architecture for Flatcar Linux ([#1485](https://github.com/poseidon/typhoon/pull/1485))
+  * Add `controller_arch` and `worker_arch` variables (`amd64` or `arm64`)
+  * Remove `arch` variable
 
 ```diff
 module "cluster" {
@@ -65,7 +80,7 @@ module "cluster" {
 +   ipv4 = ["10.0.0.0/16"]
 + }
 
-  # optional
+  # instances
 + controller_disk_type = "StandardSSD_LRS"
 + worker_ephemeral_disk = true
 }

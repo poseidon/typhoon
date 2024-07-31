@@ -19,7 +19,7 @@ data "aws_ami" "fedora-coreos" {
 }
 
 data "aws_ami" "fedora-coreos-arm" {
-  count = var.arch == "arm64" ? 1 : 0
+  count = var.controller_arch == "arm64" ? 1 : 0
 
   most_recent = true
   owners      = ["125523088429"]

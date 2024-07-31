@@ -9,7 +9,7 @@ module "workers" {
   worker_count    = var.worker_count
   instance_type   = var.worker_type
   os_image        = var.os_image
-  arch            = var.arch
+  arch            = var.worker_arch
   disk_type       = var.worker_disk_type
   disk_size       = var.worker_disk_size
   disk_iops       = var.worker_disk_iops

@@ -2,8 +2,8 @@ locals {
   # Container Linux derivative
   # flatcar-stable -> Flatcar Linux Stable
   channel      = split("-", var.os_image)[1]
-  offer_suffix = var.arch == "arm64" ? "corevm" : "free"
-  urn          = var.arch == "arm64" ? local.channel : "${local.channel}-gen2"
+  offer_suffix = var.controller_arch == "arm64" ? "corevm" : "free"
+  urn          = var.controller_arch == "arm64" ? local.channel : "${local.channel}-gen2"
 
   # Typhoon ssh_authorized_key supports RSA or a newer formats (e.g. ed25519).
   # However, Azure requires an older RSA key to pass validations. To use a
@@ -63,7 +63,7 @@ resource "azurerm_linux_virtual_machine" "controllers" {
   }
 
   dynamic "plan" {
-    for_each = var.arch == "arm64" ? [] : [1]
+    for_each = var.controller_arch == "arm64" ? [] : [1]
     content {
       publisher = "kinvolk"
       product   = "flatcar-container-linux-${local.offer_suffix}"
