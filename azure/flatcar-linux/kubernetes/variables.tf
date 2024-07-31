@@ -168,14 +168,25 @@ variable "worker_node_labels" {
   default     = []
 }
 
-variable "arch" {
-  type        = string
-  description = "Container architecture (amd64 or arm64)"
-  default     = "amd64"
+# advanced
 
+variable "controller_arch" {
+  type        = string
+  description = "Controller node(s) architecture (amd64 or arm64)"
+  default     = "amd64"
   validation {
-    condition     = var.arch == "amd64" || var.arch == "arm64"
-    error_message = "The arch must be amd64 or arm64."
+    condition     = contains(["amd64", "arm64"], var.controller_arch)
+    error_message = "The controller_arch must be amd64 or arm64."
+  }
+}
+
+variable "worker_arch" {
+  type        = string
+  description = "Worker node(s) architecture (amd64 or arm64)"
+  default     = "amd64"
+  validation {
+    condition     = contains(["amd64", "arm64"], var.worker_arch)
+    error_message = "The worker_arch must be amd64 or arm64."
   }
 }
 
