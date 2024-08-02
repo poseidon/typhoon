@@ -9,7 +9,7 @@ module "workers" {
   worker_count = var.worker_count
   machine_type = var.worker_type
   os_image     = var.os_image
-  disk_size    = var.disk_size
+  disk_size    = var.worker_disk_size
   preemptible  = var.worker_preemptible
 
   # configuration

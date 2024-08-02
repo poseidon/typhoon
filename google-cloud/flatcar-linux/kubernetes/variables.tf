@@ -22,30 +22,6 @@ variable "dns_zone_name" {
 
 # instances
 
-variable "controller_count" {
-  type        = number
-  description = "Number of controllers (i.e. masters)"
-  default     = 1
-}
-
-variable "worker_count" {
-  type        = number
-  description = "Number of workers"
-  default     = 1
-}
-
-variable "controller_type" {
-  type        = string
-  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
-  default     = "n1-standard-1"
-}
-
-variable "worker_type" {
-  type        = string
-  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
-  default     = "n1-standard-1"
-}
-
 variable "os_image" {
   type        = string
   description = "Flatcar Linux image for compute instances (flatcar-stable, flatcar-beta, flatcar-alpha)"
@@ -57,7 +33,37 @@ variable "os_image" {
   }
 }
 
-variable "disk_size" {
+variable "controller_count" {
+  type        = number
+  description = "Number of controllers (i.e. masters)"
+  default     = 1
+}
+
+variable "controller_type" {
+  type        = string
+  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
+  default     = "n1-standard-1"
+}
+
+variable "controller_disk_size" {
+  type        = number
+  description = "Size of the disk in GB"
+  default     = 30
+}
+
+variable "worker_count" {
+  type        = number
+  description = "Number of workers"
+  default     = 1
+}
+
+variable "worker_type" {
+  type        = string
+  description = "Machine type for controllers (see `gcloud compute machine-types list`)"
+  default     = "n1-standard-1"
+}
+
+variable "worker_disk_size" {
   type        = number
   description = "Size of the disk in GB"
   default     = 30

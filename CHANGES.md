@@ -12,10 +12,27 @@ Notable changes between versions.
 
 ### AWS
 
-* Add `controller_disk_type`, `controller_disk_size`, and `controller_disk_iops` variables
-* Add `worker_disk_type`, `worker_disk_size`, and `worker_disk_iops` variables and fix propagation to worker nodes
-* Remove `disk_type`, `disk_size`, and `disk_iops` variables
-* Add `controller_cpu_credits` and `worker_cpu_credits` variables to set CPU pricing mode for burstable instance types
+* Allow configuring controller and worker disks ([#1482](https://github.com/poseidon/typhoon/pull/1482))
+  * Add `controller_disk_type`, `controller_disk_size`, and `controller_disk_iops` variables
+  * Add `worker_disk_type`, `worker_disk_size`, and `worker_disk_iops` variables
+  * Remove `disk_type`, `disk_size`, and `disk_iops` variables
+  * Fix propagating settings to worker disks, previously ignored
+* Allow configuring CPU pricing model for burstable instance types ([#1482](https://github.com/poseidon/typhoon/pull/1482))
+  * Add `controller_cpu_credits` and `worker_cpu_credits` variables (`standard` or `unlimited`)
+
+```diff
+module "cluster" {
+  ...
+- disk_type = "gp3"
+- disk_size = 30
+- disk_iops = 3000
+
++ controller_disk_size   = 15
++ worker_disk_size       = 22
++ controller_cpu_credits = "standard"
++ worker_cpu_credits     = "unlimited"
+}
+```
 
 ### Azure
 
@@ -53,6 +70,12 @@ module "cluster" {
 + worker_ephemeral_disk = true
 }
 ```
+
+### Google Cloud
+
+* Allow configuring controller and worker disks ([#1486](https://github.com/poseidon/typhoon/pull/1486))
+  * Add `controller_disk_size` and `worker_disk_size` variables
+  * Remove `disk_size` variable
 
 ## v1.30.2
 
