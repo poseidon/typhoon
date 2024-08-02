@@ -81,11 +81,11 @@ module "yavin" {
   dns_zone      = "example.com"
   dns_zone_name = "example-zone"
 
+  # instances
+  worker_count = 2
+
   # configuration
   ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
-
-  # optional
-  worker_count = 2
 }
 ```
 
@@ -157,9 +157,9 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
-kube-system   calico-node-1cs8z                         2/2    Running   0         6m
-kube-system   calico-node-d1l5b                         2/2    Running   0         6m
-kube-system   calico-node-sp9ps                         2/2    Running   0         6m
+kube-system   cilium-1cs8z                              1/1    Running   0         6m
+kube-system   cilium-d1l5b                              1/1    Running   0         6m
+kube-system   cilium-sp9ps                              1/1    Running   0         6m
 kube-system   coredns-1187388186-dkh3o                  1/1    Running   0         6m
 kube-system   coredns-1187388186-zj5dl                  1/1    Running   0         6m
 kube-system   kube-apiserver-controller-0               1/1    Running   0         6m
@@ -211,12 +211,13 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
-| controller_count | Number of controllers (i.e. masters) | 1 | 3 |
-| worker_count | Number of workers | 1 | 3 |
-| controller_type | Machine type for controllers | "n1-standard-1" | See below |
-| worker_type | Machine type for workers | "n1-standard-1" | See below |
 | os_stream | Fedora CoreOS stream for compute instances | "stable" | "stable", "testing", "next" |
-| disk_size | Size of the disk in GB | 30 | 100 |
+| controller_count | Number of controllers (i.e. masters) | 1 | 3 |
+| controller_type | Machine type for controllers | "n1-standard-1" | See below |
+| controller_disk_type | Controller disk size in GB | 30 | 20 |
+| worker_count | Number of workers | 1 | 3 |
+| worker_type | Machine type for workers | "n1-standard-1" | See below |
+| worker_disk_size | Worker disk size in GB | 30 | 100 |
 | worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
 | controller_snippets | Controller Butane snippets | [] | [examples](/advanced/customization/) |
 | worker_snippets | Worker Butane snippets | [] | [examples](/advanced/customization/) |

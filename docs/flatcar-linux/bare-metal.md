@@ -333,9 +333,10 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
-kube-system   calico-node-6qp7f                          2/2       Running   1          11m
-kube-system   calico-node-gnjrm                          2/2       Running   0          11m
-kube-system   calico-node-llbgt                          2/2       Running   0          11m
+kube-system   cilium-6qp7f                               1/1       Running   1          11m
+kube-system   cilium-gnjrm                               1/1       Running   0          11m
+kube-system   cilium-llbgt                               1/1       Running   0          11m
+kube-system   cilium-operator-68d778b448-g744f           1/1       Running   0          11m
 kube-system   coredns-1187388186-dj3pd                   1/1       Running   0          11m
 kube-system   coredns-1187388186-mx9rt                   1/1       Running   0          11m
 kube-system   kube-apiserver-node1.example.com           1/1       Running   0          11m

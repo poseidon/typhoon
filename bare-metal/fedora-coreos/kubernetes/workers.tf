@@ -15,13 +15,12 @@ module "workers" {
   domain = var.workers[count.index].domain
 
   # configuration
-  kubeconfig            = module.bootstrap.kubeconfig-kubelet
-  ssh_authorized_key    = var.ssh_authorized_key
-  service_cidr          = var.service_cidr
-  cluster_domain_suffix = var.cluster_domain_suffix
-  node_labels           = lookup(var.worker_node_labels, var.workers[count.index].name, [])
-  node_taints           = lookup(var.worker_node_taints, var.workers[count.index].name, [])
-  snippets              = lookup(var.snippets, var.workers[count.index].name, [])
+  kubeconfig         = module.bootstrap.kubeconfig-kubelet
+  ssh_authorized_key = var.ssh_authorized_key
+  service_cidr       = var.service_cidr
+  node_labels        = lookup(var.worker_node_labels, var.workers[count.index].name, [])
+  node_taints        = lookup(var.worker_node_taints, var.workers[count.index].name, [])
+  snippets           = lookup(var.snippets, var.workers[count.index].name, [])
 
   # optional
   cached_install = var.cached_install

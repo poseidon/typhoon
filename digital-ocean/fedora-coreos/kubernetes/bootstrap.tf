@@ -11,11 +11,10 @@ module "bootstrap" {
   network_encapsulation = "vxlan"
   network_mtu           = "1450"
 
-  pod_cidr              = var.pod_cidr
-  service_cidr          = var.service_cidr
-  cluster_domain_suffix = var.cluster_domain_suffix
-  enable_reporting      = var.enable_reporting
-  enable_aggregation    = var.enable_aggregation
-  components            = var.components
+  pod_cidr           = var.pod_cidr
+  service_cidr       = var.service_cidr
+  enable_reporting   = var.enable_reporting
+  enable_aggregation = var.enable_aggregation
+  components         = var.components
 }
 

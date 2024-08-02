@@ -115,7 +115,6 @@ EOD
   default     = "10.3.0.0/16"
 }
 
-
 variable "enable_reporting" {
   type        = bool
   description = "Enable usage or analytics reporting to upstreams (Calico)"
@@ -134,13 +133,7 @@ variable "worker_node_labels" {
   default     = []
 }
 
-# unofficial, undocumented, unsupported
-
-variable "cluster_domain_suffix" {
-  type        = string
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default     = "cluster.local"
-}
+# advanced
 
 variable "daemonset_tolerations" {
   type        = list(string)

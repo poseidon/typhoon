@@ -164,6 +164,14 @@ EOD
   default     = "10.3.0.0/16"
 }
 
+variable "worker_node_labels" {
+  type        = list(string)
+  description = "List of initial worker node labels"
+  default     = []
+}
+
+# advanced
+
 variable "enable_reporting" {
   type        = bool
   description = "Enable usage or analytics reporting to upstreams (Calico)"
@@ -174,20 +182,6 @@ variable "enable_aggregation" {
   type        = bool
   description = "Enable the Kubernetes Aggregation Layer"
   default     = true
-}
-
-variable "worker_node_labels" {
-  type        = list(string)
-  description = "List of initial worker node labels"
-  default     = []
-}
-
-# unofficial, undocumented, unsupported
-
-variable "cluster_domain_suffix" {
-  type        = string
-  description = "Queries for domains with the suffix will be answered by CoreDNS. Default is cluster.local (e.g. foo.default.svc.cluster.local)"
-  default     = "cluster.local"
 }
 
 variable "controller_arch" {
@@ -209,7 +203,6 @@ variable "worker_arch" {
     error_message = "The worker_arch must be amd64 or arm64."
   }
 }
-
 
 variable "daemonset_tolerations" {
   type        = list(string)

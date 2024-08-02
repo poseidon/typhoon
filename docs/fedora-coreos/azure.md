@@ -93,16 +93,16 @@ module "ramius" {
   location       = "centralus"
   dns_zone       = "azure.example.com"
   dns_zone_group = "example-group"
-
-  # configuration
-  os_image           = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-36.20220716.3.1"
-  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
-
-  # optional
-  worker_count    = 2
-  network_cidr       = {
+  network_cidr   = {
     ipv4 = ["10.0.0.0/20"]
   }
+
+  # instances
+  os_image     = "/subscriptions/some/path/Microsoft.Compute/images/fedora-coreos-36.20220716.3.1"
+  worker_count = 2
+
+  # configuration
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 }
 ```
 
@@ -175,9 +175,9 @@ $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                        READY  STATUS    RESTARTS  AGE
 kube-system   coredns-7c6fbb4f4b-b6qzx                    1/1    Running   0         26m
 kube-system   coredns-7c6fbb4f4b-j2k3d                    1/1    Running   0         26m
-kube-system   calico-node-1m5bf                           2/2    Running   0         26m
-kube-system   calico-node-7jmr1                           2/2    Running   0         26m
-kube-system   calico-node-bknc8                           2/2    Running   0         26m
+kube-system   cilium-1m5bf                                1/1    Running   0         26m
+kube-system   cilium-7jmr1                                1/1    Running   0         26m
+kube-system   cilium-bknc8                                1/1    Running   0         26m
 kube-system   kube-apiserver-ramius-controller-0          1/1    Running   0         26m
 kube-system   kube-controller-manager-ramius-controller-0 1/1    Running   0         26m
 kube-system   kube-proxy-j4vpq                            1/1    Running   0         26m
@@ -240,10 +240,14 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
-| worker_count | Number of workers | 1 | 3 |
 | controller_type | Machine type for controllers | "Standard_B2s" | See below |
+| controller_disk_type | Managed disk for controllers | Premium_LRS | Standard_LRS |
+| controller_disk_size | Managed disk size in GB      | 30 | 50 |
+| worker_count | Number of workers | 1 | 3 |
 | worker_type | Machine type for workers | "Standard_D2as_v5" | See below |
-| disk_size | Size of the disk in GB | 30 | 100 |
+| worker_disk_type | Managed disk for workers | Standard_LRS | Premium_LRS |
+| worker_disk_size | Size of the disk in GB | 30 | 100 |
+| worker_ephemeral_disk | Use ephemeral local disk instead of managed disk | false | true |
 | worker_priority | Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be deallocated at any time | Regular | Spot |
 | controller_snippets | Controller Butane snippets | [] | [example](/advanced/customization/#usage) |
 | worker_snippets | Worker Butane snippets | [] | [example](/advanced/customization/#usage) |
@@ -254,9 +258,6 @@ Reference the DNS zone with `azurerm_dns_zone.clusters.name` and its resource gr
 | worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
 
 Check the list of valid [machine types](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) and their [specs](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/sizes-general). Use `az vm list-skus` to get the identifier.
-
-!!! warning
-    Unlike AWS and GCP, Azure requires its *virtual* networks to have non-overlapping IPv4 CIDRs (yeah, go figure). Instead of each cluster just using `10.0.0.0/16` for instances, each Azure cluster's `host_cidr` must be non-overlapping (e.g. 10.0.0.0/20 for the 1st cluster, 10.0.16.0/20 for the 2nd cluster, etc).
 
 !!! warning
     Do not choose a `controller_type` smaller than `Standard_B2s`. Smaller instances are not sufficient for running a controller.

@@ -74,7 +74,6 @@ data "ct_config" "controllers" {
       for i in range(var.controller_count) : "etcd${i}=https://${var.cluster_name}-etcd${i}.${var.dns_zone}:2380"
     ])
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
-    cluster_domain_suffix  = var.cluster_domain_suffix
   })
   strict   = true
   snippets = var.controller_snippets

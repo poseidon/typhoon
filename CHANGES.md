@@ -4,11 +4,7 @@ Notable changes between versions.
 
 ## Latest
 
-### Azure
-
-* Allow controller and worker nodes to use different CPU architectures
-  * Add `controller_arch` and `worker_arch` variables
-  * Remove the `arch` variable
+* Remove `cluster_domain_suffix` variable, always use "cluster.local"
 
 ## v1.30.3
 

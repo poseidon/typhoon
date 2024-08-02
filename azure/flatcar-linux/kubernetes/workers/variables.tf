@@ -137,12 +137,3 @@ variable "arch" {
     error_message = "The arch must be amd64 or arm64."
   }
 }
-
-# unofficial, undocumented, unsupported
-
-variable "cluster_domain_suffix" {
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  type        = string
-  default     = "cluster.local"
-}
-

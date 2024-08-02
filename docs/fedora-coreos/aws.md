@@ -79,12 +79,12 @@ module "tempest" {
   dns_zone     = "aws.example.com"
   dns_zone_id  = "Z3PAABBCFAKEC0"
 
-  # configuration
-  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
-
-  # optional
+  # instances
   worker_count = 2
   worker_type  = "t3.small"
+
+  # configuration
+  ssh_authorized_key = "ssh-ed25519 AAAAB3Nz..."
 }
 ```
 
@@ -155,9 +155,9 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                   READY  STATUS    RESTARTS  AGE
-kube-system   calico-node-1m5bf                      2/2    Running   0         34m
-kube-system   calico-node-7jmr1                      2/2    Running   0         34m
-kube-system   calico-node-bknc8                      2/2    Running   0         34m
+kube-system   cilium-1m5bf                           1/1    Running   0         34m
+kube-system   cilium-7jmr1                           1/1    Running   0         34m
+kube-system   cilium-bknc8                           1/1    Running   0         34m
 kube-system   coredns-1187388186-wx1lg               1/1    Running   0         34m
 kube-system   coredns-1187388186-qjnvp               1/1    Running   0         34m
 kube-system   kube-apiserver-ip-10-0-3-155           1/1    Running   0         34m
@@ -206,16 +206,21 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 
 | Name | Description | Default | Example |
 |:-----|:------------|:--------|:--------|
+| os_stream | Fedora CoreOS stream for instances | "stable" | "testing", "next" |
 | controller_count | Number of controllers (i.e. masters) | 1 | 1 |
-| worker_count | Number of workers | 1 | 3 |
 | controller_type | EC2 instance type for controllers | "t3.small" | See below |
+| controller_disk_size | Size of EBS volume in GB | 30 | 100 |
+| controller_disk_type | Type of EBS volume | gp3 | io1 |
+| controller_disk_iops | IOPS of EBS volume | 3000 | 4000 |
+| controller_cpu_credits | Burstable CPU pricing model | null (i.e. auto) | standard, unlimited |
+| worker_count | Number of workers | 1 | 3 |
 | worker_type | EC2 instance type for workers | "t3.small" | See below |
-| os_stream | Fedora CoreOS stream for compute instances | "stable" | "testing", "next" |
-| disk_size | Size of the EBS volume in GB | 30 | 100 |
-| disk_type | Type of the EBS volume | "gp3" | standard, gp2, gp3, io1 |
-| disk_iops | IOPS of the EBS volume | 0 (i.e. auto) | 400 |
-| worker_target_groups | Target group ARNs to which worker instances should be added | [] | [aws_lb_target_group.app.id] |
+| worker_disk_size | Size of EBS volume in GB | 30 | 100 |
+| worker_disk_type | Type of EBS volume | gp3 | io1 |
+| worker_disk_iops | IOPS of EBS volume | 3000 | 4000 |
+| worker_cpu_credits | Burstable CPU pricing model | null (i.e. auto) | standard, unlimited |
 | worker_price | Spot price in USD for worker instances or 0 to use on-demand instances | 0 | 0.10 |
+| worker_target_groups | Target group ARNs to which worker instances should be added | [] | [aws_lb_target_group.app.id] |
 | controller_snippets | Controller Butane snippets | [] | [examples](/advanced/customization/) |
 | worker_snippets | Worker Butane snippets | [] | [examples](/advanced/customization/) |
 | networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
@@ -228,7 +233,7 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-types/).
 
 !!! warning
-    Do not choose a `controller_type` smaller than `t2.small`. Smaller instances are not sufficient for running a controller.
+    Do not choose a `controller_type` smaller than `t3.small`. Smaller instances are not sufficient for running a controller.
 
 !!! tip "MTU"
     If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8981! You will get better pod-to-pod bandwidth.

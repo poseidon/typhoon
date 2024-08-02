@@ -148,7 +148,7 @@ storage:
           cgroupDriver: systemd
           clusterDNS:
             - ${cluster_dns_service_ip}
-          clusterDomain: ${cluster_domain_suffix}
+          clusterDomain: cluster.local
           healthzPort: 0
           rotateCertificates: true
           shutdownGracePeriod: 45s

@@ -96,13 +96,7 @@ variable "node_taints" {
   default     = []
 }
 
-# unofficial, undocumented, unsupported, temporary
-
-variable "cluster_domain_suffix" {
-  type        = string
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default     = "cluster.local"
-}
+# advanced
 
 variable "accelerator_type" {
   type        = string

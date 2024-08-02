@@ -108,12 +108,6 @@ EOD
   default     = "10.3.0.0/16"
 }
 
-variable "cluster_domain_suffix" {
-  type        = string
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default     = "cluster.local"
-}
-
 variable "node_labels" {
   type        = list(string)
   description = "List of initial node labels"
@@ -134,7 +128,7 @@ variable "arch" {
   default     = "amd64"
 
   validation {
-    condition     = var.arch == "amd64" || var.arch == "arm64"
+    condition     = contains(["amd64", "arm64"], var.arch)
     error_message = "The arch must be amd64 or arm64."
   }
 }

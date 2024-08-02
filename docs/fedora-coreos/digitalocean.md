@@ -88,12 +88,12 @@ module "nemo" {
   region       = "nyc3"
   dns_zone     = "digital-ocean.example.com"
 
-  # configuration
-  os_image         = data.digitalocean_image.fedora-coreos-31-20200323-3-2.id
-  ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
-
-  # optional
+  # instances
+  os_image     = data.digitalocean_image.fedora-coreos-31-20200323-3-2.id
   worker_count = 2
+
+  # configuration
+  ssh_fingerprints = ["d7:9d:79:ae:56:32:73:79:95:88:e3:a2:ab:5d:45:e7"]
 }
 ```
 
@@ -166,9 +166,9 @@ List the pods.
 NAMESPACE     NAME                                       READY     STATUS    RESTARTS   AGE
 kube-system   coredns-1187388186-ld1j7                   1/1       Running   0          11m
 kube-system   coredns-1187388186-rdhf7                   1/1       Running   0          11m
-kube-system   calico-node-1m5bf                          2/2       Running   0          11m
-kube-system   calico-node-7jmr1                          2/2       Running   0          11m
-kube-system   calico-node-bknc8                          2/2       Running   0          11m
+kube-system   cilium-1m5bf                               1/1       Running   0          11m
+kube-system   cilium-7jmr1                               1/1       Running   0          11m
+kube-system   cilium-bknc8                               1/1       Running   0          11m
 kube-system   kube-apiserver-ip-10.132.115.81            1/1       Running   0          11m
 kube-system   kube-controller-manager-ip-10.132.115.81   1/1       Running   0          11m
 kube-system   kube-proxy-6kxjf                           1/1       Running   0          11m

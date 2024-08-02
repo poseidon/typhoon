@@ -98,13 +98,7 @@ variable "enable_aggregation" {
   default     = true
 }
 
-# unofficial, undocumented, unsupported
-
-variable "cluster_domain_suffix" {
-  type        = string
-  description = "Queries for domains with the suffix will be answered by coredns. Default is cluster.local (e.g. foo.default.svc.cluster.local) "
-  default     = "cluster.local"
-}
+# advanced
 
 variable "components" {
   description = "Configure pre-installed cluster components"

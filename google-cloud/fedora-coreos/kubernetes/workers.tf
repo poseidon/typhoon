@@ -13,11 +13,10 @@ module "workers" {
   preemptible  = var.worker_preemptible
 
   # configuration
-  kubeconfig            = module.bootstrap.kubeconfig-kubelet
-  ssh_authorized_key    = var.ssh_authorized_key
-  service_cidr          = var.service_cidr
-  cluster_domain_suffix = var.cluster_domain_suffix
-  snippets              = var.worker_snippets
-  node_labels           = var.worker_node_labels
+  kubeconfig         = module.bootstrap.kubeconfig-kubelet
+  ssh_authorized_key = var.ssh_authorized_key
+  service_cidr       = var.service_cidr
+  snippets           = var.worker_snippets
+  node_labels        = var.worker_node_labels
 }
 
