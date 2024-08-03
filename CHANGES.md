@@ -14,12 +14,12 @@ Notable changes between versions.
 
 ### AWS
 
-* Allow configuring controller and worker disks ([#1482](https://github.com/poseidon/typhoon/pull/1482))
+* Configure controller and worker disks ([#1482](https://github.com/poseidon/typhoon/pull/1482))
   * Add `controller_disk_type`, `controller_disk_size`, and `controller_disk_iops` variables
   * Add `worker_disk_type`, `worker_disk_size`, and `worker_disk_iops` variables
   * Remove `disk_type`, `disk_size`, and `disk_iops` variables
   * Fix propagating settings to worker disks, previously ignored
-* Allow configuring CPU pricing model for burstable instance types ([#1482](https://github.com/poseidon/typhoon/pull/1482))
+* Configure CPU pricing model for burstable instance types ([#1482](https://github.com/poseidon/typhoon/pull/1482))
   * Add `controller_cpu_credits` and `worker_cpu_credits` variables (`standard` or `unlimited`)
 * Configure controller or worker instance architecture ([#1485](https://github.com/poseidon/typhoon/pull/1485))
   * Add `controller_arch` and `worker_arch` variables (`amd64` or `arm64`)
