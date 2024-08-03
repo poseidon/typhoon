@@ -152,18 +152,6 @@ variable "worker_node_labels" {
 
 # advanced
 
-variable "enable_reporting" {
-  type        = bool
-  description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default     = false
-}
-
-variable "enable_aggregation" {
-  type        = bool
-  description = "Enable the Kubernetes Aggregation Layer"
-  default     = true
-}
-
 variable "daemonset_tolerations" {
   type        = list(string)
   description = "List of additional taint keys kube-system DaemonSets should tolerate (e.g. ['custom-role', 'gpu-role'])"

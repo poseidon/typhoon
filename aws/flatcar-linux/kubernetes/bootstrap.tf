@@ -9,8 +9,6 @@ module "bootstrap" {
   network_mtu           = var.network_mtu
   pod_cidr              = var.pod_cidr
   service_cidr          = var.service_cidr
-  enable_reporting      = var.enable_reporting
-  enable_aggregation    = var.enable_aggregation
   daemonset_tolerations = var.daemonset_tolerations
   components            = var.components
 }

@@ -10,8 +10,6 @@ module "bootstrap" {
   network_ip_autodetection_method = var.network_ip_autodetection_method
   pod_cidr                        = var.pod_cidr
   service_cidr                    = var.service_cidr
-  enable_reporting                = var.enable_reporting
-  enable_aggregation              = var.enable_aggregation
   components                      = var.components
 }
 

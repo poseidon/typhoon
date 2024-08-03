@@ -139,18 +139,6 @@ variable "kernel_args" {
   default     = []
 }
 
-variable "enable_reporting" {
-  type        = bool
-  description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default     = false
-}
-
-variable "enable_aggregation" {
-  type        = bool
-  description = "Enable the Kubernetes Aggregation Layer"
-  default     = true
-}
-
 # advanced
 
 variable "components" {

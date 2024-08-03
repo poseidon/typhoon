@@ -86,18 +86,6 @@ EOD
   default     = "10.3.0.0/16"
 }
 
-variable "enable_reporting" {
-  type        = bool
-  description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default     = false
-}
-
-variable "enable_aggregation" {
-  type        = bool
-  description = "Enable the Kubernetes Aggregation Layer"
-  default     = true
-}
-
 # advanced
 
 variable "components" {

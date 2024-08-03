@@ -4,7 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Remove `enable_aggregation` variable for Kubernetes Aggregation Layer, always set to true
 * Remove `cluster_domain_suffix` variable, always use "cluster.local"
+* Remove `enable_reporting` variable for analytics, always set to false
 
 ## v1.30.3
 

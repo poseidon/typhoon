@@ -172,18 +172,6 @@ variable "worker_node_labels" {
 
 # advanced
 
-variable "enable_reporting" {
-  type        = bool
-  description = "Enable usage or analytics reporting to upstreams (Calico)"
-  default     = false
-}
-
-variable "enable_aggregation" {
-  type        = bool
-  description = "Enable the Kubernetes Aggregation Layer"
-  default     = true
-}
-
 variable "controller_arch" {
   type        = string
   description = "Controller node(s) architecture (amd64 or arm64)"
