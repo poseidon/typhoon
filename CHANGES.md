@@ -4,7 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
-* Update Cilium from v1.15.7 to [v1.16.0](https://github.com/cilium/cilium/releases/tag/v1.16.0)
+## v1.30.4
+
+* Kubernetes [v1.30.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1304)
+* Update Cilium from v1.15.7 to [v1.16.1](https://github.com/cilium/cilium/releases/tag/v1.16.1)
 * Update CoreDNS from v1.11.1 to v1.11.3
 * Remove `enable_aggregation` variable for Kubernetes Aggregation Layer, always set to true
 * Remove `cluster_domain_suffix` variable, always use "cluster.local"
