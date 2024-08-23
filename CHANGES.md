@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.31.0
 
 * Kubernetes [v1.31.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1310)
+* Fix invalid flannel-cni container image for those using flannel networking
 
 ## v1.30.4
 
