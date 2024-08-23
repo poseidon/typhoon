@@ -20,10 +20,8 @@ resource "aws_instance" "controllers" {
   tags = {
     Name = "${var.cluster_name}-controller-${count.index}"
   }
-
   instance_type = var.controller_type
   ami           = var.controller_arch == "arm64" ? data.aws_ami.fedora-coreos-arm[0].image_id : data.aws_ami.fedora-coreos.image_id
-  user_data     = data.ct_config.controllers.*.rendered[count.index]
 
   # storage
   root_block_device {
@@ -31,7 +29,9 @@ resource "aws_instance" "controllers" {
     volume_size = var.controller_disk_size
     iops        = var.controller_disk_iops
     encrypted   = true
-    tags        = {}
+    tags = {
+      Name = "${var.cluster_name}-controller-${count.index}"
+    }
   }
 
   # network
@@ -39,6 +39,10 @@ resource "aws_instance" "controllers" {
   subnet_id                   = element(aws_subnet.public.*.id, count.index)
   vpc_security_group_ids      = [aws_security_group.controller.id]
 
+  # boot
+  user_data = data.ct_config.controllers.*.rendered[count.index]
+
+  # cost
   credit_specification {
     cpu_credits = var.controller_cpu_credits
   }

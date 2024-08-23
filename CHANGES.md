@@ -9,6 +9,11 @@ Notable changes between versions.
 * Kubernetes [v1.31.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1310)
 * Fix invalid flannel-cni container image for those using flannel networking
 
+### AWS
+
+* Use EC2 resource-based hostnames instead of IP-based hostnames. The Amazon DNS server can resolve A and AAAA queries to IPv4 and IPv6 node addresses
+* Tag controller node EBS volumes with a name based on the controller node name
+
 ## v1.30.4
 
 * Kubernetes [v1.30.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1304)

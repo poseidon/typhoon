@@ -3,16 +3,14 @@ resource "aws_autoscaling_group" "workers" {
   name = "${var.name}-worker"
 
   # count
-  desired_capacity          = var.worker_count
-  min_size                  = var.worker_count
-  max_size                  = var.worker_count + 2
-  default_cooldown          = 30
-  health_check_grace_period = 30
+  desired_capacity = var.worker_count
+  min_size         = var.worker_count
+  max_size         = var.worker_count + 2
 
   # network
   vpc_zone_identifier = var.subnet_ids
 
-  # template
+  # instance template
   launch_template {
     id      = aws_launch_template.worker.id
     version = aws_launch_template.worker.latest_version
@@ -32,6 +30,10 @@ resource "aws_autoscaling_group" "workers" {
       min_healthy_percentage = 90
     }
   }
+  # Grace period before checking new instance's health
+  health_check_grace_period = 30
+  # Cooldown period between scaling activities
+  default_cooldown = 30
 
   lifecycle {
     # override the default destroy and replace update behavior
@@ -60,8 +62,6 @@ resource "aws_launch_template" "worker" {
     enabled = false
   }
 
-  user_data = sensitive(base64encode(data.ct_config.worker.rendered))
-
   # storage
   ebs_optimized = true
   block_device_mappings {
@@ -76,7 +76,13 @@ resource "aws_launch_template" "worker" {
   }
 
   # network
-  vpc_security_group_ids = var.security_groups
+  network_interfaces {
+    associate_public_ip_address = true
+    security_groups             = var.security_groups
+  }
+
+  # boot
+  user_data = sensitive(base64encode(data.ct_config.worker.rendered))
 
   # metadata
   metadata_options {

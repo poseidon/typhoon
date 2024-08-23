@@ -47,17 +47,25 @@ resource "aws_route" "egress-ipv6" {
 resource "aws_subnet" "public" {
   count = length(data.aws_availability_zones.all.names)
 
-  vpc_id            = aws_vpc.network.id
-  availability_zone = data.aws_availability_zones.all.names[count.index]
-
-  cidr_block                      = cidrsubnet(var.host_cidr, 4, count.index)
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.network.ipv6_cidr_block, 8, count.index)
-  map_public_ip_on_launch         = true
-  assign_ipv6_address_on_creation = true
-
   tags = {
     "Name" = "${var.cluster_name}-public-${count.index}"
   }
+  vpc_id            = aws_vpc.network.id
+  availability_zone = data.aws_availability_zones.all.names[count.index]
+
+  # IPv4 and IPv6 CIDR blocks
+  cidr_block      = cidrsubnet(var.host_cidr, 4, count.index)
+  ipv6_cidr_block = cidrsubnet(aws_vpc.network.ipv6_cidr_block, 8, count.index)
+
+  # Assign IPv4 and IPv6 addresses to instances
+  map_public_ip_on_launch         = true
+  assign_ipv6_address_on_creation = true
+
+  # Hostnames assigned to instances
+  # resource-name: <ec2-instance-id>.region.compute.internal
+  private_dns_hostname_type_on_launch            = "resource-name"
+  enable_resource_name_dns_a_record_on_launch    = true
+  enable_resource_name_dns_aaaa_record_on_launch = true
 }
 
 resource "aws_route_table_association" "public" {
