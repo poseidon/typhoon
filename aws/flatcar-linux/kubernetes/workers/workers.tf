@@ -58,9 +58,6 @@ resource "aws_launch_template" "worker" {
   name_prefix   = "${var.name}-worker"
   image_id      = local.ami_id
   instance_type = var.instance_type
-  monitoring {
-    enabled = false
-  }
 
   # storage
   ebs_optimized = true
@@ -88,8 +85,14 @@ resource "aws_launch_template" "worker" {
   metadata_options {
     http_tokens = "optional"
   }
+  monitoring {
+    enabled = false
+  }
 
-  # spot
+  # cost
+  credit_specification {
+    cpu_credits = var.cpu_credits
+  }
   dynamic "instance_market_options" {
     for_each = var.spot_price > 0 ? [1] : []
     content {
@@ -98,10 +101,6 @@ resource "aws_launch_template" "worker" {
         max_price = var.spot_price
       }
     }
-  }
-
-  credit_specification {
-    cpu_credits = var.cpu_credits
   }
 
   lifecycle {

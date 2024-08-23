@@ -128,8 +128,8 @@ resource "kubernetes_config_map" "cilium" {
     enable-bpf-masquerade = "true"
 
     # kube-proxy
-    kube-proxy-replacement                      = "false"
-    kube-proxy-replacement-healthz-bind-address = ""
+    kube-proxy-replacement                      = "true"
+    kube-proxy-replacement-healthz-bind-address = ":10256"
     enable-session-affinity                     = "true"
 
     # ClusterIPs from host namespace
