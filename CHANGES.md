@@ -16,6 +16,11 @@ Notable changes between versions.
   * The Amazon DNS server can resolve A and AAAA queries to IPv4 and IPv6 node addresses
 * Tag controller node EBS volumes with a name based on the controller node name
 
+### Google
+
+* Use `google_compute_region_instance_template` instead of `google_compute_instance_template`
+  * Google's regional instance template metadata is kept in the associated region for greater resiliency. The "global" instance templates were kept in a single region
+
 ## v1.30.4
 
 * Kubernetes [v1.30.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md#v1304)

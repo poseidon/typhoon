@@ -8,7 +8,7 @@ resource "google_compute_region_instance_group_manager" "workers" {
   region             = var.region
   version {
     name              = "default"
-    instance_template = google_compute_instance_template.worker.self_link
+    instance_template = google_compute_region_instance_template.worker.self_link
   }
 
   # Roll out MIG instance template changes by replacing instances.
@@ -58,7 +58,7 @@ resource "google_compute_health_check" "worker" {
 }
 
 # Worker instance template
-resource "google_compute_instance_template" "worker" {
+resource "google_compute_region_instance_template" "worker" {
   name_prefix  = "${var.name}-worker-"
   description  = "Worker Instance template"
   machine_type = var.machine_type
