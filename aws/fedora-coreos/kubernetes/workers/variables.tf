@@ -131,3 +131,13 @@ variable "arch" {
     error_message = "The arch must be amd64 or arm64."
   }
 }
+
+variable "http_tokens" {
+  description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2 (IMDSv2)"
+  default     = "optional"
+}
+
+variable "http_put_response_hop_limit" {
+  description = "The desired HTTP PUT response hop limit for instance metadata requests. The larger the number, the further instance metadata requests can travel."
+  default     = 1
+}

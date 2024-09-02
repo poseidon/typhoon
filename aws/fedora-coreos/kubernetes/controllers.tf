@@ -16,6 +16,10 @@ resource "aws_route53_record" "etcds" {
 # Controller instances
 resource "aws_instance" "controllers" {
   count = var.controller_count
+  metadata_options {
+    http_tokens                 = var.http_tokens
+    http_put_response_hop_limit = var.http_put_response_hop_limit
+  }
 
   tags = {
     Name = "${var.cluster_name}-controller-${count.index}"

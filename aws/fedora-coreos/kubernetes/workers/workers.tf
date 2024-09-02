@@ -84,8 +84,10 @@ resource "aws_launch_template" "worker" {
 
   # metadata
   metadata_options {
-    http_tokens = "optional"
+    http_tokens                 = var.http_tokens
+    http_put_response_hop_limit = var.http_put_response_hop_limit
   }
+
   monitoring {
     enabled = false
   }

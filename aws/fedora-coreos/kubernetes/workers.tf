@@ -20,10 +20,12 @@ module "workers" {
   target_groups = var.worker_target_groups
 
   # configuration
-  kubeconfig         = module.bootstrap.kubeconfig-kubelet
-  ssh_authorized_key = var.ssh_authorized_key
-  service_cidr       = var.service_cidr
-  snippets           = var.worker_snippets
-  node_labels        = var.worker_node_labels
+  kubeconfig                  = module.bootstrap.kubeconfig-kubelet
+  ssh_authorized_key          = var.ssh_authorized_key
+  service_cidr                = var.service_cidr
+  snippets                    = var.worker_snippets
+  node_labels                 = var.worker_node_labels
+  http_tokens                 = var.http_tokens
+  http_put_response_hop_limit = var.http_put_response_hop_limit
 }
 
