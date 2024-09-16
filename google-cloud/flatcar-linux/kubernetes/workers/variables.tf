@@ -51,6 +51,12 @@ variable "disk_size" {
   default     = 30
 }
 
+variable "disk_type" {
+  type        = string
+  description = "Type of managed disk"
+  default     = "pd-standard"
+}
+
 variable "preemptible" {
   type        = bool
   description = "If enabled, Compute Engine will terminate instances randomly within 24 hours"
@@ -109,4 +115,3 @@ variable "accelerator_count" {
   default     = "0"
   description = "Number of compute engine accelerators"
 }
-

@@ -209,26 +209,27 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 
 ### Optional
 
-| Name | Description | Default | Example |
-|:-----|:------------|:--------|:--------|
-| os_stream | Fedora CoreOS stream for compute instances | "stable" | "stable", "testing", "next" |
-| controller_count | Number of controllers (i.e. masters) | 1 | 3 |
-| controller_type | Machine type for controllers | "n1-standard-1" | See below |
-| controller_disk_type | Controller disk size in GB | 30 | 20 |
-| worker_count | Number of workers | 1 | 3 |
-| worker_type | Machine type for workers | "n1-standard-1" | See below |
-| worker_disk_size | Worker disk size in GB | 30 | 100 |
-| worker_preemptible | If enabled, Compute Engine will terminate workers randomly within 24 hours | false | true |
-| controller_snippets | Controller Butane snippets | [] | [examples](/advanced/customization/) |
-| worker_snippets | Worker Butane snippets | [] | [examples](/advanced/customization/) |
-| networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
-| pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
-| service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
-| worker_node_labels | List of initial worker node labels | [] | ["worker-pool=default"] |
+| Name                 | Description                                                                | Default         | Example                              |
+|:---------------------|:---------------------------------------------------------------------------|:----------------|:-------------------------------------|
+| os_stream            | Fedora CoreOS stream for compute instances                                 | "stable"        | "stable", "testing", "next"          |
+| controller_count     | Number of controllers (i.e. masters)                                       | 1               | 3                                    |
+| controller_type      | Machine type for controllers                                               | "n1-standard-1" | See below                            |
+| controller_disk_size | Controller disk size in GB                                                 | 30              | 20                                   |
+| controller_disk_type | Controller disk type                                                       | "pd-standard"   | "pd-ssd"                             |
+| worker_count         | Number of workers                                                          | 1               | 3                                    |
+| worker_type          | Machine type for workers                                                   | "n1-standard-1" | See below                            |
+| worker_disk_size     | Worker disk size in GB                                                     | 30              | 100                                  |
+| worker_disk_type     | Worker disk type                                                           | "pd-standard"   | "pd-ssd"                             |
+| worker_preemptible   | If enabled, Compute Engine will terminate workers randomly within 24 hours | false           | true                                 |
+| controller_snippets  | Controller Butane snippets                                                 | []              | [examples](/advanced/customization/) |
+| worker_snippets      | Worker Butane snippets                                                     | []              | [examples](/advanced/customization/) |
+| networking           | Choice of networking provider                                              | "cilium"        | "calico" or "cilium" or "flannel"    |
+| pod_cidr             | CIDR IPv4 range to assign to Kubernetes pods                               | "10.2.0.0/16"   | "10.22.0.0/16"                       |
+| service_cidr         | CIDR IPv4 range to assign to Kubernetes services                           | "10.3.0.0/16"   | "10.3.0.0/24"                        |
+| worker_node_labels   | List of initial worker node labels                                         | []              | ["worker-pool=default"]              |
 
 Check the list of valid [machine types](https://cloud.google.com/compute/docs/machine-types).
 
 #### Preemption
 
 Add `worker_preemptible = "true"` to allow worker nodes to be [preempted](https://cloud.google.com/compute/docs/instances/preemptible) at random, but pay [significantly](https://cloud.google.com/compute/pricing) less. Clusters tolerate stopping instances fairly well (reschedules pods, but cannot drain) and preemption provides a nice reward for running fault-tolerant cluster systems.`
-

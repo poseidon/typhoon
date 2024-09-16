@@ -51,6 +51,12 @@ variable "controller_disk_size" {
   default     = 30
 }
 
+variable "controller_disk_type" {
+  type        = string
+  description = "Type of managed disk for controller node(s)"
+  default     = "pd-standard"
+}
+
 variable "worker_count" {
   type        = number
   description = "Number of workers"
@@ -67,6 +73,12 @@ variable "worker_disk_size" {
   type        = number
   description = "Size of the disk in GB"
   default     = 30
+}
+
+variable "worker_disk_type" {
+  type        = string
+  description = "Type of managed disk for worker nodes"
+  default     = "pd-standard"
 }
 
 variable "worker_preemptible" {
