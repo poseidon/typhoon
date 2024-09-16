@@ -55,6 +55,10 @@ variable "controller_disk_type" {
   type        = string
   description = "Type of managed disk for controller node(s)"
   default     = "pd-standard"
+  validation {
+    condition     = contains(["pd-standard", "pd-ssd", "pd-balanced"], var.controller_disk_type)
+    error_message = "The controller_disk_type must be pd-standard, pd-ssd or pd-balanced."
+  }
 }
 
 variable "worker_count" {
@@ -79,6 +83,10 @@ variable "worker_disk_type" {
   type        = string
   description = "Type of managed disk for worker nodes"
   default     = "pd-standard"
+  validation {
+    condition     = contains(["pd-standard", "pd-ssd", "pd-balanced"], var.worker_disk_type)
+    error_message = "The worker_disk_type must be pd-standard, pd-ssd or pd-balanced."
+  }
 }
 
 variable "worker_preemptible" {
@@ -156,4 +164,3 @@ variable "components" {
   })
   default = null
 }
-

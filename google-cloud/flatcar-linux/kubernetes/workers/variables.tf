@@ -55,6 +55,10 @@ variable "disk_type" {
   type        = string
   description = "Type of managed disk"
   default     = "pd-standard"
+  validation {
+    condition     = contains(["pd-standard", "pd-ssd", "pd-balanced"], var.disk_type)
+    error_message = "The disk_type must be pd-standard, pd-ssd or pd-balanced."
+  }
 }
 
 variable "preemptible" {
