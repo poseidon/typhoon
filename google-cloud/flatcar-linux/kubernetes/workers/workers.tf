@@ -80,6 +80,7 @@ resource "google_compute_region_instance_template" "worker" {
     boot         = true
     source_image = data.google_compute_image.flatcar-linux.self_link
     disk_size_gb = var.disk_size
+    disk_type    = var.disk_type
   }
 
   network_interface {

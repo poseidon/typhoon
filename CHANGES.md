@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Google
+
+* Add `controller_disk_type` and `worker_disk_type` variables
+
 ## v1.31.0
 
 * Kubernetes [v1.31.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1310)

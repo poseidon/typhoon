@@ -51,6 +51,16 @@ variable "disk_size" {
   default     = 30
 }
 
+variable "disk_type" {
+  type        = string
+  description = "Type of managed disk"
+  default     = "pd-standard"
+  validation {
+    condition     = contains(["pd-standard", "pd-ssd", "pd-balanced"], var.disk_type)
+    error_message = "The disk_type must be pd-standard, pd-ssd or pd-balanced."
+  }
+}
+
 variable "preemptible" {
   type        = bool
   description = "If enabled, Compute Engine will terminate instances randomly within 24 hours"
@@ -109,4 +119,3 @@ variable "accelerator_count" {
   default     = "0"
   description = "Number of compute engine accelerators"
 }
-

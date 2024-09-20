@@ -45,6 +45,7 @@ resource "google_compute_instance" "controllers" {
     initialize_params {
       image = data.google_compute_image.flatcar-linux.self_link
       size  = var.controller_disk_size
+      type  = var.controller_disk_type
     }
   }
 

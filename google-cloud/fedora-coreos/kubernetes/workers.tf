@@ -10,6 +10,7 @@ module "workers" {
   machine_type = var.worker_type
   os_stream    = var.os_stream
   disk_size    = var.worker_disk_size
+  disk_type    = var.worker_disk_type
   preemptible  = var.worker_preemptible
 
   # configuration
@@ -19,4 +20,3 @@ module "workers" {
   snippets           = var.worker_snippets
   node_labels        = var.worker_node_labels
 }
-
