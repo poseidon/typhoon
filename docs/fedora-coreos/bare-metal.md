@@ -302,8 +302,9 @@ systemd[1]: Started Kubernetes control plane.
 
 ```
 resource "local_file" "kubeconfig-mercury" {
-  content  = module.mercury.kubeconfig-admin
-  filename = "/home/user/.kube/configs/mercury-config"
+  content         = module.mercury.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/mercury-config"
+  file_permission = "0600"
 }
 ```
 
@@ -373,4 +374,3 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | kernel_args | Additional kernel args to provide at PXE boot | [] | ["kvm-intel.nested=1"] |
 | worker_node_labels | Map from worker name to list of initial node labels | {} | {"node2" = ["role=special"]} |
 | worker_node_taints | Map from worker name to list of initial node taints | {} | {"node2" = ["role=special:NoSchedule"]} |
-

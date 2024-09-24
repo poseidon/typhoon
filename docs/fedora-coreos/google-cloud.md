@@ -136,8 +136,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-yavin" {
-  content  = module.yavin.kubeconfig-admin
-  filename = "/home/user/.kube/configs/yavin-config"
+  content         = module.yavin.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/yavin-config"
+  file_permission = "0600"
 }
 ```
 
