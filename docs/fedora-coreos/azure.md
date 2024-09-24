@@ -152,8 +152,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-ramius" {
-  content  = module.ramius.kubeconfig-admin
-  filename = "/home/user/.kube/configs/ramius-config"
+  content         = module.ramius.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/ramius-config"
+  file_permission = "0600"
 }
 ```
 

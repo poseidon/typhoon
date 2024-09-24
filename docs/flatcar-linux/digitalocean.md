@@ -144,8 +144,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-nemo" {
-  content  = module.nemo.kubeconfig-admin
-  filename = "/home/user/.kube/configs/nemo-config"
+  content         = module.nemo.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/nemo-config"
+  file_permission = "0600"
 }
 ```
 

@@ -136,8 +136,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-yavin" {
-  content  = module.yavin.kubeconfig-admin
-  filename = "/home/user/.kube/configs/yavin-config"
+  content         = module.yavin.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/yavin-config"
+  file_permission = "0600"
 }
 ```
 
@@ -231,4 +232,3 @@ Check the list of valid [machine types](https://cloud.google.com/compute/docs/ma
 #### Preemption
 
 Add `worker_preemptible = "true"` to allow worker nodes to be [preempted](https://cloud.google.com/compute/docs/instances/preemptible) at random, but pay [significantly](https://cloud.google.com/compute/pricing) less. Clusters tolerate stopping instances fairly well (reschedules pods, but cannot drain) and preemption provides a nice reward for running fault-tolerant cluster systems.`
-

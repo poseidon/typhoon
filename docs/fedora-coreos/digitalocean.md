@@ -144,8 +144,9 @@ In 3-6 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-nemo" {
-  content  = module.nemo.kubeconfig-admin
-  filename = "/home/user/.kube/configs/nemo-config"
+  content         = module.nemo.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/nemo-config"
+  file_permission = "0600"
 }
 ```
 
@@ -248,4 +249,3 @@ Check the list of valid [droplet types](https://developers.digitalocean.com/docu
 
 !!! warning
     Do not choose a `controller_type` smaller than 2GB. Smaller droplets are not sufficient for running a controller and bootstrapping will fail.
-

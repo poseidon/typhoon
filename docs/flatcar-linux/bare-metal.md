@@ -312,8 +312,9 @@ systemd[1]: Started Kubernetes control plane.
 
 ```
 resource "local_file" "kubeconfig-mercury" {
-  content  = module.mercury.kubeconfig-admin
-  filename = "/home/user/.kube/configs/mercury-config"
+  content         = module.mercury.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/mercury-config"
+  file_permission = "0600"
 }
 ```
 

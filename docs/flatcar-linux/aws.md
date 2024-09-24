@@ -134,8 +134,9 @@ In 4-8 minutes, the Kubernetes cluster will be ready.
 
 ```
 resource "local_file" "kubeconfig-tempest" {
-  content  = module.tempest.kubeconfig-admin
-  filename = "/home/user/.kube/configs/tempest-config"
+  content         = module.tempest.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/tempest-config"
+  file_permission = "0600"
 }
 ```
 
@@ -239,4 +240,3 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 #### Spot
 
 Add `worker_price = "0.10"` to use spot instance workers (instead of "on-demand") and set a maximum spot price in USD. Clusters can tolerate spot market interuptions fairly well (reschedules pods, but cannot drain) to save money, with the tradeoff that requests for workers may go unfulfilled.
-

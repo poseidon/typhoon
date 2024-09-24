@@ -87,8 +87,9 @@ module "yavin" {
 
 # Obtain cluster kubeconfig
 resource "local_file" "kubeconfig-yavin" {
-  content  = module.yavin.kubeconfig-admin
-  filename = "/home/user/.kube/configs/yavin-config"
+  content         = module.yavin.kubeconfig-admin
+  filename        = "/home/user/.kube/configs/yavin-config"
+  file_permission = "0600"
 }
 ```
 
@@ -157,4 +158,3 @@ Poseidon's Github [Sponsors](https://github.com/sponsors/poseidon) support the i
 <br>
 
 If you'd like your company here, please contact dghubble at psdn.io.
-
