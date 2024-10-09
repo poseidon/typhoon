@@ -62,6 +62,7 @@ resource "google_compute_region_instance_template" "worker" {
   name_prefix  = "${var.name}-worker-"
   description  = "Worker Instance template"
   machine_type = var.machine_type
+  region       = var.region
 
   metadata = {
     user-data = data.ct_config.worker.rendered

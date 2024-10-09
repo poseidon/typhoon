@@ -4,12 +4,15 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.31.1
+
 * Kubernetes [v1.31.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1311)
 * Update flannel from v0.25.5 to [v0.25.6](https://github.com/flannel-io/flannel/releases/tag/v0.25.6)
 
 ### Google
 
 * Add `controller_disk_type` and `worker_disk_type` variables ([#1513](https://github.com/poseidon/typhoon/pull/1513))
+* Add explicit `region` field to regional worker instance templates ([#1524](https://github.com/poseidon/typhoon/pull/1524))
 
 ## v1.31.0
 
