@@ -58,7 +58,7 @@ resource "kubernetes_deployment" "operator" {
         enable_service_links            = false
         container {
           name    = "cilium-operator"
-          image   = "quay.io/cilium/operator-generic:v1.16.2"
+          image   = "quay.io/cilium/operator-generic:v1.16.3"
           command = ["cilium-operator-generic"]
           args = [
             "--config-dir=/tmp/cilium/config-map",
