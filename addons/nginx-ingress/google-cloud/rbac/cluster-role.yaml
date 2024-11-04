@@ -29,7 +29,7 @@ rules:
       - list
       - watch
   - apiGroups:
-    - ""
+      - ""
     resources:
       - events
     verbs:
@@ -59,11 +59,11 @@ rules:
       - get
       - list
       - watch
-  - apiGroups: 
+  - apiGroups:
       - discovery.k8s.io
     resources:
       - "endpointslices"
-    verbs: 
+    verbs:
       - get
       - list
       - watch
