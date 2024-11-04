@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingress-controller-public
+  name: nginx-ingress-controller
   namespace: ingress
   annotations:
     prometheus.io/scrape: 'true'
@@ -10,7 +10,7 @@ spec:
   type: ClusterIP
   clusterIP: 10.3.0.12
   selector:
-    name: ingress-controller-public
+    name: nginx-ingress-controller
     phase: prod
   ports:
     - name: http
