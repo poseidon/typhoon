@@ -29,7 +29,7 @@ systemd:
         After=afterburn.service
         Wants=rpc-statd.service
         [Service]
-        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.31.2
+        Environment=KUBELET_IMAGE=quay.io/poseidon/kubelet:v1.31.3
         EnvironmentFile=/run/metadata/afterburn
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests

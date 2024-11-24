@@ -4,6 +4,16 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.31.3
+
+* Kubernetes [v1.31.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1312)
+* Update CoreDNS from v1.11.3 to v1.11.4
+* Update Cilium from v1.16.3 to [v1.16.4](https://github.com/cilium/cilium/releases/tag/v1.16.4)
+
+### Deprecations
+
+* Plan to drop support for using Calico CNI, recommend everyone use the Cilium default
+
 ## v1.31.2
 
 * Kubernetes [v1.31.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1312)
