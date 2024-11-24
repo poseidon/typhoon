@@ -34,7 +34,7 @@ resource "azurerm_public_ip" "frontend-ipv4" {
 
 # Static IPv6 address for the load balancer
 resource "azurerm_public_ip" "frontend-ipv6" {
-  name                = "${var.cluster_name}-ingress-ipv6"
+  name                = "${var.cluster_name}-frontend-ipv6"
   resource_group_name = azurerm_resource_group.cluster.name
   location            = var.location
   ip_version          = "IPv6"
