@@ -223,7 +223,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | controller_snippets  | Controller Container Linux Config snippets                                 | []               | [example](/advanced/customization/)         |
 | worker_snippets      | Worker Container Linux Config snippets                                     | []               | [example](/advanced/customization/)         |
 | networking           | Choice of networking provider                                              | "cilium"         | "calico" or "cilium" or "flannel"           |
-| pod_cidr             | CIDR IPv4 range to assign to Kubernetes pods                               | "10.2.0.0/16"    | "10.22.0.0/16"                              |
+| pod_cidr             | CIDR IPv4 range to assign to Kubernetes pods                               | "10.20.0.0/14"    | "10.22.0.0/16"                              |
 | service_cidr         | CIDR IPv4 range to assign to Kubernetes services                           | "10.3.0.0/16"    | "10.3.0.0/24"                               |
 | worker_node_labels   | List of initial worker node labels                                         | []               | ["worker-pool=default"]                     |
 

@@ -380,7 +380,7 @@ Check the [variables.tf](https://github.com/poseidon/typhoon/blob/master/bare-me
 | network_mtu | CNI interface MTU (calico-only) | 1480 | - |
 | snippets | Map from machine names to lists of Container Linux Config snippets | {} | [examples](/advanced/customization/) |
 | network_ip_autodetection_method | Method to detect host IPv4 address (calico-only) | "first-found" | "can-reach=10.0.0.1" |
-| pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.2.0.0/16" | "10.22.0.0/16" |
+| pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.20.0.0/14" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 | kernel_args | Additional kernel args to provide at PXE boot | [] | ["kvm-intel.nested=1"] |
 | worker_node_labels | Map from worker name to list of initial node labels | {} | {"node2" = ["role=special"]} |

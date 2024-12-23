@@ -1,7 +1,7 @@
 variable "pod_cidr" {
   type        = string
   description = "CIDR IP range to assign Kubernetes pods"
-  default     = "10.2.0.0/16"
+  default     = "10.20.0.0/14"
 }
 
 variable "daemonset_tolerations" {
