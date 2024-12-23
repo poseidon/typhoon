@@ -15,8 +15,27 @@ theme:
   icon:
     repo: fontawesome/brands/github-alt
   palette:
-    primary: blue
-    accent: pink
+    # Automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Light
+    - scheme: default
+      primary: blue
+      accent: pink
+      media: "(prefers-color-scheme: light)"
+      toggle:
+        name: Switch to dark mode
+        icon: material/weather-night
+    # Dark
+    - scheme: slate
+      primary: blue
+      accent: pink
+      media: "(prefers-color-scheme: dark)"
+      toggle:
+        name: Switch to system preference
+        icon: material/weather-sunny
   font:
     text: 'Roboto Slab'
     code: 'Roboto Mono'
