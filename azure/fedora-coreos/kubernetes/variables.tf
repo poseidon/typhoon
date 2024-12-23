@@ -132,7 +132,7 @@ variable "network_cidr" {
 variable "pod_cidr" {
   type        = string
   description = "CIDR IPv4 range to assign Kubernetes pods"
-  default     = "10.2.0.0/16"
+  default     = "10.20.0.0/14"
 }
 
 variable "service_cidr" {
