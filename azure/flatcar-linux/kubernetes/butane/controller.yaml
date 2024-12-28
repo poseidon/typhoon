@@ -153,6 +153,13 @@ storage:
           readOnlyPort: 0
           resolvConf: /run/systemd/resolve/resolv.conf
           volumePluginDir: /var/lib/kubelet/volumeplugins
+    - path: /etc/modules-load.d/typhoon.conf
+      mode: 0644
+      contents:
+        inline: |
+          # https://github.com/flannel-io/flannel/tree/master
+          nf_conntrack
+          br_netfilter
     - path: /opt/bootstrap/layout
       mode: 0544
       contents:

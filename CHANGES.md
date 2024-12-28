@@ -7,6 +7,7 @@ Notable changes between versions.
 # v1.32.0
 
 * Kubernetes [v1.32.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1320)
+* Load `nf_conntrack` and `br_netfilter` kernel modules persistently to support flannel
 
 # v1.31.4
 
