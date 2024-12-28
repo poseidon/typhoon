@@ -2,7 +2,7 @@
 
 Typhoon's component model allows for managing cluster components independent from the cluster's lifecycle, upgrading in a rolling or automated fashion, or customizing components in advanced ways.
 
-Typhoon clusters install core components like `CoreDNS`, `kube-proxy`, and a chosen CNI provider (`flannel`, `calico`, or `cilium`) by default. Since v1.30.1, pre-installed components are optional. Other "addon" components like Nginx Ingress, Prometheus, or Grafana may be optionally applied though the component model (after cluster creation).
+Typhoon clusters install core components like `CoreDNS`, `kube-proxy`, and a chosen CNI provider (`flannel` or `cilium`) by default. Since v1.30.1, pre-installed components are optional. Other "addon" components like Nginx Ingress, Prometheus, or Grafana may be optionally applied though the component model (after cluster creation).
 
 ## Components
 
@@ -12,7 +12,6 @@ Pre-installed by default:
 * kube-proxy
 * CNI provider (set via `var.networking`)
     * flannel
-    * Calico
     * Cilium
 
 Addons:
@@ -24,7 +23,7 @@ Addons:
 
 ## Pre-installed Components
 
-By default, Typhoon clusters install `CoreDNS`, `kube-proxy`, and a chosen CNI provider (`flannel`, `calico`, or `cilium`). Disable any or all of these components using the `components` system.
+By default, Typhoon clusters install `CoreDNS`, `kube-proxy`, and a chosen CNI provider (`flannel` or `cilium`). Disable any or all of these components using the `components` system.
 
 ```tf
 module "yavin" {

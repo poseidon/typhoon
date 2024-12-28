@@ -133,14 +133,8 @@ variable "ssh_authorized_key" {
 
 variable "networking" {
   type        = string
-  description = "Choice of networking provider (flannel, calico, or cilium)"
+  description = "Choice of networking provider (flannel or cilium)"
   default     = "cilium"
-}
-
-variable "network_mtu" {
-  type        = number
-  description = "CNI interface MTU (applies to calico only). Use 8981 if using instances types with Jumbo frames."
-  default     = 1480
 }
 
 variable "host_cidr" {

@@ -114,7 +114,7 @@ variable "azure_authorized_key" {
 
 variable "networking" {
   type        = string
-  description = "Choice of networking provider (flannel, calico, or cilium)"
+  description = "Choice of networking provider (flannel or cilium)"
   default     = "cilium"
 }
 

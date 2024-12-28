@@ -39,7 +39,7 @@ Together, they diversify Typhoon to support a range of container technologies.
 | control plane images | upstream images | upstream images |
 | on-host etcd      | docker    | podman |
 | on-host kubelet   | docker    | podman |
-| CNI plugins       | calico, cilium, flannel | calico, cilium, flannel |
+| CNI plugins       | cilium, flannel | cilium, flannel |
 | coordinated drain & OS update | [FLUO](https://github.com/kinvolk/flatcar-linux-update-operator) addon | [fleetlock](https://github.com/poseidon/fleetlock) |
 
 ## Directory Locations

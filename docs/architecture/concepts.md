@@ -8,7 +8,7 @@ Let's cover the concepts you'll need to get started.
 
 #### Nodes
 
-All cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the cluster. All nodes run `kube-proxy` and `calico` or `flannel` pods.
+All cluster nodes provision themselves from a declarative configuration upfront. Nodes run a `kubelet` service and register themselves with the control plane to join the cluster. All nodes run `kube-proxy` and `cilium` or `flannel` pods.
 
 #### Controllers
 

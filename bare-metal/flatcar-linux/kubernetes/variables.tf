@@ -87,20 +87,8 @@ variable "ssh_authorized_key" {
 
 variable "networking" {
   type        = string
-  description = "Choice of networking provider (flannel, calico, or cilium)"
+  description = "Choice of networking provider (flannel or cilium)"
   default     = "cilium"
-}
-
-variable "network_mtu" {
-  type        = number
-  description = "CNI interface MTU (applies to calico only)"
-  default     = 1480
-}
-
-variable "network_ip_autodetection_method" {
-  type        = string
-  description = "Method to autodetect the host IPv4 address (applies to calico only)"
-  default     = "first-found"
 }
 
 variable "pod_cidr" {

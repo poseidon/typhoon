@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.32.0 cluster on Google Compute En
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
-Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel`, `calico`, or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel` or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -224,7 +224,7 @@ resource "google_dns_managed_zone" "zone-for-clusters" {
 | worker_preemptible   | If enabled, Compute Engine will terminate workers randomly within 24 hours | false           | true                                 |
 | controller_snippets  | Controller Butane snippets                                                 | []              | [examples](/advanced/customization/) |
 | worker_snippets      | Worker Butane snippets                                                     | []              | [examples](/advanced/customization/) |
-| networking           | Choice of networking provider                                              | "cilium"        | "calico" or "cilium" or "flannel"    |
+| networking           | Choice of networking provider                                              | "cilium"        | "cilium" or "flannel"    |
 | pod_cidr             | CIDR IPv4 range to assign to Kubernetes pods                               | "10.20.0.0/14"   | "10.22.0.0/16"                       |
 | service_cidr         | CIDR IPv4 range to assign to Kubernetes services                           | "10.3.0.0/16"   | "10.3.0.0/24"                        |
 | worker_node_labels   | List of initial worker node labels                                         | []              | ["worker-pool=default"]              |

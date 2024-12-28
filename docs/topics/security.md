@@ -12,9 +12,9 @@ Typhoon aims to be minimal and secure. We're running it ourselves after all.
 * [NodeRestriction](https://kubernetes.io/docs/reference/access-authn-authz/node/) is enabled to limit Kubelet authorization
 * [Role-Based Access Control](https://kubernetes.io/docs/admin/authorization/rbac/) is enabled. Apps must define RBAC policies for API access
 * Workloads run on worker nodes only, unless they tolerate the master taint
-* Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Calico [NetworkPolicy](https://docs.projectcalico.org/latest/reference/calicoctl/resources/networkpolicy) support [^1]
+* Kubernetes [Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/) and Cilium [NetworkPolicy](https://docs.cilium.io/en/latest/security/policy/index.html) support [^1]
 
-[^1]: Requires `networking = "calico"`. Calico is the default on all platforms (AWS, Azure, bare-metal, DigitalOcean, and Google Cloud).
+[^1]: Requires `networking = "cilium"`. Cilium is the default on all platforms (AWS, Azure, bare-metal, DigitalOcean, and Google Cloud).
 
 **Hosts**
 
@@ -91,7 +91,6 @@ Typhoon publishes Terraform providers to the Terraform Registry, GPG signed by 0
 | coredns        | NA     | false   | false      |
 | kube-proxy     | root   | true    | true       |
 | cilium         | root   | true    | true       |
-| calico         | root   | true    | true       |
 | flannel        | root   | true    | true       |
 
 
@@ -103,7 +102,6 @@ Typhoon publishes Terraform providers to the Terraform Registry, GPG signed by 0
 | coredns                 | system-cluster-critical |
 | kube-proxy              | system-node-critical |
 | cilium                  | system-node-critical |
-| calico                  | system-node-critical |
 | flannel                 | system-node-critical |
 
 ## Disclosures

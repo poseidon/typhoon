@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.32.0 cluster on AWS with Flatcar 
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a VPC, gateway, subnets, security groups, controller instances, worker auto-scaling group, network load balancer, and TLS assets.
 
-Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel`, `calico`, or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel` or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -222,8 +222,7 @@ Reference the DNS zone id with `aws_route53_zone.zone-for-clusters.zone_id`.
 | worker_target_groups | Target group ARNs to which worker instances should be added | [] | [aws_lb_target_group.app.id] |
 | controller_snippets | Controller Container Linux Config snippets | [] | [example](/advanced/customization/) |
 | worker_snippets | Worker Container Linux Config snippets | [] | [example](/advanced/customization/) |
-| networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
-| network_mtu | CNI interface MTU (calico only) | 1480 | 8981 |
+| networking | Choice of networking provider | "cilium" | "cilium" or "flannel" |
 | host_cidr | CIDR IPv4 range to assign to EC2 instances | "10.0.0.0/16" | "10.1.0.0/16" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.20.0.0/14" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
@@ -233,9 +232,6 @@ Check the list of valid [instance types](https://aws.amazon.com/ec2/instance-typ
 
 !!! warning
     Do not choose a `controller_type` smaller than `t3.small`. Smaller instances are not sufficient for running a controller.
-
-!!! tip "MTU"
-    If your EC2 instance type supports [Jumbo frames](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#jumbo_frame_instances) (most do), we recommend you change the `network_mtu` to 8981! You will get better pod-to-pod bandwidth.
 
 #### Spot
 

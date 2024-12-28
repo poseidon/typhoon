@@ -4,7 +4,7 @@ In this tutorial, we'll create a Kubernetes v1.32.0 cluster on DigitalOcean with
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create controller droplets, worker droplets, DNS records, tags, and TLS assets.
 
-Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel`, `calico`, or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
+Controller hosts are provisioned to run an `etcd-member` peer and a `kubelet` service. Worker hosts run a `kubelet` service. Controller nodes run `kube-apiserver`, `kube-scheduler`, `kube-controller-manager`, and `coredns`, while `kube-proxy` and (`flannel` or `cilium`) run on every node. A generated `kubeconfig` provides `kubectl` access to the cluster.
 
 ## Requirements
 
@@ -241,7 +241,7 @@ Digital Ocean requires the SSH public key be uploaded to your account, so you ma
 | worker_type | Droplet type for workers | "s-1vcpu-2gb" | s-1vcpu-2gb, s-2vcpu-2gb, ... |
 | controller_snippets | Controller Butane snippets | [] | [example](/advanced/customization/) |
 | worker_snippets | Worker Butane snippets | [] | [example](/advanced/customization/) |
-| networking | Choice of networking provider | "cilium" | "calico" or "cilium" or "flannel" |
+| networking | Choice of networking provider | "cilium" | "cilium" or "flannel" |
 | pod_cidr | CIDR IPv4 range to assign to Kubernetes pods | "10.20.0.0/14" | "10.22.0.0/16" |
 | service_cidr | CIDR IPv4 range to assign to Kubernetes services | "10.3.0.0/16" | "10.3.0.0/24" |
 

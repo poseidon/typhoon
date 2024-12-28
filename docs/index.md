@@ -12,7 +12,7 @@ Typhoon distributes upstream Kubernetes, architectural conventions, and cluster 
 ## Features <a href="https://www.cncf.io/certification/software-conformance/"><img align="right" src="https://storage.googleapis.com/poseidon/certified-kubernetes.png"></a>
 
 * Kubernetes v1.32.0 (upstream)
-* Single or multi-master, [Calico](https://www.projectcalico.org/) or [Cilium](https://github.com/cilium/cilium) or [flannel](https://github.com/coreos/flannel) networking
+* Single or multi-master, [Cilium](https://github.com/cilium/cilium) or [flannel](https://github.com/coreos/flannel) networking
 * On-cluster etcd with TLS, [RBAC](https://kubernetes.io/docs/admin/authorization/rbac/)-enabled, [network policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/), SELinux enforcing
 * Advanced features like [worker pools](advanced/worker-pools/), [preemptible](fedora-coreos/google-cloud/#preemption) workers, and [snippets](advanced/customization/#hosts) customization
 * Ready for Ingress, Prometheus, Grafana, CSI, or other [addons](addons/overview/)
@@ -119,9 +119,9 @@ List the pods.
 ```
 $ kubectl get pods --all-namespaces
 NAMESPACE     NAME                                      READY  STATUS    RESTARTS  AGE
-kube-system   calico-node-1cs8z                         2/2    Running   0         6m
-kube-system   calico-node-d1l5b                         2/2    Running   0         6m
-kube-system   calico-node-sp9ps                         2/2    Running   0         6m
+kube-system   cilium-1cs8z                              2/2    Running   0         6m
+kube-system   cilium-d1l5b                              2/2    Running   0         6m
+kube-system   cilium-sp9ps                              2/2    Running   0         6m
 kube-system   coredns-1187388186-dkh3o                  1/1    Running   0         6m
 kube-system   coredns-1187388186-zj5dl                  1/1    Running   0         6m
 kube-system   kube-apiserver-controller-0               1/1    Running   0         6m

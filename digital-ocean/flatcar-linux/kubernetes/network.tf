@@ -39,7 +39,7 @@ resource "digitalocean_firewall" "rules" {
     source_tags = [digitalocean_tag.controllers.name, digitalocean_tag.workers.name]
   }
 
-  # IANA vxlan (flannel, calico)
+  # IANA vxlan (flannel)
   inbound_rule {
     protocol    = "udp"
     port_range  = "4789"

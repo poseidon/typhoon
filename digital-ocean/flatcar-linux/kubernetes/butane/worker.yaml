@@ -43,7 +43,6 @@ systemd:
         ExecStartPre=/bin/mkdir -p /etc/cni/net.d
         ExecStartPre=/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/bin/mkdir -p /opt/cni/bin
-        ExecStartPre=/bin/mkdir -p /var/lib/calico
         ExecStartPre=/bin/mkdir -p /var/lib/kubelet/volumeplugins
         ExecStartPre=/usr/bin/bash -c "grep 'certificate-authority-data' /etc/kubernetes/kubeconfig | awk '{print $2}' | base64 -d > /etc/kubernetes/ca.crt"
         # Podman, rkt, or runc run container processes, whereas docker run
@@ -61,7 +60,6 @@ systemd:
           -v /lib/modules:/lib/modules:ro \
           -v /run:/run \
           -v /sys/fs/cgroup:/sys/fs/cgroup \
-          -v /var/lib/calico:/var/lib/calico:ro \
           -v /var/lib/containerd:/var/lib/containerd \
           -v /var/lib/kubelet:/var/lib/kubelet:rshared \
           -v /var/log:/var/log \
