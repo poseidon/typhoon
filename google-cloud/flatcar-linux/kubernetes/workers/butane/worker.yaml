@@ -101,6 +101,7 @@ storage:
           clusterDomain: cluster.local
           healthzPort: 0
           rotateCertificates: true
+          serializeImagePulls: false
           shutdownGracePeriod: 45s
           shutdownGracePeriodCriticalPods: 30s
           staticPodPath: /etc/kubernetes/manifests

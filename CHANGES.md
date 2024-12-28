@@ -7,6 +7,8 @@ Notable changes between versions.
 # v1.32.0
 
 * Kubernetes [v1.32.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1320)
+* Change the default Pod CIDR from 10.2.0.0/16 to 10.20.0.0/14 ([#1555](https://github.com/poseidon/typhoon/pull/1555))
+* Configure Kubelets for parallel image pulls ([#1556](https://github.com/poseidon/typhoon/pull/1556))
 
 # v1.31.4
 
