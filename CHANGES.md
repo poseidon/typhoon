@@ -13,6 +13,11 @@ Notable changes between versions.
   * Remove `network_mtu`, `network_encapsulation`, and `network_ip_autodetection_method` variables (Calico-specific)
   * Remove Calico-specific Kubelet mounts
 
+### Fedora CoreOS
+
+* Fix Fedora CoreOS support for flannel CNI ([#1557](https://github.com/poseidon/typhoon/pull/1557))
+  * Explicitly load the `nf_conntrack` and `br_netfilter` kernel modules flannel needs
+
 # v1.31.4
 
 * Kubernetes [v1.31.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1314)
