@@ -9,6 +9,8 @@ Notable changes between versions.
 * Kubernetes [v1.32.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1320)
 * Change the default Pod CIDR from 10.2.0.0/16 to 10.20.0.0/14 ([#1555](https://github.com/poseidon/typhoon/pull/1555))
 * Configure Kubelets for parallel image pulls ([#1556](https://github.com/poseidon/typhoon/pull/1556))
+* Change flannel port from 4789 to 8472 to match Cilium ([#1561](https://github.com/poseidon/typhoon/pull/1561))
+  * Reverses a choice made in [#466](https://github.com/poseidon/typhoon/pull/466)
 * Remove support for Calico CNI (choose between `networking` cilium or flannel) ([#1558](https://github.com/poseidon/typhoon/pull/1558))
   * Remove Calico firewall rules or security group rules
   * Remove `network_mtu`, `network_encapsulation`, and `network_ip_autodetection_method` variables (Calico-specific)

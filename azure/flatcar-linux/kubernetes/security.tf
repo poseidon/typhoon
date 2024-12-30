@@ -164,22 +164,6 @@ resource "azurerm_network_security_rule" "controller-vxlan" {
   direction                    = "Inbound"
   protocol                     = "Udp"
   source_port_range            = "*"
-  destination_port_range       = "4789"
-  source_address_prefixes      = local.cluster_subnets[each.key]
-  destination_address_prefixes = local.controller_subnets[each.key]
-}
-
-resource "azurerm_network_security_rule" "controller-linux-vxlan" {
-  for_each = local.controller_subnets
-
-  name                         = "allow-linux-vxlan-${each.key}"
-  resource_group_name          = azurerm_resource_group.cluster.name
-  network_security_group_name  = azurerm_network_security_group.controller.name
-  priority                     = 2022 + (each.key == "ipv4" ? 0 : 1)
-  access                       = "Allow"
-  direction                    = "Inbound"
-  protocol                     = "Udp"
-  source_port_range            = "*"
   destination_port_range       = "8472"
   source_address_prefixes      = local.cluster_subnets[each.key]
   destination_address_prefixes = local.controller_subnets[each.key]
@@ -364,22 +348,6 @@ resource "azurerm_network_security_rule" "worker-vxlan" {
   resource_group_name          = azurerm_resource_group.cluster.name
   network_security_group_name  = azurerm_network_security_group.worker.name
   priority                     = 2016 + (each.key == "ipv4" ? 0 : 1)
-  access                       = "Allow"
-  direction                    = "Inbound"
-  protocol                     = "Udp"
-  source_port_range            = "*"
-  destination_port_range       = "4789"
-  source_address_prefixes      = local.cluster_subnets[each.key]
-  destination_address_prefixes = local.worker_subnets[each.key]
-}
-
-resource "azurerm_network_security_rule" "worker-linux-vxlan" {
-  for_each = local.worker_subnets
-
-  name                         = "allow-linux-vxlan-${each.key}"
-  resource_group_name          = azurerm_resource_group.cluster.name
-  network_security_group_name  = azurerm_network_security_group.worker.name
-  priority                     = 2018 + (each.key == "ipv4" ? 0 : 1)
   access                       = "Allow"
   direction                    = "Inbound"
   protocol                     = "Udp"

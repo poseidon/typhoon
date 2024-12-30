@@ -116,31 +116,6 @@ resource "aws_security_group_rule" "controller-cilium-metrics-self" {
   self      = true
 }
 
-# IANA VXLAN default
-resource "aws_security_group_rule" "controller-vxlan" {
-  count = var.networking == "flannel" ? 1 : 0
-
-  security_group_id = aws_security_group.controller.id
-
-  type                     = "ingress"
-  protocol                 = "udp"
-  from_port                = 4789
-  to_port                  = 4789
-  source_security_group_id = aws_security_group.worker.id
-}
-
-resource "aws_security_group_rule" "controller-vxlan-self" {
-  count = var.networking == "flannel" ? 1 : 0
-
-  security_group_id = aws_security_group.controller.id
-
-  type      = "ingress"
-  protocol  = "udp"
-  from_port = 4789
-  to_port   = 4789
-  self      = true
-}
-
 resource "aws_security_group_rule" "controller-apiserver" {
   security_group_id = aws_security_group.controller.id
 
@@ -152,9 +127,7 @@ resource "aws_security_group_rule" "controller-apiserver" {
 }
 
 # Linux VXLAN default
-resource "aws_security_group_rule" "controller-linux-vxlan" {
-  count = var.networking == "cilium" ? 1 : 0
-
+resource "aws_security_group_rule" "controller-vxlan" {
   security_group_id = aws_security_group.controller.id
 
   type                     = "ingress"
@@ -164,9 +137,7 @@ resource "aws_security_group_rule" "controller-linux-vxlan" {
   source_security_group_id = aws_security_group.worker.id
 }
 
-resource "aws_security_group_rule" "controller-linux-vxlan-self" {
-  count = var.networking == "cilium" ? 1 : 0
-
+resource "aws_security_group_rule" "controller-vxlan-self" {
   security_group_id = aws_security_group.controller.id
 
   type      = "ingress"
@@ -367,35 +338,8 @@ resource "aws_security_group_rule" "worker-cilium-metrics-self" {
   self      = true
 }
 
-# IANA VXLAN default
-resource "aws_security_group_rule" "worker-vxlan" {
-  count = var.networking == "flannel" ? 1 : 0
-
-  security_group_id = aws_security_group.worker.id
-
-  type                     = "ingress"
-  protocol                 = "udp"
-  from_port                = 4789
-  to_port                  = 4789
-  source_security_group_id = aws_security_group.controller.id
-}
-
-resource "aws_security_group_rule" "worker-vxlan-self" {
-  count = var.networking == "flannel" ? 1 : 0
-
-  security_group_id = aws_security_group.worker.id
-
-  type      = "ingress"
-  protocol  = "udp"
-  from_port = 4789
-  to_port   = 4789
-  self      = true
-}
-
 # Linux VXLAN default
-resource "aws_security_group_rule" "worker-linux-vxlan" {
-  count = var.networking == "cilium" ? 1 : 0
-
+resource "aws_security_group_rule" "worker-vxlan" {
   security_group_id = aws_security_group.worker.id
 
   type                     = "ingress"
@@ -405,9 +349,7 @@ resource "aws_security_group_rule" "worker-linux-vxlan" {
   source_security_group_id = aws_security_group.controller.id
 }
 
-resource "aws_security_group_rule" "worker-linux-vxlan-self" {
-  count = var.networking == "cilium" ? 1 : 0
-
+resource "aws_security_group_rule" "worker-vxlan-self" {
   security_group_id = aws_security_group.worker.id
 
   type      = "ingress"

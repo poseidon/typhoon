@@ -35,7 +35,7 @@ resource "kubernetes_config_map" "config" {
         "Network": "${var.pod_cidr}",
         "Backend": {
           "Type": "vxlan",
-          "Port": 4789
+          "Port": 8472
         }
       }
     EOF
