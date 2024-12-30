@@ -51,9 +51,6 @@ module "yavin" {
     flannel = {
       enable = true
     }
-    calico = {
-      enable = true
-    }
     cilium = {
       enable = true
     }

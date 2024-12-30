@@ -98,7 +98,6 @@ variable "components" {
     coredns    = optional(map(any))
     kube_proxy = optional(map(any))
     flannel    = optional(map(any))
-    calico     = optional(map(any))
     cilium     = optional(map(any))
   })
   default = null
