@@ -16,6 +16,12 @@ Notable changes between versions.
   * Remove `network_mtu`, `network_encapsulation`, and `network_ip_autodetection_method` variables (Calico-specific)
   * Remove Calico-specific Kubelet mounts
 
+### Azure
+
+* Add `enable_ipv6_load_balancing` variable and change the default to false (**breaking**)
+  * Azure Load Balancers include 5 rules (3 LB rules, 2 outbound) whether used or not
+  * [#1468](https://github.com/poseidon/typhoon/pull/1468) added 3 LB rules to support IPv6 load balancing,
+  raising the rules count from 5 to 8 and added ~$21/mo to the cost of the load balancer
 
 ### Fedora CoreOS
 

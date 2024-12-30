@@ -74,6 +74,8 @@ resource "azurerm_lb_rule" "apiserver-ipv4" {
 }
 
 resource "azurerm_lb_rule" "apiserver-ipv6" {
+  count = var.enable_ipv6_load_balancing ? 1 : 0
+
   name                           = "apiserver-ipv6"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "frontend-ipv6"
@@ -113,6 +115,8 @@ resource "azurerm_lb_rule" "ingress-https-ipv4" {
 }
 
 resource "azurerm_lb_rule" "ingress-http-ipv6" {
+  count = var.enable_ipv6_load_balancing ? 1 : 0
+
   name                           = "ingress-http-ipv6"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "frontend-ipv6"
@@ -126,6 +130,8 @@ resource "azurerm_lb_rule" "ingress-http-ipv6" {
 }
 
 resource "azurerm_lb_rule" "ingress-https-ipv6" {
+  count = var.enable_ipv6_load_balancing ? 1 : 0
+
   name                           = "ingress-https-ipv6"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "frontend-ipv6"
@@ -140,7 +146,7 @@ resource "azurerm_lb_rule" "ingress-https-ipv6" {
 
 # Backend Address Pools
 
-# Address pool of controllers
+# Address pools for controllers
 resource "azurerm_lb_backend_address_pool" "controller-ipv4" {
   name            = "controller-ipv4"
   loadbalancer_id = azurerm_lb.cluster.id

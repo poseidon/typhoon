@@ -150,6 +150,11 @@ EOD
   default     = "10.3.0.0/16"
 }
 
+variable "enable_ipv6_load_balancing" {
+  description = "Enable IPv6 LB rules (note: Azure charges ~$20/mo more)"
+  default     = false
+}
+
 variable "worker_node_labels" {
   type        = list(string)
   description = "List of initial worker node labels"
