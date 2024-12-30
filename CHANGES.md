@@ -10,8 +10,10 @@ Notable changes between versions.
 * Change the default Pod CIDR from 10.2.0.0/16 to 10.20.0.0/14 ([#1555](https://github.com/poseidon/typhoon/pull/1555))
 * Configure Kubelets for parallel image pulls ([#1556](https://github.com/poseidon/typhoon/pull/1556))
 * Remove support for Calico CNI (choose between `networking` cilium or flannel) ([#1558](https://github.com/poseidon/typhoon/pull/1558))
+  * Remove Calico firewall rules or security group rules
   * Remove `network_mtu`, `network_encapsulation`, and `network_ip_autodetection_method` variables (Calico-specific)
   * Remove Calico-specific Kubelet mounts
+
 
 ### Fedora CoreOS
 

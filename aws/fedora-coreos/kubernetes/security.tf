@@ -241,66 +241,6 @@ resource "aws_security_group_rule" "controller-manager-metrics" {
   source_security_group_id = aws_security_group.worker.id
 }
 
-resource "aws_security_group_rule" "controller-bgp" {
-  security_group_id = aws_security_group.controller.id
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 179
-  to_port                  = 179
-  source_security_group_id = aws_security_group.worker.id
-}
-
-resource "aws_security_group_rule" "controller-bgp-self" {
-  security_group_id = aws_security_group.controller.id
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 179
-  to_port   = 179
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-ipip" {
-  security_group_id = aws_security_group.controller.id
-
-  type                     = "ingress"
-  protocol                 = 4
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = aws_security_group.worker.id
-}
-
-resource "aws_security_group_rule" "controller-ipip-self" {
-  security_group_id = aws_security_group.controller.id
-
-  type      = "ingress"
-  protocol  = 4
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-
-resource "aws_security_group_rule" "controller-ipip-legacy" {
-  security_group_id = aws_security_group.controller.id
-
-  type                     = "ingress"
-  protocol                 = 94
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = aws_security_group.worker.id
-}
-
-resource "aws_security_group_rule" "controller-ipip-legacy-self" {
-  security_group_id = aws_security_group.controller.id
-
-  type      = "ingress"
-  protocol  = 94
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-
 resource "aws_security_group_rule" "controller-egress" {
   security_group_id = aws_security_group.controller.id
 
@@ -529,66 +469,6 @@ resource "aws_security_group_rule" "ingress-health" {
   from_port   = 10254
   to_port     = 10254
   cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "worker-bgp" {
-  security_group_id = aws_security_group.worker.id
-
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = 179
-  to_port                  = 179
-  source_security_group_id = aws_security_group.controller.id
-}
-
-resource "aws_security_group_rule" "worker-bgp-self" {
-  security_group_id = aws_security_group.worker.id
-
-  type      = "ingress"
-  protocol  = "tcp"
-  from_port = 179
-  to_port   = 179
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-ipip" {
-  security_group_id = aws_security_group.worker.id
-
-  type                     = "ingress"
-  protocol                 = 4
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = aws_security_group.controller.id
-}
-
-resource "aws_security_group_rule" "worker-ipip-self" {
-  security_group_id = aws_security_group.worker.id
-
-  type      = "ingress"
-  protocol  = 4
-  from_port = 0
-  to_port   = 0
-  self      = true
-}
-
-resource "aws_security_group_rule" "worker-ipip-legacy" {
-  security_group_id = aws_security_group.worker.id
-
-  type                     = "ingress"
-  protocol                 = 94
-  from_port                = 0
-  to_port                  = 0
-  source_security_group_id = aws_security_group.controller.id
-}
-
-resource "aws_security_group_rule" "worker-ipip-legacy-self" {
-  security_group_id = aws_security_group.worker.id
-
-  type      = "ingress"
-  protocol  = 94
-  from_port = 0
-  to_port   = 0
-  self      = true
 }
 
 resource "aws_security_group_rule" "worker-egress" {
