@@ -4,11 +4,18 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.32.1
+
+* Kubernetes [v1.32.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1321)
+* Update CoreDNS from v1.11.4 to v1.12.0
+* Update flannel from v0.26.2 to [v0.26.3](https://github.com/flannel-io/flannel/releases/tag/v0.26.3)
+* Enable the [`MutatingAdmissionPolicy`](https://kubernetes.io/docs/reference/access-authn-authz/mutating-admission-policy/) alpha feature gate and APIs
+
 ### Azure
 
 * Restore VMSS auto-scale setting to maintain node pools sizes during spot terminations ([#1567](https://github.com/poseidon/typhoon/pull/1567))
 
-# v1.32.0
+## v1.32.0
 
 * Kubernetes [v1.32.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1320)
 * Change the default Pod CIDR from 10.2.0.0/16 to 10.20.0.0/14 ([#1555](https://github.com/poseidon/typhoon/pull/1555))
@@ -32,7 +39,7 @@ Notable changes between versions.
 * Fix Fedora CoreOS support for flannel CNI ([#1557](https://github.com/poseidon/typhoon/pull/1557))
   * Explicitly load the `nf_conntrack` and `br_netfilter` kernel modules flannel needs
 
-# v1.31.4
+## v1.31.4
 
 * Kubernetes [v1.31.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1314)
 * Update Cilium from v1.16.4 to [v1.16.5](https://github.com/cilium/cilium/releases/tag/v1.16.5)
