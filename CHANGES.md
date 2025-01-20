@@ -4,6 +4,10 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Restore VMSS auto-scale setting to maintain node pools sizes during spot terminations ([#1567](https://github.com/poseidon/typhoon/pull/1567))
+
 # v1.32.0
 
 * Kubernetes [v1.32.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1320)

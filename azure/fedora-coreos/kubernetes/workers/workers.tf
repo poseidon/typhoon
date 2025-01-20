@@ -91,3 +91,20 @@ data "ct_config" "worker" {
   snippets = var.snippets
 }
 
+# Scale up or down to maintain desired number, tolerating deallocations.
+resource "azurerm_monitor_autoscale_setting" "workers" {
+  name                = "${var.name}-maintain-desired"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  # autoscale
+  enabled            = true
+  target_resource_id = azurerm_orchestrated_virtual_machine_scale_set.workers.id
+  profile {
+    name = "default"
+    capacity {
+      minimum = var.worker_count
+      default = var.worker_count
+      maximum = var.worker_count
+    }
+  }
+}
