@@ -143,3 +143,9 @@ variable "components" {
   })
   default = null
 }
+
+variable "service_account_issuer" {
+  type        = string
+  description = "kube-apiserver service account token issuer (used as an identifier in 'iss' claims)"
+  default     = "https://kubernetes.default.svc.cluster.local"
+}

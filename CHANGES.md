@@ -4,6 +4,9 @@ Notable changes between versions.
 
 ## Latest
 
+* Allow `kube-apiserver` service account token issuer `iss` to be adjusted with the `service_account_issuer` variable
+  * Allows OpenID Connect discovery to be served from an external endpoint
+
 ## v1.32.1
 
 * Kubernetes [v1.32.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1321)
