@@ -4,8 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.32.3
+
 * Allow `kube-apiserver` service account token issuer `iss` to be adjusted with the `service_account_issuer` variable
-  * Allows OpenID Connect discovery to be served from an external endpoint
+  * Allow OpenID Connect discovery to be served from an external endpoint
+* Update Cilium from v1.16.5 to [v1.17.1](https://github.com/cilium/cilium/releases/tag/v1.17.1)
 
 ## v1.32.1
 
