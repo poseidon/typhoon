@@ -8,7 +8,8 @@ Notable changes between versions.
 
 * Allow `kube-apiserver` service account token issuer `iss` to be adjusted with the `service_account_issuer` variable
   * Allow OpenID Connect discovery to be served from an external endpoint
-* Update Cilium from v1.16.5 to [v1.17.1](https://github.com/cilium/cilium/releases/tag/v1.17.1)
+* Update Cilium from v1.16.5 to [v1.17.2](https://github.com/cilium/cilium/releases/tag/v1.17.2)
+* Update flannel from v0.26.2 to [v0.26.5](https://github.com/flannel-io/flannel/releases/tag/v0.26.5)
 
 ## v1.32.1
 
