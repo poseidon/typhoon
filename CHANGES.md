@@ -4,8 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.33.0
+
+* Kubernetes [v1.33.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1330)
+
 ## v1.32.3
 
+* Kubernetes [v1.32.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1323)
 * Allow `kube-apiserver` service account token issuer `iss` to be adjusted with the `service_account_issuer` variable
   * Allow OpenID Connect discovery to be served from an external endpoint
 * Update Cilium from v1.16.5 to [v1.17.2](https://github.com/cilium/cilium/releases/tag/v1.17.2)
