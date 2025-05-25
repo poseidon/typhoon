@@ -4,6 +4,12 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.33.1
+
+* Kubernetes [v1.33.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1331)
+* Update Cilium from v1.17.2 to [v1.17.4](https://github.com/cilium/cilium/releases/tag/v1.17.4)
+* Update flannel from v0.26.5 to [v0.26.7](https://github.com/flannel-io/flannel/releases/tag/v0.26.7)
+
 ## v1.33.0
 
 * Kubernetes [v1.33.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1330)
