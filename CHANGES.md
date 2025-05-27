@@ -10,6 +10,10 @@ Notable changes between versions.
 * Update Cilium from v1.17.2 to [v1.17.4](https://github.com/cilium/cilium/releases/tag/v1.17.4)
 * Update flannel from v0.26.5 to [v0.26.7](https://github.com/flannel-io/flannel/releases/tag/v0.26.7)
 
+### Fedora CoreOS
+
+* Fix `kernel` URL name, which changed with Fedora CoreOS 42
+
 ## v1.33.0
 
 * Kubernetes [v1.33.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1330)

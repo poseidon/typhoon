@@ -1,5 +1,5 @@
 locals {
-  remote_kernel = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-kernel-x86_64"
+  remote_kernel = "https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-kernel.x86_64"
   remote_initrd = [
     "--name main https://builds.coreos.fedoraproject.org/prod/streams/${var.os_stream}/builds/${var.os_version}/x86_64/fedora-coreos-${var.os_version}-live-initramfs.x86_64.img",
   ]
@@ -11,7 +11,7 @@ locals {
     "coreos.inst.ignition_url=${var.matchbox_http_endpoint}/ignition?uuid=$${uuid}&mac=$${mac:hexhyp}",
   ]
 
-  cached_kernel = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-kernel-x86_64"
+  cached_kernel = "/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-kernel.x86_64"
   cached_initrd = [
     "/assets/fedora-coreos/fedora-coreos-${var.os_version}-live-initramfs.x86_64.img",
   ]
