@@ -107,6 +107,12 @@ variable "worker_snippets" {
   default     = []
 }
 
+variable "enable_http_lb" {
+  type        = bool
+  description = "Forward TCP/80 traffic to Backend Service of workers for HTTP ingress"
+  default     = false
+}
+
 # configuration
 
 variable "ssh_authorized_key" {

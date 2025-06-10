@@ -20,11 +20,12 @@ resource "google_compute_global_address" "apiserver-ipv4" {
 
 # Forward IPv4 TCP traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "apiserver" {
-  name        = "${var.cluster_name}-apiserver"
-  ip_address  = google_compute_global_address.apiserver-ipv4.address
-  ip_protocol = "TCP"
-  port_range  = "443"
-  target      = google_compute_target_tcp_proxy.apiserver.self_link
+  name                  = "${var.cluster_name}-apiserver"
+  ip_address            = google_compute_global_address.apiserver-ipv4.address
+  ip_protocol           = "TCP"
+  port_range            = "6443"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  target                = google_compute_target_tcp_proxy.apiserver.self_link
 }
 
 # Global TCP Proxy Load Balancer for apiservers
@@ -52,7 +53,8 @@ resource "google_compute_backend_service" "apiserver" {
     }
   }
 
-  health_checks = [google_compute_health_check.apiserver.self_link]
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  health_checks         = [google_compute_health_check.apiserver.self_link]
 }
 
 # Instance group of heterogeneous (unmanged) controller instances

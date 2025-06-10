@@ -11,8 +11,5 @@ module "bootstrap" {
   service_cidr           = var.service_cidr
   daemonset_tolerations  = var.daemonset_tolerations
   components             = var.components
-
-  // temporary
-  external_apiserver_port = 443
 }
 

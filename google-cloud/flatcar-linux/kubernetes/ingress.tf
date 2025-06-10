@@ -10,72 +10,74 @@ resource "google_compute_global_address" "ingress-ipv6" {
   ip_version = "IPV6"
 }
 
-# Forward IPv4 TCP traffic to the HTTP proxy load balancer
-# Google Cloud does not allow TCP proxies for port 80. Must use HTTP proxy.
+# Forward IPv4 TCP/80 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-http-ipv4" {
-  name        = "${var.cluster_name}-ingress-http-ipv4"
-  ip_address  = google_compute_global_address.ingress-ipv4.address
-  ip_protocol = "TCP"
-  port_range  = "80"
-  target      = google_compute_target_http_proxy.ingress-http.self_link
+  count = var.enable_http_lb ? 1 : 0
+
+  name                  = "${var.cluster_name}-ingress-http-ipv4"
+  ip_address            = google_compute_global_address.ingress-ipv4.address
+  ip_protocol           = "TCP"
+  port_range            = "80"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  target                = google_compute_target_tcp_proxy.ingress-http[0].self_link
 }
 
-# Forward IPv4 TCP traffic to the TCP proxy load balancer
+# Forward IPv4 TCP/443 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-https-ipv4" {
-  name        = "${var.cluster_name}-ingress-https-ipv4"
-  ip_address  = google_compute_global_address.ingress-ipv4.address
-  ip_protocol = "TCP"
-  port_range  = "443"
-  target      = google_compute_target_tcp_proxy.ingress-https.self_link
+  name                  = "${var.cluster_name}-ingress-https-ipv4"
+  ip_address            = google_compute_global_address.ingress-ipv4.address
+  ip_protocol           = "TCP"
+  port_range            = "443"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  target                = google_compute_target_tcp_proxy.ingress-https.self_link
 }
 
-# Forward IPv6 TCP traffic to the HTTP proxy load balancer
-# Google Cloud does not allow TCP proxies for port 80. Must use HTTP proxy.
+# Forward IPv6 TCP/80 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-http-ipv6" {
-  name        = "${var.cluster_name}-ingress-http-ipv6"
-  ip_address  = google_compute_global_address.ingress-ipv6.address
-  ip_protocol = "TCP"
-  port_range  = "80"
-  target      = google_compute_target_http_proxy.ingress-http.self_link
+  count = var.enable_http_lb ? 1 : 0
+
+  name                  = "${var.cluster_name}-ingress-http-ipv6"
+  ip_address            = google_compute_global_address.ingress-ipv6.address
+  ip_protocol           = "TCP"
+  port_range            = "80"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  target                = google_compute_target_tcp_proxy.ingress-http[0].self_link
 }
 
-# Forward IPv6 TCP traffic to the TCP proxy load balancer
+# Forward IPv6 TCP/443 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-https-ipv6" {
-  name        = "${var.cluster_name}-ingress-https-ipv6"
-  ip_address  = google_compute_global_address.ingress-ipv6.address
-  ip_protocol = "TCP"
-  port_range  = "443"
-  target      = google_compute_target_tcp_proxy.ingress-https.self_link
+  name                  = "${var.cluster_name}-ingress-https-ipv6"
+  ip_address            = google_compute_global_address.ingress-ipv6.address
+  ip_protocol           = "TCP"
+  port_range            = "443"
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  target                = google_compute_target_tcp_proxy.ingress-https.self_link
 }
 
-# HTTP proxy load balancer for ingress controllers
-resource "google_compute_target_http_proxy" "ingress-http" {
-  name        = "${var.cluster_name}-ingress-http"
-  description = "Distribute HTTP load across ${var.cluster_name} workers"
-  url_map     = google_compute_url_map.ingress-http.self_link
+# TCP proxy load balancer for ingress traffic
+resource "google_compute_target_tcp_proxy" "ingress-http" {
+  count = var.enable_http_lb ? 1 : 0
+
+  name            = "${var.cluster_name}-ingress-http"
+  description     = "Distribute TCP/80 traffic across ${var.cluster_name} workers"
+  backend_service = google_compute_backend_service.ingress-http[0].self_link
 }
 
-# TCP proxy load balancer for ingress controllers
+# TCP proxy load balancer for ingress traffic
 resource "google_compute_target_tcp_proxy" "ingress-https" {
   name            = "${var.cluster_name}-ingress-https"
-  description     = "Distribute HTTPS load across ${var.cluster_name} workers"
+  description     = "Distribute TCP/443 traffic across ${var.cluster_name} workers"
   backend_service = google_compute_backend_service.ingress-https.self_link
-}
-
-# HTTP URL Map (required)
-resource "google_compute_url_map" "ingress-http" {
-  name = "${var.cluster_name}-ingress-http"
-
-  # Do not add host/path rules for applications here. Use Ingress resources.
-  default_service = google_compute_backend_service.ingress-http.self_link
 }
 
 # Backend service backed by managed instance group of workers
 resource "google_compute_backend_service" "ingress-http" {
+  count = var.enable_http_lb ? 1 : 0
+
   name        = "${var.cluster_name}-ingress-http"
   description = "${var.cluster_name} ingress service"
 
-  protocol         = "HTTP"
+  protocol         = "TCP"
   port_name        = "http"
   session_affinity = "NONE"
   timeout_sec      = "60"
@@ -84,7 +86,8 @@ resource "google_compute_backend_service" "ingress-http" {
     group = module.workers.instance_group
   }
 
-  health_checks = [google_compute_health_check.ingress.self_link]
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  health_checks         = [google_compute_health_check.ingress.self_link]
 }
 
 # Backend service backed by managed instance group of workers
@@ -101,7 +104,8 @@ resource "google_compute_backend_service" "ingress-https" {
     group = module.workers.instance_group
   }
 
-  health_checks = [google_compute_health_check.ingress.self_link]
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+  health_checks         = [google_compute_health_check.ingress.self_link]
 }
 
 # Ingress HTTP Health Check
@@ -120,4 +124,3 @@ resource "google_compute_health_check" "ingress" {
     request_path = "/healthz"
   }
 }
-

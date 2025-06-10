@@ -4,6 +4,17 @@ Notable changes between versions.
 
 ## Latest
 
+### Google Cloud
+
+* Update Google Cloud load balancer proxies from classic to current
+* Google Cloud TCP proxies no longer restrict which frontend ports may be used
+  * Switch apiserver to listen on 6443 to match other cloud platforms
+  * Switch ingress port 80 from an HTTP to TCP proxy to match HTTPS handling
+* Add a variable `enable_http_lb` to make ingress/gateway TCP/80 IPv4/IPv6
+forwarding rules optional. Default to false.
+  * Google Cloud charges by forwarding rule, so dropping support for plaintext
+  http traffic can save costs if you're https-only.
+
 ## v1.33.1
 
 * Kubernetes [v1.33.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1331)
