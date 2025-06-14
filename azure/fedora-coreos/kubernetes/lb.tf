@@ -89,6 +89,8 @@ resource "azurerm_lb_rule" "apiserver-ipv6" {
 }
 
 resource "azurerm_lb_rule" "ingress-http-ipv4" {
+count = var.enable_http_load_balancing ? 1 : 0
+
   name                           = "ingress-http-ipv4"
   loadbalancer_id                = azurerm_lb.cluster.id
   frontend_ip_configuration_name = "frontend-ipv4"
@@ -115,7 +117,7 @@ resource "azurerm_lb_rule" "ingress-https-ipv4" {
 }
 
 resource "azurerm_lb_rule" "ingress-http-ipv6" {
-  count = var.enable_ipv6_load_balancing ? 1 : 0
+  count = var.enable_http_load_balancing && var.enable_ipv6_load_balancing ? 1 : 0
 
   name                           = "ingress-http-ipv6"
   loadbalancer_id                = azurerm_lb.cluster.id

@@ -4,14 +4,20 @@ Notable changes between versions.
 
 ## Latest
 
+### Azure
+
+* Add `enable_http_load_balancing` variable to reduce load balancer rules count
+  * Azure charges by load balancer rules (5 included)
+
 ### Google Cloud
 
-* Update Google Cloud load balancer proxies from classic to current
-* Google Cloud TCP proxies no longer restrict which frontend ports may be used
+* Update Google Cloud load balancer proxies from classic to current ([#1604](https://github.com/poseidon/typhoon/pull/1604))
+* Change `apiserver` and ingress/gateway service proxies ([#1604](https://github.com/poseidon/typhoon/pull/1604))
+  * Google Cloud TCP proxies no longer restrict which frontend ports may be used
   * Switch apiserver to listen on 6443 to match other cloud platforms
   * Switch ingress port 80 from an HTTP to TCP proxy to match HTTPS handling
 * Add a variable `enable_http_lb` to make ingress/gateway TCP/80 IPv4/IPv6
-forwarding rules optional. Default to false.
+forwarding rules optional. Default to false ([#1604](https://github.com/poseidon/typhoon/pull/1604))
   * Google Cloud charges by forwarding rule, so dropping support for plaintext
   http traffic can save costs if you're https-only.
 
