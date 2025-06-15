@@ -74,7 +74,7 @@ resource "aws_launch_template" "worker" {
 
   # network
   network_interfaces {
-    associate_public_ip_address = true
+    associate_public_ip_address = var.associate_public_ipv4_address
     security_groups             = var.security_groups
   }
 

@@ -13,6 +13,8 @@ Notable changes between versions.
 
 ### AWS
 
+* Add `worker_ipv4_address` variable to associate public IPv4 addresses to worker instances (default true)
+  * When IPv6 is all you need, set to false to remove IPv4 access to instances and outbound IPv4 access to the internet
 * Relax `aws` provider version constraint to allow upgrades to v6.x ([#1617](https://github.com/poseidon/typhoon/pull/1617))
 
 ### Azure

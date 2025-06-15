@@ -76,6 +76,12 @@ variable "worker_type" {
   default     = "t3.small"
 }
 
+variable "worker_public_ipv4" {
+  type        = bool
+  description = "Associate a public IPv4 address to instances (otherwise, no IPv4 access to instances from the internet and no outbound IPv4 access to the internet)"
+  default     = true
+}
+
 variable "worker_disk_size" {
   type        = number
   description = "Size of the EBS volume in GB"

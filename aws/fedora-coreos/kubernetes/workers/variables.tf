@@ -34,6 +34,12 @@ variable "instance_type" {
   default     = "t3.small"
 }
 
+variable "associate_public_ipv4_address" {
+  type        = bool
+  description = "Associate a public IPv4 address to instances (otherwise, no IPv4 access to instances from the internet and no outbound IPv4 access to the internet)"
+  default     = true
+}
+
 variable "os_stream" {
   type        = string
   description = "Fedora CoreOS image stream for instances (e.g. stable, testing, next)"
