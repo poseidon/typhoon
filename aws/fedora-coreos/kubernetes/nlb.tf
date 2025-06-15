@@ -13,6 +13,20 @@ resource "aws_route53_record" "apiserver" {
   }
 }
 
+resource "aws_route53_record" "apiserver-ipv6" {
+  zone_id = var.dns_zone_id
+
+  name = format("%s.%s.", var.cluster_name, var.dns_zone)
+  type = "AAAA"
+
+  # AWS recommends their special "alias" records for NLBs
+  alias {
+    name                   = aws_lb.nlb.dns_name
+    zone_id                = aws_lb.nlb.zone_id
+    evaluate_target_health = true
+  }
+}
+
 # Network Load Balancer for apiservers and ingress
 resource "aws_lb" "nlb" {
   name               = "${var.cluster_name}-nlb"

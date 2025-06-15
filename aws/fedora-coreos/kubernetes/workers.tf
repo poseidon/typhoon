@@ -19,6 +19,8 @@ module "workers" {
   spot_price    = var.worker_price
   target_groups = var.worker_target_groups
 
+  associate_public_ipv4_address = var.worker_public_ipv4
+
   # configuration
   kubeconfig         = module.bootstrap.kubeconfig-kubelet
   ssh_authorized_key = var.ssh_authorized_key
