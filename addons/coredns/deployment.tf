@@ -77,7 +77,7 @@ resource "kubernetes_deployment" "coredns" {
         }
         container {
           name  = "coredns"
-          image = "registry.k8s.io/coredns/coredns:v1.12.1"
+          image = "registry.k8s.io/coredns/coredns:v1.12.2"
           args  = ["-conf", "/etc/coredns/Corefile"]
           port {
             name           = "dns"
