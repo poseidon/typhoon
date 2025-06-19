@@ -69,6 +69,42 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "workers" {
     }
   }
 
+  # Roll out VMSS changes to instances gradually
+  upgrade_mode = "Rolling"
+  rolling_upgrade_policy {
+    max_batch_instance_percent = 20
+    pause_time_between_batches = "PT2M"
+
+    maximum_surge_instances_enabled = true
+    # Upgrade unhealthy instances first
+    prioritize_unhealthy_instances_enabled = true
+
+    # Safety gate to stop bad rollouts
+    max_unhealthy_instance_percent          = 20
+    max_unhealthy_upgraded_instance_percent = 25
+  }
+
+  # Azure instance repair replaces instances that fail probes from the
+  # ApplicationHealthExtension
+  automatic_instance_repair {
+    enabled      = true
+    grace_period = "PT15M"
+    action       = "Replace"
+  }
+
+  extension {
+    name                 = "ApplicationHealthExtension"
+    publisher            = "Microsoft.ManagedServices"
+    type                 = "ApplicationHealthLinux"
+    type_handler_version = "1.0"
+    settings = jsonencode({
+      protocol    = "http"
+      port        = 10256
+      requestPath = "/healthz"
+    })
+  }
+
+
   # lifecycle
   # eviction policy may only be set when priority is Spot
   priority        = var.priority

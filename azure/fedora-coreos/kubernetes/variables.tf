@@ -146,7 +146,7 @@ EOD
 
 variable "enable_http_load_balancing" {
   description = "Enable HTTP (port 80) LB rules"
-  default = false
+  default     = false
 }
 
 variable "enable_ipv6_load_balancing" {

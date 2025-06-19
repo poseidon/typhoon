@@ -8,6 +8,9 @@ Notable changes between versions.
 
 * Add `enable_http_load_balancing` variable to reduce load balancer rules count
   * Azure charges by load balancer rules (5 included)
+* Change Azure VMSS instance update policy (i.e. upgrade policy) from Manual to Rolling
+  * Set a rolling upgrade policy so that changes to the worker node pool are rolled out gradually. Previously, the VMSS model could change, but instances would not receive it until manually replaced
+* Define Azure automatic instance repair using Application Health Extension probes to 10256 (kube-proxy or Cilium equivalent) to match the strategy used on Google Cloud
 
 ### Google Cloud
 
