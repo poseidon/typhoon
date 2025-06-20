@@ -151,7 +151,7 @@ Typhoon worker instance groups (default workers and [worker pools](../advanced/w
 
 ### AWS
 
-On AWS, worker instances belong to an auto-scaling group. When an auto-scaling group's launch configuration changes, an AWS [Instance Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) gradually replaces worker instances.
+On AWS, worker instances belong to an auto-scaling group. When an auto-scaling group's launch template changes, an AWS [Instance Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html) gradually replaces worker instances.
 
 Instance refresh creates surge instances, waits for a warm-up period, then deletes old instances.
 
@@ -192,11 +192,40 @@ Applying edits to most worker fields will start an instance refresh:
 However, changing `os_stream`/`os_channel` or new AMIs becoming available will NOT change the launch configuration or trigger an Instance Refresh. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
 
 !!! note
-    Before Typhoon v1.33.1, worker nodes only used new launch configurations when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+    Before Typhoon v1.24.4, worker nodes only used new launch configurations when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+
+## Azure
+
+On Azure, worker instances belong to a Virtual Machine Scaling Set with [flexible orchestration mode](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-orchestration-modes). When a VMSS's latest model changes, a [rolling update/upgrade](https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-configure-rolling-upgrades?tabs=portal1%2Cportal2%2Cportal3%2Ccli4) gradually replaces worker instances according to the upgrade policy.
+
+```diff
+module "ramius" {
+  source = "git::https://github.com/poseidon/typhoon//azure/VARIANT/kubernetes?ref=VERSION"
+  ...
+
+  # workers
+  + worker_type = "D2ads_v5"
+  + worker_disk_size = 64
+}
+```
+
+Applying edits to most worker fields will start a rolling update:
+
+* `worker_type`
+* `worker_disk_type`
+* `worker_disk_size`
+* `worker_ephemeral_disk`
+* `worker_priority`
+* `worker_snippets`
+
+However, changing `os_image` or new compute images becoming available will NOT change the model or update instances. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
+
+!!! note
+    Before Typhoon v1.33.2, worker nodes only used new models when replaced manually (or due to failure).
 
 ### Google Cloud
 
-On Google Cloud, worker instances belong to a [managed instance group](https://cloud.google.com/compute/docs/instance-groups#managed_instance_groups). When a group's launch template changes, a [rolling update](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) gradually replaces worker instances.
+On Google Cloud, worker instances belong to a [managed instance group](https://cloud.google.com/compute/docs/instance-groups#managed_instance_groups). When a group's instance template changes, a [rolling update](https://cloud.google.com/compute/docs/instance-groups/rolling-out-updates-to-managed-instance-groups) gradually replaces worker instances.
 
 The rolling update creates surge instances, waits for instances to be healthy, then deletes old instances.
 
@@ -223,7 +252,7 @@ module "yavin" {
 }
 ```
 
-Applying edits to most worker fields will start an instance refresh:
+Applying edits to most worker fields will start a rolling update:
 
 * `worker_type`
 * `disk_*`
@@ -233,7 +262,7 @@ Applying edits to most worker fields will start an instance refresh:
 However, changing `os_stream`/`os_channel` or new compute images becoming available will NOT change the launch template or update instances. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
 
 !!! note
-    Before Typhoon v1.33.1, worker nodes only used new launch templates when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
+    Before Typhoon v1.24.4, worker nodes only used new instance templates when replaced manually (or due to failure). If you must change node configuration manually, it's still possible. Create a new [worker pool](../advanced/worker-pools.md), then scale down the old worker pool as desired.
 
 ## Upgrade poseidon/ct
 
