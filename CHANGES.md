@@ -4,6 +4,11 @@ Notable changes between versions.
 
 ## Latest
 
+* Kubernetes [v1.33.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1332)
+* Update CoreDNS from v1.12.0 to v1.12.1
+* Update Cilium from v1.17.4 to [v1.17.5](https://github.com/cilium/cilium/releases/tag/v1.17.5)
+* Update flannel from v0.26.7 to [v0.27.0](https://github.com/flannel-io/flannel/releases/tag/v0.27.0)
+
 ### Azure
 
 * Add `enable_http_load_balancing` variable to reduce load balancer rules count
