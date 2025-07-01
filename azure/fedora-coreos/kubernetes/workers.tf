@@ -10,13 +10,14 @@ module "workers" {
   backend_address_pool_ids = local.backend_address_pool_ids
 
   # instances
-  os_image       = var.os_image
-  worker_count   = var.worker_count
-  vm_type        = var.worker_type
-  disk_type      = var.worker_disk_type
-  disk_size      = var.worker_disk_size
-  ephemeral_disk = var.worker_ephemeral_disk
-  priority       = var.worker_priority
+  os_image                 = var.os_image
+  worker_count             = var.worker_count
+  vm_type                  = var.worker_type
+  disk_type                = var.worker_disk_type
+  disk_size                = var.worker_disk_size
+  ephemeral_disk           = var.worker_ephemeral_disk
+  ephemeral_disk_placement = var.worker_ephemeral_disk_placement
+  priority                 = var.worker_priority
 
   # configuration
   kubeconfig           = module.bootstrap.kubeconfig-kubelet

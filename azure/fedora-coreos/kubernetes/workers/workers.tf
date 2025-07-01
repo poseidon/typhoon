@@ -23,7 +23,7 @@ resource "azurerm_orchestrated_virtual_machine_scale_set" "workers" {
       for_each = var.ephemeral_disk ? [1] : []
       content {
         option    = "Local"
-        placement = "ResourceDisk"
+        placement = var.ephemeral_disk_placement
       }
     }
   }

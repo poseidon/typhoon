@@ -76,6 +76,16 @@ variable "ephemeral_disk" {
   default     = false
 }
 
+variable "ephemeral_disk_placement" {
+  type        = string
+  description = "Ephemeral disk placement setting"
+  default     = "ResourceDisk"
+  validation {
+    condition     = contains(["ResourceDisk", "NvmeDisk"], var.ephemeral_disk_placement)
+    error_message = "ephemeral_placement must be ResourceDisk or NvmeDisk."
+  }
+}
+
 variable "priority" {
   type        = string
   description = "Set priority to Spot to use reduced cost surplus capacity, with the tradeoff that instances can be evicted at any time."

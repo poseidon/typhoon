@@ -4,6 +4,8 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.33.2
+
 * Kubernetes [v1.33.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1332)
 * Update CoreDNS from v1.12.0 to v1.12.1
 * Update Cilium from v1.17.4 to [v1.17.5](https://github.com/cilium/cilium/releases/tag/v1.17.5)
@@ -16,6 +18,8 @@ Notable changes between versions.
 * Change Azure VMSS instance update policy (i.e. upgrade policy) from Manual to Rolling
   * Set a rolling upgrade policy so that changes to the worker node pool are rolled out gradually. Previously, the VMSS model could change, but instances would not receive it until manually replaced
 * Define Azure automatic instance repair using Application Health Extension probes to 10256 (kube-proxy or Cilium equivalent) to match the strategy used on Google Cloud
+* Add `worker_ephemeral_placement` variable to allow workers with `NvmeDisk` Ephemeral OS disks ([docs](https://learn.microsoft.com/en-us/azure/virtual-machines/ephemeral-os-disks))
+  * Requires `azurerm` provider with NvmeDisk support ([#30044](https://github.com/hashicorp/terraform-provider-azurerm/pull/30044))
 
 ### Google Cloud
 
