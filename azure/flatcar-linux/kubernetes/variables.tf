@@ -20,6 +20,16 @@ variable "dns_zone_group" {
   description = "Resource group where the Azure DNS Zone resides (e.g. global)"
 }
 
+variable "enable_http_load_balancing" {
+  description = "Enable HTTP (port 80) LB rules"
+  default     = false
+}
+
+variable "enable_ipv6_load_balancing" {
+  description = "Enable IPv6 LB rules"
+  default     = true
+}
+
 # instances
 
 variable "os_image" {
@@ -158,16 +168,6 @@ CIDR IPv4 range to assign Kubernetes services.
 The 1st IP will be reserved for kube_apiserver, the 10th IP will be reserved for coredns.
 EOD
   default     = "10.3.0.0/16"
-}
-
-variable "enable_http_load_balancing" {
-  description = "Enable HTTP (port 80) LB rules"
-  default     = false
-}
-
-variable "enable_ipv6_load_balancing" {
-  description = "Enable IPv6 LB rules (note: Azure charges ~$20/mo more)"
-  default     = true
 }
 
 variable "worker_node_labels" {

@@ -12,7 +12,7 @@ resource "google_compute_global_address" "ingress-ipv6" {
 
 # Forward IPv4 TCP/80 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-http-ipv4" {
-  count = var.enable_http_lb ? 1 : 0
+  count = var.enable_http_load_balancing ? 1 : 0
 
   name                  = "${var.cluster_name}-ingress-http-ipv4"
   ip_address            = google_compute_global_address.ingress-ipv4.address
@@ -34,7 +34,7 @@ resource "google_compute_global_forwarding_rule" "ingress-https-ipv4" {
 
 # Forward IPv6 TCP/80 traffic to the TCP proxy load balancer
 resource "google_compute_global_forwarding_rule" "ingress-http-ipv6" {
-  count = var.enable_http_lb ? 1 : 0
+  count = var.enable_http_load_balancing ? 1 : 0
 
   name                  = "${var.cluster_name}-ingress-http-ipv6"
   ip_address            = google_compute_global_address.ingress-ipv6.address
@@ -56,7 +56,7 @@ resource "google_compute_global_forwarding_rule" "ingress-https-ipv6" {
 
 # TCP proxy load balancer for ingress traffic
 resource "google_compute_target_tcp_proxy" "ingress-http" {
-  count = var.enable_http_lb ? 1 : 0
+  count = var.enable_http_load_balancing ? 1 : 0
 
   name            = "${var.cluster_name}-ingress-http"
   description     = "Distribute TCP/80 traffic across ${var.cluster_name} workers"
@@ -72,7 +72,7 @@ resource "google_compute_target_tcp_proxy" "ingress-https" {
 
 # Backend service backed by managed instance group of workers
 resource "google_compute_backend_service" "ingress-http" {
-  count = var.enable_http_lb ? 1 : 0
+  count = var.enable_http_load_balancing ? 1 : 0
 
   name        = "${var.cluster_name}-ingress-http"
   description = "${var.cluster_name} ingress service"
