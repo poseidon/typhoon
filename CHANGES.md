@@ -11,6 +11,10 @@ Notable changes between versions.
 * Update Cilium from v1.17.4 to [v1.17.5](https://github.com/cilium/cilium/releases/tag/v1.17.5)
 * Update flannel from v0.26.7 to [v0.27.0](https://github.com/flannel-io/flannel/releases/tag/v0.27.0)
 
+### AWS
+
+* Relax `aws` provider version constraint to allow upgrades to v6.x ([#1617](https://github.com/poseidon/typhoon/pull/1617))
+
 ### Azure
 
 * Add `enable_http_load_balancing` variable to reduce load balancer rules count
