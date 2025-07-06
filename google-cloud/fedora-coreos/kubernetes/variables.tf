@@ -20,6 +20,12 @@ variable "dns_zone_name" {
   description = "Google Cloud DNS Zone name (e.g. example-zone)"
 }
 
+variable "enable_http_load_balancing" {
+  type        = bool
+  description = "Forward TCP/80 traffic to Backend Service of workers for HTTP ingress"
+  default     = false
+}
+
 # instances
 
 variable "os_stream" {
@@ -105,12 +111,6 @@ variable "worker_snippets" {
   type        = list(string)
   description = "Worker Butane snippets"
   default     = []
-}
-
-variable "enable_http_lb" {
-  type        = bool
-  description = "Forward TCP/80 traffic to Backend Service of workers for HTTP ingress"
-  default     = false
 }
 
 # configuration

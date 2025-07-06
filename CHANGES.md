@@ -18,7 +18,7 @@ Notable changes between versions.
 * Change Azure VMSS instance update policy (i.e. upgrade policy) from Manual to Rolling
   * Set a rolling upgrade policy so that changes to the worker node pool are rolled out gradually. Previously, the VMSS model could change, but instances would not receive it until manually replaced
 * Define Azure automatic instance repair using Application Health Extension probes to 10256 (kube-proxy or Cilium equivalent) to match the strategy used on Google Cloud
-* Add `worker_ephemeral_placement` variable to allow workers with `NvmeDisk` Ephemeral OS disks ([docs](https://learn.microsoft.com/en-us/azure/virtual-machines/ephemeral-os-disks))
+* Add `worker_ephemeral_disk_placement` variable to allow workers with `NvmeDisk` Ephemeral OS disks ([docs](https://learn.microsoft.com/en-us/azure/virtual-machines/ephemeral-os-disks))
   * Requires `azurerm` provider with NvmeDisk support ([#30044](https://github.com/hashicorp/terraform-provider-azurerm/pull/30044))
 
 ### Google Cloud
@@ -28,8 +28,7 @@ Notable changes between versions.
   * Google Cloud TCP proxies no longer restrict which frontend ports may be used
   * Switch apiserver to listen on 6443 to match other cloud platforms
   * Switch ingress port 80 from an HTTP to TCP proxy to match HTTPS handling
-* Add a variable `enable_http_lb` to make ingress/gateway TCP/80 IPv4/IPv6
-forwarding rules optional. Default to false ([#1604](https://github.com/poseidon/typhoon/pull/1604))
+* Add a variable `enable_http_load_balancing` to make ingress/gateway TCP/80 forwarding rules optional. Default to false ([#1604](https://github.com/poseidon/typhoon/pull/1604))
   * Google Cloud charges by forwarding rule, so dropping support for plaintext
   http traffic can save costs if you're https-only.
 
