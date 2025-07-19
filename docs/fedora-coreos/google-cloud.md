@@ -1,6 +1,6 @@
 # Google Cloud
 
-In this tutorial, we'll create a Kubernetes v1.33.2 cluster on Google Compute Engine with Fedora CoreOS.
+In this tutorial, we'll create a Kubernetes v1.33.3 cluster on Google Compute Engine with Fedora CoreOS.
 
 We'll declare a Kubernetes cluster using the Typhoon Terraform module. Then apply the changes to create a network, firewall rules, health checks, controller instances, worker managed instance group, load balancers, and TLS assets.
 
@@ -73,7 +73,7 @@ Define a Kubernetes cluster using the module `google-cloud/fedora-coreos/kuberne
 
 ```tf
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.33.2"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.33.3"
 
   # Google Cloud
   cluster_name  = "yavin"
@@ -148,9 +148,9 @@ List nodes in the cluster.
 $ export KUBECONFIG=/home/user/.kube/configs/yavin-config
 $ kubectl get nodes
 NAME                                       ROLES    STATUS  AGE  VERSION
-yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.33.2
-yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.33.2
-yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.33.2
+yavin-controller-0.c.example-com.internal  <none>   Ready   6m   v1.33.3
+yavin-worker-jrbf.c.example-com.internal   <none>   Ready   5m   v1.33.3
+yavin-worker-mzdm.c.example-com.internal   <none>   Ready   5m   v1.33.3
 ```
 
 List the pods.
