@@ -9,6 +9,10 @@ Notable changes between versions.
 * Kubernetes [v1.33.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1333)
 * Update Cilium from v1.17.5 to [v1.17.6](https://github.com/cilium/cilium/releases/tag/v1.17.6)
 
+### Fedora CoreOS
+
+* Fix `kernel` name/URL used in the `worker` module, since this changed with Fedora CoreOS 42
+
 ## v1.33.2
 
 * Kubernetes [v1.33.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1332)
