@@ -61,7 +61,7 @@ resource "kubernetes_daemonset" "cilium" {
         # https://github.com/cilium/cilium/pull/24075
         init_container {
           name    = "install-cni"
-          image   = "quay.io/cilium/cilium:v1.18.1"
+          image   = "quay.io/cilium/cilium:v1.18.4"
           command = ["/install-plugin.sh"]
           security_context {
             allow_privilege_escalation = true
@@ -80,7 +80,7 @@ resource "kubernetes_daemonset" "cilium" {
         # We use nsenter command with host's cgroup and mount namespaces enabled.
         init_container {
           name  = "mount-cgroup"
-          image = "quay.io/cilium/cilium:v1.18.1"
+          image = "quay.io/cilium/cilium:v1.18.4"
           command = [
             "sh",
             "-ec",
@@ -115,7 +115,7 @@ resource "kubernetes_daemonset" "cilium" {
 
         init_container {
           name    = "clean-cilium-state"
-          image   = "quay.io/cilium/cilium:v1.18.1"
+          image   = "quay.io/cilium/cilium:v1.18.4"
           command = ["/init-container.sh"]
           security_context {
             allow_privilege_escalation = true
@@ -139,7 +139,7 @@ resource "kubernetes_daemonset" "cilium" {
 
         container {
           name    = "cilium-agent"
-          image   = "quay.io/cilium/cilium:v1.18.1"
+          image   = "quay.io/cilium/cilium:v1.18.4"
           command = ["cilium-agent"]
           args = [
             "--config-dir=/tmp/cilium/config-map"
