@@ -6,7 +6,7 @@ terraform {
     azurerm = ">= 2.8"
     ct = {
       source  = "poseidon/ct"
-      version = "~> 0.13"
+      version = "~> 0.14"
     }
   }
 }
