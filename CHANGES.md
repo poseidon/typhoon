@@ -4,6 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.34.2
+
+* Kubernetes [v1.34.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1342)
+* Update CoreDNS from v1.12.1 to v1.13.1
+* Update Cilium from v1.17.5 to [v1.18.4](https://github.com/cilium/cilium/releases/tag/v1.18.4)
+* Update flannel from v0.27.0 to [v0.27.4](https://github.com/flannel-io/flannel/releases/tag/v0.27.4)
+
 ## v1.33.3
 
 * Kubernetes [v1.33.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1333)
