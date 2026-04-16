@@ -73,7 +73,7 @@ resource "kubernetes_daemonset" "flannel" {
 
         container {
           name  = "flannel"
-          image = "docker.io/flannel/flannel:v0.27.4"
+          image = "docker.io/flannel/flannel:v0.28.4"
           command = [
             "/opt/bin/flanneld",
             "--ip-masq",
