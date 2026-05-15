@@ -13,12 +13,12 @@ Typhoon provides tagged releases to allow clusters to be versioned using ordinar
 
 ```
 module "yavin" {
-  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.36.0"
+  source = "git::https://github.com/poseidon/typhoon//google-cloud/fedora-coreos/kubernetes?ref=v1.36.1"
   ...
 }
 
 module "mercury" {
-  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.36.0"
+  source = "git::https://github.com/poseidon/typhoon//bare-metal/flatcar-linux/kubernetes?ref=v1.36.1"
   ...
 }
 ```
@@ -221,7 +221,7 @@ Applying edits to most worker fields will start a rolling update:
 However, changing `os_image` or new compute images becoming available will NOT change the model or update instances. This allows Fedora CoreOS or Flatcar Linux to auto-update themselves via reboots and avoids unexpected terraform diffs for new AMIs.
 
 !!! note
-    Before Typhoon v1.36.0, worker nodes only used new models when replaced manually (or due to failure).
+    Before Typhoon v1.36.1, worker nodes only used new models when replaced manually (or due to failure).
 
 ### Google Cloud
 

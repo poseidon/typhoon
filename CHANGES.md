@@ -4,9 +4,13 @@ Notable changes between versions.
 
 ## Latest
 
+## v1.36.1
+
+* Kubernetes [v1.36.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1361)
+
 ## v1.35.4
 
-* Kubernetes [v1.35.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1354)
+* Kubernetes [v1.35.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1354)
 * Update flannel from v0.27.4 to [v0.28.4](https://github.com/flannel-io/flannel/releases/tag/v0.28.4)
 * Remove nginx-ingress addon example
 
