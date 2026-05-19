@@ -85,6 +85,9 @@ systemd:
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --config=/etc/kubernetes/kubelet.yaml \
           --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
+          %{ if cloud_provider != null ~}
+          --cloud-provider=${cloud_provider} \
+          %{ endif ~}
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           --node-labels=node.kubernetes.io/controller="true" \
           --provider-id=aws:///$${COREOS_EC2_AVAILABILITY_ZONE}/$${COREOS_EC2_INSTANCE_ID} \

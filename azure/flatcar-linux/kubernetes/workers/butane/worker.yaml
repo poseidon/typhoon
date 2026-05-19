@@ -57,6 +57,9 @@ systemd:
           --bootstrap-kubeconfig=/etc/kubernetes/kubeconfig \
           --config=/etc/kubernetes/kubelet.yaml \
           --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
+          %{ if cloud_provider != null ~}
+          --cloud-provider=${cloud_provider} \
+          %{ endif ~}
           --kubeconfig=/var/lib/kubelet/kubeconfig \
           %{~ for label in split(",", node_labels) ~}
           --node-labels=${label} \

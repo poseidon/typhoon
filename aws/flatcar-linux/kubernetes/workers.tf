@@ -26,5 +26,5 @@ module "workers" {
   service_cidr       = var.service_cidr
   snippets           = var.worker_snippets
   node_labels        = var.worker_node_labels
+  cloud_provider     = var.cloud_provider
 }
-

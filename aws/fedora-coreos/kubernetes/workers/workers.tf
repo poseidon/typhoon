@@ -119,6 +119,7 @@ data "ct_config" "worker" {
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
     node_labels            = join(",", var.node_labels)
     node_taints            = join(",", var.node_taints)
+    cloud_provider         = var.cloud_provider
   })
   strict   = true
   snippets = var.snippets

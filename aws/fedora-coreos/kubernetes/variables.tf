@@ -218,3 +218,14 @@ variable "service_account_issuer" {
   description = "kube-apiserver service account token issuer (used as an identifier in 'iss' claims)"
   default     = "https://kubernetes.default.svc.cluster.local"
 }
+
+variable "cloud_provider" {
+  type        = string
+  description = "Kubernetes cloud provider integration mode"
+  default     = null
+
+  validation {
+    condition     = var.cloud_provider == null || contains(["external"], var.cloud_provider)
+    error_message = "The cloud_provider must be external or null."
+  }
+}

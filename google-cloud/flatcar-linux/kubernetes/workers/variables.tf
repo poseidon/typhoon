@@ -119,3 +119,14 @@ variable "accelerator_count" {
   default     = "0"
   description = "Number of compute engine accelerators"
 }
+
+variable "cloud_provider" {
+  type        = string
+  description = "Kubernetes cloud provider integration mode"
+  default     = null
+
+  validation {
+    condition     = var.cloud_provider == null || contains(["external"], var.cloud_provider)
+    error_message = "The cloud_provider must be external or null."
+  }
+}

@@ -137,3 +137,14 @@ variable "arch" {
     error_message = "The arch must be amd64 or arm64."
   }
 }
+
+variable "cloud_provider" {
+  type        = string
+  description = "Kubernetes cloud provider integration mode"
+  default     = null
+
+  validation {
+    condition     = var.cloud_provider == null || contains(["external"], var.cloud_provider)
+    error_message = "The cloud_provider must be external or null."
+  }
+}

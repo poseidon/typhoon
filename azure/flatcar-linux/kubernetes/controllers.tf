@@ -185,6 +185,7 @@ data "ct_config" "controllers" {
     kubeconfig             = indent(10, module.bootstrap.kubeconfig-kubelet)
     ssh_authorized_key     = var.ssh_authorized_key
     cluster_dns_service_ip = cidrhost(var.service_cidr, 10)
+    cloud_provider         = var.cloud_provider
   })
   strict   = true
   snippets = var.controller_snippets
