@@ -67,7 +67,6 @@ systemd:
           --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
           --hostname-override=${domain_name} \
           --kubeconfig=/var/lib/kubelet/kubeconfig \
-          --node-labels=node.kubernetes.io/node \
           %{~ for label in compact(split(",", node_labels)) ~}
           --node-labels=${label} \
           %{~ endfor ~}
