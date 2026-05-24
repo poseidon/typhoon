@@ -61,3 +61,6 @@ output "assets_dist" {
   sensitive = true
 }
 
+output "service_account_public_key" {
+  value = module.bootstrap.service_account_public_key
+}

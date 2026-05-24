@@ -7,6 +7,7 @@ Notable changes between versions.
 ## v1.36.1
 
 * Kubernetes [v1.36.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1361)
+* Add `cloud_provider` variable so "external" cloud controller managers may be used (default null) ([#1663](https://github.com/poseidon/typhoon/pull/1663))
 
 ## v1.35.4
 
