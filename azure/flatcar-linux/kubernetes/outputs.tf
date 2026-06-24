@@ -29,6 +29,21 @@ output "resource_group_id" {
   value = azurerm_resource_group.cluster.id
 }
 
+output "network_name" {
+  value = azurerm_virtual_network.network.name
+}
+
+output "network_id" {
+  value = azurerm_virtual_network.network.id
+}
+
+output "subnet_ids" {
+  value = {
+    controller = azurerm_subnet.controller.id
+    worker     = azurerm_subnet.worker.id
+  }
+}
+
 output "subnet_id" {
   value = azurerm_subnet.worker.id
 }
