@@ -63,7 +63,7 @@ module "yavin" {
 
 ## Managing Components
 
-If you choose to manage components youself, a recommended pattern is to use a separate Terraform workspace per component, like you would any application.
+If you choose to manage components yourself, a recommended pattern is to use a separate Terraform workspace per component, like you would any application.
 
 ```
 mkdir -p infra/components/{coredns, cilium}

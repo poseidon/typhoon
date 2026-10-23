@@ -6,15 +6,15 @@
 
 ### kube-apiserver
 
-DNS A records round-robin[^1] resolve IPv4 TCP/6443 traffic to controller droplets (regardless of whether their `kube-apiserver` is healthy). Clusters with multiple controllers are supported, but round-robin means 1/3 down causes ~1/3 of apiserver requests will fail).
+DNS A records round-robin[^1] resolve IPv4 TCP/6443 traffic to controller droplets (regardless of whether their `kube-apiserver` is healthy). Clusters with multiple controllers are supported, but round-robin means 1/3 down causes ~1/3 of apiserver requests to fail.
 
 [^1]: DigitalOcean does offer load balancers. We've opted not to use them to keep the DigitalOcean cluster cheap for developers.
 
 ### HTTP/HTTPS Ingress
 
-DNS records (A and AAAA) round-robin[^1] resolve the `workers_dns` name (e.g. `nemo-workers.example.com`) to a worker droplet's IPv4 and IPv6 address. This allows running an Ingress controller Daemonset across workers (resolved regardless of whether its the controller is healthy).
+DNS records (A and AAAA) round-robin[^1] resolve the `workers_dns` name (e.g. `nemo-workers.example.com`) to a worker droplet's IPv4 and IPv6 address. This allows running an Ingress controller Daemonset across workers (resolved regardless of whether the controller is healthy).
 
-The DNS record name is output as `workers_dns` for use in application DNS CNAME records. See [Ingess on DigitalOcean](/addons/ingress/#digital-ocean).
+The DNS record name is output as `workers_dns` for use in application DNS CNAME records. See [Ingress on DigitalOcean](/addons/ingress/#digital-ocean).
 
 ### TCP/UDP Services
 
