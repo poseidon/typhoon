@@ -112,7 +112,7 @@ commit-confirm
 ```
 
 !!! note
-    Adding multiple next-hop nodes provides equal-cost multi-path (ECMP) routing. EdgeOS v2.0+ is required. The kernel in prior versions used flow-hash to balanced packets, whereas with v2.0, round-robin sessions are used.
+    Adding multiple next-hop nodes provides equal-cost multi-path (ECMP) routing. EdgeOS v2.0+ is required. The kernel in prior versions used flow-hash to balance packets, whereas with v2.0, round-robin sessions are used.
 
 #### BGP
 

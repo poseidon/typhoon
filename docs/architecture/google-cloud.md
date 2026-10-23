@@ -13,7 +13,7 @@ Notes:
 * GCP TCP Proxy limits external port options (e.g. must use 443, not 6443)
 * A regional NLB cannot be used for multi-controller (see [#190](https://github.com/poseidon/typhoon/pull/190))
 
-### HTTP/HTTP Ingress
+### HTTP/HTTPS Ingress
 
 Global forwarding rules and a TCP Proxy distribute IPv4/IPv6 TCP/80 and TCP/443 traffic across a managed instance group of workers with a healthy Ingress Controller. Workers span zones in a region to tolerate zone outages.
 
